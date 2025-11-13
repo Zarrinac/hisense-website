@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+:root {
+  --brand-color: #00b3ac;
+  --brand-color-dark: #008b86;
+  --brand-color-light: #e1fffb;
+}
+
+@font-face {
+  font-family: 'IRANSansXV';
+  src:
+    url('/fonts/IRANSansXV.woff2') format('woff2'),
+    url('/fonts/IRANSansXV.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hisense Sans Alfabet';
+  src: url('/fonts/Hisense Sans Alfabet Light-normal-300-100.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hisense Sans Alfabet';
+  src: url('/fonts/Hisense Sans Alfabet-normal-400-100.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hisense Sans Alfabet';
+  src: url('/fonts/Hisense Sans Alfabet Medium-normal-500-100.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hisense Sans Alfabet';
+  src: url('/fonts/Hisense Sans Alfabet-normal-700-100.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-feature-settings: 'kern';
+  background-color: #f8fafc;
+  color: #0f172a;
+  accent-color: var(--brand-color);
+}
+
+html[lang='en'] body {
+  font-family: 'Hisense Sans Alfabet', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+html[lang='fa'] body {
+  font-family: 'IRANSansXV', 'Hisense Sans Alfabet', 'Segoe UI', Tahoma, sans-serif;
+}
