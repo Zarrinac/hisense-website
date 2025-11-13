@@ -1,0 +1,39 @@
+{
+  "Metadata": {
+    "title": "Hisense Experience Center",
+    "description": "Discover Hisense innovations, services, and regional product highlights."
+  },
+  "Header": {
+    "brand": "Hisense",
+    "tagline": "Inspired Living",
+    "actions": {
+      "language": "Change language",
+      "search": "Search the catalog",
+      "menu": "Open navigation",
+      "close": "Close navigation"
+    },
+    "navigation": {
+      "items": {
+        "tvAudio": "TV & Audio",
+        "laserTv": "Laser TV",
+        "homeAppliances": "Home Appliances",
+        "b2b": "B2B",
+        "about": "About Hisense",
+        "support": "Support"
+      }
+    }
+  },
+  "LanguageSwitcher": {
+    "label": "Language",
+    "options": {
+      "fa": "Persian",
+      "en": "English"
+    }
+  },
+  "HomePage": {
+    "hero": {
+      "title": "Regional showcase",
+      "subtitle": "Localized campaigns and support information will appear here."
+    }
+  }
+}
