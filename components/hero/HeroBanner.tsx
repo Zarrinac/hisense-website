@@ -5,11 +5,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
-import Banner01 from '@/assets/banner/Fix-Banner-02-Back.jpg';
-import Banner02 from '@/assets/banner/Fix-Banner-03-Back.jpg';
-import Banner03 from '@/assets/banner/Fix-Banner-04-Back.jpg';
-import Banner04 from '@/assets/banner/Fix-Banner-05-Back.jpg';
-import Banner05 from '@/assets/banner/Fix-Banner-06-Back.jpg';
+import Banner01 from '@/public/banner/Fix-Banner-02-Back.jpg';
+import Banner02 from '@/public/banner/Fix-Banner-03-Back.jpg';
+import Banner03 from '@/public/banner/Fix-Banner-04-Back.jpg';
+import Banner04 from '@/public/banner/Fix-Banner-05-Back.jpg';
+import Banner05 from '@/public/banner/Fix-Banner-06-Back.jpg';
 
 type Banner = {
   id: string;
