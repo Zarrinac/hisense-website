@@ -39,5 +39,56 @@
       "title": "Regional showcase",
       "subtitle": "Localized campaigns and support information will appear here."
     }
+  },
+  "Footer": {
+    "branding": {
+      "title": "Zarrin Namaye Kaspian",
+      "tagline": "Official Hisense distributor in Iran."
+    },
+    "about": {
+      "title": "Information"
+    },
+    "products": {
+      "title": "Products"
+    },
+    "support": {
+      "title": "Support"
+    },
+    "links": {
+      "about": "About us",
+      "contact": "Contact",
+      "complaint": "Complaint form",
+      "feedback": "Feedback form",
+      "refrigerator": "Refrigerator",
+      "washingMachine": "Washing machine",
+      "television": "Television",
+      "dcode": "D'CODE TV",
+      "ventilation": "Residential HVAC",
+      "industrialVentilation": "Industrial HVAC",
+      "faq": "FAQ",
+      "warranty": "Warranty conditions",
+      "dealerPortal": "Dealer portal",
+      "dealerList": "Dealer list",
+      "becomeDealer": "Become a dealer"
+    },
+    "contact": {
+      "address": "No. 6, Kameliya Dead end, Sasanipour street, Ketabi Square (Ahmadi Roshan Square), Tehran/Iran ",
+      "phone": "+98 21 72133",
+      "email": "info@zarrinac.com",
+      "hours": "Sat – Wed: 8:30 to 16:00 | Thu: 8:30 to 13:00",
+      "holidays": "Official holidays: closed"
+    },
+    "social": {
+      "whatsappSales": "WhatsApp Sales",
+      "whatsappService": "WhatsApp Service",
+      "instagram": "Instagram"
+    },
+    "legal": {
+      "notice": "© Zarrin Namaye Kaspian, official Hisense representative in Iran.",
+      "privacy": "Privacy Policy",
+      "cookies": "Cookies Policy",
+      "terms": "Terms & Conditions",
+      "sitemap": "Sitemap"
+    }
   }
 }

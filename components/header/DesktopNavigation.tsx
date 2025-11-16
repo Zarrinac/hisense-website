@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import SearchIcon from '@mui/icons-material/Search';
@@ -6,6 +8,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import Logo from '@/public/icons/hisense-logo-full.svg';
 import { NavKey, SubMenuItem } from './navigationData';
+import { useEffect, useState } from 'react';
 
 type LabeledNavItem = {
   key: NavKey;
@@ -44,17 +47,43 @@ export default function DesktopNavigation({
   themeDarkLabel,
   themeLightLabel,
 }: DesktopNavigationProps) {
+  const [isHidden, setIsHidden] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 120) {
+        setIsHidden(true);
+      } else {
+        setIsHidden(false);
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <div className="relative z-40" onMouseLeave={() => onMenuKeyChange(null)}>
+    <div
+      className={`sticky top-0 z-40 w-full transform-gpu transition-[transform,opacity] duration-500 ease-in-out ${
+        isHidden ? '-translate-y-[105%] opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
+      }`}
+      onMouseLeave={() => onMenuKeyChange(null)}
+    >
       <header className="relative flex h-20 items-center justify-between bg-(--surface-color) px-4 shadow-sm lg:px-11">
-        <div className="flex items-center">
+        <Link href="/" className="flex items-center">
           <Image
             alt="Hisense Logo"
             src={Logo}
             priority
             className={`block h-5 w-[92px] lg:h-6 lg:w-[117px] ${locale === 'fa' ? 'ml-12' : 'mr-12'}`}
           />
-        </div>
+        </Link>
 
         <div className="hidden h-full w-full items-center lg:flex lg:justify-between">
           <nav className="h-full items-center text-sm text-(--default-black-font) lg:flex">
