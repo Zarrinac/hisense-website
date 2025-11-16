@@ -6,7 +6,11 @@ import { type Locale } from '@/i18n/routing';
 import LanguageIcon from '@mui/icons-material/Language';
 import { useTransition } from 'react';
 
-export default function LanguageSwitcher() {
+type LanguageSwitcherProps = {
+  className?: string;
+};
+
+export default function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
@@ -26,7 +30,7 @@ export default function LanguageSwitcher() {
       type="button"
       onClick={toggleLocale}
       disabled={isPending}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 hover:text-(--brand-color) focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+      className={className}
       aria-label={`${t('label')} ${t(`options.${nextLocale}`)}`}
       title={`${t('label')} ${t(`options.${nextLocale}`)}`}
     >
