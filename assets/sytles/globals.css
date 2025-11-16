@@ -8,7 +8,7 @@
   --background-color: #f8fafc;
   --surface-color: #ffffff;
   --surface-muted-color: #f1f5f9;
-  --surface-accent-color: #e0f2fe;
+  --surface-accent-color: #ffffff;
   --surface-hover-color: #f3f6fb;
   --text-muted-color: #475569;
   --text-subtle-color: #94a3b8;
@@ -38,6 +38,11 @@
   --hero-surface-color: #0b1120;
   --hero-title-color: #e0f2fe;
   --hero-subtitle-color: #cbd5f5;
+}
+
+@theme {
+  --breakpoint-xs: 30rem;
+  --breakpoint-2xs: 20rem;
 }
 
 @font-face {
