@@ -1,28 +1,29 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
-import SearchIcon from '@mui/icons-material/Search';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useEffect, useMemo, useState } from 'react';
-import { useTranslations } from 'next-intl';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
-import Logo from '@/public/icons/hisense-logo.svg';
+import { useLocale, useTranslations } from 'next-intl';
+import DesktopNavigation from '@/components/header/DesktopNavigation';
+import MobileNavPanel from '@/components/header/MobileNavPanel';
+import {
+  NAV_ITEMS,
+  NAV_SECONDARY_ITEMS,
+  SUB_MENU_CONTENT,
+  type NavKey,
+  type SubMenuItem,
+} from '@/components/header/navigationData';
 
-const NAV_ITEMS = [
-  { key: 'tvAudio', href: '#tv-audio' },
-  { key: 'laserTv', href: '#laser-tv' },
-  { key: 'homeAppliances', href: '#home-appliances' },
-  { key: 'b2b', href: '#b2b' },
-  { key: 'about', href: '#about' },
-  { key: 'support', href: '#support' },
-] as const;
+type LabeledNavItem = {
+  key: NavKey;
+  href: string;
+  label: string;
+};
 
 export default function Header() {
   const t = useTranslations('Header');
+  const locale = useLocale();
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [activeMenuKey, setActiveMenuKey] = useState<NavKey | null>(null);
+  const [mobileActiveMenuKey, setMobileActiveMenuKey] = useState<NavKey | null>(null);
 
   useEffect(() => {
     if (isPanelOpen) {
@@ -36,104 +37,85 @@ export default function Header() {
     };
   }, [isPanelOpen]);
 
-  const navItems = useMemo(
-    () =>
-      NAV_ITEMS.map((item) => ({
-        ...item,
-        label: t(`navigation.items.${item.key}`),
-      })),
-    [t],
+  useEffect(() => {
+    if (!isPanelOpen) {
+      setMobileActiveMenuKey(null);
+    }
+  }, [isPanelOpen]);
+
+  const navItems: LabeledNavItem[] = useMemo(() => {
+    return NAV_ITEMS.map((item) => ({
+      ...item,
+      label: t(`navigation.items.${item.key}`),
+    }));
+  }, [t]);
+
+  const secondryNavItems: LabeledNavItem[] = useMemo(() => {
+    return NAV_SECONDARY_ITEMS.map((item) => ({
+      ...item,
+      label: t(`navigation.items.${item.key}`),
+    }));
+  }, [t]);
+
+  const allNavItems = useMemo(
+    () => [...navItems, ...secondryNavItems],
+    [navItems, secondryNavItems],
   );
+  const activeSubMenuItems = activeMenuKey ? SUB_MENU_CONTENT[activeMenuKey] : null;
+  const mobileActiveSubMenuItems = mobileActiveMenuKey
+    ? SUB_MENU_CONTENT[mobileActiveMenuKey]
+    : null;
+
+  const activeNavLabel = useMemo(() => {
+    if (!activeMenuKey) {
+      return '';
+    }
+    const match = allNavItems.find((item) => item.key === activeMenuKey);
+    return match?.label ?? '';
+  }, [activeMenuKey, allNavItems]);
+
+  const mobileActiveNavLabel = useMemo(() => {
+    if (!mobileActiveMenuKey) {
+      return '';
+    }
+    const match = allNavItems.find((item) => item.key === mobileActiveMenuKey);
+    return match?.label ?? '';
+  }, [mobileActiveMenuKey, allNavItems]);
 
   const iconButtonClass =
-    'inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:text-[var(--brand-color)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-color)] disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200';
+    'inline-flex h-8 w-8 items-center justify-center rounded-full border border-(--border-color) bg-(--surface-color) text-(--text-muted-color) transition-colors hover:border-(--brand-color) hover:bg-(--surface-hover-color) hover:text-(--brand-color) focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) disabled:opacity-60 sm:h-10 sm:w-10';
 
   return (
     <>
-      <header className="relative z-40 flex h-20 items-center justify-between bg-white px-4 shadow-sm dark:bg-slate-950 lg:px-10">
-        <div className="flex items-center gap-3">
-          <Image
-            alt="Hisense Logo"
-            src={Logo}
-            priority
-            className="h-5 w-[92px] lg:h-6 lg:w-[117px]"
-          />
-        </div>
+      <DesktopNavigation
+        navItems={navItems}
+        secondaryNavItems={secondryNavItems}
+        locale={locale}
+        activeMenuKey={activeMenuKey}
+        onMenuKeyChange={setActiveMenuKey}
+        activeSubMenuItems={activeSubMenuItems}
+        activeNavLabel={activeNavLabel}
+        iconButtonClass={iconButtonClass}
+        searchLabel={t('actions.search')}
+        menuLabel={t('actions.menu')}
+        themeDarkLabel={t('actions.theme.dark')}
+        themeLightLabel={t('actions.theme.light')}
+        onOpenMobilePanel={() => setIsPanelOpen(true)}
+      />
 
-        <nav className="hidden items-center gap-8 text-sm font-medium text-slate-700 lg:flex">
-          {navItems.map((item) => (
-            <Link key={item.key} href={item.href} className="transition hover:text-(--brand-color)">
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            className={iconButtonClass}
-            aria-label={t('actions.search')}
-            title={t('actions.search')}
-          >
-            <SearchIcon fontSize="small" />
-          </button>
-          <LanguageSwitcher />
-          <button
-            type="button"
-            className={`${iconButtonClass} lg:hidden`}
-            aria-label={t('actions.menu')}
-            title={t('actions.menu')}
-            onClick={() => setIsPanelOpen(true)}
-          >
-            <MenuIcon fontSize="medium" />
-          </button>
-        </div>
-      </header>
-
-      {isPanelOpen && (
-        <div className="fixed inset-0 z-50 flex">
-          <div
-            className="absolute inset-0 bg-black/60"
-            onClick={() => setIsPanelOpen(false)}
-            aria-hidden="true"
-          />
-          <aside className="relative ml-auto flex h-full w-full max-w-md flex-col bg-white p-6 shadow-2xl">
-            <div className="flex items-start justify-between">
-              <Image alt="Hisense Logo" src={Logo} className="h-5 w-[92px]" priority />
-              <button
-                type="button"
-                className={iconButtonClass}
-                onClick={() => setIsPanelOpen(false)}
-                aria-label={t('actions.close')}
-                title={t('actions.close')}
-              >
-                <CloseIcon fontSize="small" />
-              </button>
-            </div>
-            <nav className="mt-10 flex flex-col gap-6 text-lg font-semibold text-slate-900">
-              {navItems.map((item) => (
-                <a
-                  key={item.key}
-                  href={item.href}
-                  className="flex items-center justify-between border-b border-slate-100 pb-4 transition hover:text-(--brand-color)"
-                  onClick={() => setIsPanelOpen(false)}
-                >
-                  {item.label}
-                  <ChevronRightIcon />
-                </a>
-              ))}
-            </nav>
-            <div className="mt-auto pt-10">
-              <button
-                type="button"
-                className="flex w-full items-center justify-center rounded-full border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:text-(--brand-color)"
-              >
-                {t('actions.search')}
-              </button>
-            </div>
-          </aside>
-        </div>
-      )}
+      <MobileNavPanel
+        isOpen={isPanelOpen}
+        onClose={() => setIsPanelOpen(false)}
+        locale={locale}
+        iconButtonClass={iconButtonClass}
+        allNavItems={allNavItems}
+        mobileActiveMenuKey={mobileActiveMenuKey}
+        onMobileMenuKeyChange={setMobileActiveMenuKey}
+        mobileActiveNavLabel={mobileActiveNavLabel}
+        mobileActiveSubMenuItems={mobileActiveSubMenuItems}
+        searchLabel={t('actions.search')}
+        closeLabel={t('actions.close')}
+      />
     </>
   );
 }

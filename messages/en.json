@@ -10,12 +10,16 @@
       "language": "Change language",
       "search": "Search the catalog",
       "menu": "Open navigation",
-      "close": "Close navigation"
+      "close": "Close navigation",
+      "theme": {
+        "dark": "Switch to dark mode",
+        "light": "Switch to light mode"
+      }
     },
     "navigation": {
       "items": {
         "tvAudio": "TV & Audio",
-        "laserTv": "Laser TV",
+        "airConditioner": "Air-Conditioner",
         "homeAppliances": "Home Appliances",
         "b2b": "B2B",
         "about": "About Hisense",
