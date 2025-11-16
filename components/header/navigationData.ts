@@ -2,7 +2,6 @@ export const NAV_ITEMS = [
   { key: 'tvAudio', href: '#tv-audio' },
   { key: 'airConditioner', href: '#air-conditioner' },
   { key: 'homeAppliances', href: '#home-appliances' },
-  { key: 'b2b', href: '#b2b' },
 ] as const;
 
 export const NAV_SECONDARY_ITEMS = [
@@ -34,11 +33,6 @@ export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
     { title: 'Refrigeration', description: 'EvenTemp cooling to keep food fresher.' },
     { title: 'Laundry', description: 'Washers and dryers with Allergy Steam cycles.' },
     { title: 'Dishwashers', description: 'Efficient cleaning with Deep Clean Spray Arm.' },
-  ],
-  b2b: [
-    { title: 'Professional Displays', description: 'LED walls and signage for retail and venues.' },
-    { title: 'Meeting Solutions', description: 'Interactive displays and collaboration tools.' },
-    { title: 'Commercial Appliances', description: 'Reliable performance for hospitality needs.' },
   ],
   about: [
     { title: 'Our Story', description: 'A legacy of innovation since 1969.' },
