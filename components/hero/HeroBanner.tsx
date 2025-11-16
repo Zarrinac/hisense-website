@@ -1,0 +1,140 @@
+'use client';
+
+import Image, { type StaticImageData } from 'next/image';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
+import Banner01 from '@/assets/banner/Fix-Banner-02-Back.jpg';
+import Banner02 from '@/assets/banner/Fix-Banner-03-Back.jpg';
+import Banner03 from '@/assets/banner/Fix-Banner-04-Back.jpg';
+import Banner04 from '@/assets/banner/Fix-Banner-05-Back.jpg';
+import Banner05 from '@/assets/banner/Fix-Banner-06-Back.jpg';
+
+type Banner = {
+  id: string;
+  desktop: StaticImageData;
+  mobile?: StaticImageData;
+  alt: string;
+};
+
+const BANNERS: Banner[] = [
+  { id: 'banner-1', desktop: Banner01, alt: 'Hisense flagship lineup hero 1' },
+  { id: 'banner-2', desktop: Banner02, alt: 'Hisense flagship lineup hero 2' },
+  { id: 'banner-3', desktop: Banner03, alt: 'Hisense flagship lineup hero 3' },
+  { id: 'banner-4', desktop: Banner04, alt: 'Hisense flagship lineup hero 4' },
+  { id: 'banner-5', desktop: Banner05, alt: 'Hisense flagship lineup hero 5' },
+];
+
+export default function HeroBanner() {
+  const autoplay = useRef(
+    Autoplay({
+      delay: 6000,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+    }),
+  );
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [autoplay.current]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    const update = () => setIsMobile(mediaQuery.matches);
+    update();
+
+    mediaQuery.addEventListener('change', update);
+    return () => mediaQuery.removeEventListener('change', update);
+  }, []);
+
+  useEffect(() => {
+    if (!emblaApi) {
+      return;
+    }
+
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    emblaApi.on('select', onSelect);
+    onSelect();
+
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi]);
+
+  const scrollPrev = useCallback(() => {
+    autoplay.current?.reset();
+    emblaApi?.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    autoplay.current?.reset();
+    emblaApi?.scrollNext();
+  }, [emblaApi]);
+
+  const slides = useMemo(() => {
+    return BANNERS.map((banner) => ({
+      ...banner,
+      source: isMobile && banner.mobile ? banner.mobile : banner.desktop,
+    }));
+  }, [isMobile]);
+
+  return (
+    <section
+      className="relative isolate overflow-hidden bg-(--surface-color)"
+      aria-label="Featured Hisense campaigns"
+    >
+      <div className="relative" ref={emblaRef}>
+        <div className="flex touch-pan-y select-none">
+          {slides.map((banner, index) => (
+            <div key={banner.id} className="relative min-w-0 flex-[0_0_100%]">
+              <div className="relative aspect-9/16 w-full md:aspect-video lg:aspect-21/9">
+                <Image
+                  src={banner.source}
+                  alt={banner.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 100vw"
+                  priority={index === 0}
+                  placeholder="blur"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button
+        type="button"
+        className="absolute left-4 top-1/2 hidden -translate-y-1/2 rounded-full border border-(--border-color) bg-white/80 p-3 text-(--default-black-font) shadow-lg transition hover:bg-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) md:inline-flex"
+        onClick={scrollPrev}
+        aria-label="Previous banner"
+      >
+        <HiChevronLeft className="h-6 w-6" />
+      </button>
+      <button
+        type="button"
+        className="absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-full border border-(--border-color) bg-white/80 p-3 text-(--default-black-font) shadow-lg transition hover:bg-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) md:inline-flex"
+        onClick={scrollNext}
+        aria-label="Next banner"
+      >
+        <HiChevronRight className="h-6 w-6" />
+      </button>
+
+      <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 rounded-full bg-black/40 px-4 py-2 backdrop-blur-sm">
+        {slides.map((slide, index) => (
+          <button
+            key={slide.id}
+            type="button"
+            className={`h-2 w-2 rounded-full transition ${index === selectedIndex ? 'bg-white' : 'bg-white/40'}`}
+            aria-label={`Go to banner ${index + 1}`}
+            aria-pressed={index === selectedIndex}
+            onClick={() => {
+              autoplay.current?.reset();
+              emblaApi?.scrollTo(index);
+            }}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}

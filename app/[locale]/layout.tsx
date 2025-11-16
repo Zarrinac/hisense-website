@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import Header from '@/components/Header';
+import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import '@/assets/sytles/globals.css';
 import { routing, type Locale } from '@/i18n/routing';
 
@@ -53,12 +54,14 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   const direction = locale === 'fa' ? 'rtl' : 'ltr';
 
   return (
-    <html lang={locale} dir={direction} suppressHydrationWarning>
-      <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <Header />
-          <main>{children}</main>
-        </NextIntlClientProvider>
+    <html lang={locale} dir={direction} suppressHydrationWarning data-theme="light">
+      <body className="bg-(--background-color) text-(--default-black-font) transition-colors duration-300">
+        <ThemeProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <Header />
+            <main>{children}</main>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
