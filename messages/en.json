@@ -1,11 +1,23 @@
 {
   "Metadata": {
-    "title": "Hisense Experience Center",
-    "description": "Discover Hisense innovations, services, and regional product highlights."
+    "title": "Zarrin Namaye caspian | Exclusive Hisense Distributor in Iran",
+    "description": "Zarrin Namaye caspian, the official Hisense Iran representative, delivers home appliances, residential and commercial HVAC systems, LED TVs, and D'CODE products with nationwide after-sales service.",
+    "keywords": [
+      "Hisense Iran",
+      "Hisense exclusive distributor Iran",
+      "Zarrin Namaye caspian",
+      "official Hisense partner Iran",
+      "Hisense home appliances",
+      "Hisense residential HVAC",
+      "Hisense commercial HVAC",
+      "Hisense air conditioner Iran",
+      "Hisense refrigerator Iran",
+      "D'CODE LED TV"
+    ]
   },
   "Header": {
     "brand": "Hisense",
-    "tagline": "Inspired Living",
+    "tagline": "Official Hisense distributor in Iran",
     "actions": {
       "language": "Change language",
       "search": "Search the catalog",
@@ -21,7 +33,7 @@
         "tvAudio": "TV & Audio",
         "airConditioner": "Air-Conditioner",
         "homeAppliances": "Home Appliances",
-        "b2b": "B2B",
+        "dcode": "D'CODE",
         "about": "About Hisense",
         "support": "Support"
       }
@@ -36,13 +48,13 @@
   },
   "HomePage": {
     "hero": {
-      "title": "Regional showcase",
-      "subtitle": "Localized campaigns and support information will appear here."
+      "title": "Zarrin Namaye caspian – Official Hisense Distributor in Iran",
+      "subtitle": "Shop Hisense LED TVs, refrigerators, air conditioners, residential and commercial HVAC solutions, and D'CODE products with certified after-sales support across Iran."
     }
   },
   "Footer": {
     "branding": {
-      "title": "Zarrin Namaye Kaspian",
+      "title": "Zarrin Namaye caspian",
       "tagline": "Official Hisense distributor in Iran."
     },
     "about": {
@@ -84,7 +96,7 @@
       "instagram": "Instagram"
     },
     "legal": {
-      "notice": "© Zarrin Namaye Kaspian, official Hisense representative in Iran.",
+      "notice": "© Zarrin Namaye caspian, official Hisense representative in Iran.",
       "privacy": "Privacy Policy",
       "cookies": "Cookies Policy",
       "terms": "Terms & Conditions",

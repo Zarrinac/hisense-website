@@ -2,6 +2,7 @@ export const NAV_ITEMS = [
   { key: 'tvAudio', href: '#tv-audio' },
   { key: 'airConditioner', href: '#air-conditioner' },
   { key: 'homeAppliances', href: '#home-appliances' },
+  { key: 'dcode', href: '#dcode' },
 ] as const;
 
 export const NAV_SECONDARY_ITEMS = [
@@ -20,19 +21,36 @@ export type SubMenuItem = {
 
 export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
   tvAudio: [
-    { title: 'Mini-LED & ULED TVs', description: 'Flagship picture powered by Hi-View Engine.' },
-    { title: 'Laser TV & Projectors', description: 'Cinematic scale with remarkable detail.' },
-    { title: 'Soundbars', description: 'Immersive Dolby Atmos audio for every space.' },
+    {
+      title: 'Hisense TV (LED)',
+      description: 'Mini-LED, ULED و Laser TV برای تجربه تصویری جهانی.',
+    },
   ],
   airConditioner: [
-    { title: 'Split Systems', description: 'Cooling and heating built for comfort.' },
-    { title: 'Portable AC', description: 'Flexible climate control that moves with you.' },
-    { title: 'Commercial HVAC', description: 'High-capacity systems for large venues.' },
+    {
+      title: 'Hisense Residential Air Conditioner',
+      description: 'اسپلیت و کولر گازی‌های خانگی با کنترل هوشمند و برچسب انرژی A.',
+    },
+    {
+      title: 'Hisense Commercial Air Conditioner',
+      description: 'راهکارهای VRF و داکت‌اسپلیت صنعتی برای پروژه‌های بزرگ.',
+    },
   ],
   homeAppliances: [
-    { title: 'Refrigeration', description: 'EvenTemp cooling to keep food fresher.' },
-    { title: 'Laundry', description: 'Washers and dryers with Allergy Steam cycles.' },
-    { title: 'Dishwashers', description: 'Efficient cleaning with Deep Clean Spray Arm.' },
+    {
+      title: 'Hisense Refrigerator & Freezer',
+      description: 'یخچال، فریزر و ساید بای ساید با تکنولوژی Total No-Frost.',
+    },
+    {
+      title: 'Hisense Washing Machine',
+      description: 'ماشین لباسشویی با بخار ضدآلرژی و موتور اینورتر سایلنت.',
+    },
+  ],
+  dcode: [
+    {
+      title: "D'CODE TV (LED)",
+      description: "تلویزیون‌های هوشمند D'CODE با رابط کاربری بومی‌سازی شده.",
+    },
   ],
   about: [
     { title: 'Our Story', description: 'A legacy of innovation since 1969.' },
