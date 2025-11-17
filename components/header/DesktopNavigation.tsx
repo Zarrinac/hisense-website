@@ -10,6 +10,43 @@ import Logo from '@/public/icons/hisense-logo-full.svg';
 import { NavKey, SubMenuItem } from './navigationData';
 import { useEffect, useState } from 'react';
 
+const PROMO_MESSAGES: Record<
+  NavKey | 'default',
+  {
+    fa: string;
+    en: string;
+  }
+> = {
+  tvAudio: {
+    fa: 'تلویزیون‌ها و سیستم‌های صوتی هایسنس با کیفیت ULED و Mini-LED را ببینید.',
+    en: 'Explore Hisense TVs and audio systems with breathtaking ULED/Mini-LED quality.',
+  },
+  airConditioner: {
+    fa: 'کولرهای خانگی و سیستم‌های تهویه تجاری هایسنس برای هر اقلیم ایران.',
+    en: 'Residential splits and commercial HVAC solutions tailored for every climate zone.',
+  },
+  homeAppliances: {
+    fa: 'یخچال‌فریزرها و لباسشویی‌های هایسنس برای سبک زندگی مدرن شما.',
+    en: 'Hisense refrigerators, freezers, and washing machines built for premium everyday living.',
+  },
+  dcode: {
+    fa: "تلویزیون‌های هوشمند D'CODE با رابط فارسی و محتوای بومی.",
+    en: "D'CODE smart TVs deliver localized content and a seamless Persian interface.",
+  },
+  about: {
+    fa: 'درباره تاریخچه برند و مسئولیت‌پذیری اجتماعی هایسنس ایران بیشتر بدانید.',
+    en: 'Learn how Hisense Iran drives innovation, sustainability, and local partnerships.',
+  },
+  support: {
+    fa: 'مرکز تماس، گارانتی و شبکه خدمات پس از فروش در سراسر کشور در دسترس شماست.',
+    en: 'Reach nationwide after-sales service, warranty support, and dealer assistance.',
+  },
+  default: {
+    fa: 'درباره برند، خدمات مشتری و شبکه پشتیبانی ما بیشتر بدانید.',
+    en: 'Choose a category to learn about the brand, services, and support network.',
+  },
+};
+
 type LabeledNavItem = {
   key: NavKey;
   href: string;
@@ -48,6 +85,13 @@ export default function DesktopNavigation({
   themeLightLabel,
 }: DesktopNavigationProps) {
   const [isHidden, setIsHidden] = useState(false);
+  const promoKey = (activeMenuKey ?? 'default') as keyof typeof PROMO_MESSAGES;
+  const promoCopy = locale === 'fa' ? PROMO_MESSAGES[promoKey].fa : PROMO_MESSAGES[promoKey].en;
+  const localeKey = locale === 'fa' ? 'fa' : 'en';
+  const toLocalePath = (path: string) => {
+    const normalized = path.startsWith('/') ? path : `/${path}`;
+    return `/${locale}${normalized}`;
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -90,7 +134,7 @@ export default function DesktopNavigation({
             {navItems.map((item) => (
               <Link
                 key={item.key}
-                href={item.href}
+                href={toLocalePath(item.href)}
                 className="header-nav-link"
                 onMouseEnter={() => onMenuKeyChange(item.key)}
                 onFocus={() => onMenuKeyChange(item.key)}
@@ -106,7 +150,7 @@ export default function DesktopNavigation({
             {secondaryNavItems.map((item) => (
               <Link
                 key={item.key}
-                href={item.href}
+                href={toLocalePath(item.href)}
                 className="header-nav-link"
                 onMouseEnter={() => onMenuKeyChange(item.key)}
                 onFocus={() => onMenuKeyChange(item.key)}
@@ -154,18 +198,23 @@ export default function DesktopNavigation({
                 Explore
               </p>
               <p className="mt-3 text-2xl font-semibold text-(--brand-color)">{activeNavLabel}</p>
-              <p className="mt-2 text-sm text-(--text-muted-color)">
-                Discover top categories and start building your perfect setup.
-              </p>
+
+              <p className="mt-2 text-sm text-(--text-muted-color)">{promoCopy}</p>
             </div>
             <div className="grid flex-1 grid-cols-3 gap-6">
               {activeSubMenuItems.map((subItem) => (
-                <div key={subItem.title} className="header-submenu-card">
+                <Link
+                  key={subItem.title.en}
+                  href={`/${locale}${subItem.href}`}
+                  className="header-submenu-card focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-(--brand-color)"
+                >
                   <p className="text-base font-semibold text-(--default-black-font)">
-                    {subItem.title}
+                    {subItem.title[localeKey]}
                   </p>
-                  <p className="mt-2 text-sm text-(--text-muted-color)">{subItem.description}</p>
-                </div>
+                  <p className="mt-2 text-sm text-(--text-muted-color)">
+                    {subItem.description[localeKey]}
+                  </p>
+                </Link>
               ))}
             </div>
           </div>

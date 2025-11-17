@@ -8,7 +8,7 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from '@/components/theme/ThemeProvider';
 import ZarrinLogoBlack from '@/public/icons/Zarrin-Logo-Black.png';
 import ZarrinLogoWhite from '@/public/icons/Zarrin-Logo-White.png';
@@ -28,31 +28,31 @@ const FOOTER_SECTIONS: Array<{
   {
     titleKey: 'about.title',
     linkKeys: [
-      { key: 'about', href: '/#about' },
-      { key: 'contact', href: '/#contact' },
-      { key: 'complaint', href: '/#complaint-form' },
-      { key: 'feedback', href: '/#feedback-form' },
+      { key: 'about', href: '/about' },
+      { key: 'contact', href: '/contact-us' },
+      { key: 'complaint', href: '/complaint' },
+      { key: 'feedback', href: '/survey' },
     ],
   },
   {
     titleKey: 'products.title',
     linkKeys: [
-      { key: 'refrigerator', href: '/#home-appliances' },
-      { key: 'washingMachine', href: '/#home-appliances' },
-      { key: 'television', href: '/#tv-audio' },
-      { key: 'dcode', href: '/#tv-audio' },
-      { key: 'ventilation', href: '/#air-conditioner' },
-      { key: 'industrialVentilation', href: '/#b2b' },
+      { key: 'television', href: '/tv-hisense' },
+      { key: 'ventilation', href: '/rac' },
+      { key: 'industrialVentilation', href: '/cac' },
+      { key: 'refrigerator', href: '/refrigerator' },
+      { key: 'washingMachine', href: '/washing-machine' },
+      { key: 'dcode', href: '/led-dcode' },
     ],
   },
   {
     titleKey: 'support.title',
     linkKeys: [
-      { key: 'faq', href: '/#support' },
-      { key: 'warranty', href: '/#support' },
-      { key: 'dealerPortal', href: '/#b2b' },
-      { key: 'dealerList', href: '/#b2b' },
-      { key: 'becomeDealer', href: '/#b2b' },
+      { key: 'faq', href: '/faq' },
+      { key: 'warranty', href: '/warranty-and-guarantee' },
+      { key: 'dealerPortal', href: '/portal' },
+      { key: 'dealerList', href: '/portal' },
+      { key: 'becomeDealer', href: '/portal' },
     ],
   },
 ];
@@ -73,14 +73,19 @@ const SOCIAL_LINKS = [
 
 export default function Footer() {
   const t = useTranslations('Footer');
+  const locale = useLocale();
   const { theme } = useTheme();
   const logoSource = theme === 'dark' ? ZarrinLogoWhite : ZarrinLogoBlack;
+  const toLocalePath = (path: string) => {
+    const normalized = path.startsWith('/') ? path : `/${path}`;
+    return `/${locale}${normalized}`;
+  };
 
   const sections: FooterLinkSection[] = FOOTER_SECTIONS.map((section) => ({
     title: t(section.titleKey),
     links: section.linkKeys.map((item) => ({
       label: t(`links.${item.key}`),
-      href: item.href,
+      href: toLocalePath(item.href),
     })),
   }));
 
