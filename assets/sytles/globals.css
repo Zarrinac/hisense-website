@@ -18,6 +18,7 @@
   --hero-surface-color: #dbeafe;
   --hero-title-color: #082f49;
   --hero-subtitle-color: #0f172a;
+  --text-on-brand-color: #ffffff;
 }
 
 [data-theme='dark'] {
@@ -38,6 +39,7 @@
   --hero-surface-color: #0b1120;
   --hero-title-color: #e0f2fe;
   --hero-subtitle-color: #cbd5f5;
+  --text-on-brand-color: #ffffff;
 }
 
 @theme {
@@ -170,8 +172,13 @@ html[lang='fa'] body {
 
 .header-submenu-card:hover {
   border-color: var(--brand-color);
-  background-color: var(--brand-color-light);
+  background-color: var(--brand-color);
+  color: var(--text-on-brand-color);
   transform: translateY(-4px);
+}
+
+.header-submenu-card:hover p {
+  color: var(--text-on-brand-color);
 }
 
 @keyframes submenu-fade {

@@ -38,7 +38,7 @@ const PROMO_MESSAGES: Record<
     en: 'Learn how Hisense Iran drives innovation, sustainability, and local partnerships.',
   },
   support: {
-    fa: 'مرکز تماس، گارانتی و شبکه خدمات پس از فروش زرین نمای کاسپین در سراسر کشور.',
+    fa: 'مرکز تماس، گارانتی و شبکه خدمات پس از فروش در سراسر کشور در دسترس شماست.',
     en: 'Reach nationwide after-sales service, warranty support, and dealer assistance.',
   },
   default: {
@@ -87,6 +87,11 @@ export default function DesktopNavigation({
   const [isHidden, setIsHidden] = useState(false);
   const promoKey = (activeMenuKey ?? 'default') as keyof typeof PROMO_MESSAGES;
   const promoCopy = locale === 'fa' ? PROMO_MESSAGES[promoKey].fa : PROMO_MESSAGES[promoKey].en;
+  const localeKey = locale === 'fa' ? 'fa' : 'en';
+  const toLocalePath = (path: string) => {
+    const normalized = path.startsWith('/') ? path : `/${path}`;
+    return `/${locale}${normalized}`;
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -129,7 +134,7 @@ export default function DesktopNavigation({
             {navItems.map((item) => (
               <Link
                 key={item.key}
-                href={item.href}
+                href={toLocalePath(item.href)}
                 className="header-nav-link"
                 onMouseEnter={() => onMenuKeyChange(item.key)}
                 onFocus={() => onMenuKeyChange(item.key)}
@@ -145,7 +150,7 @@ export default function DesktopNavigation({
             {secondaryNavItems.map((item) => (
               <Link
                 key={item.key}
-                href={item.href}
+                href={toLocalePath(item.href)}
                 className="header-nav-link"
                 onMouseEnter={() => onMenuKeyChange(item.key)}
                 onFocus={() => onMenuKeyChange(item.key)}
@@ -198,12 +203,18 @@ export default function DesktopNavigation({
             </div>
             <div className="grid flex-1 grid-cols-3 gap-6">
               {activeSubMenuItems.map((subItem) => (
-                <div key={subItem.title} className="header-submenu-card">
+                <Link
+                  key={subItem.title.en}
+                  href={`/${locale}${subItem.href}`}
+                  className="header-submenu-card focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-(--brand-color)"
+                >
                   <p className="text-base font-semibold text-(--default-black-font)">
-                    {subItem.title}
+                    {subItem.title[localeKey]}
                   </p>
-                  <p className="mt-2 text-sm text-(--text-muted-color)">{subItem.description}</p>
-                </div>
+                  <p className="mt-2 text-sm text-(--text-muted-color)">
+                    {subItem.description[localeKey]}
+                  </p>
+                </Link>
               ))}
             </div>
           </div>

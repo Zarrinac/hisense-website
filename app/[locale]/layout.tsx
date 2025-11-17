@@ -10,7 +10,7 @@ import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import '@/assets/sytles/globals.css';
 import { routing, type Locale } from '@/i18n/routing';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.zarrinac.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const OG_LOCALE_MAP: Record<Locale, string> = {
   fa: 'fa_IR',
   en: 'en_US',
@@ -70,7 +70,7 @@ export async function generateMetadata(
       locale: openGraphLocale,
       images: [
         {
-          url: `${SITE_URL}/banner/Fix-Banner-02-Back.jpg`,
+          url: `${SITE_URL}/banner/Fix-Banner-07.jpg`,
           width: 1200,
           height: 630,
           alt: t('title'),

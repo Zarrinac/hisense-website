@@ -1,6 +1,21 @@
 /** @type {import('next-sitemap').IConfig} */
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.zarrinac.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const locales = ['fa', 'en'];
+const staticPaths = [
+  '/tv-hisense',
+  '/rac',
+  '/cac',
+  '/refrigerator',
+  '/led-dcode',
+  '/washing-machine',
+  '/about',
+  '/contact-us',
+  '/complaint',
+  '/survey',
+  '/faq',
+  '/warranty-and-guarantee',
+  '/portal',
+];
 
 module.exports = {
   siteUrl,
@@ -17,12 +32,16 @@ module.exports = {
     { href: `${siteUrl}/fa`, hreflang: 'x-default' },
   ],
   additionalPaths: async (config) => {
-    return Promise.all(
-      locales.map((locale) => {
-        const path = `/${locale}`;
-        return config.transform(config, path);
-      }),
-    );
+    const localizedStaticPaths = [];
+
+    for (const locale of locales) {
+      localizedStaticPaths.push(
+        config.transform(config, `/${locale}`),
+        ...staticPaths.map((path) => config.transform(config, `/${locale}${path}`)),
+      );
+    }
+
+    return Promise.all(localizedStaticPaths);
   },
   transform: async (config, path) => {
     const normalizedPath = path === '/' ? '/fa' : path;

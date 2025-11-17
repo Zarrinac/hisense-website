@@ -1,11 +1,11 @@
 {
   "Metadata": {
-    "title": "Zarrin Namaye caspian | Exclusive Hisense Distributor in Iran",
-    "description": "Zarrin Namaye caspian, the official Hisense Iran representative, delivers home appliances, residential and commercial HVAC systems, LED TVs, and D'CODE products with nationwide after-sales service.",
+    "title": "Zarrin Namaye Kaspian | Exclusive Hisense Distributor in Iran",
+    "description": "Zarrin Namaye Kaspian, the official Hisense Iran representative, delivers home appliances, residential and commercial HVAC systems, LED TVs, and D'CODE products with nationwide after-sales service.",
     "keywords": [
       "Hisense Iran",
       "Hisense exclusive distributor Iran",
-      "Zarrin Namaye caspian",
+      "Zarrin Namaye Kaspian",
       "official Hisense partner Iran",
       "Hisense home appliances",
       "Hisense residential HVAC",
@@ -48,13 +48,13 @@
   },
   "HomePage": {
     "hero": {
-      "title": "Zarrin Namaye caspian – Official Hisense Distributor in Iran",
+      "title": "Zarrin Namaye Kaspian – Official Hisense Distributor in Iran",
       "subtitle": "Shop Hisense LED TVs, refrigerators, air conditioners, residential and commercial HVAC solutions, and D'CODE products with certified after-sales support across Iran."
     }
   },
   "Footer": {
     "branding": {
-      "title": "Zarrin Namaye caspian",
+      "title": "Zarrin Namaye Kaspian",
       "tagline": "Official Hisense distributor in Iran."
     },
     "about": {
@@ -81,13 +81,19 @@
       "warranty": "Warranty conditions",
       "dealerPortal": "Dealer portal",
       "dealerList": "Dealer list",
-      "becomeDealer": "Become a dealer"
+      "becomeDealer": "Become a dealer",
+      "tvHisense": "Hisense TV (LED)",
+      "rac": "Residential Air Conditioner",
+      "cac": "Commercial Air Conditioner",
+      "ledDcode": "D'CODE TV",
+      "portal": "Dealer & Partner Portal",
+      "survey": "Customer Survey"
     },
     "contact": {
-      "address": "No. 6, Kameliya Dead end, Sasanipour street, Ketabi Square (Ahmadi Roshan Square), Tehran/Iran ",
+      "address": "No. 6, Kameliya Dead end, Sasanipour street, Ketabi Square (Ahmadi Roshan Square), Tehran/Iran",
       "phone": "+98 21 72133",
-      "email": "info@zarrinac.com",
-      "hours": "Sat – Wed: 8:30 to 16:00 | Thu: 8:30 to 13:00",
+      "email": "info@hisense-ir.com",
+      "hours": "Sat - Wed: 8:30 to 16:00 | Thu: 8:30 to 13:00",
       "holidays": "Official holidays: closed"
     },
     "social": {
@@ -96,11 +102,78 @@
       "instagram": "Instagram"
     },
     "legal": {
-      "notice": "© Zarrin Namaye caspian, official Hisense representative in Iran.",
+      "notice": "© Zarrin Namaye Kaspian, official Hisense representative in Iran. All rights reserved.",
       "privacy": "Privacy Policy",
       "cookies": "Cookies Policy",
       "terms": "Terms & Conditions",
       "sitemap": "Sitemap"
+    }
+  },
+  "Routes": {
+    "tvHisense": {
+      "eyebrow": "Hisense TV",
+      "title": "Hisense TV & LED Displays",
+      "description": "Experience the ULED, Mini-LED, and Laser TV lineup engineered for cinematic brilliance, vivid colors, and premium sound integration."
+    },
+    "rac": {
+      "eyebrow": "Residential Air Conditioning",
+      "title": "Hisense Residential Air Conditioners",
+      "description": "Smart inverter splits with AI airflow, silent comfort, and efficient cooling for every home across Iran."
+    },
+    "cac": {
+      "eyebrow": "Commercial HVAC",
+      "title": "Hisense Commercial Air Conditioning",
+      "description": "Complete VRF and ducted HVAC systems designed for hotels, malls, and industrial venues with nationwide project support."
+    },
+    "refrigerator": {
+      "eyebrow": "Refrigeration",
+      "title": "Hisense Refrigerators & Freezers",
+      "description": "Side-by-side, top mount, and chest freezers featuring Total No-Frost, smart sensors, and PureFlat finishing."
+    },
+    "ledDcode": {
+      "eyebrow": "D'CODE",
+      "title": "D'CODE LED & Smart TVs",
+      "description": "Locally engineered D'CODE televisions with Persian UI, curated content services, and Hisense-backed warranty."
+    },
+    "washingMachine": {
+      "eyebrow": "Laundry",
+      "title": "Hisense Washing Machines",
+      "description": "Allergy Steam cycles, durable inverter motors, and large capacities tailored for modern Iranian households."
+    },
+    "about": {
+      "eyebrow": "About",
+      "title": "About Zarrin Namaye Kaspian",
+      "description": "Learn how Zarrin Namaye Kaspian became the exclusive Hisense distributor in Iran with 1300+ sales and service partners."
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Contact Hisense Iran",
+      "description": "Reach our Tehran HQ, customer care lines, and regional teams for sales, installation, or partnership requests."
+    },
+    "complaint": {
+      "eyebrow": "Support",
+      "title": "Submit a Complaint",
+      "description": "Share service issues or feedback directly with Hisense Iran to trigger rapid case handling and follow-up."
+    },
+    "survey": {
+      "eyebrow": "Feedback",
+      "title": "Customer Survey",
+      "description": "Help us improve product quality and after-sales care by completing this quick satisfaction survey."
+    },
+    "faq": {
+      "eyebrow": "Help Center",
+      "title": "Frequently Asked Questions",
+      "description": "Browse installation, warranty, and troubleshooting answers for every Hisense appliance and HVAC system."
+    },
+    "warranty": {
+      "eyebrow": "Warranty",
+      "title": "Warranty & Guarantee Terms",
+      "description": "Understand coverage periods, claim steps, and the national support network behind every Hisense purchase."
+    },
+    "portal": {
+      "eyebrow": "Dealer Portal",
+      "title": "Dealer & Partner Portal",
+      "description": "Authorized partners can access training, spare parts ordering, and marketing materials inside the portal."
     }
   }
 }

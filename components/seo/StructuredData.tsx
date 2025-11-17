@@ -3,7 +3,7 @@
 import { OrganizationJsonLd, ProductJsonLd } from 'next-seo';
 import type { Locale } from '@/i18n/routing';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.zarrinac.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const LOGO_URL = `${SITE_URL}/favicon.svg`;
 
 const ORGANIZATION_CONTENT = {
@@ -80,7 +80,7 @@ export default function StructuredData({ locale }: StructuredDataProps) {
         }}
         sku="hisense-hvac"
         mpn="hisense-hvac"
-        image={`${SITE_URL}/banner/Fix-Banner-02-Back.jpg`}
+        image={`${SITE_URL}/banner/Fix-Banner-07.jpg`}
         offers={[
           {
             price: '0.00',

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import CloseIcon from '@mui/icons-material/Close';
 import { HiChevronRight, HiChevronLeft } from 'react-icons/hi2';
 import Logo from '@/public/icons/hisense-logo-full.svg';
@@ -40,6 +41,11 @@ export default function MobileNavPanel({
   if (!isOpen) {
     return null;
   }
+  const localeKey = locale === 'fa' ? 'fa' : 'en';
+  const toLocalePath = (path: string) => {
+    const normalized = path.startsWith('/') ? path : `/${path}`;
+    return `/${locale}${normalized}`;
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex">
@@ -95,15 +101,18 @@ export default function MobileNavPanel({
 
             <div className="mt-6 flex flex-col gap-4 pb-10">
               {mobileActiveSubMenuItems?.map((subItem) => (
-                <div
-                  key={subItem.title}
-                  className="rounded-2xl border border-(--border-color) bg-(--surface-muted-color) p-4"
+                <Link
+                  key={subItem.title.en}
+                  href={toLocalePath(subItem.href)}
+                  className="rounded-2xl border border-(--border-color) bg-(--surface-muted-color) p-4 transition hover:border-(--brand-color) hover:bg-(--surface-hover-color)"
                 >
                   <p className="text-base font-semibold text-(--default-black-font)">
-                    {subItem.title}
+                    {subItem.title[localeKey]}
                   </p>
-                  <p className="mt-1 text-sm text-(--text-muted-color)">{subItem.description}</p>
-                </div>
+                  <p className="mt-1 text-sm text-(--text-muted-color)">
+                    {subItem.description[localeKey]}
+                  </p>
+                </Link>
               ))}
             </div>
           </div>

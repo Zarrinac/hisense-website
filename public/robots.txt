@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.zarrinac.com
+Host: https://www.hisense-ir.com
 
 # Sitemaps
-Sitemap: https://www.zarrinac.com/sitemap.xml
+Sitemap: https://www.hisense-ir.com/sitemap.xml
