@@ -26,6 +26,43 @@ const BANNERS: Banner[] = [
   { id: 'banner-5', desktop: Banner05, alt: 'Hisense flagship lineup hero 5' },
 ];
 
+function useImagePreloader(images: StaticImageData[]) {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (images.length === 0) {
+      setLoaded(true);
+      return;
+    }
+
+    let canceled = false;
+
+    const loadImage = (imageData: StaticImageData) =>
+      new Promise<void>((resolve) => {
+        const img = new window.Image();
+        img.src = imageData.src;
+        if (img.complete) {
+          resolve();
+          return;
+        }
+        img.onload = () => resolve();
+        img.onerror = () => resolve();
+      });
+
+    Promise.all(images.map(loadImage)).then(() => {
+      if (!canceled) {
+        setLoaded(true);
+      }
+    });
+
+    return () => {
+      canceled = true;
+    };
+  }, [images]);
+
+  return loaded;
+}
+
 export default function HeroBanner() {
   const autoplay = useRef(
     Autoplay({
@@ -37,6 +74,16 @@ export default function HeroBanner() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [autoplay.current]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const preloadSources = useMemo(() => {
+    return BANNERS.reduce<StaticImageData[]>((sources, banner) => {
+      sources.push(banner.desktop);
+      if (banner.mobile) {
+        sources.push(banner.mobile);
+      }
+      return sources;
+    }, []);
+  }, []);
+  const bannersLoaded = useImagePreloader(preloadSources);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 768px)');
@@ -48,7 +95,7 @@ export default function HeroBanner() {
   }, []);
 
   useEffect(() => {
-    if (!emblaApi) {
+    if (!emblaApi || !bannersLoaded) {
       return;
     }
 
@@ -59,17 +106,29 @@ export default function HeroBanner() {
     return () => {
       emblaApi.off('select', onSelect);
     };
-  }, [emblaApi]);
+  }, [emblaApi, bannersLoaded]);
+
+  useEffect(() => {
+    if (emblaApi && bannersLoaded) {
+      emblaApi.reInit();
+    }
+  }, [emblaApi, bannersLoaded]);
 
   const scrollPrev = useCallback(() => {
+    if (!bannersLoaded) {
+      return;
+    }
     autoplay.current?.reset();
     emblaApi?.scrollPrev();
-  }, [emblaApi]);
+  }, [emblaApi, bannersLoaded]);
 
   const scrollNext = useCallback(() => {
+    if (!bannersLoaded) {
+      return;
+    }
     autoplay.current?.reset();
     emblaApi?.scrollNext();
-  }, [emblaApi]);
+  }, [emblaApi, bannersLoaded]);
 
   const slides = useMemo(() => {
     return BANNERS.map((banner) => ({
@@ -83,8 +142,12 @@ export default function HeroBanner() {
       className="relative isolate overflow-hidden bg-(--surface-color)"
       aria-label="Featured Hisense campaigns"
     >
-      <div className="relative" ref={emblaRef}>
-        <div className="flex touch-pan-y select-none">
+      <div className="relative" ref={emblaRef} aria-busy={!bannersLoaded}>
+        <div
+          className={`flex touch-pan-y select-none transition-opacity duration-500 ${
+            bannersLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
           {slides.map((banner, index) => (
             <div key={banner.id} className="relative min-w-0 flex-[0_0_100%]">
               <div className="relative aspect-9/16 w-full md:aspect-video lg:aspect-21/9">
@@ -93,7 +156,8 @@ export default function HeroBanner() {
                   alt={banner.alt}
                   fill
                   sizes="(max-width: 768px) 100vw, 100vw"
-                  priority={index === 0}
+                  priority
+                  loading="eager"
                   placeholder="blur"
                   className="object-cover"
                 />
@@ -101,21 +165,28 @@ export default function HeroBanner() {
             </div>
           ))}
         </div>
+        {!bannersLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center bg-(--surface-color)">
+            <span className="sr-only">Loading banners</span>
+          </div>
+        )}
       </div>
 
       <button
         type="button"
-        className="absolute left-4 top-1/2 hidden -translate-y-1/2 rounded-full border border-(--border-color) bg-white/80 p-3 text-(--default-black-font) shadow-lg transition hover:bg-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) md:inline-flex"
+        className="absolute left-4 top-1/2 hidden -translate-y-1/2 rounded-full border border-(--border-color) bg-white/80 p-3 text-(--default-black-font) shadow-lg transition hover:bg-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) disabled:cursor-not-allowed disabled:opacity-60 md:inline-flex"
         onClick={scrollPrev}
         aria-label="Previous banner"
+        disabled={!bannersLoaded}
       >
         <HiChevronLeft className="h-6 w-6" />
       </button>
       <button
         type="button"
-        className="absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-full border border-(--border-color) bg-white/80 p-3 text-(--default-black-font) shadow-lg transition hover:bg-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) md:inline-flex"
+        className="absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-full border border-(--border-color) bg-white/80 p-3 text-(--default-black-font) shadow-lg transition hover:bg-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) disabled:cursor-not-allowed disabled:opacity-60 md:inline-flex"
         onClick={scrollNext}
         aria-label="Next banner"
+        disabled={!bannersLoaded}
       >
         <HiChevronRight className="h-6 w-6" />
       </button>
@@ -125,10 +196,16 @@ export default function HeroBanner() {
           <button
             key={slide.id}
             type="button"
-            className={`h-2 w-2 rounded-full transition ${index === selectedIndex ? 'bg-white' : 'bg-white/40'}`}
+            className={`h-2 w-2 rounded-full transition disabled:cursor-not-allowed ${
+              index === selectedIndex ? 'bg-white' : 'bg-white/40'
+            }`}
             aria-label={`Go to banner ${index + 1}`}
             aria-pressed={index === selectedIndex}
+            disabled={!bannersLoaded}
             onClick={() => {
+              if (!bannersLoaded) {
+                return;
+              }
               autoplay.current?.reset();
               emblaApi?.scrollTo(index);
             }}
