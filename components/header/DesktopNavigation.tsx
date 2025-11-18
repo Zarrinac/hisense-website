@@ -8,7 +8,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import Logo from '@/public/icons/hisense-logo-full.svg';
 import { NavKey, SubMenuItem } from './navigationData';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const PROMO_MESSAGES: Record<
   NavKey | 'default',
@@ -85,6 +85,7 @@ export default function DesktopNavigation({
   themeLightLabel,
 }: DesktopNavigationProps) {
   const [isHidden, setIsHidden] = useState(false);
+  const navContainerRef = useRef<HTMLDivElement | null>(null);
   const promoKey = (activeMenuKey ?? 'default') as keyof typeof PROMO_MESSAGES;
   const promoCopy = locale === 'fa' ? PROMO_MESSAGES[promoKey].fa : PROMO_MESSAGES[promoKey].en;
   const localeKey = locale === 'fa' ? 'fa' : 'en';
@@ -99,6 +100,11 @@ export default function DesktopNavigation({
     }
     let lastScrollY = window.scrollY;
     const handleScroll = () => {
+      if (activeMenuKey) {
+        setIsHidden(false);
+        lastScrollY = window.scrollY;
+        return;
+      }
       const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY && currentScrollY > 120) {
         setIsHidden(true);
@@ -110,14 +116,26 @@ export default function DesktopNavigation({
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [activeMenuKey]);
+
+  const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
+    const nextTarget = event.relatedTarget as Node | null;
+    if (!navContainerRef.current || !nextTarget) {
+      onMenuKeyChange(null);
+      return;
+    }
+    if (!navContainerRef.current.contains(nextTarget)) {
+      onMenuKeyChange(null);
+    }
+  };
 
   return (
     <div
+      ref={navContainerRef}
       className={`sticky top-0 z-40 w-full transform-gpu transition-[transform,opacity] duration-500 ease-in-out ${
         isHidden ? '-translate-y-[105%] opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
       }`}
-      onMouseLeave={() => onMenuKeyChange(null)}
+      onMouseLeave={handleMouseLeave}
     >
       <header className="relative flex h-20 items-center justify-between bg-(--surface-color) px-4 shadow-sm lg:px-11">
         <Link href="/" className="flex items-center">
