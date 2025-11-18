@@ -119,12 +119,17 @@ export default function DesktopNavigation({
   }, [activeMenuKey]);
 
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
-    const nextTarget = event.relatedTarget as Node | null;
-    if (!navContainerRef.current || !nextTarget) {
+    const nextTarget = event.relatedTarget;
+    const container = navContainerRef.current;
+    if (!container) {
       onMenuKeyChange(null);
       return;
     }
-    if (!navContainerRef.current.contains(nextTarget)) {
+    if (!(nextTarget instanceof Node)) {
+      onMenuKeyChange(null);
+      return;
+    }
+    if (!container.contains(nextTarget)) {
       onMenuKeyChange(null);
     }
   };
