@@ -5,6 +5,7 @@
   --brand-color-dark: #008b86;
   --brand-color-light: #e1fffb;
   --default-black-font: #1d1d1f;
+  --default-white-font: #ffffff;
   --background-color: #f8fafc;
   --surface-color: #ffffff;
   --surface-muted-color: #f1f5f9;
@@ -18,7 +19,6 @@
   --hero-surface-color: #dbeafe;
   --hero-title-color: #082f49;
   --hero-subtitle-color: #0f172a;
-  --text-on-brand-color: #ffffff;
 }
 
 [data-theme='dark'] {
@@ -39,12 +39,13 @@
   --hero-surface-color: #0b1120;
   --hero-title-color: #e0f2fe;
   --hero-subtitle-color: #cbd5f5;
-  --text-on-brand-color: #ffffff;
+  --default-white-font: #ffffff;
 }
 
 @theme {
   --breakpoint-xs: 30rem;
   --breakpoint-2xs: 20rem;
+  --breakpoint-4xl: 120rem;
 }
 
 @font-face {
@@ -173,12 +174,12 @@ html[lang='fa'] body {
 .header-submenu-card:hover {
   border-color: var(--brand-color);
   background-color: var(--brand-color);
-  color: var(--text-on-brand-color);
+  color: var(--default-white-font);
   transform: translateY(-4px);
 }
 
 .header-submenu-card:hover p {
-  color: var(--text-on-brand-color);
+  color: var(--default-white-font);
 }
 
 @keyframes submenu-fade {

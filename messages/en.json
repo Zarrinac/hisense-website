@@ -50,6 +50,36 @@
     "hero": {
       "title": "Zarrin Namaye Caspian – Official Hisense Distributor in Iran",
       "subtitle": "Shop Hisense LED TVs, refrigerators, air conditioners, residential and commercial HVAC solutions, and D'CODE products with certified after-sales support across Iran."
+    },
+    "categories": {
+      "eyebrow": "Product lineup",
+      "title": "Shop the full Hisense experience",
+      "items": {
+        "tv": {
+          "eyebrow": "Television",
+          "title": "Hisense TVs & Displays",
+          "description": "Mini-LED, ULED TVs",
+          "cta": "View all"
+        },
+        "refrigerator": {
+          "eyebrow": "Cooling",
+          "title": "Hisense Refrigerators",
+          "description": "Side-by-side, and top-mount fridges",
+          "cta": "View all"
+        },
+        "washingMachine": {
+          "eyebrow": "Laundry",
+          "title": "Hisense Washing Machines",
+          "description": "Inverter motors for spotless, energy-efficient cleaning.",
+          "cta": "View all"
+        },
+        "rac": {
+          "eyebrow": "Residential HVAC",
+          "title": "Hisense Air Conditioners",
+          "description": "Smart inverter splits",
+          "cta": "View all"
+        }
+      }
     }
   },
   "Footer": {
