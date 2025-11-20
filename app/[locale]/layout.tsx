@@ -2,12 +2,15 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
-import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
+import {
+  getMessages,
+  getTranslations as getServerTranslations,
+  setRequestLocale,
+} from 'next-intl/server';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import StructuredData from '@/components/seo/StructuredData';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
-import '@/assets/sytles/globals.css';
 import { routing, type Locale } from '@/i18n/routing';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
@@ -38,7 +41,7 @@ export async function generateMetadata(
     notFound();
   }
 
-  const t = await getTranslations({
+  const t = await getServerTranslations({
     locale: locale as Locale,
     namespace: 'Metadata',
   });
@@ -93,20 +96,24 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  const direction = locale === 'fa' ? 'rtl' : 'ltr';
+  const metadataTranslations = await getServerTranslations({
+    locale: locale as Locale,
+    namespace: 'Metadata',
+  });
+  const pageTitle = metadataTranslations('title');
+  const pageContainerClass = 'mx-auto w-full max-w-[120rem] px-4 sm:px-6 lg:px-10';
 
   return (
-    <html lang={locale} dir={direction} suppressHydrationWarning data-theme="light">
-      <body className="bg-(--background-color) text-(--default-black-font) transition-colors duration-300">
-        <ThemeProvider>
-          <StructuredData locale={locale as Locale} />
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </NextIntlClientProvider>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ThemeProvider>
+      <StructuredData locale={locale as Locale} />
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        <Header />
+        <div className={pageContainerClass}>
+          <h1 className="sr-only">{pageTitle}</h1>
+          <main>{children}</main>
+          <Footer />
+        </div>
+      </NextIntlClientProvider>
+    </ThemeProvider>
   );
 }

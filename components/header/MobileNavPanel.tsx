@@ -23,6 +23,7 @@ type MobileNavPanelProps = {
   mobileActiveSubMenuItems: SubMenuItem[] | null;
   searchLabel: string;
   closeLabel: string;
+  onOpenSearch: () => void;
 };
 
 export default function MobileNavPanel({
@@ -37,6 +38,7 @@ export default function MobileNavPanel({
   mobileActiveSubMenuItems,
   searchLabel,
   closeLabel,
+  onOpenSearch,
 }: MobileNavPanelProps) {
   if (!isOpen) {
     return null;
@@ -48,7 +50,7 @@ export default function MobileNavPanel({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex">
+    <div className="fixed inset-0 z-50 flex" dir={locale === 'fa' ? 'rtl' : 'ltr'}>
       <div className="absolute inset-0 bg-(--overlay-color)" onClick={onClose} aria-hidden="true" />
       <aside className="relative ml-auto flex h-full w-full max-w-md flex-col bg-(--surface-color) p-6 shadow-(--panel-shadow)">
         <div className="flex items-start justify-between">
@@ -121,6 +123,7 @@ export default function MobileNavPanel({
           <button
             type="button"
             className="flex w-full items-center justify-center rounded-full border border-(--border-color) px-4 py-3 text-sm font-semibold text-(--text-muted-color) transition-colors hover:border-(--brand-color) hover:text-(--brand-color)"
+            onClick={onOpenSearch}
           >
             {searchLabel}
           </button>
