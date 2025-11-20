@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import DesktopNavigation from '@/components/header/DesktopNavigation';
 import MobileNavPanel from '@/components/header/MobileNavPanel';
+import SearchOverlay from '@/components/header/SearchOverlay';
 import {
   NAV_ITEMS,
   NAV_SECONDARY_ITEMS,
@@ -24,6 +25,7 @@ export default function Header() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [activeMenuKey, setActiveMenuKey] = useState<NavKey | null>(null);
   const [mobileActiveMenuKey, setMobileActiveMenuKey] = useState<NavKey | null>(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
     if (isPanelOpen) {
@@ -85,6 +87,8 @@ export default function Header() {
   const iconButtonClass =
     'inline-flex h-8 w-8 items-center justify-center rounded-full border border-(--border-color) bg-(--surface-color) text-(--text-muted-color) transition-colors hover:border-(--brand-color) hover:bg-(--surface-hover-color) hover:text-(--brand-color) focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) disabled:opacity-60 sm:h-10 sm:w-10';
 
+  const headerDirection = locale === 'fa' ? 'rtl' : 'ltr';
+
   return (
     <>
       <DesktopNavigation
@@ -101,6 +105,8 @@ export default function Header() {
         themeDarkLabel={t('actions.theme.dark')}
         themeLightLabel={t('actions.theme.light')}
         onOpenMobilePanel={() => setIsPanelOpen(true)}
+        onOpenSearch={() => setIsSearchOpen(true)}
+        direction={headerDirection}
       />
 
       <MobileNavPanel
@@ -115,6 +121,15 @@ export default function Header() {
         mobileActiveSubMenuItems={mobileActiveSubMenuItems}
         searchLabel={t('actions.search')}
         closeLabel={t('actions.close')}
+        onOpenSearch={() => setIsSearchOpen(true)}
+      />
+
+      <SearchOverlay
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        placeholder={t('searchPlaceholder')}
+        closeLabel={t('actions.close')}
+        locale={locale}
       />
     </>
   );
