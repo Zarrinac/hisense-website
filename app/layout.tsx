@@ -1,9 +1,20 @@
 import type { ReactNode } from 'react';
+import { getLocale } from 'next-intl/server';
+import '@/assets/sytles/globals.css';
 
 type RootLayoutProps = {
   children: ReactNode;
 };
 
-export default function RootLayout({ children }: RootLayoutProps) {
-  return children;
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const locale = (await getLocale()) ?? 'fa';
+  const direction = locale === 'fa' ? 'rtl' : 'ltr';
+
+  return (
+    <html lang={locale} dir={direction} suppressHydrationWarning data-theme="light">
+      <body className="bg-(--background-color) text-(--default-black-font) transition-colors duration-300">
+        {children}
+      </body>
+    </html>
+  );
 }
