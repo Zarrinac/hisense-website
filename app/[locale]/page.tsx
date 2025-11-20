@@ -30,7 +30,9 @@ export default async function HomePage() {
 
   return (
     <>
-      <HeroBanner />
+      <div className="-mx-4 sm:-mx-6 lg:-mx-10">
+        <HeroBanner />
+      </div>
       <CategorySpotlights
         eyebrow={categoryTranslations('eyebrow')}
         title={categoryTranslations('title')}

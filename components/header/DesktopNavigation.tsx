@@ -67,6 +67,8 @@ type DesktopNavigationProps = {
   onOpenMobilePanel: () => void;
   themeDarkLabel: string;
   themeLightLabel: string;
+  onOpenSearch: () => void;
+  direction: 'ltr' | 'rtl';
 };
 
 export default function DesktopNavigation({
@@ -83,6 +85,8 @@ export default function DesktopNavigation({
   onOpenMobilePanel,
   themeDarkLabel,
   themeLightLabel,
+  onOpenSearch,
+  direction,
 }: DesktopNavigationProps) {
   const [isHidden, setIsHidden] = useState(false);
   const navContainerRef = useRef<HTMLDivElement | null>(null);
@@ -93,6 +97,9 @@ export default function DesktopNavigation({
     const normalized = path.startsWith('/') ? path : `/${path}`;
     return `/${locale}${normalized}`;
   };
+  const orderedPrimaryNav = direction === 'rtl' ? [...navItems].reverse() : navItems;
+  const orderedSecondaryNav =
+    direction === 'rtl' ? [...secondaryNavItems].reverse() : secondaryNavItems;
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -141,6 +148,7 @@ export default function DesktopNavigation({
         isHidden ? '-translate-y-[105%] opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
       }`}
       onMouseLeave={handleMouseLeave}
+      dir={direction}
     >
       <header className="relative flex h-20 items-center justify-between bg-(--surface-color) px-4 shadow-sm lg:px-11">
         <Link href="/" className="flex items-center">
@@ -153,8 +161,10 @@ export default function DesktopNavigation({
         </Link>
 
         <div className="hidden h-full w-full items-center lg:flex lg:justify-between">
-          <nav className="h-full items-center text-sm text-(--default-black-font) lg:flex">
-            {navItems.map((item) => (
+          <nav
+            className={`h-full items-center text-sm text-(--default-black-font) lg:flex ${direction === 'rtl' ? 'flex-row-reverse gap-6' : ''}`}
+          >
+            {orderedPrimaryNav.map((item) => (
               <Link
                 key={item.key}
                 href={toLocalePath(item.href)}
@@ -169,8 +179,10 @@ export default function DesktopNavigation({
             ))}
           </nav>
 
-          <nav className="h-full items-center text-sm text-(--default-black-font) lg:flex">
-            {secondaryNavItems.map((item) => (
+          <nav
+            className={`h-full items-center text-sm text-(--default-black-font) lg:flex ${direction === 'rtl' ? 'flex-row-reverse gap-6' : ''}`}
+          >
+            {orderedSecondaryNav.map((item) => (
               <Link
                 key={item.key}
                 href={toLocalePath(item.href)}
@@ -192,6 +204,7 @@ export default function DesktopNavigation({
             className={iconButtonClass}
             aria-label={searchLabel}
             title={searchLabel}
+            onClick={onOpenSearch}
           >
             <SearchIcon fontSize="small" />
           </button>

@@ -141,6 +141,7 @@ export default function HeroBanner() {
     <section
       className="relative isolate overflow-hidden bg-(--surface-color)"
       aria-label="Featured Hisense campaigns"
+      dir="ltr"
     >
       <div className="relative" ref={emblaRef} aria-busy={!bannersLoaded}>
         <div
@@ -174,21 +175,21 @@ export default function HeroBanner() {
 
       <button
         type="button"
-        className="absolute left-4 top-1/2 hidden -translate-y-1/2 rounded-full border border-(--border-color) bg-white/80 p-3 text-(--default-black-font) shadow-lg transition hover:bg-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) disabled:cursor-not-allowed disabled:opacity-60 md:inline-flex"
+        className="absolute left-4 top-1/2 hidden -translate-y-1/2 rounded-full border border-(--border-color) bg-white/60 p-3 text-(--default-black-font) shadow-lg transition hover:bg-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) disabled:cursor-not-allowed disabled:opacity-60 md:inline-flex"
         onClick={scrollPrev}
         aria-label="Previous banner"
         disabled={!bannersLoaded}
       >
-        <HiChevronLeft className="h-6 w-6" />
+        <HiChevronLeft className="h-4 w-4 2xl:h-6 2xl:w-6" />
       </button>
       <button
         type="button"
-        className="absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-full border border-(--border-color) bg-white/80 p-3 text-(--default-black-font) shadow-lg transition hover:bg-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) disabled:cursor-not-allowed disabled:opacity-60 md:inline-flex"
+        className="absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-full border border-(--border-color) bg-white/60 p-3 text-(--default-black-font) shadow-lg transition hover:bg-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color) disabled:cursor-not-allowed disabled:opacity-60 md:inline-flex"
         onClick={scrollNext}
         aria-label="Next banner"
         disabled={!bannersLoaded}
       >
-        <HiChevronRight className="h-6 w-6" />
+        <HiChevronRight className="h-4 w-4 2xl:h-6 2xl:w-6" />
       </button>
 
       <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 rounded-full bg-black/40 px-4 py-2 backdrop-blur-sm">

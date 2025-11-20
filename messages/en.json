@@ -37,7 +37,8 @@
         "about": "About Hisense",
         "support": "Support"
       }
-    }
+    },
+    "searchPlaceholder": "Search Hisense"
   },
   "LanguageSwitcher": {
     "label": "Language",
@@ -52,8 +53,8 @@
       "subtitle": "Shop Hisense LED TVs, refrigerators, air conditioners, residential and commercial HVAC solutions, and D'CODE products with certified after-sales support across Iran."
     },
     "categories": {
-      "eyebrow": "Product lineup",
-      "title": "Shop the full Hisense experience",
+      "eyebrow": "",
+      "title": "Discover our series",
       "items": {
         "tv": {
           "eyebrow": "Television",
@@ -80,6 +81,15 @@
           "cta": "View all"
         }
       }
+    }
+  },
+  "NotFound": {
+    "eyebrow": "Page",
+    "title": "Sorry, we couldn’t find that page.",
+    "description": "The link may be broken or the page may have been moved. Check the URL or return to the homepage.",
+    "actions": {
+      "home": "Back to homepage",
+      "contact": "Contact us"
     }
   },
   "Footer": {

@@ -30,17 +30,34 @@ export default function CategorySpotlights({
   }
 
   const isRTL = locale === 'fa';
+  const renderTitle = (text: string) => {
+    const parts = text.trim().split(' ');
+    if (parts.length === 0) return null;
+    if (parts.length === 1) {
+      return <span className="text-(--brand-color)">{text}</span>;
+    }
+    const last = parts.pop();
+    const leading = parts.join(' ');
+    return (
+      <>
+        <span>{leading}</span> <span className="text-(--brand-color)">{last}</span>
+      </>
+    );
+  };
 
   return (
     <section className="bg-(--background-color) py-16 text-(--default-black-font) lg:py-24">
       <div className="mx-auto flex flex-col gap-10 md:px-12">
         <header className="text-center">
-          {eyebrow ? (
-            <p className="text-xs uppercase tracking-[0.45em] text-(--text-subtle-color)">
-              {eyebrow}
-            </p>
-          ) : null}
-          <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">{title}</h2>
+          <h2
+            className="mt-3 font-bold tracking-tight"
+            style={{
+              fontSize: 'clamp(32px, calc(32px + (20) * ((100vw - 1024px) / 416)), 52px)',
+              lineHeight: '1.1',
+            }}
+          >
+            {renderTitle(title)}
+          </h2>
         </header>
 
         <div className="flex flex-col">
@@ -67,15 +84,15 @@ export default function CategorySpotlights({
                     {item.title}
                   </h3>
                   <div className="flex flex-col gap-4 2xl:gap-6 4xl:gap-10">
-                    <p className="max-w-2xl text-lg text-white/90 md:font-semibold md:text-xl lg:text-2xl 2xl:text-3xl 4xl:text-4xl">
+                    <p className="max-w-2xl text-base text-white/90 md:font-semibold md:text-lg xl:text-2xl 2xl:text-3xl 4xl:text-4xl">
                       {item.description}
                     </p>
                     <span
-                      className={`inline-flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} w-fit items-center gap-2 rounded-full bg-transparent px-3 md:px-5 py-2 md:py-3 text-sm lg:text-lg 4xl:text-3xl font-semibold uppercase tracking-wide border-2 border-(--default-white-font) text-(--default-white-font) transition group-hover:bg-white group-hover:text-(--default-black-font)`}
+                      className={`inline-flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} w-fit items-center gap-2 rounded-full bg-transparent px-3 3xl:px-5 py-2 3xl:py-3 text-xs 3xl:text-base 4xl:text-xl font-semibold uppercase tracking-wide border-2 border-(--default-white-font) text-(--default-white-font) transition group-hover:bg-white group-hover:text-(--default-black-font)`}
                     >
                       {item.cta}
                       <HiArrowLongRight
-                        className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 4xl:h-8 4xl:w-8"
+                        className="h-4 w-4 2xl:h-5 2xl:w-5 4xl:h-7 4xl:w-7"
                         aria-hidden="true"
                       />
                     </span>
