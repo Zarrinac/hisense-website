@@ -149,6 +149,71 @@
       "sitemap": "Sitemap"
     }
   },
+  "TvHisensePage": {
+    "hero": {
+      "cta": "Talk to sales"
+    },
+    "productSection": {
+      "eyebrow": "100-inch lineup",
+      "title": "Explore 100\" Hisense TVs",
+      "description": "Detailed view of our flagship 100-inch LED and Mini-LED televisions."
+    },
+    "seriesSection": {
+      "eyebrow": "Series lineup",
+      "title": "Hisense ULED Mini-LED TVs"
+    },
+    "actions": {
+      "quote": "Get a quote",
+      "support": "Support",
+      "details": "View details"
+    },
+    "heroSlides": {
+      "ux": {
+        "eyebrow": "ULED X | Mini-LED",
+        "title": "UX Series",
+        "subtitle": "Flagship brightness, precise contrast control, and cinematic color accuracy."
+      },
+      "u8": {
+        "eyebrow": "U8 Mini-LED",
+        "title": "U8 Series",
+        "subtitle": "Peak luminance, fast gaming, and Dolby Vision/Atmos built in."
+      },
+      "u7": {
+        "eyebrow": "U7 Mini-LED",
+        "title": "U7 Series",
+        "subtitle": "Balanced performance for sports, movies, and next-gen consoles."
+      }
+    },
+    "series": {
+      "ux": {
+        "badge": "UX",
+        "title": "UX | ULED X",
+        "blurb": "Hisense's brightest ULED X Mini-LED display engineered for reference-level contrast and detail."
+      },
+      "u8": {
+        "badge": "U8",
+        "title": "U8 | Mini-LED",
+        "blurb": "Award-winning U8 delivers vivid HDR, low-latency gaming, and premium design."
+      },
+      "u7": {
+        "badge": "U7",
+        "title": "U7 | Mini-LED",
+        "blurb": "Versatile performance with smooth motion and rich color for every room."
+      }
+    },
+    "metadata": {
+      "keywords": [
+        "Hisense TV Iran",
+        "Hisense Mini-LED",
+        "Hisense ULED TV",
+        "UX Mini-LED",
+        "U8 Mini-LED",
+        "U7 Mini-LED",
+        "Hisense Laser TV",
+        "Hisense gaming TV"
+      ]
+    }
+  },
   "Routes": {
     "tvHisense": {
       "eyebrow": "Hisense TV",

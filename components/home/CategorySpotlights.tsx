@@ -88,7 +88,7 @@ export default function CategorySpotlights({
                       {item.description}
                     </p>
                     <span
-                      className={`inline-flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} w-fit items-center gap-2 rounded-full bg-transparent px-3 3xl:px-5 py-2 3xl:py-3 text-xs 3xl:text-base 4xl:text-xl font-semibold uppercase tracking-wide border-2 border-(--default-white-font) text-(--default-white-font) transition group-hover:bg-white group-hover:text-(--default-black-font)`}
+                      className={`inline-flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} w-fit items-center gap-2 rounded-full bg-transparent px-3 3xl:px-5 py-2 3xl:py-3 text-xs 3xl:text-base 4xl:text-xl font-semibold uppercase tracking-wide border-2 border-(--default-white-font) text-(--default-white-font) transition hover:bg-white hover:text-black dark:hover:text-black`}
                     >
                       {item.cta}
                       <HiArrowLongRight
