@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
-import Image from 'next/image';
+import Image, { type StaticImageData } from 'next/image';
 import Link from 'next/link';
-import { TV_PRODUCTS } from '@/content/tvProducts';
+import { TV_PRODUCTS, type TvProduct } from '@/content/tvProducts';
+import Banner from '@/public/products/tvs/100-U7K-Files/100U7K-Hero.png';
 
 type PageParams = {
   locale?: string;
@@ -14,6 +15,12 @@ type PageProps = {
   params: PageParams | Promise<PageParams>;
 };
 
+type Banner = {
+  id: string;
+  desktop: StaticImageData;
+  mobile?: StaticImageData;
+  alt: string;
+};
 const LOCALES = ['en', 'fa'] as const;
 
 export function generateStaticParams() {
@@ -24,6 +31,8 @@ export function generateStaticParams() {
     })),
   );
 }
+
+const BANNERS: Banner[] = [{ id: 'banner', desktop: Banner, alt: 'Hisense 100U7K LED hero' }];
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolved = await params;
@@ -53,7 +62,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title: copy.name,
       description: copy.tagline,
-      images: [{ url: product.image.src }],
+      images: [{ url: (product.posterImage ?? product.image).src }],
       url: `/${locale}/tv-hisense/${pid}`,
     },
     alternates: {
@@ -80,6 +89,7 @@ export default async function TvProductDetailPage({ params }: PageProps) {
 
   const t = await getTranslations('TvHisensePage');
   const copy = product.copy[lang];
+
   const specLabels =
     lang === 'fa'
       ? {
@@ -105,26 +115,59 @@ export default async function TvProductDetailPage({ params }: PageProps) {
           extras: 'Features',
         };
 
+  const featureCards = product.featureCards ?? [];
+  const badges = product.badges ?? [];
+  const gallery = product.gallery ?? [];
+
   return (
     <div
-      className="space-y-12 pb-16 pt-8 lg:space-y-16 lg:pb-24 lg:pt-12"
+      className="space-y-16 pb-16 pt-8 lg:space-y-20 lg:pb-24 lg:pt-12 bg-amber-500"
       dir={lang === 'fa' ? 'rtl' : 'ltr'}
     >
+      {/* Banner */}
+      <div key={BANNERS[0].id} className="relative min-w-0 flex-[0_0_100%]">
+        <div className="relative aspect-9/16 w-full md:aspect-video lg:aspect-21/9">
+          <Image
+            src={BANNERS[0].desktop}
+            alt={BANNERS[0].alt}
+            fill
+            sizes="(max-width: 768px) 100vw, 100vw"
+            priority
+            loading="eager"
+            placeholder="blur"
+            className="object-cover"
+          />
+        </div>
+      </div>
       <div className="mx-auto w-full max-w-480 px-4 sm:px-6 lg:px-10">
-        <div className="relative overflow-hidden rounded-3xl bg-(--surface-color) shadow-lg ring-1 ring-(--border-color)">
+        <div className="relative overflow-hidden rounded-3xl bg-black shadow-2xl ring-1 ring-(--border-color)">
           <div className="relative aspect-video w-full">
-            <Image
-              src={product.image}
-              alt={copy.name}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/35 to-transparent" />
+            {product.heroVideo ? (
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                poster={(product.posterImage ?? product.image).src}
+              >
+                <source src={product.heroVideo} type="video/mp4" />
+              </video>
+            ) : (
+              <Image
+                src={product.image}
+                alt={copy.name}
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover"
+              />
+            )}
+            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
             <div className="absolute inset-0 flex items-end px-6 pb-10 pt-12 sm:px-10 lg:px-16 lg:pb-14 lg:pt-16">
               <div className="max-w-3xl space-y-3 text-white">
-                <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
+                <p className="inline-flex flex-wrap items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
                   <span>{product.series}</span>
                   <span>{product.panel}</span>
                   <span>{product.refreshRate}</span>
@@ -148,7 +191,7 @@ export default async function TvProductDetailPage({ params }: PageProps) {
               {copy.highlights.map((point, idx) => (
                 <li
                   key={idx}
-                  className="flex items-start gap-2 rounded-xl bg-(--surface-color-2) px-3 py-2"
+                  className="flex items-start gap-2 rounded-xl bg-(--surface-color-2) px-3 py-2 transition duration-300 hover:-translate-y-1 hover:shadow-md"
                 >
                   <span aria-hidden className="mt-1 h-2 w-2 rounded-full bg-(--brand-color)" />
                   <span>{point}</span>
@@ -173,35 +216,72 @@ export default async function TvProductDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          <div className="rounded-3xl border border-(--border-color) bg-(--surface-color) p-6 shadow-sm">
-            <h4 className="mb-3 text-lg font-semibold">{specLabels.connectivity}</h4>
-            <div className="flex flex-wrap gap-2 text-xs">
-              {product.connectivity.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-(--border-color) px-3 py-1 text-(--default-black-font)"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
+        {badges.length > 0 && (
+          <div className="flex flex-wrap items-center justify-center gap-4 rounded-3xl border border-(--border-color) bg-(--surface-color) p-4 shadow-sm">
+            {badges.map((badge, idx) => (
+              <div key={idx} className="relative h-10 w-auto max-w-[140px]">
+                <Image
+                  src={badge}
+                  alt="certification badge"
+                  className="h-full w-auto object-contain"
+                />
+              </div>
+            ))}
           </div>
+        )}
 
-          <div className="rounded-3xl border border-(--border-color) bg-(--surface-color) p-6 shadow-sm">
-            <h4 className="mb-3 text-lg font-semibold">{specLabels.extras}</h4>
-            <div className="flex flex-wrap gap-2 text-xs">
-              {product.extras.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full bg-(--brand-color)/10 px-3 py-1 text-(--brand-color-dark)"
-                >
-                  {item}
-                </span>
-              ))}
+        {featureCards.length > 0 && (
+          <div className="bg-red-400 mx-auto w-full grid gap-4 grid-cols-3 sm:grid-cols-6">
+            {featureCards.map((block) => (
+              <div
+                key={block.title}
+                className="flex justify-center rounded-3xl border border-(--border-color) bg-(--surface-color) shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="rounded-2xl bg-(--surface-color-2)">
+                  <Image src={block.image} alt={block.title} className="h-20 w-20 object-cover" />
+                </div>
+                {/* <h4 className="mt-4 text-lg font-semibold">{block.title}</h4>
+                <p className="mt-2 text-sm text-(--text-muted-color)">{block.description}</p> */}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {product.beforeAfter && (
+          <div className="grid gap-4 lg:grid-cols-2">
+            <div className="overflow-hidden rounded-3xl border border-(--border-color) bg-(--surface-color) shadow-sm">
+              <Image
+                src={product.beforeAfter.before}
+                alt={lang === 'fa' ? 'قبل' : 'Before'}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="overflow-hidden rounded-3xl border border-(--border-color) bg-(--surface-color) shadow-sm">
+              <Image
+                src={product.beforeAfter.after}
+                alt={lang === 'fa' ? 'بعد' : 'After'}
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
-        </div>
+        )}
+
+        {gallery.length > 0 && (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {gallery.map((item, idx) => (
+              <div
+                key={idx}
+                className="overflow-hidden rounded-2xl border border-(--border-color) bg-(--surface-color) shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-lg"
+              >
+                <Image
+                  src={item}
+                  alt={`${copy.name} gallery ${idx + 1}`}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
