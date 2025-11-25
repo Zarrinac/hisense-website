@@ -149,11 +149,81 @@
       "sitemap": "نقشه سایت"
     }
   },
+  "TvHisensePage": {
+    "hero": {
+      "cta": "درخواست مشاوره خرید"
+    },
+    "productSection": {
+      "eyebrow": "سری ۱۰۰ اینچ",
+      "title": "تلویزیون‌های ۱۰۰ اینچ هایسنس",
+      "description": "نمای کامل محصولات ۱۰۰ اینچی LED و Mini-LED هایسنس."
+    },
+    "seriesSection": {
+      "eyebrow": "معرفی سری‌ها",
+      "title": "تلویزیون‌های Mini-LED ULED هایسنس"
+    },
+    "actions": {
+      "quote": "دریافت پیش‌فاکتور",
+      "support": "پشتیبانی",
+      "details": "مشاهده جزئیات"
+    },
+    "heroSlides": {
+      "ux": {
+        "eyebrow": "ULED X | Mini-LED",
+        "title": "سری UX",
+        "subtitle": "روشنایی پرچمدار، کنترل کنتراست دقیق و دقت رنگ سینمایی."
+      },
+      "u8": {
+        "eyebrow": "U8 Mini-LED",
+        "title": "سری U8",
+        "subtitle": "اوج روشنایی، گیمینگ سریع و پشتیبانی داخلی Dolby Vision/Atmos."
+      },
+      "u7": {
+        "eyebrow": "U7 Mini-LED",
+        "title": "سری U7",
+        "subtitle": "عملکرد متعادل برای ورزش، فیلم و کنسول‌های نسل جدید."
+      },
+      "rgb": {
+        "eyebrow": "RGB LED",
+        "title": "RGB",
+        "subtitle": "عملکرد متعادل برای ورزش، فیلم و کنسول‌های نسل جدید."
+      }
+    },
+    "series": {
+      "ux": {
+        "badge": "UX",
+        "title": "UX | ULED X",
+        "blurb": "درخشان‌ترین تلویزیون ULED X Mini-LED هایسنس با کنتراست و جزئیات در سطح مرجع."
+      },
+      "u8": {
+        "badge": "U8",
+        "title": "U8 | Mini-LED",
+        "blurb": "U8 برنده جوایز با HDR درخشان، تأخیر کم برای بازی و طراحی پریمیوم."
+      },
+      "u7": {
+        "badge": "U7",
+        "title": "U7 | Mini-LED",
+        "blurb": "عملکرد همه‌جانبه با حرکت روان و رنگ غنی برای هر اتاق."
+      }
+    },
+    "metadata": {
+      "keywords": [
+        "تلویزیون هایسنس",
+        "هایسنس Mini-LED",
+        "تلویزیون ULED",
+        "سری UX هایسنس",
+        "سری U8 هایسنس",
+        "سری U7 هایسنس",
+        "تلویزیون لیزری هایسنس",
+        "تلویزیون گیمینگ هایسنس"
+      ]
+    }
+  },
   "Routes": {
     "tvHisense": {
       "eyebrow": "تلویزیون هایسنس",
       "title": "تلویزیون‌ها و نمایشگرهای LED هایسنس",
-      "description": "سری‌های ULED، Mini-LED و Laser TV برای نمایشگرهایی با روشنایی خیره‌کننده و صدای حرفه‌ای."
+      "description": "سری‌های ULED ، Mini-LED  و QLED نمایشگرهایی با روشنایی خیره‌کننده و صدای حرفه‌ای"
     },
     "rac": {
       "eyebrow": "تهویه خانگی",
