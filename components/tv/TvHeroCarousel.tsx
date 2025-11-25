@@ -111,7 +111,7 @@ export default function TvHeroCarousel({ slides, locale }: TvHeroCarouselProps) 
 
   return (
     <section
-      className="relative isolate overflow-hidden rounded-3xl bg-(--surface-color) shadow-xl ring-1 ring-(--border-color)"
+      className="relative isolate overflow-hidden bg-(--surface-color) shadow-xl ring-1 ring-(--border-color)"
       aria-label="Featured Hisense TVs"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
@@ -133,7 +133,7 @@ export default function TvHeroCarousel({ slides, locale }: TvHeroCarouselProps) 
                   sizes="(max-width: 768px) 100vw, 100vw"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/35 to-transparent" />
-                <div className="absolute inset-0 flex items-end px-6 pb-10 pt-12 sm:px-10 lg:px-16 lg:pb-12 lg:pt-16">
+                {/* <div className="absolute inset-0 flex items-end px-6 pb-10 pt-12 sm:px-10 lg:px-16 lg:pb-12 lg:pt-16">
                   <div className="max-w-3xl space-y-3 text-white">
                     <p className="inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
                       {slide.eyebrow}
@@ -143,7 +143,7 @@ export default function TvHeroCarousel({ slides, locale }: TvHeroCarouselProps) 
                     </h1>
                     <p className="text-base text-white/80 sm:text-lg">{slide.subtitle}</p>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           ))}

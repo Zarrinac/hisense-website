@@ -83,16 +83,16 @@ export default function CategorySpotlights({
                   <h3 className="text-xl font-semibold sm:text-2xl lg:text-4xl text-center">
                     {item.title}
                   </h3>
-                  <div className="flex flex-col gap-4 2xl:gap-6 4xl:gap-10">
-                    <p className="max-w-2xl text-base text-white/90 md:font-semibold md:text-lg xl:text-2xl 2xl:text-3xl 4xl:text-4xl">
+                  <div className="flex flex-col gap-4 2xl:gap-6 5xl:gap-10">
+                    <p className="max-w-2xl text-base text-white/90 md:font-semibold md:text-lg xl:text-2xl 2xl:text-3xl 5xl:text-4xl">
                       {item.description}
                     </p>
                     <span
-                      className={`inline-flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} w-fit items-center gap-2 rounded-full bg-transparent px-3 3xl:px-5 py-2 3xl:py-3 text-xs 3xl:text-base 4xl:text-xl font-semibold uppercase tracking-wide border-2 border-(--default-white-font) text-(--default-white-font) transition hover:bg-white hover:text-black dark:hover:text-black`}
+                      className={`inline-flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} w-fit items-center gap-2 rounded-full bg-transparent px-3 4xl:px-5 py-2 4xl:py-3 text-xs 4xl:text-base 5xl:text-xl font-semibold uppercase tracking-wide border-2 border-(--default-white-font) text-(--default-white-font) transition hover:bg-white hover:text-black dark:hover:text-black`}
                     >
                       {item.cta}
                       <HiArrowLongRight
-                        className="h-4 w-4 2xl:h-5 2xl:w-5 4xl:h-7 4xl:w-7"
+                        className="h-4 w-4 2xl:h-5 2xl:w-5 5xl:h-7 5xl:w-7"
                         aria-hidden="true"
                       />
                     </span>

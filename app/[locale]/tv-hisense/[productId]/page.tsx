@@ -89,6 +89,8 @@ export default async function TvProductDetailPage({ params }: PageProps) {
 
   const t = await getTranslations('TvHisensePage');
   const copy = product.copy[lang];
+  const featureIntroTitle = copy.featureIntroTitle;
+  const featureIntroText = copy.featureIntroText;
 
   const specLabels =
     lang === 'fa'
@@ -120,27 +122,42 @@ export default async function TvProductDetailPage({ params }: PageProps) {
   const gallery = product.gallery ?? [];
 
   return (
-    <div
-      className="space-y-16 pb-16 pt-8 lg:space-y-20 lg:pb-24 lg:pt-12 bg-amber-500"
-      dir={lang === 'fa' ? 'rtl' : 'ltr'}
-    >
+    <div className="space-y-16 pb-16 lg:space-y-20 lg:pb-24" dir={lang === 'fa' ? 'rtl' : 'ltr'}>
       {/* Banner */}
-      <div key={BANNERS[0].id} className="relative min-w-0 flex-[0_0_100%]">
-        <div className="relative aspect-9/16 w-full md:aspect-video lg:aspect-21/9">
-          <Image
-            src={BANNERS[0].desktop}
-            alt={BANNERS[0].alt}
-            fill
-            sizes="(max-width: 768px) 100vw, 100vw"
-            priority
-            loading="eager"
-            placeholder="blur"
-            className="object-cover"
-          />
+      <div className="-mx-4 sm:-mx-6 lg:-mx-10 max-w-480">
+        <div key={BANNERS[0].id} className="relative min-w-0 flex-[0_0_100%]">
+          <div className="relative aspect-9/16 w-full md:aspect-video lg:aspect-21/9">
+            <Image
+              src={BANNERS[0].desktop}
+              alt={BANNERS[0].alt}
+              fill
+              sizes="(max-width: 768px) 100vw, 100vw"
+              priority
+              loading="eager"
+              placeholder="blur"
+              className="object-cover"
+            />
+          </div>
         </div>
       </div>
-      <div className="mx-auto w-full max-w-480 px-4 sm:px-6 lg:px-10">
-        <div className="relative overflow-hidden rounded-3xl bg-black shadow-2xl ring-1 ring-(--border-color)">
+
+      {featureIntroTitle && featureIntroText && (
+        <div className="mx-auto w-full max-w-360">
+          <div className="rounded-xl border border-(--border-color) bg-(--surface-color) px-6 py-8 text-center ">
+            <p
+              className="text-2xl font-black md:text-4xl bg-clip-text text-transparent"
+              style={{ backgroundImage: 'var(--brand-gradient)' }}
+            >
+              {featureIntroTitle}
+            </p>
+            <p className="mt-4 text-xs leading-10 text-(--text-muted-color) md:text-base 4xl:text-xl">
+              {featureIntroText}
+            </p>
+          </div>
+        </div>
+      )}
+      <div className="mx-auto w-full max-w-360">
+        <div className="relative overflow-hidden bg-black shadow-2xl ring-1 ring-(--border-color)">
           <div className="relative aspect-video w-full">
             {product.heroVideo ? (
               <video
@@ -165,19 +182,6 @@ export default async function TvProductDetailPage({ params }: PageProps) {
               />
             )}
             <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
-            <div className="absolute inset-0 flex items-end px-6 pb-10 pt-12 sm:px-10 lg:px-16 lg:pb-14 lg:pt-16">
-              <div className="max-w-3xl space-y-3 text-white">
-                <p className="inline-flex flex-wrap items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
-                  <span>{product.series}</span>
-                  <span>{product.panel}</span>
-                  <span>{product.refreshRate}</span>
-                </p>
-                <h1 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-                  {copy.name}
-                </h1>
-                <p className="text-base text-white/80 sm:text-lg">{copy.tagline}</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>

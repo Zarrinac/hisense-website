@@ -24,6 +24,8 @@ export type TvProductCopy = {
   tagline: string;
   description: string;
   highlights: string[];
+  featureIntroTitle?: string;
+  featureIntroText?: string;
 };
 
 export type TvProduct = {
@@ -177,6 +179,9 @@ export const TV_PRODUCTS: TvProduct[] = [
           'Time Shift, DVB-T/T2 tuner, and TV recording support.',
           'WiFi, Bluetooth 5, HDMI x4, USB 2.0 x2, SPDIF, and AV connectivity.',
         ],
+        featureIntroTitle: 'Great Things Come in Small Packages',
+        featureIntroText:
+          "Hisense's Mini LED setup improves on these LEDs, resulting in breathtaking detail on screen. Tightly grouped LEDs for an infinitely more precise backlight and better contrast control. Additionally, the mini-LEDs emit light in a line, instead of a diffuse cone which also improves precision. Utilize up to 1000 dimming zones for improved contrast and a crisp, vivid picture.",
       },
       fa: {
         name: 'تلویزیون 100U7K هایسنس (Mini-LED)',
@@ -191,6 +196,9 @@ export const TV_PRODUCTS: TvProduct[] = [
           'Time Shift، تیونر DVB-T/T2 و امکان ضبط برنامه‌های تلویزیونی.',
           'اتصال WiFi، بلوتوث ۵، چهار HDMI، دو USB 2.0، SPDIF و AV.',
         ],
+        featureIntroTitle: 'کیفیت بزرگ در ابعاد کوچک',
+        featureIntroText:
+          'فناوری Mini LED هایسنس با بهبود ساختار LED‌ها، جزئیاتی نفس‌گیر و خیره‌کننده روی صفحه ایجاد می‌کند. گروه‌بندی بسیار دقیق LEDها، باعث کنترل بهتر نور پس‌زمینه و کنتراست می‌شود. علاوه‌براین، Mini LEDها نور را به‌صورت خطی منتشر می‌کنند، نه مخروطیِ پخش‌شونده؛ و همین موضوع دقت تصویر را به‌طور چشمگیری افزایش می‌دهد. با استفاده از ۱۰۰۰ ناحیه‌ی کم‌نوردهی (Dimming Zone) ، کنتراست بهبود می‌یابد و تصویری روشن، زنده و بسیار شفاف ارائه می‌شود.',
       },
     },
   },

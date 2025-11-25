@@ -2,13 +2,16 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Visibility } from '@mui/icons-material';
 import TvHeroCarousel from '@/components/tv/TvHeroCarousel';
 import { TV_PRODUCTS } from '@/content/tvProducts';
 import tv01 from '@/public/tv-banner/tv01.ux-mini-led-tv.jpg';
 import tv02 from '@/public/tv-banner/tv02.u8-mini-led-tv.jpg';
 import tv03 from '@/public/tv-banner/tv03.u7-mini-led-tv.jpg';
+import tv04 from '@/public/tv-banner/tv04.tv-rgb-ban.jpg';
 
 const HERO_SLIDES = [
+  { id: 'rgb', image: tv04 },
   { id: 'ux', image: tv01 },
   { id: 'u8', image: tv02 },
   { id: 'u7', image: tv03 },
@@ -41,6 +44,7 @@ export default async function TvHisensePage() {
   const pageTranslations = await getTranslations('TvHisensePage');
   const detailsLabel = pageTranslations('actions.details');
   const lang: 'fa' | 'en' = locale === 'fa' ? 'fa' : 'en';
+  const detailsTooltip = lang === 'fa' ? 'دیدن جزییات' : 'More details';
 
   const heroSlides = HERO_SLIDES.map((slide) => ({
     id: slide.id,
@@ -51,70 +55,73 @@ export default async function TvHisensePage() {
   }));
 
   return (
-    <div className="space-y-14 pb-16 pt-8 lg:space-y-20 lg:pb-24 lg:pt-12">
-      <div className="mx-auto w-full max-w-480 px-4 sm:px-6 lg:px-10">
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-[0.5em] text-(--text-subtle-color)">
-              {routeTranslations('eyebrow')}
-            </p>
-            <h1 className="mt-2 text-3xl font-bold sm:text-4xl">{routeTranslations('title')}</h1>
-            <p className="mt-3 max-w-3xl text-base text-(--text-muted-color) sm:text-lg">
-              {routeTranslations('description')}
-            </p>
-          </div>
-          <Link
-            href={`/${locale}/contact-us`}
-            className="hidden items-center gap-2 rounded-full border border-(--border-color) px-4 py-2 text-sm font-semibold text-(--default-black-font) transition hover:border-(--brand-color) hover:text-(--brand-color) lg:inline-flex"
-          >
-            {pageTranslations('hero.cta')}
-          </Link>
-        </div>
-
+    <div className="space-y-14 pb-16 lg:space-y-20 lg:pb-24">
+      <div className="-mx-4 sm:-mx-6 lg:-mx-10 max-w-[1440px] 3xl:mx-auto">
         <TvHeroCarousel slides={heroSlides} locale={locale} />
       </div>
 
       <div className="mx-auto w-full max-w-480 px-4 sm:px-6 lg:px-10">
         <div className="mb-8 text-center">
-          <p className="text-xs uppercase tracking-[0.5em] text-(--text-subtle-color)">
-            {pageTranslations('seriesSection.eyebrow')}
+          <h2 className="mt-3 text-2xl font-bold sm:text-3xl">{routeTranslations('title')}</h2>
+          <p className="mt-3 text-base text-(--text-muted-color) sm:text-lg">
+            {routeTranslations('description')}
           </p>
-          <h2 className="mt-3 text-2xl font-bold sm:text-3xl">
-            {pageTranslations('seriesSection.title')}
-          </h2>
         </div>
         <div className="grid gap-6 lg:grid-cols-3">
           {TV_PRODUCTS.map((product) => {
             const copy = product.copy[lang];
+            const featureTags = (product.extras ?? []).slice(0, 3).filter(Boolean);
+            const overlayFeatures =
+              featureTags.length > 0
+                ? featureTags
+                : [product.panel, product.refreshRate, product.os].filter(Boolean).slice(0, 3);
             return (
               <Link
                 key={product.id}
                 href={`/${locale}/tv-hisense/${product.id}`}
-                className="group relative block overflow-hidden rounded-3xl border border-(--border-color) bg-(--surface-color) shadow-sm transition hover:-translate-y-1 hover:shadow-lg focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
+                className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-(--border-color) bg-(--surface-color) shadow-(--panel-shadow) transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_color-mix(in_srgb,var(--overlay-color) 55%,transparent)] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
               >
-                <div className="relative aspect-4/3 w-full overflow-hidden">
-                  <Image
-                    src={product.image}
-                    alt={copy.name}
-                    fill
-                    className="object-cover transition duration-700 group-hover:scale-105"
-                    sizes="(max-width: 1024px) 100vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <p className="text-sm font-semibold uppercase tracking-[0.35em] text-(--brand-color)">
-                      {product.series}
-                    </p>
-                    <h3 className="mt-2 text-xl font-semibold text-white">{copy.name}</h3>
+                <div className="relative w-full overflow-hidden">
+                  <div className="aspect-4/3 w-full bg-(--surface-color)">
+                    <Image
+                      src={product.image}
+                      alt={copy.name}
+                      fill
+                      className="object-contain transition duration-700 group-hover:scale-105"
+                      sizes="(max-width: 1024px) 100vw, 33vw"
+                    />
+                  </div>
+                  <div className="absolute inset-0 flex flex-col justify-between bg-linear-to-t from-(--overlay-color) via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100">
+                    <div className="flex h-10 w-full items-center gap-2 bg-linear-to-b from-(--surface-hover-color) to-(--surface-color) px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-(--default-black-font)">
+                      {overlayFeatures.map((feature) => (
+                        <span key={feature} className="flex-1 text-center leading-4">
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex justify-center pb-5">
+                      <div className="relative inline-flex">
+                        <span className="pointer-events-none absolute -top-11 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-(--default-black-font) px-3 py-1 text-xs font-semibold text-white opacity-0 shadow-md transition duration-200 peer-hover:opacity-100 peer-focus-visible:opacity-100">
+                          {detailsTooltip}
+                        </span>
+                        <span
+                          className="peer inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-(--default-black-font) shadow-sm ring-1 ring-(--border-color) transition duration-200 group-hover:bg-white group-hover:text-black dark:group-hover:text-black hover:bg-(--brand-color) hover:text-white hover:ring-(--brand-color) focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
+                          aria-label={detailsLabel}
+                        >
+                          <Visibility fontSize="small" className="h-5 w-5" aria-hidden="true" />
+                          <span className="sr-only">{detailsLabel}</span>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-3 p-5">
-                  <p className="text-sm text-(--text-muted-color)">{copy.tagline}</p>
-                  <div className="flex flex-wrap gap-3">
-                    <span className="inline-flex items-center gap-2 rounded-full bg-(--brand-color) px-4 py-2 text-sm font-semibold text-white transition group-hover:bg-(--brand-color-dark)">
-                      {detailsLabel}
-                    </span>
-                  </div>
+                <div className="flex flex-1 flex-col gap-2 p-6">
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-(--text-subtle-color)">
+                    {product.series}
+                  </p>
+                  <h3 className="text-lg font-bold text-(--default-black-font) sm:text-xl">
+                    {copy.name}
+                  </h3>
                 </div>
               </Link>
             );

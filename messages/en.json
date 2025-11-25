@@ -182,6 +182,11 @@
         "eyebrow": "U7 Mini-LED",
         "title": "U7 Series",
         "subtitle": "Balanced performance for sports, movies, and next-gen consoles."
+      },
+      "rgb": {
+        "eyebrow": "RGB LED",
+        "title": "RGB",
+        "subtitle": "Balanced performance for sports, movies, and next-gen consoles."
       }
     },
     "series": {
@@ -218,7 +223,7 @@
     "tvHisense": {
       "eyebrow": "Hisense TV",
       "title": "Hisense TV & LED Displays",
-      "description": "Experience the ULED, Mini-LED, and Laser TV lineup engineered for cinematic brilliance, vivid colors, and premium sound integration."
+      "description": "Experience the ULED, Mini-LED, and QLED lineup engineered for cinematic brilliance, vivid colors, and premium sound integration"
     },
     "rac": {
       "eyebrow": "Residential Air Conditioning",
