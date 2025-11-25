@@ -4,6 +4,7 @@
   --brand-color: #00b3ac;
   --brand-color-dark: #008b86;
   --brand-color-light: #e1fffb;
+  --brand-gradient: linear-gradient(90deg, #4be1d9, #008b86);
   --default-black-font: #1d1d1f;
   --default-white-font: #ffffff;
   --background-color: #f8fafc;
@@ -25,6 +26,7 @@
   --brand-color: #00d7ce;
   --brand-color-dark: #00a39c;
   --brand-color-light: rgba(0, 181, 173, 0.16);
+  --brand-gradient: linear-gradient(90deg, #5af2ea, #00a39c);
   --default-black-font: #f8fafc;
   --background-color: #020617;
   --surface-color: #0f172a;
@@ -45,8 +47,9 @@
 @theme {
   --breakpoint-xs: 30rem; /* 480 px */
   --breakpoint-2xs: 20rem; /* 320 px */
-  --breakpoint-3xl: 108rem; /* 1728 px */
-  --breakpoint-4xl: 120rem; /* 1920 px */
+  --breakpoint-3xl: 90.0625rem; /* 1440 px */
+  --breakpoint-4xl: 108rem; /* 1728 px */
+  --breakpoint-5xl: 120rem; /* 1920 px */
 }
 
 @font-face {
