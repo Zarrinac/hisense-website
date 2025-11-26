@@ -21,12 +21,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const routeTranslations = await getTranslations('Routes.tvHisense');
   const pageTranslations = await getTranslations('TvHisensePage');
-  const keywords = pageTranslations.raw('metadata.keywords');
+  const keywordsRaw: unknown = pageTranslations.raw('metadata.keywords');
 
   return {
     title: routeTranslations('title'),
     description: routeTranslations('description'),
-    keywords: Array.isArray(keywords) ? keywords : undefined,
+    keywords: Array.isArray(keywordsRaw) ? keywordsRaw : undefined,
     openGraph: {
       title: routeTranslations('title'),
       description: routeTranslations('description'),

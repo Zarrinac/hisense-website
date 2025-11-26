@@ -24,6 +24,7 @@ function useImagePreloader(images: StaticImageData[]) {
 
   useEffect(() => {
     if (images.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- set once when there is nothing to preload
       setLoaded(true);
       return;
     }
@@ -42,7 +43,7 @@ function useImagePreloader(images: StaticImageData[]) {
         img.onerror = () => resolve();
       });
 
-    Promise.all(images.map(loadImage)).then(() => {
+    void Promise.all(images.map(loadImage)).then(() => {
       if (!canceled) {
         setLoaded(true);
       }

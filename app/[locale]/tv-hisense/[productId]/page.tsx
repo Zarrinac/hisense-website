@@ -1,9 +1,7 @@
 import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Image, { type StaticImageData } from 'next/image';
-import Link from 'next/link';
-import { TV_PRODUCTS, type TvProduct } from '@/content/tvProducts';
+import { TV_PRODUCTS } from '@/content/tvProducts';
 import Banner from '@/public/products/tvs/100-U7K-Files/100U7K-Hero.png';
 
 type PageParams = {
@@ -87,10 +85,10 @@ export default async function TvProductDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const t = await getTranslations('TvHisensePage');
   const copy = product.copy[lang];
   const featureIntroTitle = copy.featureIntroTitle;
   const featureIntroText = copy.featureIntroText;
+  const masterMomentTitle = copy.masterMomentTitle;
 
   const specLabels =
     lang === 'fa'
@@ -118,7 +116,6 @@ export default async function TvProductDetailPage({ params }: PageProps) {
         };
 
   const featureCards = product.featureCards ?? [];
-  const badges = product.badges ?? [];
   const gallery = product.gallery ?? [];
 
   return (
@@ -186,6 +183,41 @@ export default async function TvProductDetailPage({ params }: PageProps) {
         </div>
       </div>
 
+      {masterMomentTitle && (
+        <div className="mx-auto w-full max-w-360">
+          <div className="rounded-xl border border-(--border-color) bg-(--surface-color) px-6 py-8 text-center ">
+            <p
+              className="text-2xl font-black md:text-4xl bg-clip-text text-transparent"
+              style={{ backgroundImage: 'var(--brand-gradient)' }}
+            >
+              {masterMomentTitle}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {featureCards.length > 0 && (
+        <div className="mx-auto w-full max-w-360">
+          <div className="mx-auto w-full grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
+            {featureCards.map((block) => (
+              <div
+                key={block.title}
+                className="flex flex-col gap-2 items-center justify-between rounded-xl border border-(--border-color) bg-(--surface-color) shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="rounded-2xl bg-(--surface-color-2)">
+                  <Image
+                    src={block.image}
+                    alt={block.title}
+                    className={`${block.title === 'Filmmaker' ? 'h-12 mt-4' : 'h-20'} w-auto object-cover`}
+                  />
+                </div>
+                <h4 className="text-xs md:text-sm text-center mb-2 md:mb-2">{block.title}</h4>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="mx-auto flex w-full max-w-480 flex-col gap-10 px-4 sm:px-6 lg:px-10">
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-4 rounded-3xl border border-(--border-color) bg-(--surface-color) p-6 shadow-sm">
@@ -219,37 +251,6 @@ export default async function TvProductDetailPage({ params }: PageProps) {
             </div>
           </div>
         </div>
-
-        {badges.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-4 rounded-3xl border border-(--border-color) bg-(--surface-color) p-4 shadow-sm">
-            {badges.map((badge, idx) => (
-              <div key={idx} className="relative h-10 w-auto max-w-[140px]">
-                <Image
-                  src={badge}
-                  alt="certification badge"
-                  className="h-full w-auto object-contain"
-                />
-              </div>
-            ))}
-          </div>
-        )}
-
-        {featureCards.length > 0 && (
-          <div className="bg-red-400 mx-auto w-full grid gap-4 grid-cols-3 sm:grid-cols-6">
-            {featureCards.map((block) => (
-              <div
-                key={block.title}
-                className="flex justify-center rounded-3xl border border-(--border-color) bg-(--surface-color) shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-lg"
-              >
-                <div className="rounded-2xl bg-(--surface-color-2)">
-                  <Image src={block.image} alt={block.title} className="h-20 w-20 object-cover" />
-                </div>
-                {/* <h4 className="mt-4 text-lg font-semibold">{block.title}</h4>
-                <p className="mt-2 text-sm text-(--text-muted-color)">{block.description}</p> */}
-              </div>
-            ))}
-          </div>
-        )}
 
         {product.beforeAfter && (
           <div className="grid gap-4 lg:grid-cols-2">
