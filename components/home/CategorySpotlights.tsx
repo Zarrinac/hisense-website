@@ -4,7 +4,6 @@ import { HiArrowLongRight } from 'react-icons/hi2';
 
 export type SpotlightCard = {
   id: string;
-  eyebrow?: string;
   title: string;
   description: string;
   cta: string;
@@ -13,18 +12,12 @@ export type SpotlightCard = {
 };
 
 type CategorySpotlightsProps = {
-  eyebrow?: string;
   title: string;
   items: SpotlightCard[];
   locale?: string;
 };
 
-export default function CategorySpotlights({
-  eyebrow,
-  title,
-  items,
-  locale,
-}: CategorySpotlightsProps) {
+export default function CategorySpotlights({ title, items, locale }: CategorySpotlightsProps) {
   if (!items.length) {
     return null;
   }

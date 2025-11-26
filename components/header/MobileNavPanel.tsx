@@ -1,9 +1,9 @@
-import Image from 'next/image';
+import Image, { type StaticImageData } from 'next/image';
 import Link from 'next/link';
 import CloseIcon from '@mui/icons-material/Close';
 import { HiChevronRight, HiChevronLeft } from 'react-icons/hi2';
 import Logo from '@/public/icons/hisense-logo-full.svg';
-import { NavKey, SubMenuItem } from './navigationData';
+import type { NavKey, SubMenuItem } from './navigationData';
 
 type LabeledNavItem = {
   key: NavKey;
@@ -44,6 +44,7 @@ export default function MobileNavPanel({
     return null;
   }
   const localeKey = locale === 'fa' ? 'fa' : 'en';
+  const logoAsset = Logo as StaticImageData;
   const toLocalePath = (path: string) => {
     const normalized = path.startsWith('/') ? path : `/${path}`;
     return `/${locale}${normalized}`;
@@ -54,7 +55,7 @@ export default function MobileNavPanel({
       <div className="absolute inset-0 bg-(--overlay-color)" onClick={onClose} aria-hidden="true" />
       <aside className="relative ml-auto flex h-full w-full max-w-md flex-col bg-(--surface-color) p-6 shadow-(--panel-shadow)">
         <div className="flex items-start justify-between">
-          <Image alt="Hisense Logo" src={Logo} className="h-5 w-[92px]" priority />
+          <Image alt="Hisense Logo" src={logoAsset} className="h-5 w-[92px]" priority />
           <button
             type="button"
             className={iconButtonClass}
