@@ -31,6 +31,7 @@ function useImagePreloader(images: StaticImageData[]) {
 
   useEffect(() => {
     if (images.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- set once when there is nothing to preload
       setLoaded(true);
       return;
     }
@@ -49,7 +50,7 @@ function useImagePreloader(images: StaticImageData[]) {
         img.onerror = () => resolve();
       });
 
-    Promise.all(images.map(loadImage)).then(() => {
+    void Promise.all(images.map(loadImage)).then(() => {
       if (!canceled) {
         setLoaded(true);
       }
@@ -149,7 +150,7 @@ export default function HeroBanner() {
             bannersLoaded ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          {slides.map((banner, index) => (
+          {slides.map((banner) => (
             <div key={banner.id} className="relative min-w-0 flex-[0_0_100%]">
               <div className="relative aspect-9/16 w-full md:aspect-video lg:aspect-21/9">
                 <Image

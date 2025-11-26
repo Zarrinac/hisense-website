@@ -8,16 +8,18 @@ import u7kGallery3 from '@/public/products/tvs/100-U7K-Files/new-image-66ab02300
 import u7kGallery4 from '@/public/products/tvs/100-U7K-Files/new-image-66ab02301fd16.jpg';
 import u7kBefore1 from '@/public/products/tvs/100-U7K-Files/new-before_image-66ab0230189a8.jpg';
 import u7kAfter1 from '@/public/products/tvs/100-U7K-Files/new-after_image-66ab023019ca2.jpg';
-import u7kFeature1 from '@/public/products/tvs/100-U7K-Files/Feature_Mini-LED-X_b.png';
-import u7kFeature2 from '@/public/products/tvs/100-U7K-Files/Feature_Quantum-Dot-Colour_m.png';
-import u7kFeature3 from '@/public/products/tvs/100-U7K-Files/Feature_Hi-View-Engine-X_m.png';
-import u7kFeature4 from '@/public/products/tvs/100-U7K-Files/Feature_Dynamic-X-Display_m.png';
-import u7kFeature5 from '@/public/products/tvs/100-U7K-Files/Feature_144Hz_Game_Mode_PRO_m.png';
-import u7kFeature6 from '@/public/products/tvs/100-U7K-Files/Feature_CineStage-X-Surround_m.png';
-import u7kBadgeDolby from '@/public/products/tvs/100-U7K-Files/dolby vision-atoms.png';
-import u7kBadgeHDR from '@/public/products/tvs/100-U7K-Files/HDR-logo.png';
-import u7kBadgeIMAX from '@/public/products/tvs/100-U7K-Files/IMAX-logo.png';
-import u7kBadgeHiView from '@/public/products/tvs/100-U7K-Files/Hi-view-green-logo.png';
+import u7kFeature1 from '@/public/products/tvs/100-U7K-Files/dolby vision-atoms.png';
+import u7kFeature2 from '@/public/products/tvs/100-U7K-Files/HDR-logo.png';
+import u7kFeature21 from '@/public/products/tvs/100-U7K-Files/HDR-logo-black.png';
+import u7kFeature3 from '@/public/products/tvs/100-U7K-Files/Filmmaker-Mode-logo.png';
+import u7kFeature4 from '@/public/products/tvs/100-U7K-Files/IMAX-logo.png';
+import u7kFeature41 from '@/public/products/tvs/100-U7K-Files/IMAX-logo-reverse.png';
+import u7kFeature5 from '@/public/products/tvs/100-U7K-Files/Hi-view-green-logo.png';
+import u7kFeature6 from '@/public/products/tvs/100-U7K-Files/Feature_Mini-LED-X_b.png';
+import u7kFeature7 from '@/public/products/tvs/100-U7K-Files/Feature_Quantum-Dot-Colour_m.png';
+import u7kFeature8 from '@/public/products/tvs/100-U7K-Files/Feature_Dynamic-X-Display_m.png';
+import u7kFeature9 from '@/public/products/tvs/100-U7K-Files/Feature_144Hz_Game_Mode_PRO_m.png';
+import u7kFeature10 from '@/public/products/tvs/100-U7K-Files/Feature_CineStage-X-Surround_m.png';
 
 export type TvProductCopy = {
   name: string;
@@ -26,6 +28,7 @@ export type TvProductCopy = {
   highlights: string[];
   featureIntroTitle?: string;
   featureIntroText?: string;
+  masterMomentTitle?: string;
 };
 
 export type TvProduct = {
@@ -46,7 +49,12 @@ export type TvProduct = {
   posterImage?: StaticImageData;
   gallery?: StaticImageData[];
   beforeAfter?: { before: StaticImageData; after: StaticImageData };
-  featureCards?: { title: string; description: string; image: StaticImageData }[];
+  featureCards?: {
+    title: string;
+    description: string;
+    image: StaticImageData;
+    imageBlack?: StaticImageData;
+  }[];
   badges?: StaticImageData[];
   copy: Record<'en' | 'fa', TvProductCopy>;
 };
@@ -133,38 +141,64 @@ export const TV_PRODUCTS: TvProduct[] = [
     beforeAfter: { before: u7kBefore1, after: u7kAfter1 },
     featureCards: [
       {
-        title: 'Mini-LED X',
+        title: 'Dolby Vision-Atoms',
         description:
           'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
         image: u7kFeature1,
       },
       {
-        title: 'Quantum Dot Colour',
-        description: 'Billion+ colour shades with high volume for vivid HDR scenes.',
+        title: 'HDR',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
         image: u7kFeature2,
+        imageBlack: u7kFeature21,
       },
       {
-        title: 'Hi-View Engine X',
-        description: 'AI processing that refines contrast, detail, and motion frame by frame.',
+        title: 'Filmmaker',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
         image: u7kFeature3,
+      },
+      {
+        title: 'IMAX',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: u7kFeature4,
+        imageBlack: u7kFeature41,
+      },
+      {
+        title: 'Hi-view',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: u7kFeature5,
+      },
+      {
+        title: 'Mini-LED X',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: u7kFeature6,
+      },
+      {
+        title: 'Quantum Dot Colour',
+        description: 'Billion+ colour shades with high volume for vivid HDR scenes.',
+        image: u7kFeature7,
       },
       {
         title: 'Dynamic X-Display',
         description: 'Optimized panel uniformity and anti-glare for wide seating and bright rooms.',
-        image: u7kFeature4,
+        image: u7kFeature8,
       },
       {
         title: '144Hz Game Mode Pro',
         description: 'High refresh rate with low latency for fast games and smooth sports.',
-        image: u7kFeature5,
+        image: u7kFeature9,
       },
       {
         title: 'CineStage X Surround',
         description: '5.1 channel sound layout with Dolby support and built-in subwoofer.',
-        image: u7kFeature6,
+        image: u7kFeature10,
       },
     ],
-    badges: [u7kBadgeDolby, u7kBadgeHDR, u7kBadgeIMAX, u7kBadgeHiView],
     copy: {
       en: {
         name: 'Hisense 100U7K Mini-LED 4K TV',
@@ -182,6 +216,7 @@ export const TV_PRODUCTS: TvProduct[] = [
         featureIntroTitle: 'Great Things Come in Small Packages',
         featureIntroText:
           "Hisense's Mini LED setup improves on these LEDs, resulting in breathtaking detail on screen. Tightly grouped LEDs for an infinitely more precise backlight and better contrast control. Additionally, the mini-LEDs emit light in a line, instead of a diffuse cone which also improves precision. Utilize up to 1000 dimming zones for improved contrast and a crisp, vivid picture.",
+        masterMomentTitle: 'Master The Moments With Details',
       },
       fa: {
         name: 'تلویزیون 100U7K هایسنس (Mini-LED)',
@@ -199,6 +234,7 @@ export const TV_PRODUCTS: TvProduct[] = [
         featureIntroTitle: 'کیفیت بزرگ در ابعاد کوچک',
         featureIntroText:
           'فناوری Mini LED هایسنس با بهبود ساختار LED‌ها، جزئیاتی نفس‌گیر و خیره‌کننده روی صفحه ایجاد می‌کند. گروه‌بندی بسیار دقیق LEDها، باعث کنترل بهتر نور پس‌زمینه و کنتراست می‌شود. علاوه‌براین، Mini LEDها نور را به‌صورت خطی منتشر می‌کنند، نه مخروطیِ پخش‌شونده؛ و همین موضوع دقت تصویر را به‌طور چشمگیری افزایش می‌دهد. با استفاده از ۱۰۰۰ ناحیه‌ی کم‌نوردهی (Dimming Zone) ، کنتراست بهبود می‌یابد و تصویری روشن، زنده و بسیار شفاف ارائه می‌شود.',
+        masterMomentTitle: 'لحظه‌ها را با جزئیات، بی نقص بسازید',
       },
     },
   },

@@ -37,6 +37,7 @@ export function ThemeProvider({ children, defaultTheme = 'light' }: ThemeProvide
       return;
     }
 
+    /* eslint-disable react-hooks/set-state-in-effect */
     const root = document.documentElement;
     const storedTheme = window.localStorage.getItem(STORAGE_KEY) as Theme | null;
 
@@ -52,6 +53,7 @@ export function ThemeProvider({ children, defaultTheme = 'light' }: ThemeProvide
     setThemeState(resolvedTheme);
     root.dataset.theme = resolvedTheme;
     setIsReady(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [defaultTheme]);
 
   useEffect(() => {
