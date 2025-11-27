@@ -2,15 +2,15 @@ import { type StaticImageData } from 'next/image';
 import tv100Q7Hero from '@/public/products/tvs/100Q7/hero.png';
 import u7kHero from '@/public/products/tvs/100-U7K-Files/hero.png';
 import u7kVideoPoster from '@/public/products/tvs/100-U7K-Files/new-image-66ab023011a9a.jpg';
-import u7kGallery1 from '@/public/products/tvs/100-U7K-Files/new-image-66ab023002196.jpg';
 import u7kGallery2 from '@/public/products/tvs/100-U7K-Files/new-image-66ab0230051d6.jpg';
 import u7kGallery3 from '@/public/products/tvs/100-U7K-Files/new-image-66ab023007bc9.jpg';
 import u7kGallery4 from '@/public/products/tvs/100-U7K-Files/new-image-66ab02301fd16.jpg';
 import u7kBefore1 from '@/public/products/tvs/100-U7K-Files/new-before_image-66ab0230189a8.jpg';
 import u7kAfter1 from '@/public/products/tvs/100-U7K-Files/new-after_image-66ab023019ca2.jpg';
-import u7kFeature1 from '@/public/products/tvs/100-U7K-Files/dolby vision-atoms.png';
-import u7kFeature2 from '@/public/products/tvs/100-U7K-Files/HDR-logo.png';
-import u7kFeature21 from '@/public/products/tvs/100-U7K-Files/HDR-logo-black.png';
+import u7kFeature1 from '@/public/products/tvs/100-U7K-Files/Dolby-Vision-Atmos-svg-dark.svg';
+import u7kFeature11 from '@/public/products/tvs/100-U7K-Files/Dolby-Vision-Atmos-svg-white.svg';
+import u7kFeature2 from '@/public/products/tvs/100-U7K-Files/HDR-logo-black.png';
+import u7kFeature21 from '@/public/products/tvs/100-U7K-Files/HDR-logo.png';
 import u7kFeature3 from '@/public/products/tvs/100-U7K-Files/Filmmaker-Mode-logo.png';
 import u7kFeature4 from '@/public/products/tvs/100-U7K-Files/IMAX-logo.png';
 import u7kFeature41 from '@/public/products/tvs/100-U7K-Files/IMAX-logo-reverse.png';
@@ -20,6 +20,8 @@ import u7kFeature7 from '@/public/products/tvs/100-U7K-Files/Feature_Quantum-Dot
 import u7kFeature8 from '@/public/products/tvs/100-U7K-Files/Feature_Dynamic-X-Display_m.png';
 import u7kFeature9 from '@/public/products/tvs/100-U7K-Files/Feature_144Hz_Game_Mode_PRO_m.png';
 import u7kFeature10 from '@/public/products/tvs/100-U7K-Files/Feature_CineStage-X-Surround_m.png';
+import u7kIntelligentProcessor from '@/public/products/tvs/100-U7K-Files/HI-VIEW-engine.jpg';
+import u7kDetailSection from '@/public/products/tvs/100-U7K-Files/detailSection-image.jpg';
 
 export type TvProductCopy = {
   name: string;
@@ -29,6 +31,10 @@ export type TvProductCopy = {
   featureIntroTitle?: string;
   featureIntroText?: string;
   masterMomentTitle?: string;
+  intelligentProcessorTitle?: string;
+  intelligentProcessorText?: string;
+  detailTitle?: string;
+  detailText?: string;
 };
 
 export type TvProduct = {
@@ -49,6 +55,11 @@ export type TvProduct = {
   posterImage?: StaticImageData;
   gallery?: StaticImageData[];
   beforeAfter?: { before: StaticImageData; after: StaticImageData };
+  contentSections?: {
+    image: StaticImageData;
+    titleKey: keyof TvProductCopy;
+    textKey: keyof TvProductCopy;
+  }[];
   featureCards?: {
     title: string;
     description: string;
@@ -104,7 +115,7 @@ export const TV_PRODUCTS: TvProduct[] = [
         highlights: [
           'نمایشگر QLED 4K (۳۸۴۰x۲۱۶۰) با HDR و زاویه دید ۱۷۸ درجه.',
           'سیستم هوشمند VIDAA U7.6 با ارتقاء تصویر HD به 4K توسط هوش مصنوعی.',
-          'پردازشگر Hi-View Engine X و Dynamic X-Display برای روشنایی و کنتراست دقیق.',
+          ' پردازشگر Hi-View Engine X و Dynamic X-Display برای روشنایی و کنتراست دقیق.',
           'حالت Game Mode Pro با نرخ ۱۴۴ هرتز و رنگ‌های Quantum Dot برای تاخیر کم.',
           'صدای ۲.۱ کانال (۲x۱۵ وات + ساب ۲۰ وات)، دالبی و CineStage X Surround.',
           'اتصال WiFi، بلوتوث ۵، چهار HDMI، دو USB 2.0، SPDIF، AV و خروجی هدفون.',
@@ -137,14 +148,27 @@ export const TV_PRODUCTS: TvProduct[] = [
     image: u7kHero,
     heroVideo: 'https://hisenseme.com/storage/13212/new-video-66ab022f82acb.mp4',
     posterImage: u7kVideoPoster,
-    gallery: [u7kGallery1, u7kGallery2, u7kGallery3, u7kGallery4],
+    gallery: [u7kGallery2, u7kGallery3, u7kGallery4],
     beforeAfter: { before: u7kBefore1, after: u7kAfter1 },
+    contentSections: [
+      {
+        image: u7kIntelligentProcessor,
+        titleKey: 'intelligentProcessorTitle',
+        textKey: 'intelligentProcessorText',
+      },
+      {
+        image: u7kDetailSection,
+        titleKey: 'detailTitle',
+        textKey: 'detailText',
+      },
+    ],
     featureCards: [
       {
         title: 'Dolby Vision-Atoms',
         description:
           'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
-        image: u7kFeature1,
+        image: u7kFeature1 as StaticImageData,
+        imageBlack: u7kFeature11 as StaticImageData,
       },
       {
         title: 'HDR',
@@ -217,6 +241,12 @@ export const TV_PRODUCTS: TvProduct[] = [
         featureIntroText:
           "Hisense's Mini LED setup improves on these LEDs, resulting in breathtaking detail on screen. Tightly grouped LEDs for an infinitely more precise backlight and better contrast control. Additionally, the mini-LEDs emit light in a line, instead of a diffuse cone which also improves precision. Utilize up to 1000 dimming zones for improved contrast and a crisp, vivid picture.",
         masterMomentTitle: 'Master The Moments With Details',
+        intelligentProcessorTitle: 'Scene-By-Scene Intelligent Processor',
+        intelligentProcessorText:
+          'Hisense’s Hi-View Engine is both the brains and the muscle that keeps your TV running smoothly. A powerful neural network consistently optimizes your viewing experience with real-time frame-level analysis to ensure you’re experiencing the optimal audiovisual journey, while also taking care of complex functions like 4K upscaling, and color enhancement so that even lower quality video looks better than ever.',
+        detailTitle: 'See All The Content You Love in Dazzling Details',
+        detailText:
+          'Hisense TVs have taken the only sensible approach to HDR with support for all major formats, including Dolby Vision, HDR10, HDR10+, and HLG. Never worry about subpar video quality or compatibility again. Simply choose and play whatever content you want, knowing you’re experiencing it in perfect detail, enhanced colors, and deeper blacks, thanks to the wide range of HDR formats.',
       },
       fa: {
         name: 'تلویزیون 100U7K هایسنس (Mini-LED)',
@@ -235,6 +265,12 @@ export const TV_PRODUCTS: TvProduct[] = [
         featureIntroText:
           'فناوری Mini LED هایسنس با بهبود ساختار LED‌ها، جزئیاتی نفس‌گیر و خیره‌کننده روی صفحه ایجاد می‌کند. گروه‌بندی بسیار دقیق LEDها، باعث کنترل بهتر نور پس‌زمینه و کنتراست می‌شود. علاوه‌براین، Mini LEDها نور را به‌صورت خطی منتشر می‌کنند، نه مخروطیِ پخش‌شونده؛ و همین موضوع دقت تصویر را به‌طور چشمگیری افزایش می‌دهد. با استفاده از ۱۰۰۰ ناحیه‌ی کم‌نوردهی (Dimming Zone) ، کنتراست بهبود می‌یابد و تصویری روشن، زنده و بسیار شفاف ارائه می‌شود.',
         masterMomentTitle: 'لحظه‌ها را با جزئیات، بی نقص بسازید',
+        intelligentProcessorTitle: 'پردازش هوشمند صحنه‌ به‌ صحنه',
+        intelligentProcessorText:
+          'موتور Hi-View هایسنس، قلب تپنده و مرکز فرمان تلویزیون است؛ جایی که ترکیبی از هوش و قدرت، تجربه تماشای شما را به بهترین شکل کنترل و بهینه‌سازی می‌کند. این پردازنده با استفاده از یک شبکه قدرتمند، هر فریم تصویر را به صورت لحظه‌ای تحلیل کرده و کیفیت صدا و تصویر را متناسب با صحنه تنظیم می‌کند. در کنار این‌ها، وظایف پیچیده‌ای مانند ارتقای هوشمند کیفیت تا 4K، بهبود رنگ و پردازش پیشرفته تصویر نیز به‌طور خودکار انجام می‌شود تا حتی محتوای کم کیفیت، شفاف‌ تر، طبیعی‌تر و جذاب‌تر از همیشه به‌نظر برسد.',
+        detailTitle: 'تماشای تمام محتوای موردعلاقه‌تان با جزئیات خیره‌ کننده',
+        detailText:
+          'تلویزیون‌های هایسنس با پشتیبانی از تمامی فرمت‌های اصلی HDR از جمله Dolby Vision، HDR10+، HDR10 و HLG، تجربه‌ای کامل و بی‌نقص را ارائه می‌دهند. دیگر نگران سازگاری یا کیفیت پایین تصویر نباشید؛ هر محتوایی را که بخواهید، انتخاب و پخش کنید و از جزئیات دقیق‌تر، رنگ‌های زنده‌تر و سیاهی‌های عمیق‌تر لذت ببرید — همه این‌ها به لطف طیف گسترده‌ی فرمت‌های HDR.',
       },
     },
   },

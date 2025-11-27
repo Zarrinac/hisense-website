@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import Image, { type StaticImageData } from 'next/image';
 import { TV_PRODUCTS } from '@/content/tvProducts';
 import Banner from '@/public/products/tvs/100-U7K-Files/100U7K-Hero.png';
+import FeatureCardImage from '@/components/tv/FeatureCardImage';
+import ContentSections, { type ContentSectionData } from '@/components/tv/ContentSections';
 
 type PageParams = {
   locale?: string;
@@ -89,6 +91,15 @@ export default async function TvProductDetailPage({ params }: PageProps) {
   const featureIntroTitle = copy.featureIntroTitle;
   const featureIntroText = copy.featureIntroText;
   const masterMomentTitle = copy.masterMomentTitle;
+  const contentSections: ContentSectionData[] =
+    product.contentSections
+      ?.map((section) => {
+        const title = copy[section.titleKey];
+        const text = copy[section.textKey];
+        if (!title || !text) return null;
+        return { image: section.image, title, text };
+      })
+      .filter((section): section is ContentSectionData => Boolean(section)) ?? [];
 
   const specLabels =
     lang === 'fa'
@@ -117,6 +128,8 @@ export default async function TvProductDetailPage({ params }: PageProps) {
 
   const featureCards = product.featureCards ?? [];
   const gallery = product.gallery ?? [];
+
+  const compactFeatureTitles = new Set(['Dolby Vision-Atoms', 'Filmmaker', 'IMAX']);
 
   return (
     <div className="space-y-16 pb-16 lg:space-y-20 lg:pb-24" dir={lang === 'fa' ? 'rtl' : 'ltr'}>
@@ -204,18 +217,30 @@ export default async function TvProductDetailPage({ params }: PageProps) {
                 key={block.title}
                 className="flex flex-col gap-2 items-center justify-between rounded-xl border border-(--border-color) bg-(--surface-color) shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="rounded-2xl bg-(--surface-color-2)">
-                  <Image
-                    src={block.image}
-                    alt={block.title}
-                    className={`${block.title === 'Filmmaker' ? 'h-12 mt-4' : 'h-20'} w-auto object-cover`}
-                  />
+                <div className="rounded-2xl bg-(--surface-color-2) flex items-center justify-center">
+                  {(() => {
+                    const isCompact = compactFeatureTitles.has(block.title);
+                    const imageClasses = `${isCompact ? 'h-12 mt-4' : 'h-14 mt-2'} w-auto object-contain`;
+
+                    return (
+                      <FeatureCardImage
+                        title={block.title}
+                        image={block.image}
+                        imageBlack={block.imageBlack}
+                        className={imageClasses}
+                      />
+                    );
+                  })()}
                 </div>
                 <h4 className="text-xs md:text-sm text-center mb-2 md:mb-2">{block.title}</h4>
               </div>
             ))}
           </div>
         </div>
+      )}
+
+      {contentSections.length > 0 && (
+        <ContentSections sections={contentSections} isRTL={lang === 'fa'} />
       )}
 
       <div className="mx-auto flex w-full max-w-480 flex-col gap-10 px-4 sm:px-6 lg:px-10">
