@@ -44,7 +44,7 @@ export function ThemeProvider({ children, defaultTheme = 'light' }: ThemeProvide
     }
 
     /* eslint-disable react-hooks/set-state-in-effect */
-    const root = document.documentElement;
+    // const root = document.documentElement;
     const storedTheme = window.localStorage.getItem(STORAGE_KEY) as Theme | null;
 
     if (storedTheme === 'light' || storedTheme === 'dark') {
