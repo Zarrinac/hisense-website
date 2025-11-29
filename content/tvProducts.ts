@@ -1,12 +1,7 @@
 import { type StaticImageData } from 'next/image';
 import tv100Q7Hero from '@/public/products/tvs/100Q7/hero.png';
 import u7kHero from '@/public/products/tvs/100-U7K-Files/hero.png';
-import u7kVideoPoster from '@/public/products/tvs/100-U7K-Files/new-image-66ab023011a9a.jpg';
-import u7kGallery2 from '@/public/products/tvs/100-U7K-Files/new-image-66ab0230051d6.jpg';
-import u7kGallery3 from '@/public/products/tvs/100-U7K-Files/new-image-66ab023007bc9.jpg';
-import u7kGallery4 from '@/public/products/tvs/100-U7K-Files/new-image-66ab02301fd16.jpg';
-import u7kBefore1 from '@/public/products/tvs/100-U7K-Files/new-before_image-66ab0230189a8.jpg';
-import u7kAfter1 from '@/public/products/tvs/100-U7K-Files/new-after_image-66ab023019ca2.jpg';
+import u7kVideoPoster from '@/public/products/tvs/100-U7K-Files/gamePlaySection-image.jpg';
 import u7kFeature1 from '@/public/products/tvs/100-U7K-Files/Dolby-Vision-Atmos-svg-dark.svg';
 import u7kFeature11 from '@/public/products/tvs/100-U7K-Files/Dolby-Vision-Atmos-svg-white.svg';
 import u7kFeature2 from '@/public/products/tvs/100-U7K-Files/HDR-logo-black.png';
@@ -22,6 +17,16 @@ import u7kFeature9 from '@/public/products/tvs/100-U7K-Files/Feature_144Hz_Game_
 import u7kFeature10 from '@/public/products/tvs/100-U7K-Files/Feature_CineStage-X-Surround_m.png';
 import u7kIntelligentProcessor from '@/public/products/tvs/100-U7K-Files/HI-VIEW-engine.jpg';
 import u7kDetailSection from '@/public/products/tvs/100-U7K-Files/detailSection-image.jpg';
+import u7kDolbySection from '@/public/products/tvs/100-U7K-Files/dolbySection-image.jpg';
+import u7kImaxSection from '@/public/products/tvs/100-U7K-Files/imaxSection-image.jpg';
+import u7kfilmMakerSection from '@/public/products/tvs/100-U7K-Files/filmMakerSection-image.jpg';
+import u7kAutoLightAfterSection from '@/public/products/tvs/100-U7K-Files/autoLight-after-image.jpg';
+import u7kAutoLightBeforeSection from '@/public/products/tvs/100-U7K-Files/autoLight-before-image.jpg';
+import u7kSportsModeBeforeSection from '@/public/products/tvs/100-U7K-Files/sportsMode-before-image.jpg';
+import u7kSportsModeAfterSection from '@/public/products/tvs/100-U7K-Files/sportsMode-after-image.jpg';
+import u7kOptimizationSection from '@/public/products/tvs/100-U7K-Files/optimization-image.jpg';
+import u7kStayConnectedSection from '@/public/products/tvs/100-U7K-Files/stayConnected-image.jpg';
+import u7kExperienceSection from '@/public/products/tvs/100-U7K-Files/experience-image.jpg';
 
 export type TvProductCopy = {
   name: string;
@@ -35,6 +40,24 @@ export type TvProductCopy = {
   intelligentProcessorText?: string;
   detailTitle?: string;
   detailText?: string;
+  dolbyTitle?: string;
+  dolbyText?: string;
+  imaxTitle?: string;
+  imaxText?: string;
+  filmMakerTitle?: string;
+  filmMakerText?: string;
+  gamePlayTitle?: string;
+  gamePlayText?: string;
+  autoLightTitle?: string;
+  autoLightText?: string;
+  sportsModeTitle?: string;
+  sportsModeText?: string;
+  optimizationTitle?: string;
+  optimizationText?: string;
+  stayConnectedTitle?: string;
+  stayConnectedText?: string;
+  experienceTitle?: string;
+  experienceText?: string;
 };
 
 export type TvProduct = {
@@ -55,6 +78,13 @@ export type TvProduct = {
   posterImage?: StaticImageData;
   gallery?: StaticImageData[];
   beforeAfter?: { before: StaticImageData; after: StaticImageData };
+  filmMakerImage?: StaticImageData;
+  gamePlayImage?: StaticImageData;
+  autoLightComparison?: { before: StaticImageData; after: StaticImageData };
+  sportsModeComparison?: { before: StaticImageData; after: StaticImageData };
+  optimizationImage?: StaticImageData;
+  stayConnectedImage?: StaticImageData;
+  experienceImage?: StaticImageData;
   contentSections?: {
     image: StaticImageData;
     titleKey: keyof TvProductCopy;
@@ -148,8 +178,13 @@ export const TV_PRODUCTS: TvProduct[] = [
     image: u7kHero,
     heroVideo: 'https://hisenseme.com/storage/13212/new-video-66ab022f82acb.mp4',
     posterImage: u7kVideoPoster,
-    gallery: [u7kGallery2, u7kGallery3, u7kGallery4],
-    beforeAfter: { before: u7kBefore1, after: u7kAfter1 },
+    filmMakerImage: u7kfilmMakerSection,
+    gamePlayImage: u7kVideoPoster,
+    autoLightComparison: { before: u7kAutoLightBeforeSection, after: u7kAutoLightAfterSection },
+    sportsModeComparison: { before: u7kSportsModeBeforeSection, after: u7kSportsModeAfterSection },
+    optimizationImage: u7kOptimizationSection,
+    stayConnectedImage: u7kStayConnectedSection,
+    experienceImage: u7kExperienceSection,
     contentSections: [
       {
         image: u7kIntelligentProcessor,
@@ -160,6 +195,16 @@ export const TV_PRODUCTS: TvProduct[] = [
         image: u7kDetailSection,
         titleKey: 'detailTitle',
         textKey: 'detailText',
+      },
+      {
+        image: u7kDolbySection,
+        titleKey: 'dolbyTitle',
+        textKey: 'dolbyText',
+      },
+      {
+        image: u7kImaxSection,
+        titleKey: 'imaxTitle',
+        textKey: 'imaxText',
       },
     ],
     featureCards: [
@@ -247,6 +292,33 @@ export const TV_PRODUCTS: TvProduct[] = [
         detailTitle: 'See All The Content You Love in Dazzling Details',
         detailText:
           'Hisense TVs have taken the only sensible approach to HDR with support for all major formats, including Dolby Vision, HDR10, HDR10+, and HLG. Never worry about subpar video quality or compatibility again. Simply choose and play whatever content you want, knowing you’re experiencing it in perfect detail, enhanced colors, and deeper blacks, thanks to the wide range of HDR formats.',
+        dolbyTitle: 'Step into The Story',
+        dolbyText:
+          'See and hear what you’ve been missing. Connect more deeply to the shows and movies you love when you watch them in Dolby. Dolby builds a deeper connection to the stories and characters you love and take your entertainment to new heights when you stream your favorite shows and the best movies.',
+        imaxTitle: 'Unleash The Power of Imax at Home',
+        imaxText:
+          'IMAX quality cinema need not be out of reach. Certified by the IMAX corporation and Hollywood’s leading technical specialists to deliver IMAX’s signature brand picture quality and DTS®-powered audio immersion from the comfort of your own home. Dive deeper into the world’s most innovative movie-going experience for an immersive audio visual experience.',
+        filmMakerTitle: 'Watch Your Movies and TV Shows The Way The Filmmakers Intended',
+        filmMakerText:
+          'Experience the message as it was intended with the Hisense Filmmaker Mode. Adjust your video to its original settings, to see details like the sound, aspect ratio, color, frame rate, and more as it was originally envisioned for the most authentic display of your favorite filmmaker’s masterpiece, before it was altered for generic viewing.',
+        gamePlayTitle: 'Dominate With Optimized Gameplay',
+        gamePlayText:
+          'Dominate your opponents by equipping the Game Bar and using an array of tools to give you the best gaming experience technology has to offer. From providing real time refresh rate and input lag status reports, to an adaptive easy to adjust screen to quickly and smoothly adjust your picture size and position. Surprise your opponents with a tactical gameplay that fully supports your skill set.',
+        autoLightTitle: 'Auto-Optimized For Any Light',
+        autoLightText:
+          'The room light that is too bright or too dark will be something in the past. With your viewing ambient considered, Hisense TV can sense the surrounding in a sophisticated way and calibrates according to the brightness level and color temperature. The sunlight in your room will not take over the bright yet precise image. Meanwhile, it goes easy on your eyes at night but with all the captivating details.',
+        sportsModeTitle: 'Claim the Best Seats in The Stadium',
+        sportsModeText:
+          'AI Sports Mode enables the best picture and audio quality for the smoothest viewing experience. See every crack in the field, the players’ determined stare, and the excitement of everyone in the audience, and hear every note of the commentator’s voice. Hisense TVs intuitively sense and clean up and enhance fast-moving objects, for a perfectly fluid viewing experience.',
+        optimizationTitle: 'AI Real-Time Scenario-Specific Optimization',
+        optimizationText:
+          'Let your TV do the work with the intelligent AI Picture optimization software. Like the world’s greatestart critic, your TV will analyze the composition of each frame and adjust your brightness, resolution, color settings, and more so that each scene looks perfect – and you don’t have to do anything but sit back, relax, and let your smart TV take care of everything.',
+        stayConnectedTitle: 'Stay Connected',
+        stayConnectedText:
+          'Newest consoles, faster data transmission and lower lag. Add all external devices with state of the art wireless and wired connectivity. HDMI 2.1, AirPlay, Bluetooth, Share to TV, WISA Ready.',
+        experienceTitle: 'Control The Experienc',
+        experienceText:
+          'Hisense TV and sound bar are made perfect for each other. Enjoy calibrating the sound simply with your TV remote powered by the EZPlay function. Customize the bass and tremble the way you like it, all visualized on your Hisense TV.',
       },
       fa: {
         name: 'تلویزیون 100U7K هایسنس (Mini-LED)',
@@ -271,6 +343,33 @@ export const TV_PRODUCTS: TvProduct[] = [
         detailTitle: 'تماشای تمام محتوای موردعلاقه‌تان با جزئیات خیره‌ کننده',
         detailText:
           'تلویزیون‌های هایسنس با پشتیبانی از تمامی فرمت‌های اصلی HDR از جمله Dolby Vision، HDR10+، HDR10 و HLG، تجربه‌ای کامل و بی‌نقص را ارائه می‌دهند. دیگر نگران سازگاری یا کیفیت پایین تصویر نباشید؛ هر محتوایی را که بخواهید، انتخاب و پخش کنید و از جزئیات دقیق‌تر، رنگ‌های زنده‌تر و سیاهی‌های عمیق‌تر لذت ببرید — همه این‌ها به لطف طیف گسترده‌ی فرمت‌های HDR.',
+        dolbyTitle: 'تجربه‌ای عمیق‌تر از هر داستان',
+        dolbyText:
+          'با Dolby، آنچه را تاکنون از دست می‌دادید ببینید و بشنوید. هنگام تماشای فیلم‌ها و سریال‌های محبوبتان، ارتباطی عمیق‌تر با داستان و شخصیت‌ها برقرار کنید و تجربه‌ای فراگیرتر داشته باشید. فناوری Dolby سرگرمی شما را به سطحی فراتر می‌برد و هنگام استریم بهترین فیلم‌ها و برنامه‌ها، شما را بیش از همیشه در فضای داستان غوطه‌ور می‌کند.',
+        imaxTitle: 'قدرت IMAX را در خانه تجربه کنید',
+        imaxText:
+          'سینمای واقعی IMAX دیگر دست نیافتنی نیست. تلویزیون‌های هایسنس با تأییدیه رسمی شرکت IMAX و همکاری متخصصان برتر هالیوود، همان کیفیت خیره‌کننده‌ی تصویر و صدای فراگیر مبتنی بر DTS® را به خانه شما می‌آورند.با این استاندارد پیشرفته، در دنیای فیلم‌ها عمیق‌تر غوطه‌ور شوید و تجربه‌ای مشابه نوآورانه‌ترین سالن‌های سینمای جهان را در اتاق نشیمن خود احساس کنید — تجربه‌ای کاملاً فراگیر در تصویر و صدا.',
+        filmMakerTitle: 'تماشای فیلم‌ها و سریال‌ها همان‌طور که فیلمساز خواسته است',
+        filmMakerText:
+          'با Filmmaker Mode هایسنس، محتوای تصویری را دقیقاً همان‌گونه ببینید که سازندگان آن در نظر داشته‌اند. این حالت با بازگرداندن تنظیمات تصویر به حالت اصلی، جزئیاتی مانند صدا، نسبت تصویر، رنگ‌ها، نرخ فریم و دیگر ویژگی‌های مهم را مطابق نسخه‌ی اولیه نمایش می‌دهد. نتیجه؟ نمایش اصیل و وفادار به دیدگاه فیلمساز و تجربه‌ای بی‌واسطه از شاهکارهای موردعلاقه‌تان، قبل از آن‌که برای نمایش عمومی تغییر داده شوند.',
+        gamePlayTitle: 'برتری در بازی با تنظیمات هوشمند گیمینگ',
+        gamePlayText:
+          'با فعال‌سازی Game Bar هایسنس و مجموعه‌ای از ابزارهای تخصصی گیمینگ، تجربه‌ای سریع‌تر، دقیق‌تر و رقابتی‌تر داشته باشید. این قابلیت، اطلاعات مهمی مانند نرخ تازه‌سازی لحظه‌ای و وضعیت Input Lag را در همان لحظه نمایش می‌دهد و با امکان تنظیم آسان و تطبیقی اندازه و موقعیت تصویر، کنترل کامل صحنه را به شما می‌دهد. با این مجموعه‌ی حرفه‌ای، هوشمندانه‌تر بازی کنید، واکنش سریع‌تری داشته باشید و رقیبانتان را با یک سبک بازی تاکتیکی و هماهنگ با مهارت‌های خود غافلگیر کنید.',
+        autoLightTitle: 'بهینه‌سازی هوشمند برای هر میزان نور محیط',
+        autoLightText:
+          'دیگر نور زیاد یا کمِ اتاق، مانعی برای تماشای عالی نخواهد بود. تلویزیون‌های هایسنس با سنجش دقیق نور و شرایط محیط، روشنایی و دمای رنگ تصویر را به‌صورت هوشمند تنظیم می‌کنند. در طول روز، نور خورشید نمی‌تواند بر وضوح و روشنایی دقیق تصویر غلبه کند و در شب نیز نمایشگر با کاهش خستگی چشم، همان جزئیات جذاب و کامل را ارائه می‌دهد.نتیجه؟ تصویری متعادل، واضح و راحت برای چشم در هر ساعت از شبانه‌روز و با هر شرایط نوری.',
+        sportsModeTitle: 'بهترین جایگاه ورزشگاه را در خانه تجربه کنید',
+        sportsModeText:
+          'با AI Sports Mode هایسنس، رقابت‌ها را با بهترین کیفیت تصویر و صدا دنبال کنید. هر ترک روی زمین بازی، نگاه مصمم بازیکنان و هیجان تماشاگران را با وضوح بی‌نظیر ببینید و صدای گزارشگر را با شفافیتی واقعی بشنوید. تلویزیون‌های هایسنس به‌صورت هوشمند اجسام سریع را تشخیص داده، نویزهای اضافی را پاک می‌کنند و حرکات را روان‌تر نمایش می‌دهند تا تماشای مسابقه، کاملاً سیال، واقعی و پرهیجان باشد—درست مثل نشستن در بهترین صندلی ورزشگاه.',
+        optimizationTitle: 'بهینه‌سازی هوشمند صحنه‌ها در لحظه، با کمک AI',
+        optimizationText:
+          'با نرم‌افزار هوشمند AI Picture، تلویزیون شما همه‌چیز را خودش مدیریت می‌کند. این فناوری با تحلیل دقیق ترکیب هر فریم — مانند یک منتقد هنری خبره — تنظیماتی مثل روشنایی، وضوح، رنگ و سایر پارامترهای تصویری را به‌طور خودکار اصلاح می‌کند تا هر صحنه در بهترین حالت ممکن نمایش داده شود. کافی است بنشینید و لذت ببرید؛ تلویزیون هوشمندتان تمام جزئیات را برای یک تجربه‌ی بی‌نقص تنظیم می‌کند.',
+        stayConnectedTitle: 'همیشه متصل بمانید',
+        stayConnectedText:
+          'با پشتیبانی از جدیدترین کنسول‌ها، انتقال داده سریع‌تر و تأخیر کمتر، تمام دستگاه‌های خارجی خود را به‌سادگی متصل کنید. تلویزیون‌های هایسنس با مجموعه‌ای از پیشرفته‌ترین قابلیت‌های ارتباطی — HDMI 2.1، AirPlay، بلوتوث، Share to TV و WISA Ready — تجربه‌ای روان، سریع و بی‌وقفه را در اختیار شما قرار می‌دهند.',
+        experienceTitle: 'کنترل کامل تجربه تماشا',
+        experienceText:
+          'ساندبار و تلویزیون‌های هایسنس برای هماهنگی کامل با یکدیگر طراحی شده‌اند. با قابلیت EZPlay، تنها از طریق ریموت تلویزیون می‌توانید تنظیمات صدا را به‌سادگی مدیریت کنید. بیس و تریبل را مطابق سلیقه‌تان شخصی‌سازی کنید و همه تغییرات را به‌صورت واضح و یکپارچه روی صفحه تلویزیون ببینید؛ تجربه‌ای دقیق، راحت و کاملاً تحت کنترل شما.',
       },
     },
   },

@@ -18,7 +18,7 @@ export default function FeatureCardImage({
 }: FeatureCardImageProps) {
   const { theme, isReady } = useTheme();
   const showDarkVariant = isReady && theme === 'dark' && imageBlack;
-  const src = showDarkVariant ? imageBlack! : image;
+  const src = showDarkVariant ? imageBlack : image;
 
   return <Image src={src} alt={title} className={className} />;
 }

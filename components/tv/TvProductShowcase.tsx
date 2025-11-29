@@ -50,7 +50,7 @@ export default function TvProductShowcase({
             <meta itemProp="model" content={product.series} />
 
             <div className="grid items-center gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-              <div className="relative aspect-video w-full overflow-hidden bg-(--surface-color) lg:aspect-16/9">
+              <div className="relative aspect-video w-full overflow-hidden bg-(--surface-color) lg:aspect-video">
                 <Image
                   src={product.image}
                   alt={copy.name}
