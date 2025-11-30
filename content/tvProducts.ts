@@ -1,32 +1,42 @@
 import { type StaticImageData } from 'next/image';
-import tv100Q7Hero from '@/public/products/tvs/100Q7/hero.png';
-import u7kHero from '@/public/products/tvs/100-U7K-Files/hero.png';
-import u7kVideoPoster from '@/public/products/tvs/100-U7K-Files/gamePlaySection-image.jpg';
-import u7kFeature1 from '@/public/products/tvs/100-U7K-Files/Dolby-Vision-Atmos-svg-dark.svg';
-import u7kFeature11 from '@/public/products/tvs/100-U7K-Files/Dolby-Vision-Atmos-svg-white.svg';
-import u7kFeature2 from '@/public/products/tvs/100-U7K-Files/HDR-logo-black.png';
-import u7kFeature21 from '@/public/products/tvs/100-U7K-Files/HDR-logo.png';
-import u7kFeature3 from '@/public/products/tvs/100-U7K-Files/Filmmaker-Mode-logo.png';
-import u7kFeature4 from '@/public/products/tvs/100-U7K-Files/IMAX-logo.png';
-import u7kFeature41 from '@/public/products/tvs/100-U7K-Files/IMAX-logo-reverse.png';
-import u7kFeature5 from '@/public/products/tvs/100-U7K-Files/Hi-view-green-logo.png';
-import u7kFeature6 from '@/public/products/tvs/100-U7K-Files/Feature_Mini-LED-X_b.png';
-import u7kFeature7 from '@/public/products/tvs/100-U7K-Files/Feature_Quantum-Dot-Colour_m.png';
-import u7kFeature8 from '@/public/products/tvs/100-U7K-Files/Feature_Dynamic-X-Display_m.png';
-import u7kFeature9 from '@/public/products/tvs/100-U7K-Files/Feature_144Hz_Game_Mode_PRO_m.png';
-import u7kFeature10 from '@/public/products/tvs/100-U7K-Files/Feature_CineStage-X-Surround_m.png';
-import u7kIntelligentProcessor from '@/public/products/tvs/100-U7K-Files/HI-VIEW-engine.jpg';
-import u7kDetailSection from '@/public/products/tvs/100-U7K-Files/detailSection-image.jpg';
-import u7kDolbySection from '@/public/products/tvs/100-U7K-Files/dolbySection-image.jpg';
-import u7kImaxSection from '@/public/products/tvs/100-U7K-Files/imaxSection-image.jpg';
-import u7kfilmMakerSection from '@/public/products/tvs/100-U7K-Files/filmMakerSection-image.jpg';
-import u7kAutoLightAfterSection from '@/public/products/tvs/100-U7K-Files/autoLight-after-image.jpg';
-import u7kAutoLightBeforeSection from '@/public/products/tvs/100-U7K-Files/autoLight-before-image.jpg';
-import u7kSportsModeBeforeSection from '@/public/products/tvs/100-U7K-Files/sportsMode-before-image.jpg';
-import u7kSportsModeAfterSection from '@/public/products/tvs/100-U7K-Files/sportsMode-after-image.jpg';
-import u7kOptimizationSection from '@/public/products/tvs/100-U7K-Files/optimization-image.jpg';
-import u7kStayConnectedSection from '@/public/products/tvs/100-U7K-Files/stayConnected-image.jpg';
-import u7kExperienceSection from '@/public/products/tvs/100-U7K-Files/experience-image.jpg';
+// logos
+import dolbyVisionAtomsLogo from '@/public/products/tvs/U7K-Files/Dolby-Vision-Atmos-svg-dark.svg';
+import dolbyVisionAtomsLogo1 from '@/public/products/tvs/U7K-Files/Dolby-Vision-Atmos-svg-white.svg';
+import HdrLogo from '@/public/products/tvs/U7K-Files/HDR-logo-black.png';
+import HdrLogo1 from '@/public/products/tvs/U7K-Files/HDR-logo.png';
+import filmmakerLogo from '@/public/products/tvs/U7K-Files/Filmmaker-Mode-logo.png';
+import ImaxLogo from '@/public/products/tvs/U7K-Files/IMAX-logo.png';
+import ImaxLogo1 from '@/public/products/tvs/U7K-Files/IMAX-logo-reverse.png';
+import HiViewLogo from '@/public/products/tvs/U7K-Files/Hi-view-green-logo.png';
+import u7kFeature6 from '@/public/products/tvs/U7K-Files/Feature_Mini-LED-X_b.png';
+import quantumDotLogo from '@/public/products/tvs/U7K-Files/Feature_Quantum-Dot-Colour_m.png';
+import dynamicXDisplayLogo from '@/public/products/tvs/U7K-Files/Feature_Dynamic-X-Display_m.png';
+import gameModeLogo from '@/public/products/tvs/U7K-Files/Feature_144Hz_Game_Mode_PRO_m.png';
+import dolbyVisionAtomsLogo0 from '@/public/products/tvs/U7K-Files/Feature_CineStage-X-Surround_m.png';
+import aiPicLogo from '@/public/products/tvs/q7q-Files/logo-ai-picture-white.png';
+import aiUpscalerLogo from '@/public/products/tvs/q7q-Files/logo-ai-upscaler.png';
+import amdLogo from '@/public/products/tvs/q7q-Files/logo-amd-white.png';
+import gameBarLogo from '@/public/products/tvs/q7q-Files/logo-game-bar.png';
+import smoothMotionLogo from '@/public/products/tvs/q7q-Files/logo-smooth-motion.png';
+import voiceRemoteLogo from '@/public/products/tvs/q7q-Files/logo-voice-remote-white.png';
+
+// U7K-series
+import u7kHero from '@/public/products/tvs/U7K-Files/hero.png';
+import u7kVideoPoster from '@/public/products/tvs/U7K-Files/gamePlaySection-image.jpg';
+import u7kIntelligentProcessor from '@/public/products/tvs/U7K-Files/HI-VIEW-engine.jpg';
+import u7kDetailSection from '@/public/products/tvs/U7K-Files/detailSection-image.jpg';
+import u7kDolbySection from '@/public/products/tvs/U7K-Files/dolbySection-image.jpg';
+import u7kImaxSection from '@/public/products/tvs/U7K-Files/imaxSection-image.jpg';
+import u7kfilmMakerSection from '@/public/products/tvs/U7K-Files/filmMakerSection-image.jpg';
+import u7kAutoLightAfterSection from '@/public/products/tvs/U7K-Files/autoLight-after-image.jpg';
+import u7kAutoLightBeforeSection from '@/public/products/tvs/U7K-Files/autoLight-before-image.jpg';
+import u7kSportsModeBeforeSection from '@/public/products/tvs/U7K-Files/sportsMode-before-image.jpg';
+import u7kSportsModeAfterSection from '@/public/products/tvs/U7K-Files/sportsMode-after-image.jpg';
+import u7kOptimizationSection from '@/public/products/tvs/U7K-Files/optimization-image.jpg';
+import u7kStayConnectedSection from '@/public/products/tvs/U7K-Files/stayConnected-image.jpg';
+import u7kExperienceSection from '@/public/products/tvs/U7K-Files/experience-image.jpg';
+// Q7Q-series
+import q7QHero from '@/public/products/tvs/q7q-Files/q7q-Hero.jpg';
 
 export type TvProductCopy = {
   name: string;
@@ -58,13 +68,37 @@ export type TvProductCopy = {
   stayConnectedText?: string;
   experienceTitle?: string;
   experienceText?: string;
+  VprTitle?: string;
+  VprText?: string;
+};
+
+export type TvSectionConfig = {
+  image: StaticImageData;
+  titleKey: keyof TvProductCopy;
+  textKey: keyof TvProductCopy;
+};
+
+export type TvComparisonConfig = {
+  before: StaticImageData;
+  after: StaticImageData;
+  titleKey: keyof TvProductCopy;
+  textKey: keyof TvProductCopy;
+};
+
+export type TvBanner = {
+  id: string;
+  desktop: StaticImageData;
+  mobile?: StaticImageData;
+  alt: string;
 };
 
 export type TvProduct = {
   id: string;
   sku: string;
   size: string;
+  sizes?: string[];
   series: string;
+  seriesLabel?: string;
   panel: string;
   resolution: string;
   refreshRate: string;
@@ -77,19 +111,11 @@ export type TvProduct = {
   heroVideo?: string;
   posterImage?: StaticImageData;
   gallery?: StaticImageData[];
-  beforeAfter?: { before: StaticImageData; after: StaticImageData };
-  filmMakerImage?: StaticImageData;
-  gamePlayImage?: StaticImageData;
-  autoLightComparison?: { before: StaticImageData; after: StaticImageData };
-  sportsModeComparison?: { before: StaticImageData; after: StaticImageData };
-  optimizationImage?: StaticImageData;
-  stayConnectedImage?: StaticImageData;
-  experienceImage?: StaticImageData;
-  contentSections?: {
-    image: StaticImageData;
-    titleKey: keyof TvProductCopy;
-    textKey: keyof TvProductCopy;
-  }[];
+  contentSections?: TvSectionConfig[];
+  stackedSections?: TvSectionConfig[];
+  bottomStackedSections?: TvSectionConfig[];
+  comparisonSections?: TvComparisonConfig[];
+  experienceSection?: TvSectionConfig;
   featureCards?: {
     title: string;
     description: string;
@@ -97,16 +123,19 @@ export type TvProduct = {
     imageBlack?: StaticImageData;
   }[];
   badges?: StaticImageData[];
+  banners?: TvBanner[];
   copy: Record<'en' | 'fa', TvProductCopy>;
 };
 
 export const TV_PRODUCTS: TvProduct[] = [
   {
-    id: '100Q7N',
-    sku: '100Q7N',
+    id: 'Q7N',
+    sku: 'Q7N',
     size: '100"',
-    series: 'Q7N',
-    panel: 'QLED & DLED',
+    sizes: ['100"'],
+    banners: [{ id: 'q7n-banner', desktop: q7QHero, alt: 'Hisense Q7N hero' }],
+    series: 'Q7Q',
+    panel: '4K QLED SMART TV',
     resolution: '4K (3840x2160)',
     refreshRate: '144Hz + HDR',
     os: 'VIDAA U7.6',
@@ -121,10 +150,72 @@ export const TV_PRODUCTS: TvProduct[] = [
       'Quantum Dot Colour',
       'CineStage X Surround',
     ],
-    image: tv100Q7Hero,
+    image: q7QHero,
+    heroVideo: 'https://hisenseme.com/storage/20093/E7-PRO(Q7)_2K.mp4',
+    featureCards: [
+      {
+        title: 'Dolby Vision-Atoms',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: dolbyVisionAtomsLogo as StaticImageData,
+        imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
+      },
+      {
+        title: 'AI Picture',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: aiPicLogo,
+        imageBlack: aiPicLogo,
+      },
+      {
+        title: 'Filmmaker',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: filmmakerLogo,
+      },
+      {
+        title: '4K AI Upscaler',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: aiUpscalerLogo,
+        imageBlack: aiUpscalerLogo,
+      },
+      {
+        title: 'AMD FreeSync Premium ',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: amdLogo,
+      },
+      {
+        title: 'Game bar',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: gameBarLogo,
+      },
+      {
+        title: 'Quantum Dot Colour',
+        description: 'Billion+ colour shades with high volume for vivid HDR scenes.',
+        image: quantumDotLogo,
+      },
+      {
+        title: 'Smooth Motion',
+        description: 'Optimized panel uniformity and anti-glare for wide seating and bright rooms.',
+        image: smoothMotionLogo,
+      },
+      {
+        title: '144Hz Game Mode Pro',
+        description: 'High refresh rate with low latency for fast games and smooth sports.',
+        image: gameModeLogo,
+      },
+      {
+        title: 'Voice Control',
+        description: '5.1 channel sound layout with Dolby support and built-in subwoofer.',
+        image: voiceRemoteLogo,
+      },
+    ],
     copy: {
       en: {
-        name: 'Hisense 100Q7N QLED 4K TV',
+        name: 'Hisense Q7N QLED 4K TV',
         tagline: '100-inch QLED with 144Hz motion and AI-powered 4K upscaling.',
         description:
           'A flagship 100-inch QLED display with Quantum Dot colour, wide viewing angles, and VIDAA U7.6 smart OS—built for cinematic rooms and gaming setups.',
@@ -136,29 +227,35 @@ export const TV_PRODUCTS: TvProduct[] = [
           '2.1ch 2x15W + 20W subwoofer, Dolby surround, and CineStage X Surround.',
           'WiFi, Bluetooth 5, HDMI x4, USB 2.0 x2, SPDIF, AV, and headphone out.',
         ],
+        VprTitle: 'Native 144Hz VRR, victory in every frame',
+        VprText:
+          'Unlock your ultimate gaming potential with 144Hz Game Mode PRO with an integrated game bar, say goodbye to the lag and enjoy the tear-free gameplay.',
       },
       fa: {
-        name: 'تلویزیون 100Q7N هایسنس',
+        name: 'تلویزیون Q7N هایسنس',
         tagline: 'نمایشگر ۱۰۰ اینچی QLED با نرخ ۱۴۴ هرتز و ارتقاء هوشمند 4K.',
         description:
           'تلویزیون پرچمدار ۱۰۰ اینچی با رنگ‌های Quantum Dot، زاویه دید گسترده و سیستم عامل VIDAA U7.6؛ مناسب سالن‌های سینمای خانگی و گیمینگ.',
         highlights: [
-          'نمایشگر QLED 4K (۳۸۴۰x۲۱۶۰) با HDR و زاویه دید ۱۷۸ درجه.',
+          'نمایشگر QLED 4K (۳۸۴۰ x ۲۱۶۰) با HDR و زاویه دید ۱۷۸ درجه.',
           'سیستم هوشمند VIDAA U7.6 با ارتقاء تصویر HD به 4K توسط هوش مصنوعی.',
           ' پردازشگر Hi-View Engine X و Dynamic X-Display برای روشنایی و کنتراست دقیق.',
           'حالت Game Mode Pro با نرخ ۱۴۴ هرتز و رنگ‌های Quantum Dot برای تاخیر کم.',
           'صدای ۲.۱ کانال (۲x۱۵ وات + ساب ۲۰ وات)، دالبی و CineStage X Surround.',
           'اتصال WiFi، بلوتوث ۵، چهار HDMI، دو USB 2.0، SPDIF، AV و خروجی هدفون.',
         ],
+        VprTitle: 'پیروزی واقعی در هر فریم ,144Hz VRR',
+        VprText:
+          'با Game Mode PRO و نرخ تازه‌سازی 144Hz، نهایت توان گیمینگ خود را آزاد کنید. یک Game Bar یکپارچه در اختیارتان است تا کنترل کامل داشته باشید. با حذف لگ و جلوگیری از پارگی تصویر، از تجربه‌ای روان، سریع و بی‌نقص لذت ببرید—دقیقاً همان‌طور که یک بازی رقابتی باید باشد.',
       },
     },
   },
   {
-    id: '100U7K',
-    sku: '100U7K',
+    id: 'U7K',
+    sku: 'U7K',
     size: '100"',
     series: 'U7K',
-    panel: 'Mini-LED X',
+    panel: 'ULED MiniLED',
     resolution: '4K (3840x2160)',
     refreshRate: '144Hz + HDR',
     os: 'VIDAA U7',
@@ -173,18 +270,73 @@ export const TV_PRODUCTS: TvProduct[] = [
       'Quantum Dot Colour',
       'CineStage X Surround',
       'Mini-LED X backlight',
-      '6.5ms response time',
+      '6.5 ms response time',
     ],
     image: u7kHero,
+    banners: [{ id: 'u7k-banner', desktop: u7kHero, alt: 'Hisense U7K hero' }],
     heroVideo: 'https://hisenseme.com/storage/13212/new-video-66ab022f82acb.mp4',
     posterImage: u7kVideoPoster,
-    filmMakerImage: u7kfilmMakerSection,
-    gamePlayImage: u7kVideoPoster,
-    autoLightComparison: { before: u7kAutoLightBeforeSection, after: u7kAutoLightAfterSection },
-    sportsModeComparison: { before: u7kSportsModeBeforeSection, after: u7kSportsModeAfterSection },
-    optimizationImage: u7kOptimizationSection,
-    stayConnectedImage: u7kStayConnectedSection,
-    experienceImage: u7kExperienceSection,
+    featureCards: [
+      {
+        title: 'Dolby Vision-Atoms',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: dolbyVisionAtomsLogo as StaticImageData,
+        imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
+      },
+      {
+        title: 'HDR',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: HdrLogo,
+        imageBlack: HdrLogo1,
+      },
+      {
+        title: 'Filmmaker',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: filmmakerLogo,
+      },
+      {
+        title: 'IMAX',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: ImaxLogo,
+        imageBlack: ImaxLogo1,
+      },
+      {
+        title: 'Hi-view',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: HiViewLogo,
+      },
+      {
+        title: 'Mini-LED',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: u7kFeature6,
+      },
+      {
+        title: 'Quantum Dot Colour',
+        description: 'Billion+ colour shades with high volume for vivid HDR scenes.',
+        image: quantumDotLogo,
+      },
+      {
+        title: 'Dynamic X-Display',
+        description: 'Optimized panel uniformity and anti-glare for wide seating and bright rooms.',
+        image: dynamicXDisplayLogo,
+      },
+      {
+        title: '144Hz Game Mode Pro',
+        description: 'High refresh rate with low latency for fast games and smooth sports.',
+        image: gameModeLogo,
+      },
+      {
+        title: 'CineStage X Surround',
+        description: '5.1 channel sound layout with Dolby support and built-in subwoofer.',
+        image: dolbyVisionAtomsLogo0,
+      },
+    ],
     contentSections: [
       {
         image: u7kIntelligentProcessor,
@@ -207,80 +359,62 @@ export const TV_PRODUCTS: TvProduct[] = [
         textKey: 'imaxText',
       },
     ],
-    featureCards: [
+    stackedSections: [
       {
-        title: 'Dolby Vision-Atoms',
-        description:
-          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
-        image: u7kFeature1 as StaticImageData,
-        imageBlack: u7kFeature11 as StaticImageData,
+        image: u7kfilmMakerSection,
+        titleKey: 'filmMakerTitle',
+        textKey: 'filmMakerText',
       },
       {
-        title: 'HDR',
-        description:
-          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
-        image: u7kFeature2,
-        imageBlack: u7kFeature21,
-      },
-      {
-        title: 'Filmmaker',
-        description:
-          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
-        image: u7kFeature3,
-      },
-      {
-        title: 'IMAX',
-        description:
-          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
-        image: u7kFeature4,
-        imageBlack: u7kFeature41,
-      },
-      {
-        title: 'Hi-view',
-        description:
-          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
-        image: u7kFeature5,
-      },
-      {
-        title: 'Mini-LED X',
-        description:
-          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
-        image: u7kFeature6,
-      },
-      {
-        title: 'Quantum Dot Colour',
-        description: 'Billion+ colour shades with high volume for vivid HDR scenes.',
-        image: u7kFeature7,
-      },
-      {
-        title: 'Dynamic X-Display',
-        description: 'Optimized panel uniformity and anti-glare for wide seating and bright rooms.',
-        image: u7kFeature8,
-      },
-      {
-        title: '144Hz Game Mode Pro',
-        description: 'High refresh rate with low latency for fast games and smooth sports.',
-        image: u7kFeature9,
-      },
-      {
-        title: 'CineStage X Surround',
-        description: '5.1 channel sound layout with Dolby support and built-in subwoofer.',
-        image: u7kFeature10,
+        image: u7kVideoPoster,
+        titleKey: 'gamePlayTitle',
+        textKey: 'gamePlayText',
       },
     ],
+    bottomStackedSections: [
+      {
+        image: u7kOptimizationSection,
+        titleKey: 'optimizationTitle',
+        textKey: 'optimizationText',
+      },
+      {
+        image: u7kStayConnectedSection,
+        titleKey: 'stayConnectedTitle',
+        textKey: 'stayConnectedText',
+      },
+    ],
+    comparisonSections: [
+      {
+        before: u7kAutoLightBeforeSection,
+        after: u7kAutoLightAfterSection,
+        titleKey: 'autoLightTitle',
+        textKey: 'autoLightText',
+      },
+      {
+        before: u7kSportsModeBeforeSection,
+        after: u7kSportsModeAfterSection,
+        titleKey: 'sportsModeTitle',
+        textKey: 'sportsModeText',
+      },
+    ],
+    experienceSection: {
+      image: u7kExperienceSection,
+      titleKey: 'experienceTitle',
+      textKey: 'experienceText',
+    },
     copy: {
       en: {
-        name: 'Hisense 100U7K Mini-LED 4K TV',
+        name: 'Hisense U7K ULED MiniLED 4K TV',
         tagline: '100-inch Mini-LED X with 144Hz, wide colour, and cinematic 5.1-channel audio.',
         description:
           'Mini-LED X backlight with Quantum Dot colour, 144Hz motion, and 6.5ms response time—paired with VIDAA U7 smart OS and immersive 5.1-channel sound.',
         highlights: [
-          '100-inch Mini-LED X 4K (3840x2160) with HDR and 178° viewing.',
+          '100-inch Mini-LED X 4K (3840 x 2160) with HDR and 178° viewing.',
           '144Hz refresh with 6.5ms response for smooth sports and gaming.',
           'Hi-View Engine X, Dynamic X-Display, and Quantum Dot Colour accuracy.',
-          '5.1ch audio: 2x15W + 20W + 2x5W with built-in sub and Dolby surround.',
+          '5.1ch audio: 2x15 W + 20W + 2x5 W with built-in sub and Dolby surround.',
           'Time Shift, DVB-T/T2 tuner, and TV recording support.',
-          'WiFi, Bluetooth 5, HDMI x4, USB 2.0 x2, SPDIF, and AV connectivity.',
+          'WiFi, Bluetooth 5, HDMI x 4, USB 2.0 x 2, SPDIF, and AV connectivity.',
         ],
         featureIntroTitle: 'Great Things Come in Small Packages',
         featureIntroText:
@@ -321,12 +455,12 @@ export const TV_PRODUCTS: TvProduct[] = [
           'Hisense TV and sound bar are made perfect for each other. Enjoy calibrating the sound simply with your TV remote powered by the EZPlay function. Customize the bass and tremble the way you like it, all visualized on your Hisense TV.',
       },
       fa: {
-        name: 'تلویزیون 100U7K هایسنس (Mini-LED)',
-        tagline: 'نمایشگر ۱۰۰ اینچی Mini-LED X با نرخ ۱۴۴ هرتز و صدای سینمایی ۵.۱ کاناله.',
+        name: 'تلویزیون U7K هایسنس (Mini-LED)',
+        tagline: ' نمایشگر ۱۰۰ اینچی Mini-LED X با نرخ ۱۴۴ هرتز و صدای سینمایی ۵.۱ کاناله.',
         description:
-          'پس‌زمینه Mini-LED X با رنگ‌های Quantum Dot، حرکت ۱۴۴ هرتز و پاسخ ۶.۵ میلی‌ثانیه؛ همراه با سیستم هوشمند VIDAA U7 و صدای فراگیر ۵.۱ کانال.',
+          ' پس‌زمینه Mini-LED X با رنگ‌های Quantum Dot، حرکت ۱۴۴ هرتز و پاسخ ۶.۵ میلی‌ثانیه؛ همراه با سیستم هوشمند VIDAA U7 و صدای فراگیر ۵.۱ کانال.',
         highlights: [
-          'نمایشگر ۱۰۰ اینچی Mini-LED X با وضوح 4K (۳۸۴۰x۲۱۶۰) و HDR.',
+          'نمایشگر ۱۰۰ اینچی Mini-LED X با وضوح 4K (۳۸۴۰ x ۲۱۶۰) و HDR.',
           'نرخ ۱۴۴ هرتز و پاسخ ۶.۵ میلی‌ثانیه برای ورزش و گیمینگ روان.',
           'پردازشگر Hi-View Engine X، نمایشگر Dynamic X و رنگ‌های Quantum Dot.',
           'صدای ۵.۱ کانال (۲x۱۵ وات + ۲۰ وات + ۲x۵ وات) با ساب داخلی و دالبی.',
