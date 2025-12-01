@@ -7,6 +7,7 @@ export type ContentSectionData = {
   image: StaticImageData;
   title: string;
   text: string;
+  textPosition?: 'left' | 'right';
 };
 
 type ContentSectionsProps = {

@@ -4,10 +4,10 @@ import Image, { type StaticImageData } from 'next/image';
 import { TV_PRODUCTS } from '@/content/tvProducts';
 import FeatureCardImage from '@/components/tv/FeatureCardImage';
 import ContentSections, { type ContentSectionData } from '@/components/tv/ContentSections';
-import StackedContentSections, {
-  type StackedSectionData,
-} from '@/components/tv/StackedContentSections';
+import OverlayContentSections from '@/components/tv/OverlayContentSections';
+import StackedContentSections from '@/components/tv/StackedContentSections';
 import BeforeAfterSlider from '@/components/tv/BeforeAfterSlider';
+import { type TvSectionConfig, type TvSectionGroup } from '@/types/tv';
 
 type ComparisonSection = {
   title: string;
@@ -90,9 +90,10 @@ export default async function TvProductDetailPage({ params }: PageProps) {
   }
 
   const copy = product.copy[lang];
-  const featureIntroTitle = copy.featureIntroTitle;
-  const featureIntroText = copy.featureIntroText;
-  const masterMomentTitle = copy.masterMomentTitle;
+  const blocks = copy.blocks ?? {};
+  const featureIntroTitle = blocks.featureIntro?.title;
+  const featureIntroText = blocks.featureIntro?.text;
+  const masterMomentTitle = blocks.masterMoment?.title;
   const banners =
     product.banners && product.banners.length > 0
       ? product.banners
@@ -100,31 +101,66 @@ export default async function TvProductDetailPage({ params }: PageProps) {
   const resolveSections = (
     sections?: {
       image: StaticImageData;
-      titleKey: keyof typeof copy;
-      textKey: keyof typeof copy;
+      copyKey: keyof typeof copy.blocks;
     }[],
   ) =>
     sections
       ?.map((section) => {
-        const title = copy[section.titleKey];
-        const text = copy[section.textKey];
-        if (!title || !text) return null;
-        return { image: section.image, title, text };
+        const block = blocks[section.copyKey];
+        if (!block?.title || !block?.text) return null;
+        return { image: section.image, title: block.title, text: block.text };
       })
       .filter((section): section is ContentSectionData => Boolean(section)) ?? [];
-  const contentSections: ContentSectionData[] = resolveSections(product.contentSections);
-  const stackedSections: StackedSectionData[] = resolveSections(product.stackedSections);
-  const bottomStackedSections: StackedSectionData[] = resolveSections(
-    product.bottomStackedSections,
-  );
+
+  const defaultSectionGroups: TvSectionGroup[] = [];
+  if (product.contentSections) {
+    defaultSectionGroups.push({ kind: 'content', sections: product.contentSections });
+  }
+  if (product.stackedSections) {
+    defaultSectionGroups.push({ kind: 'stacked', sections: product.stackedSections });
+  }
+  if (product.bottomStackedSections) {
+    defaultSectionGroups.push({
+      kind: 'stacked',
+      textFirst: true,
+      sections: product.bottomStackedSections,
+    });
+  }
+
+  const sectionGroupConfigs: TvSectionGroup[] = Array.isArray(product.sectionGroups)
+    ? product.sectionGroups.filter(
+        (group): group is TvSectionGroup =>
+          Boolean(group) && Array.isArray(group.sections) && typeof group.kind === 'string',
+      )
+    : defaultSectionGroups;
+
+  type NormalizedSectionGroup = {
+    kind: TvSectionGroup['kind'];
+    sections: ContentSectionData[];
+    textFirst?: boolean;
+  };
+
+  const sectionGroups: NormalizedSectionGroup[] = sectionGroupConfigs.flatMap((group) => {
+    const sectionsSource: TvSectionConfig[] = group?.sections ?? [];
+    const sections = resolveSections(sectionsSource);
+    if (sections.length === 0) return [];
+    const normalized: NormalizedSectionGroup = {
+      kind: group.kind,
+      sections,
+      ...(group.kind === 'stacked' ? { textFirst: Boolean(group.textFirst) } : {}),
+    };
+    return [normalized];
+  });
+
+  const experienceBlock = product.experienceSection
+    ? blocks[product.experienceSection.copyKey]
+    : undefined;
   const experienceSection: ContentSectionData | null =
-    product.experienceSection &&
-    copy[product.experienceSection.titleKey] &&
-    copy[product.experienceSection.textKey]
+    product.experienceSection && experienceBlock?.title && experienceBlock?.text
       ? {
           image: product.experienceSection.image,
-          title: copy[product.experienceSection.titleKey] as string,
-          text: copy[product.experienceSection.textKey] as string,
+          title: experienceBlock.title,
+          text: experienceBlock.text,
         }
       : null;
   const comparisonLabels =
@@ -132,47 +168,26 @@ export default async function TvProductDetailPage({ params }: PageProps) {
   const comparisonSections: ComparisonSection[] =
     product.comparisonSections
       ?.map((section) => {
-        const title = copy[section.titleKey];
-        const text = copy[section.textKey];
-        if (!title || !text) return null;
-        return { title, text, before: section.before, after: section.after };
+        const block = blocks[section.copyKey];
+        if (!block?.title || !block?.text) return null;
+        return {
+          title: block.title,
+          text: block.text,
+          before: section.before,
+          after: section.after,
+        };
       })
       .filter((section): section is ComparisonSection => Boolean(section)) ?? [];
-  const specDetails =
-    lang === 'fa'
-      ? [
-          'تلویزیون هوشمند Smart وضوح تصویر بالا و شفاف',
-          'تصویر هشت مگا پیکسل 4K رزولوشن (3840x2160, 8MP)',
-          'دارای سیستم عامل VIDAA U7',
-          'ارتقاء تصویر HD to 4K توسط هوش مصنوعی AI Upscaler',
-          'زاویه دید 178 درجه ، تصویر HDR',
-          'نرخ تازه سازی تصویر 144HZ',
-          'زمان پاسخ تصویر 6.5 میلی ثانیه',
-          'مجهز به فناوری Quantum Dot (نمایش طیف وسیع رنگ ها با بهره گیری از تکنولوژی کوانتوم دات)',
-          'مجهز به Time Shift و گیرنده دیجیتال داخلی',
-          'صدای فراگیر دالبی  SOUND OUTPUT: 5.1 (2 x 15W + 20W + 2 x 5W Built-in Subwoofer)',
-          'قابلیت اتصال به WIFI و Bluetooth 5',
-          'قابلیت اتصال به گوشی همراه',
-          'تیونر دیجیتال داخلی DVB-T/T2',
-          'قابلیت ضبط برنامه های تلویزیونی',
-          'SPDIF, AV, USB 2.0 x 2, HDMI x 4',
-        ]
-      : [
-          'Smart TV with sharp 4K picture (3840x2160, 8MP)',
-          'VIDAA U7 operating system',
-          'AI Upscaler from HD to 4K',
-          '178° viewing with HDR picture',
-          '144Hz refresh rate',
-          '6.5 ms response time',
-          'Quantum Dot color (wide gamut)',
-          'Time Shift and built-in digital tuner',
-          'Dolby surround output: 5.1 (2x15W + 20W + 2x5W built-in subwoofer)',
-          'WiFi and Bluetooth 5 connectivity',
-          'Mobile device connectivity',
-          'DVB-T/T2 digital tuner',
-          'TV recording support',
-          'SPDIF, AV, USB 2.0 x 2, HDMI x 4',
-        ];
+  const resolveSpecs = (specs?: Record<'en' | 'fa', string[]>): string[] => {
+    if (!specs) return [];
+    if (lang === 'fa' && Array.isArray(specs.fa)) return specs.fa;
+    if (Array.isArray(specs.en)) return specs.en;
+    return [];
+  };
+
+  const specDetails: string[] = resolveSpecs(
+    product.specs as Record<'en' | 'fa', string[]> | undefined,
+  );
 
   const featureCards = product.featureCards ?? [];
 
@@ -251,19 +266,21 @@ export default async function TvProductDetailPage({ params }: PageProps) {
                   {seriesDisplay || copy.name}
                 </h1>
                 {availableSizes.length > 0 && (
-                  <ul className="flex flex-wrap items-center gap-4 text-xs md:text-base 5xl:text-2xl font-semibold">
-                    {availableSizes.map((size, idx) => (
-                      <li key={`${size}-${idx}`} className="flex items-center gap-2">
-                        <span className="inline-flex h-3 w-5 items-center justify-center rounded-full bg-(--brand-color) border border-(--brand-color)" />
-                        <span>{size}</span>
-                        {idx < availableSizes.length - 1 && (
-                          <span aria-hidden className="opacity-70">
-                            |
-                          </span>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="flex items-center gap-4">
+                    <div className="inline-flex h-3 w-5 items-center justify-center rounded-full bg-(--brand-color) border border-(--brand-color)" />
+                    <ul className="flex flex-wrap items-center gap-4 text-xs md:text-base 5xl:text-2xl font-semibold">
+                      {availableSizes.map((size, idx) => (
+                        <li key={`${size}-${idx}`} className="flex items-center gap-2">
+                          <span>{size}</span>
+                          {idx < availableSizes.length - 1 && (
+                            <span aria-hidden className="opacity-70">
+                              |
+                            </span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </div>
             </div>
@@ -416,12 +433,35 @@ export default async function TvProductDetailPage({ params }: PageProps) {
         </div>
       )}
 
-      {contentSections.length > 0 && (
-        <ContentSections sections={contentSections} isRTL={lang === 'fa'} />
-      )}
-      {stackedSections.length > 0 && (
-        <StackedContentSections sections={stackedSections} isRTL={lang === 'fa'} />
-      )}
+      {sectionGroups.map((group, idx) => {
+        if (group.kind === 'content') {
+          return (
+            <ContentSections
+              key={`content-${idx}`}
+              sections={group.sections}
+              isRTL={lang === 'fa'}
+            />
+          );
+        }
+        if (group.kind === 'overlay') {
+          return (
+            <OverlayContentSections
+              key={`overlay-${idx}`}
+              sections={group.sections}
+              isRTL={lang === 'fa'}
+            />
+          );
+        }
+        return (
+          <StackedContentSections
+            key={`stacked-${idx}`}
+            sections={group.sections}
+            isRTL={lang === 'fa'}
+            textFirst={group.textFirst}
+          />
+        );
+      })}
+
       {comparisonSections.length > 0 && (
         <div className="w-full mx-auto space-y-12 max-w-360">
           {comparisonSections.map((section, idx) => (
@@ -454,9 +494,6 @@ export default async function TvProductDetailPage({ params }: PageProps) {
             </div>
           ))}
         </div>
-      )}
-      {bottomStackedSections.length > 0 && (
-        <StackedContentSections sections={bottomStackedSections} isRTL={lang === 'fa'} textFirst />
       )}
       {experienceSection && (
         <ContentSections sections={[experienceSection]} isRTL={lang === 'fa'} />
