@@ -13,9 +13,14 @@ export type ContentSectionData = {
 type ContentSectionsProps = {
   sections: ContentSectionData[];
   isRTL?: boolean;
+  isImageLeft?: boolean;
 };
 
-export default function ContentSections({ sections, isRTL = false }: ContentSectionsProps) {
+export default function ContentSections({
+  sections,
+  isRTL = false,
+  isImageLeft = false,
+}: ContentSectionsProps) {
   const refs = useRef<(HTMLDivElement | null)[]>([]);
   const [visible, setVisible] = useState<boolean[]>(() => sections.map(() => false));
 
@@ -62,7 +67,7 @@ export default function ContentSections({ sections, isRTL = false }: ContentSect
               refs.current[idx] = el;
             }}
             className={`flex flex-col items-center gap-6 ${
-              isImageRight ? 'md:flex-row' : 'md:flex-row-reverse'
+              isImageRight || isImageLeft ? 'md:flex-row' : 'md:flex-row-reverse'
             }`}
           >
             <div

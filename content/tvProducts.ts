@@ -78,42 +78,39 @@ export const TV_PRODUCTS: TvProduct[] = [
     heroVideo: 'https://hisenseme.com/storage/20093/E7-PRO(Q7)_2K.mp4',
     featureCards: [
       {
-        title: 'Dolby Vision-Atoms',
+        title: 'Dolby Vision-Atmos',
         description:
-          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+          'Dolby Vision HDR picture with Dolby Atmos immersive sound for cinematic impact.',
         image: dolbyVisionAtomsLogo as StaticImageData,
         imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
       },
       {
         title: 'AI Picture',
         description:
-          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+          'Scene-by-scene AI tuning that sharpens detail, color, and contrast automatically.',
         image: aiPicLogo,
         imageBlack: aiPicLogo,
       },
       {
         title: 'Filmmaker',
-        description:
-          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        description: 'Filmmaker Mode keeps original frame rates, colors, and aspect ratios intact.',
         image: filmmakerLogo,
       },
       {
         title: '4K AI Upscaler',
         description:
-          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+          'Upscales HD to near-4K clarity with AI-driven noise reduction and detail boost.',
         image: aiUpscalerLogo,
         imageBlack: aiUpscalerLogo,
       },
       {
-        title: 'AMD FreeSync Premium ',
-        description:
-          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        title: 'AMD FreeSync Premium',
+        description: 'VRR + low-latency gaming with tear-free, stutter-free frames.',
         image: amdLogo,
       },
       {
-        title: 'Game bar',
-        description:
-          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        title: 'Game Bar',
+        description: 'On-screen game HUD to tweak latency, VRR, and picture presets in real time.',
         image: gameBarLogo,
       },
       {
@@ -133,7 +130,7 @@ export const TV_PRODUCTS: TvProduct[] = [
       },
       {
         title: 'Voice Control',
-        description: '5.1 channel sound layout with Dolby support and built-in subwoofer.',
+        description: 'Hands-free or remote mic voice commands for quick search and control.',
         image: voiceRemoteLogo,
       },
     ],
