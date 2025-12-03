@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import DesktopNavigation from '@/components/header/DesktopNavigation';
 import MobileNavPanel from '@/components/header/MobileNavPanel';
@@ -10,7 +10,6 @@ import {
   NAV_SECONDARY_ITEMS,
   SUB_MENU_CONTENT,
   type NavKey,
-  type SubMenuItem,
 } from '@/components/header/navigationData';
 
 type LabeledNavItem = {
@@ -39,11 +38,10 @@ export default function Header() {
     };
   }, [isPanelOpen]);
 
-  useEffect(() => {
-    if (!isPanelOpen) {
-      setMobileActiveMenuKey(null);
-    }
-  }, [isPanelOpen]);
+  const closeMobilePanel = useCallback(() => {
+    setIsPanelOpen(false);
+    setMobileActiveMenuKey(null);
+  }, []);
 
   const navItems: LabeledNavItem[] = useMemo(() => {
     return NAV_ITEMS.map((item) => ({
@@ -111,7 +109,7 @@ export default function Header() {
 
       <MobileNavPanel
         isOpen={isPanelOpen}
-        onClose={() => setIsPanelOpen(false)}
+        onClose={closeMobilePanel}
         locale={locale}
         iconButtonClass={iconButtonClass}
         allNavItems={allNavItems}

@@ -1,9 +1,9 @@
-import Image from 'next/image';
+import Image, { type StaticImageData } from 'next/image';
 import Link from 'next/link';
 import CloseIcon from '@mui/icons-material/Close';
 import { HiChevronRight, HiChevronLeft } from 'react-icons/hi2';
 import Logo from '@/public/icons/hisense-logo-full.svg';
-import { NavKey, SubMenuItem } from './navigationData';
+import type { NavKey, SubMenuItem } from './navigationData';
 
 type LabeledNavItem = {
   key: NavKey;
@@ -44,6 +44,7 @@ export default function MobileNavPanel({
     return null;
   }
   const localeKey = locale === 'fa' ? 'fa' : 'en';
+  const logoAsset = Logo as StaticImageData;
   const toLocalePath = (path: string) => {
     const normalized = path.startsWith('/') ? path : `/${path}`;
     return `/${locale}${normalized}`;
@@ -54,7 +55,7 @@ export default function MobileNavPanel({
       <div className="absolute inset-0 bg-(--overlay-color)" onClick={onClose} aria-hidden="true" />
       <aside className="relative ml-auto flex h-full w-full max-w-md flex-col bg-(--surface-color) p-6 shadow-(--panel-shadow)">
         <div className="flex items-start justify-between">
-          <Image alt="Hisense Logo" src={Logo} className="h-5 w-[92px]" priority />
+          <Image alt="Hisense Logo" src={logoAsset} className="h-5 w-[92px]" priority />
           <button
             type="button"
             className={iconButtonClass}
@@ -66,7 +67,7 @@ export default function MobileNavPanel({
           </button>
         </div>
 
-        <div className="relative mt-10 flex-1 overflow-hidden">
+        <div className="relative flex-1 mt-10 overflow-hidden">
           <nav
             className={`absolute inset-0 flex flex-col gap-6 overflow-y-auto text-lg font-semibold text-(--default-black-font) transition-transform duration-300 ease-out ${
               mobileActiveMenuKey ? '-translate-x-full' : 'translate-x-0'
@@ -101,7 +102,7 @@ export default function MobileNavPanel({
               <span className="text-(--default-black-font)">{mobileActiveNavLabel}</span>
             </button>
 
-            <div className="mt-6 flex flex-col gap-4 pb-10">
+            <div className="flex flex-col gap-4 pb-10 mt-6">
               {mobileActiveSubMenuItems?.map((subItem) => (
                 <Link
                   key={subItem.title.en}
@@ -119,7 +120,7 @@ export default function MobileNavPanel({
             </div>
           </div>
         </div>
-        <div className="mt-auto pt-10">
+        <div className="pt-10 mt-auto">
           <button
             type="button"
             className="flex w-full items-center justify-center rounded-full border border-(--border-color) px-4 py-3 text-sm font-semibold text-(--text-muted-color) transition-colors hover:border-(--brand-color) hover:text-(--brand-color)"

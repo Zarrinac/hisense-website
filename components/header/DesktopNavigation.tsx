@@ -1,14 +1,15 @@
 'use client';
 
-import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
+import type { MouseEvent } from 'react';
+import Image, { type StaticImageData } from 'next/image';
 import Link from 'next/link';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import Logo from '@/public/icons/hisense-logo-full.svg';
-import { NavKey, SubMenuItem } from './navigationData';
-import { useEffect, useRef, useState } from 'react';
+import type { NavKey, SubMenuItem } from './navigationData';
 
 const PROMO_MESSAGES: Record<
   NavKey | 'default',
@@ -18,7 +19,7 @@ const PROMO_MESSAGES: Record<
   }
 > = {
   tvAudio: {
-    fa: 'تلویزیون‌ها و سیستم‌های صوتی هایسنس با کیفیت ULED و Mini-LED را ببینید.',
+    fa: ' تلویزیون‌ها و سیستم‌های صوتی هایسنس با کیفیت ULED و Mini-LED را ببینید.',
     en: 'Explore Hisense TVs and audio systems with breathtaking ULED/Mini-LED quality.',
   },
   airConditioner: {
@@ -90,9 +91,10 @@ export default function DesktopNavigation({
 }: DesktopNavigationProps) {
   const [isHidden, setIsHidden] = useState(false);
   const navContainerRef = useRef<HTMLDivElement | null>(null);
-  const promoKey = (activeMenuKey ?? 'default') as keyof typeof PROMO_MESSAGES;
+  const promoKey: keyof typeof PROMO_MESSAGES = activeMenuKey ?? 'default';
   const promoCopy = locale === 'fa' ? PROMO_MESSAGES[promoKey].fa : PROMO_MESSAGES[promoKey].en;
   const localeKey = locale === 'fa' ? 'fa' : 'en';
+  const logoAsset = Logo as StaticImageData;
   const toLocalePath = (path: string) => {
     const normalized = path.startsWith('/') ? path : `/${path}`;
     return `/${locale}${normalized}`;
@@ -125,7 +127,7 @@ export default function DesktopNavigation({
     return () => window.removeEventListener('scroll', handleScroll);
   }, [activeMenuKey]);
 
-  const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseLeave = (event: MouseEvent<HTMLDivElement>) => {
     const nextTarget = event.relatedTarget;
     const container = navContainerRef.current;
     if (!container) {
@@ -154,7 +156,7 @@ export default function DesktopNavigation({
         <Link href="/" className="flex items-center">
           <Image
             alt="Hisense Logo"
-            src={Logo}
+            src={logoAsset}
             priority
             className={`block h-5 w-[92px] lg:h-6 lg:w-[117px] ${locale === 'fa' ? 'ml-12' : 'mr-12'}`}
           />

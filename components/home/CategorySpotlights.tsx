@@ -4,8 +4,8 @@ import { HiArrowLongRight } from 'react-icons/hi2';
 
 export type SpotlightCard = {
   id: string;
-  eyebrow?: string;
   title: string;
+  eyebrow?: string;
   description: string;
   cta: string;
   href: string;
@@ -49,6 +49,11 @@ export default function CategorySpotlights({
     <section className="bg-(--background-color) py-16 text-(--default-black-font) lg:py-24">
       <div className="mx-auto flex flex-col gap-10 md:px-12">
         <header className="text-center">
+          {eyebrow && (
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-(--text-muted-color)">
+              {eyebrow}
+            </p>
+          )}
           <h2
             className="mt-3 font-bold tracking-tight"
             style={{
