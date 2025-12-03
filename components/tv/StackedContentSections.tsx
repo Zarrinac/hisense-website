@@ -1,0 +1,113 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import Image, { type StaticImageData } from 'next/image';
+
+export type StackedSectionData = {
+  image: StaticImageData;
+  title: string;
+  text: string;
+};
+
+type StackedContentSectionsProps = {
+  sections: StackedSectionData[];
+  isRTL?: boolean;
+  textFirst?: boolean;
+};
+
+export default function StackedContentSections({
+  sections,
+  isRTL = false,
+  textFirst = false,
+}: StackedContentSectionsProps) {
+  const refs = useRef<(HTMLDivElement | null)[]>([]);
+  const [visible, setVisible] = useState<boolean[]>(() => sections.map(() => false));
+
+  useEffect(() => {
+    const targets = [...refs.current];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setVisible((prev) => {
+          const next = [...prev];
+          entries.forEach((entry) => {
+            const indexAttr = (entry.target as HTMLElement).dataset.index;
+            if (!indexAttr) return;
+            const idx = Number(indexAttr);
+            if (entry.isIntersecting) {
+              next[idx] = true;
+            }
+          });
+          return next;
+        });
+      },
+      { threshold: 0.35 },
+    );
+
+    targets.forEach((el) => el && observer.observe(el));
+    return () => {
+      targets.forEach((el) => el && observer.unobserve(el));
+      observer.disconnect();
+    };
+  }, [sections.length]);
+
+  return (
+    <div className="w-full mx-auto space-y-12 max-w-360" dir={isRTL ? 'rtl' : 'ltr'}>
+      {sections.map((section, idx) => {
+        const show = visible[idx];
+        const textBlock = (
+          <div
+            className={`px-6 pb-6 pt-4 text-center md:px-10 transition-all duration-700 ease-out ${
+              show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+            style={{ transitionDelay: show ? '140ms' : '0ms' }}
+          >
+            <h3 className="text-2xl font-bold md:text-3xl">{section.title}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-(--text-muted-color) md:text-base">
+              {section.text}
+            </p>
+          </div>
+        );
+
+        const imageBlock = (
+          <div
+            className={`relative aspect-video w-full transition-all duration-1000 ease-out ${
+              show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
+          >
+            <Image
+              src={section.image}
+              alt={section.title}
+              fill
+              sizes="(min-width: 1024px) 80vw, 100vw"
+              className="object-cover rounded-3xl"
+              priority={idx === 0}
+            />
+          </div>
+        );
+
+        return (
+          <div
+            key={`${section.title}-${idx}`}
+            data-index={idx}
+            ref={(el) => {
+              refs.current[idx] = el;
+            }}
+            className="overflow-hidden rounded-3xl"
+          >
+            {textFirst ? (
+              <>
+                {textBlock}
+                {imageBlock}
+              </>
+            ) : (
+              <>
+                {imageBlock}
+                {textBlock}
+              </>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
