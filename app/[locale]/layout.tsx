@@ -28,6 +28,14 @@ type LocaleLayoutProps = {
   params: Promise<LocaleLayoutParams>;
 };
 
+function ensureLocale(locale: string): Locale {
+  const match = routing.locales.find((value): value is Locale => value === locale);
+  if (!match) {
+    notFound();
+  }
+  return match;
+}
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -41,20 +49,21 @@ export async function generateMetadata(
     notFound();
   }
 
+  const typedLocale = ensureLocale(locale);
   const t = await getServerTranslations({
-    locale: locale as Locale,
+    locale: typedLocale,
     namespace: 'Metadata',
   });
   const keywords = t.raw('keywords') as string[] | undefined;
   const metadataBase = new URL(SITE_URL);
-  const localizedPath = `/${locale}`;
+  const localizedPath = `/${typedLocale}`;
   const canonicalUrl = `${SITE_URL}${localizedPath}`;
   const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
     acc[lang] = `${SITE_URL}/${lang}`;
     return acc;
   }, {});
   languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}`;
-  const openGraphLocale = OG_LOCALE_MAP[locale as Locale];
+  const openGraphLocale = OG_LOCALE_MAP[typedLocale];
 
   return {
     metadataBase,
@@ -93,11 +102,13 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     notFound();
   }
 
-  setRequestLocale(locale);
+  const typedLocale = ensureLocale(locale);
+
+  setRequestLocale(typedLocale);
 
   const messages = await getMessages();
   const metadataTranslations = await getServerTranslations({
-    locale: locale as Locale,
+    locale: typedLocale,
     namespace: 'Metadata',
   });
   const pageTitle = metadataTranslations('title');
@@ -105,8 +116,8 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
   return (
     <ThemeProvider>
-      <StructuredData locale={locale as Locale} />
-      <NextIntlClientProvider locale={locale} messages={messages}>
+      <StructuredData locale={typedLocale} />
+      <NextIntlClientProvider locale={typedLocale} messages={messages}>
         <Header />
         <div className={pageContainerClass}>
           <h1 className="sr-only">{pageTitle}</h1>

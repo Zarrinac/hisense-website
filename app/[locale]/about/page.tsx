@@ -56,7 +56,7 @@ export async function generateMetadata(props: AboutPageProps): Promise<Metadata>
       description: content.meta.description,
       url: `${SITE_URL}${localizedPath}`,
       siteName: 'Zarrin Namaye Caspian | Hisense Iran',
-      locale: OG_LOCALE_MAP[locale as Locale],
+      locale: OG_LOCALE_MAP[locale],
       images: [
         {
           url: `${SITE_URL}/images/showroom.png`,

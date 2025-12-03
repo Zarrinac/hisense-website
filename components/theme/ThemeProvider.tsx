@@ -32,17 +32,23 @@ export function ThemeProvider({ children, defaultTheme = 'light' }: ThemeProvide
   const [theme, setThemeState] = useState<Theme>(defaultTheme);
   const [isReady, setIsReady] = useState(false);
 
+  const applyTheme = useCallback((value: Theme) => {
+    const root = document.documentElement;
+    root.dataset.theme = value;
+    root.classList.toggle('dark', value === 'dark');
+  }, []);
+
   useEffect(() => {
     if (typeof window === 'undefined') {
       return;
     }
 
-    const root = document.documentElement;
+    /* eslint-disable react-hooks/set-state-in-effect */
     const storedTheme = window.localStorage.getItem(STORAGE_KEY) as Theme | null;
 
     if (storedTheme === 'light' || storedTheme === 'dark') {
       setThemeState(storedTheme);
-      root.dataset.theme = storedTheme;
+      applyTheme(storedTheme);
       setIsReady(true);
       return;
     }
@@ -50,18 +56,18 @@ export function ThemeProvider({ children, defaultTheme = 'light' }: ThemeProvide
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const resolvedTheme = prefersDark ? 'dark' : defaultTheme;
     setThemeState(resolvedTheme);
-    root.dataset.theme = resolvedTheme;
+    applyTheme(resolvedTheme);
     setIsReady(true);
-  }, [defaultTheme]);
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, [applyTheme, defaultTheme]);
 
   useEffect(() => {
     if (!isReady || typeof window === 'undefined') {
       return;
     }
-    const root = document.documentElement;
-    root.dataset.theme = theme;
+    applyTheme(theme);
     window.localStorage.setItem(STORAGE_KEY, theme);
-  }, [theme, isReady]);
+  }, [applyTheme, theme, isReady]);
 
   const setTheme = useCallback((nextTheme: Theme) => {
     setThemeState(nextTheme);

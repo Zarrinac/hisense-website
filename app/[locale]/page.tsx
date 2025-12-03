@@ -15,7 +15,6 @@ const SPOTLIGHT_SOURCES = [
 ] as const satisfies ReadonlyArray<Pick<SpotlightCard, 'id' | 'href' | 'image'>>;
 
 export default async function HomePage() {
-  const heroTranslations = await getTranslations('HomePage.hero');
   const categoryTranslations = await getTranslations('HomePage.categories');
   const locale = await getLocale();
 
