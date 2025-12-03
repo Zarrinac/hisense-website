@@ -78,7 +78,7 @@ export default async function TvHisensePage() {
             return (
               <Link
                 key={product.id}
-                href={`/${locale}/tv-hisense/${product.id}`}
+                href={`/${locale}/tv-hisense/${product.id.toLocaleLowerCase()}`}
                 className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-(--border-color) bg-(--surface-color) shadow-(--panel-shadow) transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_color-mix(in_srgb,var(--overlay-color) 55%,transparent)] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
               >
                 <div className="relative w-full overflow-hidden">

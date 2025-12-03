@@ -27,6 +27,7 @@ export type CopyBlockKey =
   | 'gameManagement'
   | 'movies'
   | 'biggerScreen'
+  | 'sizes'
   | 'voiceCommand';
 
 export type CopyBlock = {

@@ -50,289 +50,20 @@ import q7qScreenTear from '@/public/products/tvs/q7q-Files/q7q-screenTear.jpg';
 import q7qVividColor from '@/public/products/tvs/q7q-Files/q7q-vividColor.jpg';
 import q7qVrr from '@/public/products/tvs/q7q-Files/q7q-vrr.jpg';
 import q7qVoiceCommand from '@/public/products/tvs/q7q-Files/q7q-voiceCommand.jpg';
+// Q6Q-series
+import q6qHero from '@/public/products/tvs/q6q-Files/q6q-Hero.jpg';
+import q6qDolby from '@/public/products/tvs/q6q-Files/q6q-dolby.jpg';
+import q6qFuzzyImage from '@/public/products/tvs/q6q-Files/q6q-fuzzyImage.jpg';
+import q6qGameManagement from '@/public/products/tvs/q6q-Files/q6q-gameManagement.jpg';
+import q6qMovies from '@/public/products/tvs/q6q-Files/q6q-movies.jpg';
+import q6qNoBlur from '@/public/products/tvs/q6q-Files/q6q-noBlur.jpg';
+import q6qVividColor from '@/public/products/tvs/q6q-Files/q6q-vividColor.jpg';
+import q6qVoiceCommand from '@/public/products/tvs/q6q-Files/q6q-voiceCommand.jpg';
+import q6qVrr from '@/public/products/tvs/q6q-Files/q6q-vrr.jpg';
+import q6qBrightness from '@/public/products/tvs/q6q-Files/q6q-brightness.jpg';
+import q6qSizes from '@/public/products/tvs/q6q-Files/q6q-sizes.jpg';
 
 export const TV_PRODUCTS: TvProduct[] = [
-  {
-    id: 'Q7Q',
-    sku: 'Q7Q',
-    size: '100"',
-    sizes: ['100"', '85"', '75"', '65"', '55"'],
-    banners: [{ id: 'q7q-banner', desktop: q7qHero, alt: 'Hisense Q7Q hero' }],
-    series: 'Q7Q',
-    panel: '4K QLED SMART TV',
-    resolution: '4K (3840x2160)',
-    refreshRate: '144Hz + HDR',
-    os: 'VIDAA U7.6',
-    sound: '2.1ch 2x15W + 20W built-in sub, Dolby surround',
-    connectivity: ['WiFi', 'Bluetooth 5', 'HDMI x4', 'USB 2.0 x2', 'SPDIF', 'AV', 'Headphone'],
-    tuner: 'DVB-T/T2, Time Shift',
-    extras: [
-      'AI Upscaler (HD → 4K)',
-      'Hi-View Engine X',
-      'Dynamic X-Display',
-      '144Hz Game Mode Pro',
-      'Quantum Dot Colour',
-      'CineStage X Surround',
-    ],
-    image: q7qHero,
-    heroVideo: 'https://hisenseme.com/storage/20093/E7-PRO(Q7)_2K.mp4',
-    featureCards: [
-      {
-        title: 'Dolby Vision-Atmos',
-        description:
-          'Dolby Vision HDR picture with Dolby Atmos immersive sound for cinematic impact.',
-        image: dolbyVisionAtomsLogo as StaticImageData,
-        imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
-      },
-      {
-        title: 'AI Picture',
-        description:
-          'Scene-by-scene AI tuning that sharpens detail, color, and contrast automatically.',
-        image: aiPicLogo,
-        imageBlack: aiPicLogo,
-      },
-      {
-        title: 'Filmmaker',
-        description: 'Filmmaker Mode keeps original frame rates, colors, and aspect ratios intact.',
-        image: filmmakerLogo,
-      },
-      {
-        title: '4K AI Upscaler',
-        description:
-          'Upscales HD to near-4K clarity with AI-driven noise reduction and detail boost.',
-        image: aiUpscalerLogo,
-        imageBlack: aiUpscalerLogo,
-      },
-      {
-        title: 'AMD FreeSync Premium',
-        description: 'VRR + low-latency gaming with tear-free, stutter-free frames.',
-        image: amdLogo,
-      },
-      {
-        title: 'Game Bar',
-        description: 'On-screen game HUD to tweak latency, VRR, and picture presets in real time.',
-        image: gameBarLogo,
-      },
-      {
-        title: 'Quantum Dot Colour',
-        description: 'Billion+ colour shades with high volume for vivid HDR scenes.',
-        image: quantumDotLogo,
-      },
-      {
-        title: 'Smooth Motion',
-        description: 'Optimized panel uniformity and anti-glare for wide seating and bright rooms.',
-        image: smoothMotionLogo,
-      },
-      {
-        title: '144Hz Game Mode Pro',
-        description: 'High refresh rate with low latency for fast games and smooth sports.',
-        image: gameModeLogo,
-      },
-      {
-        title: 'Voice Control',
-        description: 'Hands-free or remote mic voice commands for quick search and control.',
-        image: voiceRemoteLogo,
-      },
-    ],
-    sectionGroups: [
-      {
-        kind: 'stacked',
-        textFirst: true,
-        sections: [
-          { image: q7qVrr, copyKey: 'vrr' },
-          { image: q7qScreenTear, copyKey: 'screenTear' },
-          { image: q7qVividColor, copyKey: 'vividColor' },
-          { image: q7qGaming, copyKey: 'gaming' },
-          { image: q7qNoBlur, copyKey: 'noBlur' },
-          { image: q7qFuzzyImage, copyKey: 'fuzzyImage' },
-        ],
-      },
-      {
-        kind: 'overlay',
-        sections: [
-          { image: q7qEnhancement, copyKey: 'enhancement', textPosition: 'right' },
-          { image: q7qBiggerScreen, copyKey: 'biggerScreen', textPosition: 'left' },
-        ],
-      },
-      {
-        kind: 'content',
-        sections: [
-          { image: q7qBrightness, copyKey: 'brightness' },
-          { image: q7qGameManagement, copyKey: 'gameManagement' },
-          { image: q7qMovies, copyKey: 'movies' },
-        ],
-      },
-      {
-        kind: 'stacked',
-        textFirst: true,
-        sections: [{ image: q7qVoiceCommand, copyKey: 'voiceCommand' }],
-      },
-    ],
-    specs: {
-      en: [
-        'Smart TV with sharp and clear picture',
-        'QLED & DLED display technology',
-        '8MP 4K resolution (3840 x 2160)',
-        'VIDAA U7.6 operating system',
-        'AI Upscaler upgrades HD to 4K',
-        '178° viewing angle with HDR picture',
-        '144Hz refresh rate',
-        'Quantum Dot tech for wide color gamut',
-        'Built-in Time Shift and digital tuner',
-        'Dolby surround: 2.1 (2x15W + 20W built-in subwoofer)',
-        'Headphone and optical out; WiFi & Bluetooth 5',
-        'SPDIF, AV, USB 2.0 x 2, HDMI x 4',
-        'DVB-T/T2 digital tuner',
-        'Mobile device connectivity',
-      ],
-      fa: [
-        'تلویزیون هوشمند Smart وضوح تصویر بالا و شفاف',
-        'تکنولوژی صفحه نمایش QLED & DLED',
-        'تصویر هشت مگا پیکسل 4K رزولوشن 2160 * 3840',
-        'دارای سیستم عامل VIDAA U7.6',
-        'ارتقاء تصویر HD to 4K توسط هوش مصنوعی AI Upscaler',
-        'زاویه دید 178 درجه ، تصویر HDR',
-        'نرخ تازه سازی تصویر 144HZ',
-        'مجهز به فناوری Quantum Dot (نمایش طیف وسیع رنگ ها با بهره گیری از تکنولوژی کوانتوم دات)',
-        'مجهز به Time Shift و گیرنده دیجیتال داخلی',
-        'صدای فراگیر دالبی SOUND OUTPUT: 2.1 2*15w+20W Built-in Subwoofer',
-        'خروجی هدفون و Optical ، قابلیت اتصال به WIFI و Bluetooth 5',
-        'SPDIF AV USB2.0x2 HDMIx4',
-        'تیونر دیجیتال داخلی DVB-T/T2',
-        'قابلیت اتصال به گوشی همراه',
-      ],
-    },
-    copy: {
-      en: {
-        name: 'Hisense Q7Q QLED 4K TV',
-        tagline: '100-inch QLED with 144Hz motion and AI-powered 4K upscaling.',
-        description:
-          'A flagship 100-inch QLED display with Quantum Dot colour, wide viewing angles, and VIDAA U7.6 smart OS—built for cinematic rooms and gaming setups.',
-        highlights: [
-          '100-inch QLED 4K (3840x2160) with HDR and 178° viewing.',
-          'VIDAA U7.6 smart platform with AI upscaling from HD to 4K.',
-          'Hi-View Engine X + Dynamic X-Display for controlled brightness and contrast.',
-          '144Hz Game Mode Pro with Quantum Dot Colour and low-latency response.',
-          '2.1ch 2x15W + 20W subwoofer, Dolby surround, and CineStage X Surround.',
-          'WiFi, Bluetooth 5, HDMI x4, USB 2.0 x2, SPDIF, AV, and headphone out.',
-        ],
-        blocks: {
-          vrr: {
-            title: 'Native 144Hz VRR, victory in every frame',
-            text: 'Unlock your ultimate gaming potential with 144Hz Game Mode PRO with an integrated game bar, say goodbye to the lag and enjoy the tear-free gameplay.',
-          },
-          screenTear: {
-            title: 'No screen tearing, just gaming',
-            text: 'Thanks to Variable Refresh Rate technology and AMD FreeSync Premium, you can stay immersed in the action without the fear of screen tearing.',
-          },
-          vividColor: {
-            title: 'Billion+ shades of vivid colour',
-            text: 'Experience a visual treat with QLED Colour. Every frame is rich, vibrant, and true-to-life, ensuring every colour, from the most subtle to the most vibrant, stands out.',
-          },
-          gaming: {
-            title: 'A whole new world of gaming',
-            text: 'Dolby transforms gaming. Witness unmatched visuals and be engulfed in the immersive sound. See brighter, hear clearer, and game better like never before. Step in, and play differently.',
-          },
-          enhancement: {
-            title: 'Intelligent visual enhancement',
-            text: 'Real-time intelligent enhancement for lifelike contrast, colour, clarity, and details.',
-          },
-          noBlur: {
-            title: 'Smoother picture with no blur',
-            text: `Experience smooth, lifelike visuals with advanced features like MEMC (Motion Estimation, Motion Compensation) and 3D Noise Reduction, built into a highly responsive panel. With AI Smooth Motion technology, annoying motion blur lies in the past. Whether it's fast-paced sports or action-packed gaming, every movement and sudden twist is rendered with crisp clarity, ensuring dynamic scenes appear seamless and true to life.`,
-          },
-          fuzzyImage: {
-            title: 'Fuzzy images are upscaled close to 4K quality',
-            text: `Hisense's Al 4K Upscaler unlocks superior clarity for all your favorite content. This smart feature reshapes not only your cherished classics and home movies, but also modern TV broadcasts, movies, and even streaming content into stunning 4K quality. Every pixel is elevated to the power of your TV.`,
-          },
-          brightness: {
-            title: 'Intelligent brightness for sustainable viewing',
-            text: 'No matter the time of the day, your TV detects and adjusts screen brightness automatically in response to ambient light to save electricity. Balance energy savings with quality viewing.',
-          },
-          gameManagement: {
-            title: 'Seamless gaming management at one stop',
-            text: 'Enjoy your gaming dashboard and manage your performance in real-time. You are able to adjust the gaming options and monitor the gameplay data seamlessly. Lead with precision, and play to win.',
-          },
-          movies: {
-            title: 'Watch your movies and TV shows the way the filmmakers intended',
-            text: 'Experience the message as it was intended with Filmmaker Mode. Adjust your video to its original settings to see details like the sound, aspect ratio, colour, frame rate, and more as it was originally envisioned for the most authentic display of your favorite filmmaker’s masterpiece, before it was altered for generic viewing.',
-          },
-          biggerScreen: {
-            title: 'Bigger screen for greater enjoyment',
-            text: 'More large-sized TV options. Gaming world or cinema, just dive in at your own home.',
-          },
-          voiceCommand: {
-            title: 'Your voice, your command',
-            text: 'Enjoy fast and convenient access to TV entertainment while keeping your data private. Try it now and experience effortless voice search and navigation.',
-          },
-        },
-      },
-      fa: {
-        name: 'تلویزیون Q7Q هایسنس',
-        tagline: 'نمایشگر ۱۰۰ اینچی QLED با نرخ ۱۴۴ هرتز و ارتقاء هوشمند 4K.',
-        description:
-          'تلویزیون پرچمدار ۱۰۰ اینچی با رنگ‌های Quantum Dot، زاویه دید گسترده و سیستم عامل VIDAA U7.6؛ مناسب سالن‌های سینمای خانگی و گیمینگ.',
-        highlights: [
-          'نمایشگر QLED 4K (۳۸۴۰ x ۲۱۶۰) با HDR و زاویه دید ۱۷۸ درجه.',
-          'سیستم هوشمند VIDAA U7.6 با ارتقاء تصویر HD به 4K توسط هوش مصنوعی.',
-          ' پردازشگر Hi-View Engine X و Dynamic X-Display برای روشنایی و کنتراست دقیق.',
-          'حالت Game Mode Pro با نرخ ۱۴۴ هرتز و رنگ‌های Quantum Dot برای تاخیر کم.',
-          'صدای ۲.۱ کانال (۲x۱۵ وات + ساب ۲۰ وات)، دالبی و CineStage X Surround.',
-          'اتصال WiFi، بلوتوث ۵، چهار HDMI، دو USB 2.0، SPDIF، AV و خروجی هدفون.',
-        ],
-        blocks: {
-          vrr: {
-            title: 'پیروزی واقعی در هر فریم ,144Hz VRR',
-            text: 'با Game Mode PRO و نرخ تازه‌سازی 144Hz، نهایت توان گیمینگ خود را آزاد کنید. یک Game Bar یکپارچه در اختیارتان است تا کنترل کامل داشته باشید. با حذف لگ و جلوگیری از گسست تصویر، از تجربه‌ای روان، سریع و بی‌نقص لذت ببرید—دقیقاً همان‌طور که یک بازی رقابتی باید باشد.',
-          },
-          screenTear: {
-            title: 'بدون گسست تصویر؛ فقط بازی',
-            text: 'با فناوری Variable Refresh Rate و پشتیبانی از AMD FreeSync Premium، در اوج هیجان بازی غوطه‌ور بمانید. نرخ تازه‌سازی متغیر به‌طور هوشمند با فریم‌های بازی هماهنگ می‌شود تا هیچ نشانه‌ای از گسست تصویر باقی نماند— فقط یک تجربه‌ی روان، دقیق و کاملاً immersive.',
-          },
-          vividColor: {
-            title: 'بیش از یک میلیارد سایه از رنگ‌های زنده و خیره‌کننده',
-            text: 'با فناوری QLED Colour، هر فریم به یک نمایش واقعی از رنگ‌های غنی، پویا و طبیعی تبدیل می‌شود. از لطیف‌ترین تون‌ها تا درخشان‌ترین رنگ‌ها، همه با وضوحی چشمگیر دیده می‌شوند تا تصویری زنده و واقعی پیش چشم شما قرار گیرد.',
-          },
-          gaming: {
-            title: 'دنیایی تازه از گیمینگ',
-            text: 'Dolby تجربه‌ی گیمینگ را دگرگون می‌کند. با تصویری بی‌رقیب و صدایی فراگیر، عمیق‌تر در دنیای بازی غوطه‌ور شوید. روشن‌تر ببینید، شفاف تر بشنوید و بهتر بازی کنید — چنان‌ که تاکنون تجربه نکرده‌اید. یک قدم بردارید و بازی را به شکلی کاملاً متفاوت آغاز کنید.',
-          },
-          enhancement: {
-            title: 'بهبود هوشمند کیفیت تصویر',
-            text: 'افزایش هوشمند کیفیت تصویر در لحظه، برای ارائه‌ی کنتراست، رنگ، وضوح و جزئیاتی واقعی و زنده.',
-          },
-          noBlur: {
-            title: 'تصویری روان و بدون تاری',
-            text: 'با فناوری‌های پیشرفته‌ای مانند MEMC و کاهش نویز سه‌بعدی در کنار یک پنل بسیار پاسخ‌گو، تصاویری روان، شفاف و نزدیک به واقعیت را تجربه کنید. تکنولوژی AI Smooth Motion تاری و محوشدگی حرکتی را از میان برمی‌دارد تا حتی صحنه‌های سریع — چه در مسابقات ورزشی و چه در بازی‌های هیجانی — با وضوحی دقیق، حرکت یکپارچه و جزئیاتی زنده نمایش داده شوند.',
-          },
-          fuzzyImage: {
-            title: 'بهبود هوشمند تصویر تا مرز وضوح 4K',
-            text: `AI 4K Upscaler هایسنس، وضوح و شفافیت محتوای شما را به سطحی کاملاً جدید می‌برد. این فناوری هوشمند، نه‌تنها فیلم‌ها و ویدئوهای قدیمی و خانگی، بلکه پخش تلویزیونی، فیلم‌های روز و حتی محتوای استریم‌شده را با کیفیتی نزدیک به 4K بازآفرینی می‌کند. در این فرآیند، هر پیکسل ارتقا یافته و تصویر نهایی، بیشترین توان تلویزیون شما را به نمایش می‌گذارد — شفاف، دقیق و چشمگیر.`,
-          },
-          brightness: {
-            title: 'روشنایی هوشمند برای تماشای پایدار',
-            text: 'در هر ساعت از شبانه‌روز، تلویزیون‌های هایسنس با تشخیص نور محیط، میزان روشنایی صفحه را به‌صورت خودکار تنظیم می‌کنند تا مصرف انرژی کاهش یابد. این فناوری تعادلی هوشمند میان صرفه‌جویی در برق و کیفیت مطلوب تصویر ایجاد می‌کند و تجربه‌ای پایدار و بهینه را برای شما رقم می‌زند.',
-          },
-          gameManagement: {
-            title: 'مدیریت یکپارچه گیمینگ در یک نقطه',
-            text: 'با داشبورد گیمینگ، عملکرد خود را در لحظه مدیریت کنید. تنظیمات گیمینگ را به‌صورت آنی تغییر دهید و داده‌های بازی را بدون وقفه زیر نظر داشته باشید. با دقت بیشتر بازی کنید، کنترل کامل داشته باشید و برای پیروزی پیش بروید.',
-          },
-          movies: {
-            title: 'تماشای فیلم‌ها و سریال‌ها همان‌طور که فیلم‌ساز می‌خواست',
-            text: 'با Filmmaker Mode محتوای تصویری را دقیقاً همان‌گونه ببینید که خالق اثر در نظر داشته است. این حالت با بازگرداندن تنظیمات تصویر به حالت اصلی، جزئیاتی مانند صدا، نسبت تصویر، رنگ‌ها، نرخ فریم و بسیاری موارد دیگر را مطابق نسخه‌ی اولیه نمایش می‌دهد. نتیجه، نمایش اصیل و وفادار به دیدگاه فیلم‌ساز است؛ پیش از آن‌که برای نمایش عمومی دستکاری یا ساده‌سازی شود.',
-          },
-          biggerScreen: {
-            title: 'صفحه‌نمایش بزرگ‌تر، لذت بیشتر',
-            text: 'گزینه‌های متنوعی از تلویزیون‌های سایز بزرگ پیش روی شماست. چه در دنیای بازی و چه در سینما، کافی است غرق تصویر شوید و تجربه‌ای هیجان‌انگیز را در خانه خود رقم بزنید.',
-          },
-          voiceCommand: {
-            title: 'صدای شما؛ فرمان شما',
-            text: 'به محتوای تلویزیونی خود سریع و آسان دسترسی پیدا کنید، در حالی‌ که حریم خصوصی‌ تان محفوظ می‌ماند. همین حالا امتحان کنید و جستجو و ناوبری صوتی را با نهایت راحتی و بدون هیچ زحمتی تجربه کنید.',
-          },
-        },
-      },
-    },
-  },
   {
     id: 'U7K',
     sku: 'U7K',
@@ -640,6 +371,501 @@ export const TV_PRODUCTS: TvProduct[] = [
           experience: {
             title: 'کنترل کامل تجربه تماشا',
             text: 'ساندبار و تلویزیون‌های هایسنس برای هماهنگی کامل با یکدیگر طراحی شده‌اند. با قابلیت EZPlay، تنها از طریق ریموت تلویزیون می‌توانید تنظیمات صدا را به‌سادگی مدیریت کنید. بیس و تریبل را مطابق سلیقه‌تان شخصی‌سازی کنید و همه تغییرات را به‌صورت واضح و یکپارچه روی صفحه تلویزیون ببینید؛ تجربه‌ای دقیق، راحت و کاملاً تحت کنترل شما.',
+          },
+        },
+      },
+    },
+  },
+  {
+    id: 'Q7Q',
+    sku: 'Q7Q',
+    sizes: ['55"', '65"', '75"', '85"', '100"'],
+    banners: [{ id: 'q7q-banner', desktop: q7qHero, alt: 'Hisense Q7Q hero' }],
+    series: 'Q7Q',
+    panel: '4K QLED SMART TV',
+    resolution: '4K (3840x2160)',
+    refreshRate: '144Hz + HDR',
+    os: 'VIDAA U7.6',
+    sound: '2.1ch 2x15W + 20W built-in sub, Dolby surround',
+    connectivity: ['WiFi', 'Bluetooth 5', 'HDMI x4', 'USB 2.0 x2', 'SPDIF', 'AV', 'Headphone'],
+    tuner: 'DVB-T/T2, Time Shift',
+    extras: [
+      'AI Upscaler (HD → 4K)',
+      'Hi-View Engine X',
+      'Dynamic X-Display',
+      '144Hz Game Mode Pro',
+      'Quantum Dot Colour',
+      'CineStage X Surround',
+    ],
+    image: q7qHero,
+    heroVideo: 'https://hisenseme.com/storage/20093/E7-PRO(Q7)_2K.mp4',
+    featureCards: [
+      {
+        title: 'Dolby Vision-Atmos',
+        description:
+          'Dolby Vision HDR picture with Dolby Atmos immersive sound for cinematic impact.',
+        image: dolbyVisionAtomsLogo as StaticImageData,
+        imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
+      },
+      {
+        title: 'AI Picture',
+        description:
+          'Scene-by-scene AI tuning that sharpens detail, color, and contrast automatically.',
+        image: aiPicLogo,
+        imageBlack: aiPicLogo,
+      },
+      {
+        title: 'Filmmaker',
+        description: 'Filmmaker Mode keeps original frame rates, colors, and aspect ratios intact.',
+        image: filmmakerLogo,
+      },
+      {
+        title: '4K AI Upscaler',
+        description:
+          'Upscales HD to near-4K clarity with AI-driven noise reduction and detail boost.',
+        image: aiUpscalerLogo,
+        imageBlack: aiUpscalerLogo,
+      },
+      {
+        title: 'AMD FreeSync Premium',
+        description: 'VRR + low-latency gaming with tear-free, stutter-free frames.',
+        image: amdLogo,
+      },
+      {
+        title: 'Game Bar',
+        description: 'On-screen game HUD to tweak latency, VRR, and picture presets in real time.',
+        image: gameBarLogo,
+      },
+      {
+        title: 'Quantum Dot Colour',
+        description: 'Billion+ colour shades with high volume for vivid HDR scenes.',
+        image: quantumDotLogo,
+      },
+      {
+        title: 'Smooth Motion',
+        description: 'Optimized panel uniformity and anti-glare for wide seating and bright rooms.',
+        image: smoothMotionLogo,
+      },
+      {
+        title: '144Hz Game Mode Pro',
+        description: 'High refresh rate with low latency for fast games and smooth sports.',
+        image: gameModeLogo,
+      },
+      {
+        title: 'Voice Control',
+        description: 'Hands-free or remote mic voice commands for quick search and control.',
+        image: voiceRemoteLogo,
+      },
+    ],
+    sectionGroups: [
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: q7qVrr, copyKey: 'vrr' },
+          { image: q7qScreenTear, copyKey: 'screenTear' },
+          { image: q7qVividColor, copyKey: 'vividColor' },
+          { image: q7qGaming, copyKey: 'gaming' },
+          { image: q7qNoBlur, copyKey: 'noBlur' },
+          { image: q7qFuzzyImage, copyKey: 'fuzzyImage' },
+        ],
+      },
+      {
+        kind: 'overlay',
+        sections: [
+          { image: q7qEnhancement, copyKey: 'enhancement', textPosition: 'right' },
+          { image: q7qBiggerScreen, copyKey: 'biggerScreen', textPosition: 'left' },
+        ],
+      },
+      {
+        kind: 'content',
+        sections: [
+          { image: q7qBrightness, copyKey: 'brightness' },
+          { image: q7qGameManagement, copyKey: 'gameManagement' },
+          { image: q7qMovies, copyKey: 'movies' },
+        ],
+      },
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [{ image: q7qVoiceCommand, copyKey: 'voiceCommand' }],
+      },
+    ],
+    specs: {
+      en: [
+        'Smart TV with sharp and clear picture',
+        'QLED & DLED display technology',
+        '8MP 4K resolution (3840 x 2160)',
+        'VIDAA U7.6 operating system',
+        'AI Upscaler upgrades HD to 4K',
+        '178° viewing angle with HDR picture',
+        '144Hz refresh rate',
+        'Quantum Dot tech for wide color gamut',
+        'Built-in Time Shift and digital tuner',
+        'Dolby surround: 2.1 (2x15W + 20W built-in subwoofer)',
+        'Headphone and optical out; WiFi & Bluetooth 5',
+        'SPDIF, AV, USB 2.0 x 2, HDMI x 4',
+        'DVB-T/T2 digital tuner',
+        'Mobile device connectivity',
+      ],
+      fa: [
+        'تلویزیون هوشمند Smart وضوح تصویر بالا و شفاف',
+        'تکنولوژی صفحه نمایش QLED & DLED',
+        'تصویر هشت مگا پیکسل 4K رزولوشن 2160 * 3840',
+        'دارای سیستم عامل VIDAA U7.6',
+        'ارتقاء تصویر HD to 4K توسط هوش مصنوعی AI Upscaler',
+        'زاویه دید 178 درجه ، تصویر HDR',
+        'نرخ تازه سازی تصویر 144HZ',
+        'مجهز به فناوری Quantum Dot (نمایش طیف وسیع رنگ ها با بهره گیری از تکنولوژی کوانتوم دات)',
+        'مجهز به Time Shift و گیرنده دیجیتال داخلی',
+        'صدای فراگیر دالبی SOUND OUTPUT: 2.1 2*15w+20W Built-in Subwoofer',
+        'خروجی هدفون و Optical ، قابلیت اتصال به WIFI و Bluetooth 5',
+        'SPDIF AV USB2.0x2 HDMIx4',
+        'تیونر دیجیتال داخلی DVB-T/T2',
+        'قابلیت اتصال به گوشی همراه',
+      ],
+    },
+    copy: {
+      en: {
+        name: 'Hisense Q7Q QLED 4K TV',
+        tagline: '100-inch QLED with 144Hz motion and AI-powered 4K upscaling.',
+        description:
+          'A flagship 100-inch QLED display with Quantum Dot colour, wide viewing angles, and VIDAA U7.6 smart OS—built for cinematic rooms and gaming setups.',
+        highlights: [
+          '100-inch QLED 4K (3840x2160) with HDR and 178° viewing.',
+          'VIDAA U7.6 smart platform with AI upscaling from HD to 4K.',
+          'Hi-View Engine X + Dynamic X-Display for controlled brightness and contrast.',
+          '144Hz Game Mode Pro with Quantum Dot Colour and low-latency response.',
+          '2.1ch 2x15W + 20W subwoofer, Dolby surround, and CineStage X Surround.',
+          'WiFi, Bluetooth 5, HDMI x4, USB 2.0 x2, SPDIF, AV, and headphone out.',
+        ],
+        blocks: {
+          featureIntro: {
+            title: 'Game on. Go beyond.',
+            text: 'QLED 4K Smart TV',
+          },
+          vrr: {
+            title: 'Native 144Hz VRR, victory in every frame',
+            text: 'Unlock your ultimate gaming potential with 144Hz Game Mode PRO with an integrated game bar, say goodbye to the lag and enjoy the tear-free gameplay.',
+          },
+          screenTear: {
+            title: 'No screen tearing, just gaming',
+            text: 'Thanks to Variable Refresh Rate technology and AMD FreeSync Premium, you can stay immersed in the action without the fear of screen tearing.',
+          },
+          vividColor: {
+            title: 'Billion+ shades of vivid colour',
+            text: 'Experience a visual treat with QLED Colour. Every frame is rich, vibrant, and true-to-life, ensuring every colour, from the most subtle to the most vibrant, stands out.',
+          },
+          gaming: {
+            title: 'A whole new world of gaming',
+            text: 'Dolby transforms gaming. Witness unmatched visuals and be engulfed in the immersive sound. See brighter, hear clearer, and game better like never before. Step in, and play differently.',
+          },
+          enhancement: {
+            title: 'Intelligent visual enhancement',
+            text: 'Real-time intelligent enhancement for lifelike contrast, colour, clarity, and details.',
+          },
+          noBlur: {
+            title: 'Smoother picture with no blur',
+            text: `Experience smooth, lifelike visuals with advanced features like MEMC (Motion Estimation, Motion Compensation) and 3D Noise Reduction, built into a highly responsive panel. With AI Smooth Motion technology, annoying motion blur lies in the past. Whether it's fast-paced sports or action-packed gaming, every movement and sudden twist is rendered with crisp clarity, ensuring dynamic scenes appear seamless and true to life.`,
+          },
+          fuzzyImage: {
+            title: 'Fuzzy images are upscaled close to 4K quality',
+            text: `Hisense's Al 4K Upscaler unlocks superior clarity for all your favorite content. This smart feature reshapes not only your cherished classics and home movies, but also modern TV broadcasts, movies, and even streaming content into stunning 4K quality. Every pixel is elevated to the power of your TV.`,
+          },
+          brightness: {
+            title: 'Intelligent brightness for sustainable viewing',
+            text: 'No matter the time of the day, your TV detects and adjusts screen brightness automatically in response to ambient light to save electricity. Balance energy savings with quality viewing.',
+          },
+          gameManagement: {
+            title: 'Seamless gaming management at one stop',
+            text: 'Enjoy your gaming dashboard and manage your performance in real-time. You are able to adjust the gaming options and monitor the gameplay data seamlessly. Lead with precision, and play to win.',
+          },
+          movies: {
+            title: 'Watch your movies and TV shows the way the filmmakers intended',
+            text: 'Experience the message as it was intended with Filmmaker Mode. Adjust your video to its original settings to see details like the sound, aspect ratio, colour, frame rate, and more as it was originally envisioned for the most authentic display of your favorite filmmaker’s masterpiece, before it was altered for generic viewing.',
+          },
+          biggerScreen: {
+            title: 'Bigger screen for greater enjoyment',
+            text: 'More large-sized TV options. Gaming world or cinema, just dive in at your own home.',
+          },
+          voiceCommand: {
+            title: 'Your voice, your command',
+            text: 'Enjoy fast and convenient access to TV entertainment while keeping your data private. Try it now and experience effortless voice search and navigation.',
+          },
+        },
+      },
+      fa: {
+        name: 'تلویزیون Q7Q هایسنس',
+        tagline: 'نمایشگر ۱۰۰ اینچی QLED با نرخ ۱۴۴ هرتز و ارتقاء هوشمند 4K.',
+        description:
+          'تلویزیون پرچمدار ۱۰۰ اینچی با رنگ‌های Quantum Dot، زاویه دید گسترده و سیستم عامل VIDAA U7.6؛ مناسب سالن‌های سینمای خانگی و گیمینگ.',
+        highlights: [
+          'نمایشگر QLED 4K (۳۸۴۰ x ۲۱۶۰) با HDR و زاویه دید ۱۷۸ درجه.',
+          'سیستم هوشمند VIDAA U7.6 با ارتقاء تصویر HD به 4K توسط هوش مصنوعی.',
+          ' پردازشگر Hi-View Engine X و Dynamic X-Display برای روشنایی و کنتراست دقیق.',
+          'حالت Game Mode Pro با نرخ ۱۴۴ هرتز و رنگ‌های Quantum Dot برای تاخیر کم.',
+          'صدای ۲.۱ کانال (۲x۱۵ وات + ساب ۲۰ وات)، دالبی و CineStage X Surround.',
+          'اتصال WiFi، بلوتوث ۵، چهار HDMI، دو USB 2.0، SPDIF، AV و خروجی هدفون.',
+        ],
+        blocks: {
+          featureIntro: {
+            title: 'شروع کن؛ فراتر از مرزها پیش برو',
+            text: 'تلویزیون هوشمند QLED 4K',
+          },
+          vrr: {
+            title: 'پیروزی واقعی در هر فریم ,144Hz VRR',
+            text: 'با Game Mode PRO و نرخ تازه‌سازی 144Hz، نهایت توان گیمینگ خود را آزاد کنید. یک Game Bar یکپارچه در اختیارتان است تا کنترل کامل داشته باشید. با حذف لگ و جلوگیری از گسست تصویر، از تجربه‌ای روان، سریع و بی‌نقص لذت ببرید—دقیقاً همان‌طور که یک بازی رقابتی باید باشد.',
+          },
+          screenTear: {
+            title: 'بدون گسست تصویر؛ فقط بازی',
+            text: 'با فناوری Variable Refresh Rate و پشتیبانی از AMD FreeSync Premium، در اوج هیجان بازی غوطه‌ور بمانید. نرخ تازه‌سازی متغیر به‌طور هوشمند با فریم‌های بازی هماهنگ می‌شود تا هیچ نشانه‌ای از گسست تصویر باقی نماند— فقط یک تجربه‌ی روان، دقیق و کاملاً immersive.',
+          },
+          vividColor: {
+            title: 'بیش از یک میلیارد سایه از رنگ‌های زنده و خیره‌کننده',
+            text: 'با فناوری QLED Colour، هر فریم به یک نمایش واقعی از رنگ‌های غنی، پویا و طبیعی تبدیل می‌شود. از لطیف‌ترین تون‌ها تا درخشان‌ترین رنگ‌ها، همه با وضوحی چشمگیر دیده می‌شوند تا تصویری زنده و واقعی پیش چشم شما قرار گیرد.',
+          },
+          gaming: {
+            title: 'دنیایی تازه از گیمینگ',
+            text: 'Dolby تجربه‌ی گیمینگ را دگرگون می‌کند. با تصویری بی‌رقیب و صدایی فراگیر، عمیق‌تر در دنیای بازی غوطه‌ور شوید. روشن‌تر ببینید، شفاف تر بشنوید و بهتر بازی کنید — چنان‌ که تاکنون تجربه نکرده‌اید. یک قدم بردارید و بازی را به شکلی کاملاً متفاوت آغاز کنید.',
+          },
+          enhancement: {
+            title: 'بهبود هوشمند کیفیت تصویر',
+            text: 'افزایش هوشمند کیفیت تصویر در لحظه، برای ارائه‌ی کنتراست، رنگ، وضوح و جزئیاتی واقعی و زنده.',
+          },
+          noBlur: {
+            title: 'تصویری روان و بدون تاری',
+            text: 'با فناوری‌های پیشرفته‌ای مانند MEMC و کاهش نویز سه‌بعدی در کنار یک پنل بسیار پاسخ‌گو، تصاویری روان، شفاف و نزدیک به واقعیت را تجربه کنید. تکنولوژی AI Smooth Motion تاری و محوشدگی حرکتی را از میان برمی‌دارد تا حتی صحنه‌های سریع — چه در مسابقات ورزشی و چه در بازی‌های هیجانی — با وضوحی دقیق، حرکت یکپارچه و جزئیاتی زنده نمایش داده شوند.',
+          },
+          fuzzyImage: {
+            title: 'بهبود هوشمند تصویر تا مرز وضوح 4K',
+            text: `AI 4K Upscaler هایسنس، وضوح و شفافیت محتوای شما را به سطحی کاملاً جدید می‌برد. این فناوری هوشمند، نه‌تنها فیلم‌ها و ویدئوهای قدیمی و خانگی، بلکه پخش تلویزیونی، فیلم‌های روز و حتی محتوای استریم‌شده را با کیفیتی نزدیک به 4K بازآفرینی می‌کند. در این فرآیند، هر پیکسل ارتقا یافته و تصویر نهایی، بیشترین توان تلویزیون شما را به نمایش می‌گذارد — شفاف، دقیق و چشمگیر.`,
+          },
+          brightness: {
+            title: 'روشنایی هوشمند برای تماشای پایدار',
+            text: 'در هر ساعت از شبانه‌روز، تلویزیون‌های هایسنس با تشخیص نور محیط، میزان روشنایی صفحه را به‌صورت خودکار تنظیم می‌کنند تا مصرف انرژی کاهش یابد. این فناوری تعادلی هوشمند میان صرفه‌جویی در برق و کیفیت مطلوب تصویر ایجاد می‌کند و تجربه‌ای پایدار و بهینه را برای شما رقم می‌زند.',
+          },
+          gameManagement: {
+            title: 'مدیریت یکپارچه گیمینگ در یک نقطه',
+            text: 'با داشبورد گیمینگ، عملکرد خود را در لحظه مدیریت کنید. تنظیمات گیمینگ را به‌صورت آنی تغییر دهید و داده‌های بازی را بدون وقفه زیر نظر داشته باشید. با دقت بیشتر بازی کنید، کنترل کامل داشته باشید و برای پیروزی پیش بروید.',
+          },
+          movies: {
+            title: 'تماشای فیلم‌ها و سریال‌ها همان‌طور که فیلم‌ساز می‌خواست',
+            text: 'با Filmmaker Mode محتوای تصویری را دقیقاً همان‌گونه ببینید که خالق اثر در نظر داشته است. این حالت با بازگرداندن تنظیمات تصویر به حالت اصلی، جزئیاتی مانند صدا، نسبت تصویر، رنگ‌ها، نرخ فریم و بسیاری موارد دیگر را مطابق نسخه‌ی اولیه نمایش می‌دهد. نتیجه، نمایش اصیل و وفادار به دیدگاه فیلم‌ساز است؛ پیش از آن‌که برای نمایش عمومی دستکاری یا ساده‌سازی شود.',
+          },
+          biggerScreen: {
+            title: 'صفحه‌نمایش بزرگ‌تر، لذت بیشتر',
+            text: 'گزینه‌های متنوعی از تلویزیون‌های سایز بزرگ پیش روی شماست. چه در دنیای بازی و چه در سینما، کافی است غرق تصویر شوید و تجربه‌ای هیجان‌انگیز را در خانه خود رقم بزنید.',
+          },
+          voiceCommand: {
+            title: 'صدای شما؛ فرمان شما',
+            text: 'به محتوای تلویزیونی خود سریع و آسان دسترسی پیدا کنید، در حالی‌ که حریم خصوصی‌ تان محفوظ می‌ماند. همین حالا امتحان کنید و جستجو و ناوبری صوتی را با نهایت راحتی و بدون هیچ زحمتی تجربه کنید.',
+          },
+        },
+      },
+    },
+  },
+  {
+    id: 'Q6Q',
+    sku: 'Q6Q',
+    sizes: ['50"', '55"', '65"', '75"', '85"'],
+    series: 'Q6Q',
+    panel: '4K QLED SMART TV',
+    resolution: '4K (3840x2160)',
+    refreshRate: 'Game Mode Plus (VRR/ALLM)',
+    os: 'VIDAA Smart OS',
+    sound: 'Dolby Atmos ready (details TBD)',
+    connectivity: ['WiFi', 'Bluetooth', 'HDMI', 'USB'],
+    tuner: 'To be confirmed',
+    extras: ['QLED Colour', '4K AI Upscaler', 'Game Mode Plus (VRR + ALLM)'],
+    image: q6qHero,
+    banners: [{ id: 'q6q-banner', desktop: q6qHero, alt: 'Hisense Q6Q hero' }],
+    heroVideo: 'https://hisenseme.com/storage/19829/E7-clean-1127.mp4',
+    featureCards: [
+      {
+        title: 'Smooth Motion',
+        description: 'MEMC and panel tuning cut blur for fast action and sports.',
+        image: smoothMotionLogo,
+      },
+      {
+        title: '4K AI Upscaler',
+        description: 'AI processing lifts HD sources closer to 4K clarity with clean detail.',
+        image: aiUpscalerLogo,
+        imageBlack: aiUpscalerLogo,
+      },
+      {
+        title: 'Dolby Vision-Atmos',
+        description: 'Dolby Vision HDR picture paired with Dolby Atmos sound for immersive nights.',
+        image: dolbyVisionAtomsLogo as StaticImageData,
+        imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
+      },
+      {
+        title: 'QLED Colour',
+        description: 'Billion+ shades with high colour volume for bright, punchy HDR scenes.',
+        image: quantumDotLogo,
+      },
+      {
+        title: 'Voice Control',
+        description: 'Voice Remote support for quick search and control.',
+        image: voiceRemoteLogo,
+      },
+      {
+        title: 'Game Mode Plus',
+        description: 'VRR/ALLM with Game Bar controls to reduce lag and tearing.',
+        image: gameBarLogo,
+      },
+      {
+        title: 'Filmmaker',
+        description:
+          'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
+        image: filmmakerLogo,
+      },
+    ],
+    sectionGroups: [
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: q6qVividColor, copyKey: 'vividColor' },
+          { image: q6qDolby, copyKey: 'dolby' },
+          { image: q6qFuzzyImage, copyKey: 'fuzzyImage' },
+          { image: q6qNoBlur, copyKey: 'noBlur' },
+        ],
+      },
+      {
+        kind: 'content',
+        sections: [{ image: q6qMovies, copyKey: 'movies' }],
+      },
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: q6qVrr, copyKey: 'vrr' },
+          { image: q6qGameManagement, copyKey: 'gameManagement' },
+          { image: q6qVoiceCommand, copyKey: 'voiceCommand' },
+          { image: q6qBrightness, copyKey: 'brightness' },
+          { image: q6qSizes, copyKey: 'sizes' },
+        ],
+      },
+    ],
+    copy: {
+      en: {
+        name: 'Hisense Q6Q 4K QLED TV',
+        tagline: 'QLED 4K Smart TV with Dolby Vision Atmos and Game Mode Plus.',
+        description:
+          'QLED colour, Dolby Vision Atmos, AI 4K upscaling, and Game Mode Plus with VRR/ALLM on a VIDAA smart TV.',
+        highlights: [
+          'QLED 4K panel with HDR and high colour volume.',
+          'Dolby Vision HDR and Dolby Atmos audio support.',
+          'Game Mode Plus with VRR/ALLM and Game Bar controls.',
+          'AI 4K Upscaler with MEMC smooth motion.',
+          'Voice Remote for hands-free commands and search.',
+          'VIDAA smart OS with fast access to global and local apps.',
+        ],
+        blocks: {
+          featureIntro: {
+            title: 'More colours, More enjoyment',
+            text: 'QLED 4K Smart TV',
+          },
+          vividColor: {
+            title: 'Billion + shades of vivid colour',
+            text: 'Experience a visual treat with QLED Colour. Every frame is rich, vibrant, and true-to-life, ensuring every colour, from the most subtle to the most vibrant, stands out.',
+          },
+          dolby: {
+            title: 'Dolby Vision & Atmos',
+            text: 'The fusion of Dolby Vision™ HDR imaging and Dolby Atmos® sound transforms your TV into an entertainment powerhouse.',
+          },
+          fuzzyImage: {
+            title: 'Fuzzy images are upscaled close to 4K quality',
+            text: "Hisense's Al 4K Upscaler unlocks superior clarity for all your favorite content. This smart feature reshapes not only your cherished classics and home movies, but also modern TV broadcasts, movies, and even streaming content into stunning 4K quality. Every pixel is elevated to the power of your TV.",
+          },
+          noBlur: {
+            title: 'Smoother picture with no blur',
+            text: `Experience smooth, lifelike visuals with advanced features like MEMC (Motion Estimation, Motion Compensation) and 3D Noise Reduction, built into a highly responsive panel. With AI Smooth Motion technology, annoying motion blur lies in the past. Whether it's fast-paced sports or action-packed gaming, every movement and sudden twist is rendered with crisp clarity, ensuring dynamic scenes appear seamless and true to life.`,
+          },
+          movies: {
+            title: 'Watch your movies and TV shows the way the filmmakers intended',
+            text: 'Experience the message as it was intended with Filmmaker Mode. Adjust your video to its original settings to see details like the sound, aspect ratio, colour, frame rate, and more as it was originally envisioned for the most authentic display of your favorite filmmaker’s masterpiece, before it was altered for generic viewing.',
+          },
+          vrr: {
+            title: 'Ultra-smooth gaming, lag-free experience',
+            text: 'Boost up your gaming experience with Game Mode PLUS with a game bar as an integrated control center. VRR and ALLM reduce the input lag and eliminate the screen tearing. Enjoy the smooth gameplay on a reasonably priced TV!',
+          },
+          gameManagement: {
+            title: 'Seamless gaming management at one stop',
+            text: 'Enjoy your gaming dashboard and manage your perforamce in real-time. You are able to adjust the gaming options and monitor the gameplay data seamlessly. Lead with precision, and play to win.',
+          },
+          voiceCommand: {
+            title: 'Your voice, your command',
+            text: 'Try the Hisense Voice Remote and take TV control to the next level of convenience. A single button press activates voice commands. Effortlessly navigate shows, adjust volume, or interact with virtual assistants.',
+          },
+          brightness: {
+            title: 'Intelligent brightness for sustainable viewing',
+            text: 'No matter the time of the day, your TV detects and adjust screen brightness automatically in response to ambient light to save electricity. Balance energy savings with quality viewing.',
+          },
+          sizes: {
+            title: 'Find the size that suits your space',
+            text: 'A full range of screen sizes ready to seamlessly fit into your home, no matter what you need.',
+          },
+        },
+      },
+      fa: {
+        name: 'تلویزیون Q6Q هایسنس',
+        tagline: 'QLED 4K Smart TV with Dolby Vision Atmos and Game Mode Plus.',
+        description:
+          'QLED colour, Dolby Vision Atmos, AI 4K upscaling, and Game Mode Plus with VRR/ALLM on a VIDAA smart TV.',
+        highlights: [
+          'QLED 4K panel with HDR and high colour volume.',
+          'Dolby Vision HDR and Dolby Atmos audio support.',
+          'Game Mode Plus with VRR/ALLM and Game Bar controls.',
+          'AI 4K Upscaler with MEMC smooth motion.',
+          'Voice Remote for hands-free commands and search.',
+          'VIDAA smart OS with fast access to global and local apps.',
+        ],
+        blocks: {
+          featureIntro: {
+            title: 'تنوع رنگ بیشتر، تجربه‌ای جذاب‌تر',
+            text: 'تلویزیون هوشمند QLED 4K',
+          },
+          vividColor: {
+            title: 'بیش از یک میلیارد سایه از رنگ‌های زنده و خیره‌کننده',
+            text: 'با فناوری QLED Colour، هر فریم سرشار از رنگ‌های غنی، پویا و طبیعی است. از لطیف‌ترین تون‌ها تا درخشان‌ترین رنگ‌ها، همه با وضوحی چشمگیر دیده می‌شوند و تصویری واقعی و زنده را پیش چشم شما قرار می‌دهند.',
+          },
+          dolby: {
+            title: 'Dolby Vision & Atmos',
+            text: 'ترکیب تصویر پیشرفته Dolby Vision™ و صدای فراگیر Dolby Atmos® تلویزیون شما را به یک مرکز قدرتمند سرگرمی تبدیل می‌کند—با تصویری سینمایی و صدایی فراگیر و عمیق.',
+          },
+          fuzzyImage: {
+            title: 'بهبود هوشمند تصویر تا مرز وضوح 4K',
+            text: 'فناوری AI 4K Upscaler هایسنس، وضوح محتوای شما را به سطحی تازه ارتقا می‌دهد. این قابلیت هوشمند، فیلم‌ها، پخش تلویزیونی و حتی محتوای استریم‌شده را با کیفیتی نزدیک به 4K بازآفرینی می‌کند. هر پیکسل برای دستیابی به تصویری شفاف، دقیق و چشمگیر پردازش می‌شود.',
+          },
+          noBlur: {
+            title: 'تصویری روان و بدون تاری',
+            text: 'با فناوری‌های MEMC و کاهش نویز سه‌بعدی در کنار یک پنل بسیار پاسخ‌گو، حرکات سریع با وضوح و یکپارچگی کامل نمایش داده می‌شوند. تکنولوژی AI Smooth Motion محوشدگی حرکتی را از بین می‌برد تا صحنه‌های ورزشی و بازی‌های هیجانی، شفاف، واقعی و کاملاً روان دیده شوند.',
+          },
+          movies: {
+            title: 'تماشای فیلم‌ها و سریال‌ها همان‌طور که فیلم‌ساز خواسته است',
+            text: 'با Filmmaker Mode محتوا را دقیقاً مطابق دیدگاه خالق اثر ببینید. این حالت با بازگرداندن تنظیمات تصویر به حالت اصلی، جزئیاتی مانند صدا، نسبت تصویر، رنگ‌ها، نرخ فریم و دیگر پارامترهای مهم را همان‌طور که در نسخه اولیه بوده نمایش می‌دهد—برای تجربه‌ای اصیل و وفادار به فیلم‌ساز.',
+          },
+          vrr: {
+            title: 'گیم‌پلی فوق‌العاده روان با تجربه‌ای بدون لگ',
+            text: 'با Game Mode PLUS و کنترل یکپارچه Game Bar، تجربه گیمینگ خود را ارتقا دهید. فناوری‌های VRR و ALLM تاخیر ورودی را کاهش داده و گسست تصویر را از میان می‌برند تا از یک گیم‌پلی سریع، روان و لذت‌بخش روی تلویزیونی مقرون‌ به‌ صرفه بهره‌مند شوید.',
+          },
+          gameManagement: {
+            title: 'مدیریت یکپارچه گیمینگ در یک نقطه',
+            text: 'با داشبورد گیمینگ، عملکرد خود را در لحظه مدیریت کنید. تنظیمات بازی را فوراً تغییر دهید و داده‌های گیم‌پلی را بدون وقفه زیر نظر داشته باشید. با دقت بازی کنید، کنترل کامل داشته باشید و برای پیروزی جلو بروید.',
+          },
+
+          voiceCommand: {
+            title: 'صدای شما؛ فرمان شما',
+            text: 'با ریموت صوتی هایسنس، کنترل تلویزیون را به سطحی تازه ببرید. تنها با یک دکمه، فرمان‌های صوتی فعال می‌شوند. به‌سادگی در برنامه‌ها جابه‌جا شوید، صدا را تنظیم کنید یا با دستیارهای هوشمند تعامل داشته باشید — سریع، راحت و بدون دست.',
+          },
+          brightness: {
+            title: 'روشنایی هوشمند برای تماشای پایدار',
+            text: 'تلویزیون به‌صورت خودکار نور محیط را تشخیص داده و روشنایی صفحه را مطابق آن تنظیم می‌کند تا مصرف انرژی کاهش یابد. این فناوری تعادلی هوشمند میان صرفه‌جویی در برق و کیفیت مطلوب تصویر ایجاد می‌کند.',
+          },
+          sizes: {
+            title: 'انتخاب سایزی که مناسب فضای شماست',
+            text: 'مجموعه‌ای کامل از اندازه‌های صفحه‌نمایش در اختیار شماست تا بدون دغدغه، گزینه‌ای متناسب با دکور، فضا و نیاز خود انتخاب کنید.',
           },
         },
       },

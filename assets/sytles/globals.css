@@ -4,7 +4,7 @@
   --brand-color: #00b3ac;
   --brand-color-dark: #008b86;
   --brand-color-light: #e1fffb;
-  --brand-gradient: linear-gradient(90deg, #4be1d9, #008b86);
+  --brand-gradient: linear-gradient(90deg, #6debe6, #00aaa6, #067977);
   --default-black-font: #1d1d1f;
   --default-white-font: #ffffff;
   --background-color: #f8fafc;
@@ -28,7 +28,7 @@
   --brand-color: #00d7ce;
   --brand-color-dark: #00a39c;
   --brand-color-light: rgba(0, 181, 173, 0.16);
-  --brand-gradient: linear-gradient(90deg, #5af2ea, #00a39c);
+  --brand-gradient: linear-gradient(90deg, #6debe6, #00aaa6, #067977);
   --default-black-font: #f8fafc;
   --background-color: #020617;
   --background-gradient: linear-gradient(135deg, #0a2a33 0%, #07373f 45%, #0a4a4f 100%);
