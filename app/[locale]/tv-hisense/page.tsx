@@ -55,12 +55,12 @@ export default async function TvHisensePage() {
   }));
 
   return (
-    <div className="space-y-14 pb-16 lg:space-y-20 lg:pb-24">
+    <div className="pb-16 space-y-14 lg:space-y-20 lg:pb-24">
       <div className="-mx-4 sm:-mx-6 lg:-mx-10 max-w-[1440px] 3xl:mx-auto">
         <TvHeroCarousel slides={heroSlides} locale={locale} />
       </div>
 
-      <div className="mx-auto w-full max-w-480 px-4 sm:px-6 lg:px-10">
+      <div className="w-full px-4 mx-auto max-w-480 sm:px-6 lg:px-10">
         <div className="mb-8 text-center">
           <h2 className="mt-3 text-2xl font-bold sm:text-3xl">{routeTranslations('title')}</h2>
           <p className="mt-3 text-base text-(--text-muted-color) sm:text-lg">
@@ -78,7 +78,7 @@ export default async function TvHisensePage() {
             return (
               <Link
                 key={product.id}
-                href={`/${locale}/tv-hisense/${product.id}`}
+                href={`/${locale}/tv-hisense/${product.id.toLocaleLowerCase()}`}
                 className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-(--border-color) bg-(--surface-color) shadow-(--panel-shadow) transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_color-mix(in_srgb,var(--overlay-color) 55%,transparent)] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
               >
                 <div className="relative w-full overflow-hidden">
@@ -94,7 +94,7 @@ export default async function TvHisensePage() {
                   <div className="absolute inset-0 flex flex-col justify-between bg-linear-to-t from-(--overlay-color) via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100">
                     <div className="flex h-10 w-full items-center gap-2 bg-linear-to-b from-(--surface-hover-color) to-(--surface-color) px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-(--default-black-font)">
                       {overlayFeatures.map((feature) => (
-                        <span key={feature} className="flex-1 text-center leading-4">
+                        <span key={feature} className="flex-1 leading-4 text-center">
                           {feature}
                         </span>
                       ))}
@@ -108,14 +108,14 @@ export default async function TvHisensePage() {
                           className="peer inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-(--default-black-font) shadow-sm ring-1 ring-(--border-color) transition duration-200 group-hover:bg-white group-hover:text-black dark:group-hover:text-black hover:bg-(--brand-color) hover:text-white hover:ring-(--brand-color) focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
                           aria-label={detailsLabel}
                         >
-                          <Visibility fontSize="small" className="h-5 w-5" aria-hidden="true" />
+                          <Visibility fontSize="small" className="w-5 h-5" aria-hidden="true" />
                           <span className="sr-only">{detailsLabel}</span>
                         </span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-1 flex-col gap-2 p-6">
+                <div className="flex flex-col flex-1 gap-2 p-6">
                   <p className="text-xs font-semibold uppercase tracking-[0.35em] text-(--text-subtle-color)">
                     {product.series}
                   </p>
@@ -129,7 +129,7 @@ export default async function TvHisensePage() {
         </div>
       </div>
 
-      {/* <div className="mx-auto w-full max-w-480 px-4 sm:px-6 lg:px-10">
+      {/* <div className="w-full px-4 mx-auto max-w-480 sm:px-6 lg:px-10">
         <div className="mb-8 text-center">
           <p className="text-xs uppercase tracking-[0.5em] text-(--text-subtle-color)">
             {pageTranslations('productSection.eyebrow')}

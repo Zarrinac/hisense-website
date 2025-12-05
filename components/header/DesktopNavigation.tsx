@@ -19,7 +19,7 @@ const PROMO_MESSAGES: Record<
   }
 > = {
   tvAudio: {
-    fa: 'تلویزیون‌ها و سیستم‌های صوتی هایسنس با کیفیت ULED و Mini-LED را ببینید.',
+    fa: ' تلویزیون‌ها و سیستم‌های صوتی هایسنس با کیفیت ULED و Mini-LED را ببینید.',
     en: 'Explore Hisense TVs and audio systems with breathtaking ULED/Mini-LED quality.',
   },
   airConditioner: {

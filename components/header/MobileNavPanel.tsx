@@ -67,7 +67,7 @@ export default function MobileNavPanel({
           </button>
         </div>
 
-        <div className="relative mt-10 flex-1 overflow-hidden">
+        <div className="relative flex-1 mt-10 overflow-hidden">
           <nav
             className={`absolute inset-0 flex flex-col gap-6 overflow-y-auto text-lg font-semibold text-(--default-black-font) transition-transform duration-300 ease-out ${
               mobileActiveMenuKey ? '-translate-x-full' : 'translate-x-0'
@@ -102,7 +102,7 @@ export default function MobileNavPanel({
               <span className="text-(--default-black-font)">{mobileActiveNavLabel}</span>
             </button>
 
-            <div className="mt-6 flex flex-col gap-4 pb-10">
+            <div className="flex flex-col gap-4 pb-10 mt-6">
               {mobileActiveSubMenuItems?.map((subItem) => (
                 <Link
                   key={subItem.title.en}
@@ -120,7 +120,7 @@ export default function MobileNavPanel({
             </div>
           </div>
         </div>
-        <div className="mt-auto pt-10">
+        <div className="pt-10 mt-auto">
           <button
             type="button"
             className="flex w-full items-center justify-center rounded-full border border-(--border-color) px-4 py-3 text-sm font-semibold text-(--text-muted-color) transition-colors hover:border-(--brand-color) hover:text-(--brand-color)"
