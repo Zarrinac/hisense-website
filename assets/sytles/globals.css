@@ -4,7 +4,7 @@
   --brand-color: #00b3ac;
   --brand-color-dark: #008b86;
   --brand-color-light: #e1fffb;
-  --brand-gradient: linear-gradient(90deg, #4be1d9, #008b86);
+  --brand-gradient: linear-gradient(90deg, #6debe6, #00aaa6, #067977);
   --default-black-font: #1d1d1f;
   --default-white-font: #ffffff;
   --background-color: #f8fafc;
@@ -28,7 +28,7 @@
   --brand-color: #00d7ce;
   --brand-color-dark: #00a39c;
   --brand-color-light: rgba(0, 181, 173, 0.16);
-  --brand-gradient: linear-gradient(90deg, #5af2ea, #00a39c);
+  --brand-gradient: linear-gradient(90deg, #6debe6, #00aaa6, #067977);
   --default-black-font: #f8fafc;
   --background-color: #020617;
   --background-gradient: linear-gradient(135deg, #0a2a33 0%, #07373f 45%, #0a4a4f 100%);
@@ -59,11 +59,12 @@
 @font-face {
   font-family: 'IRANSansXV';
   src:
-    url('/fonts/IRANSansXV.woff2') format('woff2'),
+    url('/fonts/IRANSansXV.woff2') format('woff2-variations'),
     url('/fonts/IRANSansXV.woff') format('woff');
-  font-weight: 400;
+  font-weight: 100 1000;
   font-style: normal;
   font-display: swap;
+  font-variation-settings: 'dots' 0;
 }
 
 @font-face {
@@ -118,6 +119,7 @@ body {
   margin: 0;
   min-height: 100vh;
   font-feature-settings: 'kern';
+  font-synthesis: none;
   background: var(--background-color, var(--background-gradient));
   background-color: var(--background-color);
   color: var(--default-black-font);

@@ -7,14 +7,20 @@ export type ContentSectionData = {
   image: StaticImageData;
   title: string;
   text: string;
+  textPosition?: 'left' | 'right';
 };
 
 type ContentSectionsProps = {
   sections: ContentSectionData[];
   isRTL?: boolean;
+  isImageLeft?: boolean;
 };
 
-export default function ContentSections({ sections, isRTL = false }: ContentSectionsProps) {
+export default function ContentSections({
+  sections,
+  isRTL = false,
+  isImageLeft = false,
+}: ContentSectionsProps) {
   const refs = useRef<(HTMLDivElement | null)[]>([]);
   const [visible, setVisible] = useState<boolean[]>(() => sections.map(() => false));
 
@@ -46,7 +52,7 @@ export default function ContentSections({ sections, isRTL = false }: ContentSect
   }, [sections.length]);
 
   return (
-    <div className="mx-auto w-full max-w-360 space-y-10 md:space-y-14">
+    <div className="w-full mx-auto space-y-10 max-w-360 md:space-y-14">
       {sections.map((section, idx) => {
         const isImageRightBase = idx % 2 === 0;
         const isImageRight = isRTL ? !isImageRightBase : isImageRightBase;
@@ -60,8 +66,8 @@ export default function ContentSections({ sections, isRTL = false }: ContentSect
             ref={(el) => {
               refs.current[idx] = el;
             }}
-            className={`flex flex-col items-center gap-6 rounded-3xl border border-(--border-color) bg-(--surface-color) p-6 shadow-sm md:gap-10 md:p-8 ${
-              isImageRight ? 'md:flex-row' : 'md:flex-row-reverse'
+            className={`flex flex-col items-center gap-6 ${
+              isImageRight || isImageLeft ? 'md:flex-row' : 'md:flex-row-reverse'
             }`}
           >
             <div
@@ -75,14 +81,14 @@ export default function ContentSections({ sections, isRTL = false }: ContentSect
               </p>
             </div>
             <div
-              className={`flex-1 overflow-hidden rounded-2xl border border-(--border-color) bg-(--surface-color-2) shadow-sm transition-all duration-1100 ease-out ${
+              className={`flex-1 overflow-hidden rounded-3xl border border-(--border-color) bg-(--surface-color-2) shadow-sm transition-all duration-1100 ease-out ${
                 show ? 'opacity-100 translate-x-0' : `opacity-0 ${imageOffset}`
               }`}
             >
               <Image
                 src={section.image}
                 alt={section.title}
-                className="h-full w-full object-cover"
+                className="object-cover w-full h-full"
               />
             </div>
           </div>
