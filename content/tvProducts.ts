@@ -67,7 +67,7 @@ import q6qVrr from '@/public/products/tvs/q6q-Files/q6q-vrr.jpg';
 import q6qBrightness from '@/public/products/tvs/q6q-Files/q6q-brightness.jpg';
 import q6qSizes from '@/public/products/tvs/q6q-Files/q6q-sizes.jpg';
 // A4AN-series
-import A4ANHero from '@/public/products/tvs/a4k-Files/a4k-Hero.jpg';
+import A4ANHero from '@/public/products/tvs/a4k-Files/a4k-Hero.png';
 import A4ANCrispClear from '@/public/products/tvs/a4k-Files/a4k-crispClear.jpg';
 import A4ANNature from '@/public/products/tvs/a4k-Files/a4k-nature.jpg';
 import A4ANVisuals from '@/public/products/tvs/a4k-Files/a4k-visuals.jpg';
@@ -81,6 +81,8 @@ import A4ANConnect from '@/public/products/tvs/a4k-Files/a4k-connect.jpg';
 import dtsxLogo from '@/public/products/tvs/logos/dtsx-logo.png';
 import gameModeSimpleLogo from '@/public/products/tvs/logos/game-mode-logo.png';
 import shareToTvLogo from '@/public/products/tvs/logos/share-to-tv-logo.png';
+// A3Q-series
+import A3QHero from '@/public/products/tvs/a3q-Files/a3q-Hero.jpg';
 
 export const TV_PRODUCTS: TvProduct[] = [
   {
@@ -1211,8 +1213,8 @@ export const TV_PRODUCTS: TvProduct[] = [
     connectivity: ['HDMI x2', 'USB 2.0 x2', 'AV/Component', 'Optical out', 'Headphone out'],
     tuner: 'DVB-T/T2 tuner with Time Shift and TV recording (PVR)',
     extras: ['HDR support with 178° viewing angle', 'Natural Colour Enhancer'],
-    image: A4ANHero,
-    banners: [{ id: 'A3Q-banner', desktop: A4ANHero, alt: 'Hisense A3Q hero' }],
+    image: A3QHero,
+    banners: [{ id: 'A3Q-banner', desktop: A3QHero, alt: 'Hisense A3Q hero' }],
     sectionGroups: [
       {
         kind: 'stacked',
@@ -1225,30 +1227,18 @@ export const TV_PRODUCTS: TvProduct[] = [
       {
         kind: 'overlay',
         sections: [
-          { image: A4ANVisuals, copyKey: 'visual', textPosition: 'right' },
-          { image: A4ANDepth, copyKey: 'depth' },
-        ],
-      },
-      {
-        kind: 'stacked',
-        textFirst: true,
-        sections: [
-          { image: A4ANEntertainment, copyKey: 'entertainment' },
-          { image: A4ANAudio, copyKey: 'audio' },
-          { image: A4ANLeaderboard, copyKey: 'leaderboard' },
+          { image: A4ANVisuals, copyKey: 'visual', textPosition: 'left' },
+          { image: A4ANDepth, copyKey: 'depth', textPosition: 'left' },
         ],
       },
       {
         kind: 'overlay',
-        sections: [{ image: A4ANEasyFast, copyKey: 'easyFastSecure', textPosition: 'right' }],
+        sections: [{ image: A4ANEasyFast, copyKey: 'easyFastSecure', textPosition: 'left' }],
       },
       {
         kind: 'stacked',
         textFirst: true,
-        sections: [
-          { image: A4ANCast, copyKey: 'cast' },
-          { image: A4ANConnect, copyKey: 'connect' },
-        ],
+        sections: [{ image: A4ANConnect, copyKey: 'connect' }],
       },
     ],
     specs: {
