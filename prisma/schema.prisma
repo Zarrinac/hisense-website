@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Product {
+  id                    String   @id
+  slug                  String   @unique
+  sku                   String?
+  series                String
+  seriesLabel           String?
+  size                  String?
+  sizes                 String[] @default([])
+  panel                 String
+  resolution            String
+  refreshRate           String
+  os                    String
+  sound                 String
+  connectivity          String[] @default([])
+  tuner                 String
+  extras                String[] @default([])
+  imageUrl              String
+  posterImageUrl        String?
+  heroVideoUrl          String?
+  gallery               Json?
+  banners               Json?
+  featureCards          Json?
+  sectionGroups         Json?
+  contentSections       Json?
+  stackedSections       Json?
+  bottomStackedSections Json?
+  comparisonSections    Json?
+  experienceSection     Json?
+  badges                Json?
+  specs                 Json?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  copies ProductCopy[]
+}
+
+model ProductCopy {
+  id          String   @id @default(cuid())
+  productId   String
+  locale      String
+  name        String
+  tagline     String
+  description String?
+  highlights  String[] @default([])
+  blocks      Json?
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, locale])
+}
