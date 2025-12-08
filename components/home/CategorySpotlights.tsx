@@ -2,6 +2,8 @@ import Link from 'next/link';
 import Image, { type StaticImageData } from 'next/image';
 import { HiArrowLongRight } from 'react-icons/hi2';
 
+// Category spotlight grid linking to major product lines.
+
 export type SpotlightCard = {
   id: string;
   title: string;

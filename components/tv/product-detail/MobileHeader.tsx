@@ -1,5 +1,7 @@
 import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 
+// Mobile-friendly header for the TV detail page showing breadcrumbs and sizes.
+
 type MobileHeaderProps = {
   breadcrumbItems: BreadcrumbItem[];
   lang: 'fa' | 'en';

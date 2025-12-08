@@ -1,5 +1,6 @@
 'use client';
 
+// Small button that flips between light/dark themes once ThemeProvider is ready.
 import { HiMoon, HiSun } from 'react-icons/hi2';
 import { useTheme } from './ThemeProvider';
 

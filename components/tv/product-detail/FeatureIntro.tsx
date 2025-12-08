@@ -1,3 +1,4 @@
+// Short intro blurb that only renders when copy is provided.
 type FeatureIntroProps = {
   title?: string;
   text?: string;

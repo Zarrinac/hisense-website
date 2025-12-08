@@ -1,5 +1,6 @@
 'use client';
 
+// Alternating image/text sections with intersection observer reveal animations.
 import { useEffect, useRef, useState } from 'react';
 import Image, { type StaticImageData } from 'next/image';
 
@@ -25,6 +26,7 @@ export default function ContentSections({
   const [visible, setVisible] = useState<boolean[]>(() => sections.map(() => false));
 
   useEffect(() => {
+    // Fade/slide sections in as they become visible.
     const elements = [...refs.current];
     const observer = new IntersectionObserver(
       (entries) => {

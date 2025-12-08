@@ -1,5 +1,6 @@
 'use client';
 
+// Animated stack of image/text sections with optional RTL + text-first ordering.
 import { useEffect, useRef, useState } from 'react';
 import Image, { type StaticImageData } from 'next/image';
 
@@ -24,6 +25,7 @@ export default function StackedContentSections({
   const [visible, setVisible] = useState<boolean[]>(() => sections.map(() => false));
 
   useEffect(() => {
+    // Fade/slide sections in as they enter the viewport.
     const targets = [...refs.current];
     const observer = new IntersectionObserver(
       (entries) => {

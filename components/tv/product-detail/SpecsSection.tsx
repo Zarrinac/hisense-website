@@ -1,3 +1,4 @@
+// Simple specs list; labels switch between FA/EN.
 type SpecsSectionProps = {
   items: string[];
   lang: 'fa' | 'en';

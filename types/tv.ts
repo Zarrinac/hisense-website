@@ -1,5 +1,6 @@
 import { type StaticImageData } from 'next/image';
 
+// Shape of the TV catalog content used by both pages and API fallbacks.
 export type Locale = 'en' | 'fa';
 
 export type CopyBlockKey =
