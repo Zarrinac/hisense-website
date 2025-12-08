@@ -20,6 +20,8 @@ import type {
   ApiSectionGroup,
 } from './types';
 
+// Normalizes Prisma records and static TV content into the API-facing product shape.
+
 const toSrc = (value: unknown): string => {
   if (typeof value === 'string') return value;
   if (value && typeof value === 'object' && 'src' in (value as { src?: unknown })) {

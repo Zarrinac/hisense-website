@@ -49,7 +49,7 @@
   },
   "HomePage": {
     "hero": {
-      "title": "Zarrin Namaye Caspian – Official Hisense Distributor in Iran",
+      "title": "Zarrin Namaye Caspian - Official Hisense Distributor in Iran",
       "subtitle": "Shop Hisense LED TVs, refrigerators, air conditioners, residential and commercial HVAC solutions, and D'CODE products with certified after-sales support across Iran."
     },
     "categories": {
@@ -83,9 +83,24 @@
       }
     }
   },
+  "UnderConstruction": {
+    "eyebrow": "Work in progress",
+    "title": "We are still putting this page together.",
+    "description": "This section is being built. In the meantime you can browse the catalog or reach our team for help.",
+    "supporting": "We are wiring up content, imagery, and links for this section. Thanks for your patience.",
+    "status": {
+      "content": "Content and specs are being finalized.",
+      "links": "Navigation, downloads, and support links will show up here soon."
+    },
+    "actions": {
+      "backHome": "Back to homepage",
+      "viewProducts": "Browse products",
+      "contact": "Contact support"
+    }
+  },
   "NotFound": {
     "eyebrow": "Page",
-    "title": "Sorry, we couldn’t find that page.",
+    "title": "Sorry, we couldn't find that page.",
     "description": "The link may be broken or the page may have been moved. Check the URL or return to the homepage.",
     "actions": {
       "home": "Back to homepage",

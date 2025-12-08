@@ -6,6 +6,8 @@ import Logo from '@/public/icons/hisense-logo-full.svg';
 import { TV_PRODUCTS } from '@/content/tvProducts';
 import type { NavKey, SubMenuItem } from './navigationData';
 
+// Mobile navigation drawer with nested submenus and deep links into TV models.
+
 type LabeledNavItem = {
   key: NavKey;
   href: string;

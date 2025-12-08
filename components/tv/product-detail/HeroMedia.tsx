@@ -1,5 +1,6 @@
 import Image, { type StaticImageData } from 'next/image';
 
+// Renders the hero media block only when a video URL exists, using the poster/image as fallback media.
 type HeroMediaProps = {
   image: StaticImageData;
   posterImage?: StaticImageData;

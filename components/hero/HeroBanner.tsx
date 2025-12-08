@@ -1,5 +1,6 @@
 'use client';
 
+// Homepage hero carousel with image preloading and Embla autoplay controls.
 import Image, { type StaticImageData } from 'next/image';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';

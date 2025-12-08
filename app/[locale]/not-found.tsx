@@ -4,6 +4,8 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { HiArrowLeft, HiArrowRight } from 'react-icons/hi2';
 import type { Locale } from '@/i18n/routing';
 
+// Locale-aware 404 with brand logos and localized navigation actions.
+
 export default async function NotFoundPage() {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations({ locale, namespace: 'NotFound' });

@@ -3,6 +3,8 @@ import { prisma } from '@/lib/db';
 import { FALLBACK_PRODUCTS, normalizeDbProducts } from '@/lib/api/products/normalizers';
 import type { ApiProduct } from '@/lib/api/products/types';
 
+// Returns the product catalog; prefers the database but falls back to bundled static content.
+
 const DEFAULT_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=300',
 };

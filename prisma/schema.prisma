@@ -1,3 +1,4 @@
+// Product catalog schema with localized copy blocks stored per product.
 generator client {
   provider = "prisma-client-js"
 }

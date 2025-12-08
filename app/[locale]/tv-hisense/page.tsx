@@ -10,6 +10,7 @@ import tv02 from '@/public/tv-banner/tv02.u8-mini-led-tv.jpg';
 import tv03 from '@/public/tv-banner/tv03.u7-mini-led-tv.jpg';
 import tv04 from '@/public/tv-banner/tv04.tv-rgb-ban.jpg';
 
+// Locale-aware TV listing pulls from the bundled product content until a DB is connected.
 const HERO_SLIDES = [
   { id: 'rgb', image: tv04 },
   { id: 'ux', image: tv01 },

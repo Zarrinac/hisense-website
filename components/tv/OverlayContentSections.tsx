@@ -1,5 +1,6 @@
 'use client';
 
+// Overlay variant of content sections with image-first layout and animated copy overlays.
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import type { ContentSectionData } from './ContentSections';
@@ -17,6 +18,7 @@ export default function OverlayContentSections({
   const [visible, setVisible] = useState<boolean[]>(() => sections.map(() => false));
 
   useEffect(() => {
+    // Reveal blocks when they enter view for subtle motion.
     const targets = [...refs.current];
     const observer = new IntersectionObserver(
       (entries) => {

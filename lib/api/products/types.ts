@@ -1,3 +1,4 @@
+// Shared product contract returned by the product API routes.
 export type ApiLocale = 'en' | 'fa';
 
 export type ApiCopyBlock = {

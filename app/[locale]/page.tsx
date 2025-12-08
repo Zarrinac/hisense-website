@@ -7,6 +7,8 @@ import Banner03 from '@/public/banner/Fix-Banner-03-Back.jpg';
 import Banner04 from '@/public/banner/Fix-Banner-04-Back.jpg';
 import Banner05 from '@/public/banner/Fix-Banner-05-Back.jpg';
 
+// Locale-aware homepage renders the hero carousel and localized category spotlights.
+
 const SPOTLIGHT_SOURCES = [
   { id: 'tv', href: '/tv-hisense', image: Banner02 },
   { id: 'refrigerator', href: '/refrigerator', image: Banner03 },

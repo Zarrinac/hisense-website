@@ -1,6 +1,8 @@
 import type { TvFeatureCard } from '@/types/tv';
 import FeatureCardImage from '@/components/tv/FeatureCardImage';
 
+// Grid of product feature badges, swapping images for dark mode when available.
+
 type FeatureCardsGridProps = {
   featureCards: TvFeatureCard[];
   compactFeatureTitles: Set<string>;

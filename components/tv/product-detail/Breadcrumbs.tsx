@@ -1,5 +1,7 @@
 import type { FC } from 'react';
 
+// Lightweight breadcrumb trail with schema.org markup for the TV detail pages.
+
 export type BreadcrumbItem = {
   label: string;
   href: string;

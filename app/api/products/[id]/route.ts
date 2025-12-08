@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { findFallbackProduct, normalizeDbProduct } from '@/lib/api/products/normalizers';
 
+// Looks up a product by id/slug using the DB when available, otherwise the static fallback list.
+
 const DEFAULT_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=300',
 };

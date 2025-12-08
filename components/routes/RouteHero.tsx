@@ -1,3 +1,4 @@
+// Slim hero block for route landing pages.
 type RouteHeroProps = {
   eyebrow: string;
   title: string;
