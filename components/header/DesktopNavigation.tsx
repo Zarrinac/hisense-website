@@ -1,5 +1,6 @@
 'use client';
 
+// Desktop navigation shell with hoverable mega-menu and RTL support.
 import { useEffect, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
 import Image, { type StaticImageData } from 'next/image';
@@ -110,6 +111,7 @@ export default function DesktopNavigation({
     }
     let lastScrollY = window.scrollY;
     const handleScroll = () => {
+      // Hide the bar when scrolling down unless a submenu is open.
       if (activeMenuKey) {
         setIsHidden(false);
         lastScrollY = window.scrollY;

@@ -1,5 +1,6 @@
 'use client';
 
+// Draggable before/after comparison slider with RTL and keyboard support.
 import {
   useCallback,
   useEffect,

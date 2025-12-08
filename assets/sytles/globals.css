@@ -1,3 +1,4 @@
+/* Global design tokens and Tailwind base import. */
 @import 'tailwindcss';
 
 :root {

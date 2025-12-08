@@ -1,6 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
 
+// Middleware keeps all non-asset routes locale-scoped for next-intl.
 export default createMiddleware(routing);
 
 export const config = {

@@ -1,5 +1,6 @@
 'use client';
 
+// Injects organization and product JSON-LD for search engines per locale.
 import { OrganizationJsonLd, ProductJsonLd } from 'next-seo';
 import type { Locale } from '@/i18n/routing';
 

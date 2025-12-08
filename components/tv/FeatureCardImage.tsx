@@ -1,5 +1,6 @@
 'use client';
 
+// Chooses a light/dark asset variant for feature cards based on the active theme.
 import Image, { type StaticImageData } from 'next/image';
 import { useTheme } from '@/components/theme/ThemeProvider';
 

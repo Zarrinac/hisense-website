@@ -1,5 +1,6 @@
 'use client';
 
+// Orchestrates top-level navigation, language-aware labels, and search/mobile overlays.
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import DesktopNavigation from '@/components/header/DesktopNavigation';
@@ -27,6 +28,7 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
+    // Prevent background scroll when the mobile drawer is open.
     if (isPanelOpen) {
       document.body.style.overflow = 'hidden';
     } else {
