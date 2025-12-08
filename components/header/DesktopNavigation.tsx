@@ -9,44 +9,45 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import Logo from '@/public/icons/hisense-logo-full.svg';
+import { TV_PRODUCTS } from '@/content/tvProducts';
 import type { NavKey, SubMenuItem } from './navigationData';
 
-const PROMO_MESSAGES: Record<
-  NavKey | 'default',
-  {
-    fa: string;
-    en: string;
-  }
-> = {
-  tvAudio: {
-    fa: ' تلویزیون‌ها و سیستم‌های صوتی هایسنس با کیفیت ULED و Mini-LED را ببینید.',
-    en: 'Explore Hisense TVs and audio systems with breathtaking ULED/Mini-LED quality.',
-  },
-  airConditioner: {
-    fa: 'کولرهای خانگی و سیستم‌های تهویه تجاری هایسنس برای هر اقلیم ایران.',
-    en: 'Residential splits and commercial HVAC solutions tailored for every climate zone.',
-  },
-  homeAppliances: {
-    fa: 'یخچال‌فریزرها و لباسشویی‌های هایسنس برای سبک زندگی مدرن شما.',
-    en: 'Hisense refrigerators, freezers, and washing machines built for premium everyday living.',
-  },
-  dcode: {
-    fa: "تلویزیون‌های هوشمند D'CODE با رابط فارسی و محتوای بومی.",
-    en: "D'CODE smart TVs deliver localized content and a seamless Persian interface.",
-  },
-  about: {
-    fa: 'درباره تاریخچه برند و مسئولیت‌پذیری اجتماعی هایسنس ایران بیشتر بدانید.',
-    en: 'Learn how Hisense Iran drives innovation, sustainability, and local partnerships.',
-  },
-  support: {
-    fa: 'مرکز تماس، گارانتی و شبکه خدمات پس از فروش در سراسر کشور در دسترس شماست.',
-    en: 'Reach nationwide after-sales service, warranty support, and dealer assistance.',
-  },
-  default: {
-    fa: 'درباره برند، خدمات مشتری و شبکه پشتیبانی ما بیشتر بدانید.',
-    en: 'Choose a category to learn about the brand, services, and support network.',
-  },
-};
+// const PROMO_MESSAGES: Record<
+//   NavKey | 'default',
+//   {
+//     fa: string;
+//     en: string;
+//   }
+// > = {
+//   tvAudio: {
+//     fa: ' تلویزیون‌ها و سیستم‌های صوتی هایسنس با کیفیت ULED و Mini-LED را ببینید.',
+//     en: 'Explore Hisense TVs and audio systems with breathtaking ULED/Mini-LED quality.',
+//   },
+//   airConditioner: {
+//     fa: 'کولرهای خانگی و سیستم‌های تهویه تجاری هایسنس برای هر اقلیم ایران.',
+//     en: 'Residential splits and commercial HVAC solutions tailored for every climate zone.',
+//   },
+//   homeAppliances: {
+//     fa: 'یخچال‌فریزرها و لباسشویی‌های هایسنس برای سبک زندگی مدرن شما.',
+//     en: 'Hisense refrigerators, freezers, and washing machines built for premium everyday living.',
+//   },
+//   dcode: {
+//     fa: "تلویزیون‌های هوشمند D'CODE با رابط فارسی و محتوای بومی.",
+//     en: "D'CODE smart TVs deliver localized content and a seamless Persian interface.",
+//   },
+//   about: {
+//     fa: 'درباره تاریخچه برند و مسئولیت‌پذیری اجتماعی هایسنس ایران بیشتر بدانید.',
+//     en: 'Learn how Hisense Iran drives innovation, sustainability, and local partnerships.',
+//   },
+//   support: {
+//     fa: 'مرکز تماس، گارانتی و شبکه خدمات پس از فروش در سراسر کشور در دسترس شماست.',
+//     en: 'Reach nationwide after-sales service, warranty support, and dealer assistance.',
+//   },
+//   default: {
+//     fa: 'درباره برند، خدمات مشتری و شبکه پشتیبانی ما بیشتر بدانید.',
+//     en: 'Choose a category to learn about the brand, services, and support network.',
+//   },
+// };
 
 type LabeledNavItem = {
   key: NavKey;
@@ -91,8 +92,8 @@ export default function DesktopNavigation({
 }: DesktopNavigationProps) {
   const [isHidden, setIsHidden] = useState(false);
   const navContainerRef = useRef<HTMLDivElement | null>(null);
-  const promoKey: keyof typeof PROMO_MESSAGES = activeMenuKey ?? 'default';
-  const promoCopy = locale === 'fa' ? PROMO_MESSAGES[promoKey].fa : PROMO_MESSAGES[promoKey].en;
+  // const promoKey: keyof typeof PROMO_MESSAGES = activeMenuKey ?? 'default';
+  // const promoCopy = locale === 'fa' ? PROMO_MESSAGES[promoKey].fa : PROMO_MESSAGES[promoKey].en;
   const localeKey = locale === 'fa' ? 'fa' : 'en';
   const logoAsset = Logo as StaticImageData;
   const toLocalePath = (path: string) => {
@@ -142,6 +143,12 @@ export default function DesktopNavigation({
       onMenuKeyChange(null);
     }
   };
+
+  const tvModelLinks = TV_PRODUCTS.map((product) => ({
+    id: product.id.toLowerCase(),
+    name: product.copy?.[localeKey]?.name ?? product.id,
+    href: toLocalePath(`/tv-hisense/${product.id.toLowerCase()}`),
+  }));
 
   return (
     <div
@@ -237,22 +244,32 @@ export default function DesktopNavigation({
               </p>
               <p className="mt-3 text-2xl font-semibold text-(--brand-color)">{activeNavLabel}</p>
 
-              <p className="mt-2 text-sm text-(--text-muted-color)">{promoCopy}</p>
+              {/* <p className="mt-2 text-sm text-(--text-muted-color)">{promoCopy}</p> */}
             </div>
             <div className="grid flex-1 grid-cols-3 gap-6">
               {activeSubMenuItems.map((subItem) => (
-                <Link
+                <div
                   key={subItem.title.en}
-                  href={`/${locale}${subItem.href}`}
                   className="header-submenu-card focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-(--brand-color)"
                 >
-                  <p className="text-base font-semibold text-(--default-black-font)">
+                  <Link
+                    href={`/${locale}${subItem.href}`}
+                    className="text-base font-semibold text-(--default-black-font) hover:text-white"
+                  >
                     {subItem.title[localeKey]}
-                  </p>
-                  <p className="mt-2 text-sm text-(--text-muted-color)">
-                    {subItem.description[localeKey]}
-                  </p>
-                </Link>
+                  </Link>
+                  {subItem.href === '/tv-hisense' && tvModelLinks.length > 0 && (
+                    <ul className="mt-3 space-y-2 text-sm text-(--text-muted-color)">
+                      {tvModelLinks.map((model) => (
+                        <li key={model.id}>
+                          <Link href={model.href} className="transition-colors hover:text-white">
+                            {model.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               ))}
             </div>
           </div>
