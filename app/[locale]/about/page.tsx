@@ -7,6 +7,7 @@ import factoryImage from '@/public/images/factory.png';
 import hisenseImage from '@/public/images/hisense.png';
 import showroomImage from '@/public/images/showroom.png';
 
+// About page hydrates structured content from locale-specific JSON files.
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const OG_LOCALE_MAP: Record<Locale, string> = {
   fa: 'fa_IR',

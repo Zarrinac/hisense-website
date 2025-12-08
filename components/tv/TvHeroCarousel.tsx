@@ -1,5 +1,6 @@
 'use client';
 
+// TV category hero carousel with Embla autoplay and RTL-aware slide order.
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image, { type StaticImageData } from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';

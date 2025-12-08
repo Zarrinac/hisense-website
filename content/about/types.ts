@@ -1,3 +1,4 @@
+// Typed contract for localized About page content consumed by the page component.
 export type AboutImageKey = 'factory' | 'hisense' | 'showroom';
 
 export type AboutHero = {

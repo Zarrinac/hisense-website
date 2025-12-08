@@ -2,6 +2,8 @@ import Image from 'next/image';
 import type { TvBanner } from '@/types/tv';
 import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 
+// Hero banner for TV detail pages with breadcrumb trail and size badges.
+
 type BannerSectionProps = {
   banner: TvBanner;
   breadcrumbItems: BreadcrumbItem[];
