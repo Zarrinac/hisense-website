@@ -50,14 +50,24 @@ const buildBanners = (product: NormalizedProduct, copyName: string): TvBanner[] 
 const resolveSections = (
   sections: TvSectionConfig[] | undefined,
   blocks: Blocks,
-): ContentSectionData[] =>
-  sections
-    ?.map((section) => {
-      const block = blocks[section.copyKey];
-      if (!block?.title || !block?.text) return null;
-      return { image: section.image, title: block.title, text: block.text };
-    })
-    .filter((section): section is ContentSectionData => Boolean(section)) ?? [];
+): ContentSectionData[] => {
+  if (!sections) return [];
+
+  return sections.reduce<ContentSectionData[]>((acc, section) => {
+    const block = blocks[section.copyKey];
+    if (!block?.title || !block?.text) return acc;
+
+    const resolved: ContentSectionData = {
+      image: section.image,
+      title: block.title,
+      text: block.text,
+      ...(section.textPosition ? { textPosition: section.textPosition } : {}),
+    };
+
+    acc.push(resolved);
+    return acc;
+  }, []);
+};
 
 const buildDefaultSectionGroups = (product: NormalizedProduct): TvSectionGroup[] => {
   const defaults: TvSectionGroup[] = [];
