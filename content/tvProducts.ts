@@ -1,5 +1,6 @@
 import { type StaticImageData } from 'next/image';
 import { type TvProduct } from '@/types/tv';
+// Bundled fallback TV catalog used when a database is not available.
 // logos
 import dolbyVisionAtomsLogo from '@/public/products/tvs/logos/Dolby-Vision-Atmos-svg-dark.svg';
 import dolbyVisionAtomsLogo1 from '@/public/products/tvs/logos/Dolby-Vision-Atmos-svg-white.svg';

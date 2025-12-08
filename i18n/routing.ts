@@ -1,5 +1,6 @@
 import { defineRouting } from 'next-intl/routing';
 
+// Central locale configuration for next-intl routing helpers and middleware.
 export const routing = defineRouting({
   locales: ['fa', 'en'],
   defaultLocale: 'fa',
