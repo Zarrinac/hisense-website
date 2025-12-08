@@ -7,6 +7,7 @@ export type CopyBlockKey =
   | 'masterMoment'
   | 'intelligentProcessor'
   | 'detail'
+  | 'details'
   | 'dolby'
   | 'imax'
   | 'filmMaker'
@@ -28,7 +29,16 @@ export type CopyBlockKey =
   | 'movies'
   | 'biggerScreen'
   | 'sizes'
-  | 'voiceCommand';
+  | 'voiceCommand'
+  | 'nature'
+  | 'depth'
+  | 'entertainment'
+  | 'audio'
+  | 'leaderboard'
+  | 'easyFastSecure'
+  | 'cast'
+  | 'connect'
+  | 'visual';
 
 export type CopyBlock = {
   title?: string;

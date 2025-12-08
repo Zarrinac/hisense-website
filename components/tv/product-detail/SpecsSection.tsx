@@ -4,7 +4,7 @@ type SpecsSectionProps = {
 };
 
 const SpecsSection = ({ items, lang }: SpecsSectionProps) => (
-  <div>
+  <div className="w-full mx-auto space-y-12 max-w-360">
     <div className="space-y-4 rounded-3xl border border-(--border-color) bg-(--surface-color) p-6 shadow-sm md:p-8">
       <h2 className="text-2xl font-bold text-center sm:text-3xl">
         {lang === 'fa' ? 'مشخصات فنی' : 'Specifications'}

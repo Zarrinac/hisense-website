@@ -42,12 +42,14 @@ export default function OverlayContentSections({
   }, [sections]);
 
   return (
-    <div className="w-full mx-auto space-y-12 max-w-360 md:space-y-16" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div
+      className="w-full mx-auto space-y-12 max-w-360 md:space-y-16 lg:my-16"
+      dir={isRTL ? 'rtl' : 'ltr'}
+    >
       {sections.map((section, idx) => {
         const requestedSide = section.textPosition ?? (idx % 2 === 0 ? 'left' : 'right');
-        const isTextLeft = isRTL ? requestedSide === 'right' : requestedSide === 'left';
-        const gradient = isTextLeft === true ? '' : '';
-        const textAlign = isTextLeft ? 'items-start' : 'items-end';
+        const isTextLeft = isRTL ? requestedSide === 'left' : requestedSide === 'right';
+        const textAlign = isTextLeft ? 'items-start text-right' : 'items-end text-left';
         const textOffset = isTextLeft ? '-translate-x-6' : 'translate-x-6';
         const show = visible[idx];
 
@@ -58,37 +60,55 @@ export default function OverlayContentSections({
             ref={(el) => {
               refs.current[idx] = el;
             }}
-            className="relative isolate overflow-hidden rounded-3xl border border-(--border-color) bg-black shadow-2xl aspect-21/9 min-h-[420px]"
+            className="overflow-hidden"
           >
-            <div className="absolute inset-0">
-              <Image
-                src={section.image}
-                alt={section.title}
-                fill
-                sizes="100vw"
-                className="object-cover"
-                priority={idx === 0}
-              />
-            </div>
-            <div className={`absolute inset-0 ${gradient}`} />
-            <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-black/5" />
-            <div
-              className={`relative z-10 flex h-full w-full items-center px-5 py-10 sm:px-10 lg:px-16 ${isTextLeft ? 'justify-end' : 'justify-start'}`}
-            >
+            <div className="flex flex-col">
               <div
-                className={`max-w-[400px] space-y-4 text-white drop-shadow-[0_14px_32px_rgba(0,0,0,0.65)] transition-all duration-900 ease-out ${
-                  show
-                    ? 'opacity-100 translate-y-0 translate-x-0'
-                    : `opacity-0 translate-y-4 ${textOffset}`
-                } ${textAlign}`}
+                className={`lg:hidden flex flex-col gap-3 px-6 pb-6 pt-5 sm:px-8 md:px-10 transition-all duration-700 ease-out text-center justify-center`}
                 style={{ transitionDelay: show ? '140ms' : '0ms' }}
               >
-                <h3 className="text-xl font-black leading-tight sm:text-2xl lg:text-3xl">
-                  {section.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-white/85 sm:text-base lg:text-lg">
+                <h3 className="text-xl font-black leading-tight sm:text-2xl">{section.title}</h3>
+                <p className="text-sm leading-relaxed text-(--text-muted-color) sm:text-base">
                   {section.text}
                 </p>
+              </div>
+
+              <div
+                className={`relative overflow-hidden aspect-video w-full rounded-3xl transition-all duration-900 ease-out lg:aspect-21/9 lg:min-h-[420px] ${
+                  show ? 'opacity-100 translate-y-0' : `opacity-0 ${textOffset}`
+                }`}
+              >
+                <Image
+                  src={section.image}
+                  alt={section.title}
+                  fill
+                  sizes="(min-width: 1440px) 1200px, (min-width: 1024px) 90vw, 100vw"
+                  className="object-cover"
+                  priority={idx === 0}
+                />
+
+                <div className="hidden lg:block absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-black/5" />
+                <div
+                  className={`hidden lg:flex absolute inset-0 items-center px-5 py-10 sm:px-10 lg:px-16 ${
+                    isTextLeft ? 'justify-end' : 'justify-start'
+                  }`}
+                >
+                  <div
+                    className={`max-w-[420px] space-y-4 text-white drop-shadow-[0_14px_32px_rgba(0,0,0,0.65)] transition-all duration-900 ease-out ${
+                      show
+                        ? 'opacity-100 translate-y-0 translate-x-0'
+                        : `opacity-0 translate-y-4 ${textOffset}`
+                    } ${textAlign}`}
+                    style={{ transitionDelay: show ? '140ms' : '0ms' }}
+                  >
+                    <h3 className="text-xl font-black leading-tight sm:text-xl lg:text-2xl 4xl:text-3xl">
+                      {section.title}
+                    </h3>
+                    <p className="text-xs leading-relaxed text-white/85 sm:text-sm lg:text-base 4xl:text-lg">
+                      {section.text}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
