@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { findFallbackProduct, normalizeDbProduct } from '@/lib/api/products/normalizers';
 
@@ -41,8 +41,10 @@ const getProduct = async (
   return { product: null, source: 'fallback' };
 };
 
-export async function GET(_request: Request, { params }: { params: { id?: string } }) {
-  const id = params?.id;
+type RouteContext = { params: Promise<{ id: string }> };
+
+export async function GET(_request: NextRequest, context: RouteContext) {
+  const { id } = await context.params;
 
   if (!id) {
     return NextResponse.json(
