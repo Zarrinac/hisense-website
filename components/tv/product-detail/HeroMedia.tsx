@@ -1,12 +1,15 @@
-import Image, { type StaticImageData } from 'next/image';
+import Image from 'next/image';
+import type { ImageSource } from '@/types/tv';
 
 // Renders the hero media block only when a video URL exists, using the poster/image as fallback media.
 type HeroMediaProps = {
-  image: StaticImageData;
-  posterImage?: StaticImageData;
+  image: ImageSource;
+  posterImage?: ImageSource;
   heroVideo?: string;
   alt: string;
 };
+
+const toSrc = (value: ImageSource) => (typeof value === 'string' ? value : value.src);
 
 const HeroMedia = ({ image, posterImage, heroVideo, alt }: HeroMediaProps) =>
   heroVideo && (
@@ -21,7 +24,7 @@ const HeroMedia = ({ image, posterImage, heroVideo, alt }: HeroMediaProps) =>
               muted
               playsInline
               preload="auto"
-              poster={(posterImage ?? image).src}
+              poster={toSrc(posterImage ?? image)}
             >
               <source src={heroVideo} type="video/mp4" />
             </video>

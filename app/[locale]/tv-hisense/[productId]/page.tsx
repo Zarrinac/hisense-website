@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { TV_PRODUCTS } from '@/content/tvProducts';
 import ContentSections, { type ContentSectionData } from '@/components/tv/ContentSections';
 import BannerSection from '@/components/tv/product-detail/BannerSection';
 import MobileHeader from '@/components/tv/product-detail/MobileHeader';
@@ -22,8 +21,9 @@ import type {
   TvSectionConfig,
   TvSectionGroup,
 } from '@/types/tv';
+import type { ApiProduct } from '@/lib/api/products/types';
 
-// Builds the TV detail page from the bundled content, normalizing copy blocks per locale.
+// Builds the TV detail page from the API (DB-first) with bundled content as fallback via the API layer.
 
 type PageParams = {
   locale?: string;
@@ -34,20 +34,88 @@ type PageProps = {
   params: PageParams | Promise<PageParams>;
 };
 
-const LOCALES = ['en', 'fa'] as const;
+const COPY_BLOCK_KEYS: CopyBlockKey[] = [
+  'featureIntro',
+  'masterMoment',
+  'intelligentProcessor',
+  'detail',
+  'details',
+  'dolby',
+  'imax',
+  'filmMaker',
+  'gamePlay',
+  'autoLight',
+  'sportsMode',
+  'optimization',
+  'stayConnected',
+  'experience',
+  'vrr',
+  'screenTear',
+  'vividColor',
+  'gaming',
+  'enhancement',
+  'noBlur',
+  'fuzzyImage',
+  'brightness',
+  'gameManagement',
+  'movies',
+  'biggerScreen',
+  'sizes',
+  'voiceCommand',
+  'nature',
+  'depth',
+  'entertainment',
+  'audio',
+  'leaderboard',
+  'easyFastSecure',
+  'cast',
+  'connect',
+  'visual',
+];
 
-type Blocks = Partial<Record<CopyBlockKey, CopyBlock>>;
-type NormalizedProduct = (typeof TV_PRODUCTS)[number];
+const COPY_BLOCK_KEYS_SET = new Set(COPY_BLOCK_KEYS);
+
+export const dynamic = 'force-dynamic';
 
 const resolveLocale = (locale?: string): 'fa' | 'en' => (locale === 'fa' ? 'fa' : 'en');
 
-const findProduct = (productId: string) =>
-  TV_PRODUCTS.find((product) => product.id.toLowerCase() === productId.toLowerCase());
+const toSrc = (image: string | { src: string }) => (typeof image === 'string' ? image : image.src);
+
+type CopyBlocksInput = ApiProduct['copy']['en']['blocks'];
+
+const filterBlocks = (copyBlocks: CopyBlocksInput): Blocks => {
+  const filtered: Blocks = {};
+  if (!copyBlocks) return filtered;
+  Object.entries(copyBlocks).forEach(([key, value]) => {
+    if (!COPY_BLOCK_KEYS_SET.has(key as CopyBlockKey)) return;
+    if (!value || typeof value !== 'object') return;
+    const title =
+      typeof (value as { title?: unknown }).title === 'string'
+        ? (value as { title: string }).title
+        : undefined;
+    const text =
+      typeof (value as { text?: unknown }).text === 'string'
+        ? (value as { text: string }).text
+        : undefined;
+    if (title || text) {
+      filtered[key as CopyBlockKey] = { ...(title ? { title } : {}), ...(text ? { text } : {}) };
+    }
+  });
+  return filtered;
+};
+
+type Blocks = Partial<Record<CopyBlockKey, CopyBlock>>;
+type NormalizedProduct = ApiProduct;
+
+const getBlock = (blocks: Blocks, key: string): CopyBlock | undefined => {
+  if (!COPY_BLOCK_KEYS_SET.has(key as CopyBlockKey)) return undefined;
+  return blocks[key as CopyBlockKey];
+};
 
 const buildBanners = (product: NormalizedProduct, copyName: string): TvBanner[] =>
   product.banners && product.banners.length > 0
     ? product.banners
-    : [{ id: 'default-banner', desktop: product.image, alt: copyName }];
+    : [{ id: 'default-banner', desktop: product.imageUrl, alt: copyName }];
 
 const resolveSections = (
   sections: TvSectionConfig[] | undefined,
@@ -75,16 +143,31 @@ const buildDefaultSectionGroups = (product: NormalizedProduct): TvSectionGroup[]
   const defaults: TvSectionGroup[] = [];
 
   if (product.contentSections) {
-    defaults.push({ kind: 'content', sections: product.contentSections });
+    defaults.push({
+      kind: 'content',
+      sections: product.contentSections.map((section) => ({
+        ...section,
+        copyKey: section.copyKey as CopyBlockKey,
+      })),
+    });
   }
   if (product.stackedSections) {
-    defaults.push({ kind: 'stacked', sections: product.stackedSections });
+    defaults.push({
+      kind: 'stacked',
+      sections: product.stackedSections.map((section) => ({
+        ...section,
+        copyKey: section.copyKey as CopyBlockKey,
+      })),
+    });
   }
   if (product.bottomStackedSections) {
     defaults.push({
       kind: 'stacked',
       textFirst: true,
-      sections: product.bottomStackedSections,
+      sections: product.bottomStackedSections.map((section) => ({
+        ...section,
+        copyKey: section.copyKey as CopyBlockKey,
+      })),
     });
   }
 
@@ -97,10 +180,19 @@ const buildSectionGroups = (
 ): NormalizedSectionGroup[] => {
   const defaultSectionGroups = buildDefaultSectionGroups(product);
   const sectionGroupConfigs: TvSectionGroup[] = Array.isArray(product.sectionGroups)
-    ? product.sectionGroups.filter(
-        (group): group is TvSectionGroup =>
-          Boolean(group) && Array.isArray(group.sections) && typeof group.kind === 'string',
-      )
+    ? (product.sectionGroups ?? [])
+        .filter(
+          (group): group is NonNullable<ApiProduct['sectionGroups']>[number] =>
+            Boolean(group) && Array.isArray(group.sections) && typeof group.kind === 'string',
+        )
+        .map((group) => ({
+          ...group,
+          sections: group.sections.map((section) => ({
+            ...section,
+            copyKey: section.copyKey as CopyBlockKey,
+          })),
+        }))
+        .map((group) => group as unknown as TvSectionGroup)
     : defaultSectionGroups;
 
   return sectionGroupConfigs.flatMap((group) => {
@@ -120,9 +212,8 @@ const buildExperienceSection = (
   product: NormalizedProduct,
   blocks: Blocks,
 ): ContentSectionData | null => {
-  const experienceBlock = product.experienceSection
-    ? blocks[product.experienceSection.copyKey]
-    : undefined;
+  const key = product.experienceSection?.copyKey;
+  const experienceBlock = key ? getBlock(blocks, key) : undefined;
 
   if (!product.experienceSection || !experienceBlock?.title || !experienceBlock?.text) {
     return null;
@@ -135,19 +226,26 @@ const buildExperienceSection = (
   };
 };
 
-const buildComparisonSections = (product: NormalizedProduct, blocks: Blocks): ComparisonSection[] =>
-  product.comparisonSections
-    ?.map((section) => {
-      const block = blocks[section.copyKey];
-      if (!block?.title || !block?.text) return null;
-      return {
-        title: block.title,
-        text: block.text,
-        before: section.before,
-        after: section.after,
-      };
-    })
-    .filter((section): section is ComparisonSection => Boolean(section)) ?? [];
+const buildComparisonSections = (
+  product: NormalizedProduct,
+  blocks: Blocks,
+): ComparisonSection[] => {
+  if (!Array.isArray(product.comparisonSections)) {
+    return [];
+  }
+  const items: ComparisonSection[] = [];
+  product.comparisonSections.forEach((section) => {
+    const block = getBlock(blocks, section.copyKey);
+    if (!block?.title || !block?.text) return;
+    items.push({
+      title: block.title,
+      text: block.text,
+      before: section.before,
+      after: section.after,
+    });
+  });
+  return items;
+};
 
 const resolveSpecs = (
   specs: Record<'en' | 'fa', string[]> | undefined,
@@ -180,14 +278,20 @@ const buildBreadcrumbItems = (
   { label: productLabel, href: `/${locale}/tv-hisense/${productId}` },
 ];
 
-export function generateStaticParams() {
-  return TV_PRODUCTS.flatMap((product) =>
-    LOCALES.map((locale) => ({
-      locale,
-      productId: product.id.toLowerCase(),
-    })),
-  );
-}
+const productApiUrl = (id: string) => `/api/products/${id}`;
+
+const fetchProduct = async (productId: string): Promise<NormalizedProduct | null> => {
+  try {
+    const response = await fetch(productApiUrl(productId), { cache: 'no-store' });
+    if (!response.ok) {
+      return null;
+    }
+    const product = (await response.json()) as NormalizedProduct;
+    return product;
+  } catch {
+    return null;
+  }
+};
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolved = await params;
@@ -195,11 +299,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const productId = resolved?.productId ?? '';
   if (!productId) return {};
 
-  const product = findProduct(productId);
+  const product = await fetchProduct(productId);
   if (!product) return {};
 
   const lang = resolveLocale(localeParam);
   const copy = product.copy[lang];
+  const imageUrl = toSrc(product.posterImageUrl ?? product.imageUrl);
 
   return {
     title: copy.name,
@@ -217,7 +322,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title: copy.name,
       description: copy.tagline,
-      images: [{ url: (product.posterImage ?? product.image).src }],
+      images: [{ url: imageUrl }],
       url: `/${localeParam}/tv-hisense/${productId}`,
     },
     alternates: {
@@ -236,14 +341,14 @@ export default async function TvProductDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const product = findProduct(productId);
+  const product = await fetchProduct(productId);
 
   if (!product) {
     notFound();
   }
 
   const copy = product.copy[lang];
-  const blocks: Blocks = copy.blocks ?? {};
+  const blocks = filterBlocks(copy.blocks);
   const featureIntroTitle = blocks.featureIntro?.title;
   const featureIntroText = blocks.featureIntro?.text;
   const masterMomentTitle = blocks.masterMoment?.title;
@@ -251,10 +356,7 @@ export default async function TvProductDetailPage({ params }: PageProps) {
   const sectionGroups = buildSectionGroups(product, blocks);
   const experienceSection = buildExperienceSection(product, blocks);
   const comparisonSections = buildComparisonSections(product, blocks);
-  const specDetails: string[] = resolveSpecs(
-    product.specs as Record<'en' | 'fa', string[]> | undefined,
-    lang,
-  );
+  const specDetails: string[] = resolveSpecs(product.specs, lang);
   const featureCards = product.featureCards ?? [];
   const compactFeatureTitles = new Set(['Dolby Vision-Atmos', 'Filmmaker', 'IMAX']);
   const availableSizes = getAvailableSizes(product);
@@ -285,9 +387,9 @@ export default async function TvProductDetailPage({ params }: PageProps) {
       <FeatureIntro title={featureIntroTitle} text={featureIntroText} />
 
       <HeroMedia
-        image={product.image}
-        posterImage={product.posterImage}
-        heroVideo={product.heroVideo}
+        image={product.imageUrl}
+        posterImage={product.posterImageUrl ?? undefined}
+        heroVideo={product.heroVideoUrl ?? undefined}
         alt={copy.name}
       />
 

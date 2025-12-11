@@ -11,7 +11,7 @@ export type SpotlightCard = {
   description: string;
   cta: string;
   href: string;
-  image: StaticImageData;
+  image: StaticImageData | string;
 };
 
 type CategorySpotlightsProps = {

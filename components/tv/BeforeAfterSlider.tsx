@@ -12,8 +12,8 @@ import {
 import Image, { type StaticImageData } from 'next/image';
 
 type BeforeAfterSliderProps = {
-  before: StaticImageData;
-  after: StaticImageData;
+  before: StaticImageData | string;
+  after: StaticImageData | string;
   beforeLabel?: string;
   afterLabel?: string;
   isRTL?: boolean;
