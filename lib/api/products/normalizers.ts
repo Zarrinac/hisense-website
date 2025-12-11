@@ -144,7 +144,7 @@ const normalizeSectionGroup = (group: unknown): ApiSectionGroup | null => {
   const sections = Array.isArray((group as { sections?: unknown }).sections)
     ? ((group as { sections?: unknown }).sections as unknown[])
         .map(normalizeSection)
-        .filter(Boolean)
+        .filter((section): section is ApiSection => Boolean(section))
     : [];
 
   if (sections.length === 0) return null;
@@ -259,7 +259,7 @@ export const normalizeDbProduct = (product: Product & { copies: ProductCopy[] })
     stackedSections: toArray(product.stackedSections, normalizeSection),
     bottomStackedSections: toArray(product.bottomStackedSections, normalizeSection),
     comparisonSections: toArray(product.comparisonSections, normalizeComparisonSection),
-    experienceSection: normalizeExperienceSection(product.experienceSection),
+    experienceSection: normalizeExperienceSection(product.experienceSection) ?? undefined,
     badges: toArray(product.badges, toSrc),
     specs: normalizeSpecs(product.specs),
     copy: copyByLocale,
@@ -386,7 +386,9 @@ export const normalizeContentProduct = (product: TvProduct): ApiProduct => {
       .map((banner) => normalizeBannerFromContent(banner, toSrc(product.image)))
       .filter((banner): banner is ApiBanner => Boolean(banner)),
     featureCards: Array.isArray(product.featureCards)
-      ? product.featureCards.map((card) => normalizeFeatureCard(card)).filter(Boolean)
+      ? product.featureCards
+          .map((card) => normalizeFeatureCard(card))
+          .filter((card): card is ApiFeatureCard => Boolean(card))
       : [],
     sectionGroups: sectionGroups
       .map((group) => normalizeSectionGroupFromContent(group))
