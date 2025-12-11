@@ -4,13 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Visibility } from '@mui/icons-material';
 import TvHeroCarousel from '@/components/tv/TvHeroCarousel';
-import { TV_PRODUCTS } from '@/content/tvProducts';
 import tv01 from '@/public/tv-banner/tv01.ux-mini-led-tv.jpg';
 import tv02 from '@/public/tv-banner/tv02.u8-mini-led-tv.jpg';
 import tv03 from '@/public/tv-banner/tv03.u7-mini-led-tv.jpg';
 import tv04 from '@/public/tv-banner/tv04.tv-rgb-ban.jpg';
+import { FALLBACK_PRODUCTS } from '@/lib/api/products/normalizers';
+import type { ApiProduct } from '@/lib/api/products/types';
 
-// Locale-aware TV listing pulls from the bundled product content until a DB is connected.
 const HERO_SLIDES = [
   { id: 'rgb', image: tv04 },
   { id: 'ux', image: tv01 },
@@ -39,10 +39,33 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+const fetchProducts = async (): Promise<ApiProduct[]> => {
+  const apiUrl =
+    process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL.length > 0
+      ? new URL('/api/products', process.env.NEXT_PUBLIC_SITE_URL).toString()
+      : '/api/products';
+  try {
+    const response = await fetch(apiUrl, { cache: 'no-store', next: { revalidate: 0 } });
+    if (!response.ok) {
+      return FALLBACK_PRODUCTS;
+    }
+    let data: ApiProduct[];
+    try {
+      data = (await response.json()) as ApiProduct[];
+    } catch {
+      return FALLBACK_PRODUCTS;
+    }
+    return Array.isArray(data) && data.length > 0 ? data : FALLBACK_PRODUCTS;
+  } catch {
+    return FALLBACK_PRODUCTS;
+  }
+};
+
 export default async function TvHisensePage() {
   const locale = await getLocale();
   const routeTranslations = await getTranslations('Routes.tvHisense');
   const pageTranslations = await getTranslations('TvHisensePage');
+  const products = await fetchProducts();
   const detailsLabel = pageTranslations('actions.details');
   const lang: 'fa' | 'en' = locale === 'fa' ? 'fa' : 'en';
   const detailsTooltip = lang === 'fa' ? 'دیدن جزییات' : 'More details';
@@ -69,8 +92,8 @@ export default async function TvHisensePage() {
           </p>
         </div>
         <div className="grid gap-6 lg:grid-cols-3">
-          {TV_PRODUCTS.map((product) => {
-            const copy = product.copy[lang];
+          {products.map((product) => {
+            const copy = product.copy[lang] ?? product.copy.en;
             const featureTags = (product.extras ?? []).slice(0, 3).filter(Boolean);
             const overlayFeatures =
               featureTags.length > 0
@@ -79,13 +102,13 @@ export default async function TvHisensePage() {
             return (
               <Link
                 key={product.id}
-                href={`/${locale}/tv-hisense/${product.id.toLocaleLowerCase()}`}
+                href={`/${locale}/tv-hisense/${(product.slug ?? product.id).toLocaleLowerCase()}`}
                 className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-(--border-color) bg-(--surface-color) shadow-(--panel-shadow) transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_color-mix(in_srgb,var(--overlay-color) 55%,transparent)] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
               >
                 <div className="relative w-full overflow-hidden">
-                  <div className="aspect-4/3 w-full bg-(--surface-color)">
+                  <div className="relative aspect-4/3 w-full bg-(--surface-color)">
                     <Image
-                      src={product.image}
+                      src={product.imageUrl}
                       alt={copy.name}
                       fill
                       className="object-contain transition duration-700 group-hover:scale-105"

@@ -155,7 +155,7 @@ export default function DesktopNavigation({
   return (
     <div
       ref={navContainerRef}
-      className={`sticky top-0 z-40 w-full transform-gpu transition-[transform,opacity] duration-500 ease-in-out ${
+      className={`sticky top-0 z-50 w-full transform-gpu transition-[transform,opacity] duration-500 ease-in-out ${
         isHidden ? '-translate-y-[105%] opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
       }`}
       onMouseLeave={handleMouseLeave}
@@ -238,7 +238,7 @@ export default function DesktopNavigation({
       </header>
 
       {activeSubMenuItems && (
-        <div className="header-submenu-panel hidden px-4 lg:block">
+        <div className="header-submenu-panel hidden px-4 lg:absolute lg:left-0 lg:right-0 lg:top-full lg:z-50 lg:block">
           <div className="mx-auto flex max-w-6xl gap-10 px-7 py-7">
             <div className="max-w-xs">
               <p className="text-xs uppercase tracking-[0.4em] text-(--text-subtle-color)">
