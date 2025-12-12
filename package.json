@@ -23,7 +23,7 @@
     "@prisma/client": "^7.1.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
-    "next": "16.0.7",
+    "next": "^16.0.10",
     "next-intl": "^4.5.8",
     "next-seo": "^7.0.1",
     "next-sitemap": "^4.2.3",

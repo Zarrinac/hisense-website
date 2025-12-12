@@ -10,7 +10,7 @@ const DEFAULT_HEADERS = {
 };
 
 const loadProduct = async (idOrSlug: string) => {
-  if (process.env.DATABASE_URL) {
+  if (prisma) {
     try {
       const product = await prisma.product.findFirst({
         where: {
