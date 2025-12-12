@@ -278,7 +278,9 @@ const buildBreadcrumbItems = (
   { label: productLabel, href: `/${locale}/tv-hisense/${productId}` },
 ];
 
-const productApiUrl = (id: string) => `/api/products/${id}`;
+const apiBaseUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ?? 'http://localhost:3000';
+
+const productApiUrl = (id: string) => new URL(`/api/products/${id}`, apiBaseUrl).toString();
 
 const fetchProduct = async (productId: string): Promise<NormalizedProduct | null> => {
   try {
