@@ -3,7 +3,10 @@ import Link from 'next/link';
 import CloseIcon from '@mui/icons-material/Close';
 import { HiChevronRight, HiChevronLeft } from 'react-icons/hi2';
 import Logo from '@/public/icons/hisense-logo-full.svg';
+import { TV_PRODUCTS } from '@/content/tvProducts';
 import type { NavKey, SubMenuItem } from './navigationData';
+
+// Mobile navigation drawer with nested submenus and deep links into TV models.
 
 type LabeledNavItem = {
   key: NavKey;
@@ -49,6 +52,12 @@ export default function MobileNavPanel({
     const normalized = path.startsWith('/') ? path : `/${path}`;
     return `/${locale}${normalized}`;
   };
+
+  const tvModelLinks = TV_PRODUCTS.map((product) => ({
+    id: product.id.toLowerCase(),
+    name: product.copy?.[localeKey]?.name ?? product.id,
+    href: toLocalePath(`/tv-hisense/${product.id.toLowerCase()}`),
+  }));
 
   return (
     <div className="fixed inset-0 z-50 flex" dir={locale === 'fa' ? 'rtl' : 'ltr'}>
@@ -104,18 +113,35 @@ export default function MobileNavPanel({
 
             <div className="flex flex-col gap-4 pb-10 mt-6">
               {mobileActiveSubMenuItems?.map((subItem) => (
-                <Link
+                <div
                   key={subItem.title.en}
-                  href={toLocalePath(subItem.href)}
                   className="rounded-2xl border border-(--border-color) bg-(--surface-muted-color) p-4 transition hover:border-(--brand-color) hover:bg-(--surface-hover-color)"
                 >
-                  <p className="text-base font-semibold text-(--default-black-font)">
+                  <Link
+                    href={toLocalePath(subItem.href)}
+                    className="text-base font-semibold text-(--default-black-font) hover:text-(--brand-color)"
+                  >
                     {subItem.title[localeKey]}
-                  </p>
-                  <p className="mt-1 text-sm text-(--text-muted-color)">
-                    {subItem.description[localeKey]}
-                  </p>
-                </Link>
+                  </Link>
+                  {subItem.href === '/tv-hisense' && tvModelLinks.length > 0 ? (
+                    <ul className="mt-2 space-y-2 text-sm text-(--text-muted-color)">
+                      {tvModelLinks.map((model) => (
+                        <li key={model.id}>
+                          <Link
+                            href={model.href}
+                            className="transition-colors hover:text-(--brand-color)"
+                          >
+                            {model.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="mt-1 text-sm text-(--text-muted-color)">
+                      {subItem.description[localeKey]}
+                    </p>
+                  )}
+                </div>
               ))}
             </div>
           </div>

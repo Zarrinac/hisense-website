@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# media moved to server, keep out of repo
+/public/products/
+/public/images/
+/public/tv-banner/
+/public/banner/
+
+/app/generated/prisma

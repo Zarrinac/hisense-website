@@ -1,5 +1,6 @@
 'use client';
 
+// Locale toggle that swaps the current route to the opposite locale without full reload.
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { type Locale } from '@/i18n/routing';

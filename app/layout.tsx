@@ -2,6 +2,8 @@ import type { ReactNode } from 'react';
 import { getLocale } from 'next-intl/server';
 import '@/assets/sytles/globals.css';
 
+// Root layout sets the html lang/dir attributes based on resolved locale and applies global styles.
+
 type RootLayoutProps = {
   children: ReactNode;
 };

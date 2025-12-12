@@ -1,14 +1,16 @@
 'use client';
 
+// TV category hero carousel with Embla autoplay and RTL-aware slide order.
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Image, { type StaticImageData } from 'next/image';
+import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
+import type { ImageSource } from '@/types/tv';
 
 type Slide = {
   id: string;
-  image: StaticImageData;
+  image: ImageSource;
   eyebrow: string;
   title: string;
   subtitle: string;
@@ -19,7 +21,9 @@ type TvHeroCarouselProps = {
   locale: string;
 };
 
-function useImagePreloader(images: StaticImageData[]) {
+const getSrc = (image: ImageSource) => (typeof image === 'string' ? image : image.src);
+
+function useImagePreloader(images: ImageSource[]) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -31,10 +35,10 @@ function useImagePreloader(images: StaticImageData[]) {
 
     let canceled = false;
 
-    const loadImage = (imageData: StaticImageData) =>
+    const loadImage = (imageData: ImageSource) =>
       new Promise<void>((resolve) => {
         const img = new window.Image();
-        img.src = imageData.src;
+        img.src = getSrc(imageData);
         if (img.complete) {
           resolve();
           return;

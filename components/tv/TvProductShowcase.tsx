@@ -1,5 +1,6 @@
 'use client';
 
+// Standalone showcase list for TV products rendered from content data.
 import Image from 'next/image';
 import Link from 'next/link';
 import { type TvProduct } from '@/types/tv';

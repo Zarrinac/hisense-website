@@ -1,67 +1,91 @@
-import { type StaticImageData } from 'next/image';
+import { mediaUrl } from '@/lib/mediaUrl';
 import { type TvProduct } from '@/types/tv';
+// Bundled fallback TV catalog used when a database is not available.
 // logos
-import dolbyVisionAtomsLogo from '@/public/products/tvs/U7K-Files/Dolby-Vision-Atmos-svg-dark.svg';
-import dolbyVisionAtomsLogo1 from '@/public/products/tvs/U7K-Files/Dolby-Vision-Atmos-svg-white.svg';
-import HdrLogo from '@/public/products/tvs/U7K-Files/HDR-logo-black.png';
-import HdrLogo1 from '@/public/products/tvs/U7K-Files/HDR-logo.png';
-import filmmakerLogo from '@/public/products/tvs/U7K-Files/Filmmaker-Mode-logo.png';
-import ImaxLogo from '@/public/products/tvs/U7K-Files/IMAX-logo.png';
-import ImaxLogo1 from '@/public/products/tvs/U7K-Files/IMAX-logo-reverse.png';
-import HiViewLogo from '@/public/products/tvs/U7K-Files/Hi-view-green-logo.png';
-import u7kFeature6 from '@/public/products/tvs/U7K-Files/Feature_Mini-LED-X_b.png';
-import quantumDotLogo from '@/public/products/tvs/U7K-Files/Feature_Quantum-Dot-Colour_m.png';
-import dynamicXDisplayLogo from '@/public/products/tvs/U7K-Files/Feature_Dynamic-X-Display_m.png';
-import gameModeLogo from '@/public/products/tvs/U7K-Files/Feature_144Hz_Game_Mode_PRO_m.png';
-import dolbyVisionAtomsLogo0 from '@/public/products/tvs/U7K-Files/Feature_CineStage-X-Surround_m.png';
-import aiPicLogo from '@/public/products/tvs/q7q-Files/logo-ai-picture-white.png';
-import aiUpscalerLogo from '@/public/products/tvs/q7q-Files/logo-ai-upscaler.png';
-import amdLogo from '@/public/products/tvs/q7q-Files/logo-amd-white.png';
-import gameBarLogo from '@/public/products/tvs/q7q-Files/logo-game-bar.png';
-import smoothMotionLogo from '@/public/products/tvs/q7q-Files/logo-smooth-motion.png';
-import voiceRemoteLogo from '@/public/products/tvs/q7q-Files/logo-voice-remote-white.png';
+const productAsset = (path: string) => mediaUrl(`/products/${path}`);
+
+const dolbyVisionAtomsLogo = productAsset('tvs/logos/Dolby-Vision-Atoms-svg-dark.svg');
+const dolbyVisionAtomsLogo1 = productAsset('tvs/logos/Dolby-Vision-Atoms-svg-white.svg');
+const HdrLogo = productAsset('tvs/logos/HDR-logo-black.png');
+const HdrLogo1 = productAsset('tvs/logos/HDR-logo.png');
+const filmmakerLogo = productAsset('tvs/logos/Filmmaker-Mode-logo.png');
+const ImaxLogo = productAsset('tvs/logos/IMAX-logo.png');
+const ImaxLogo1 = productAsset('tvs/logos/IMAX-logo-reverse.png');
+const HiViewLogo = productAsset('tvs/logos/Hi-view-green-logo.png');
+const u7kFeature6 = productAsset('tvs/logos/Feature_Mini-LED-X_b.png');
+const quantumDotLogo = productAsset('tvs/logos/Feature_Quantum-Dot-Colour_m.png');
+const dynamicXDisplayLogo = productAsset('tvs/logos/Feature_Dynamic-X-Display_m.png');
+const gameModeLogo = productAsset('tvs/logos/Feature_144Hz_Game_Mode_PRO_m.png');
+const dolbyVisionAtomsLogo0 = productAsset('tvs/logos/Feature_CineStage-X-Surround_m.png');
+const aiPicLogo = productAsset('tvs/logos/logo-ai-picture-white.png');
+const aiUpscalerLogo = productAsset('tvs/logos/logo-ai-upscaler.png');
+const amdLogo = productAsset('tvs/logos/logo-amd-white.png');
+const gameBarLogo = productAsset('tvs/logos/logo-game-bar.png');
+const smoothMotionLogo = productAsset('tvs/logos/logo-smooth-motion.png');
+const voiceRemoteLogo = productAsset('tvs/logos/logo-voice-remote-white.png');
+const aiSportsLogo = productAsset('tvs/logos/ai-sports-logo.png');
+const colorEnhancerLogo = productAsset('tvs/logos/colour-enhancer-logo.png');
+const depthEnhancerLogo = productAsset('tvs/logos/depth-enhancer-logo.png');
+const noiseReductionLogo = productAsset('tvs/logos/noise-reduction-logo.png');
 
 // U7K-series
-import u7kHero from '@/public/products/tvs/U7K-Files/U7K-Hero.png';
-import u7kVideoPoster from '@/public/products/tvs/U7K-Files/gamePlaySection-image.jpg';
-import u7kIntelligentProcessor from '@/public/products/tvs/U7K-Files/HI-VIEW-engine.jpg';
-import u7kDetailSection from '@/public/products/tvs/U7K-Files/detailSection-image.jpg';
-import u7kDolbySection from '@/public/products/tvs/U7K-Files/dolbySection-image.jpg';
-import u7kImaxSection from '@/public/products/tvs/U7K-Files/imaxSection-image.jpg';
-import u7kfilmMakerSection from '@/public/products/tvs/U7K-Files/filmMakerSection-image.jpg';
-import u7kAutoLightAfterSection from '@/public/products/tvs/U7K-Files/autoLight-after-image.jpg';
-import u7kAutoLightBeforeSection from '@/public/products/tvs/U7K-Files/autoLight-before-image.jpg';
-import u7kSportsModeBeforeSection from '@/public/products/tvs/U7K-Files/sportsMode-before-image.jpg';
-import u7kSportsModeAfterSection from '@/public/products/tvs/U7K-Files/sportsMode-after-image.jpg';
-import u7kOptimizationSection from '@/public/products/tvs/U7K-Files/optimization-image.jpg';
-import u7kStayConnectedSection from '@/public/products/tvs/U7K-Files/stayConnected-image.jpg';
-import u7kExperienceSection from '@/public/products/tvs/U7K-Files/experience-image.jpg';
+const u7kHero = productAsset('tvs/U7K-Files/U7K-Hero.png');
+const u7kVideoPoster = productAsset('tvs/U7K-Files/gamePlaySection-image.jpg');
+const u7kIntelligentProcessor = productAsset('tvs/U7K-Files/HI-VIEW-engine.jpg');
+const u7kDetailSection = productAsset('tvs/U7K-Files/detailSection-image.jpg');
+const u7kDolbySection = productAsset('tvs/U7K-Files/dolbySection-image.jpg');
+const u7kImaxSection = productAsset('tvs/U7K-Files/imaxSection-image.jpg');
+const u7kfilmMakerSection = productAsset('tvs/U7K-Files/filmMakerSection-image.jpg');
+const u7kAutoLightAfterSection = productAsset('tvs/U7K-Files/autoLight-after-image.jpg');
+const u7kAutoLightBeforeSection = productAsset('tvs/U7K-Files/autoLight-before-image.jpg');
+const u7kSportsModeBeforeSection = productAsset('tvs/U7K-Files/sportsMode-before-image.jpg');
+const u7kSportsModeAfterSection = productAsset('tvs/U7K-Files/sportsMode-after-image.jpg');
+const u7kOptimizationSection = productAsset('tvs/U7K-Files/optimization-image.jpg');
+const u7kStayConnectedSection = productAsset('tvs/U7K-Files/stayConnected-image.jpg');
+const u7kExperienceSection = productAsset('tvs/U7K-Files/experience-image.jpg');
 // Q7Q-series
-import q7qHero from '@/public/products/tvs/q7q-Files/q7q-Hero.jpg';
-import q7qBiggerScreen from '@/public/products/tvs/q7q-Files/q7q-biggerScreen.jpg';
-import q7qBrightness from '@/public/products/tvs/q7q-Files/q7q-brightness.jpg';
-import q7qEnhancement from '@/public/products/tvs/q7q-Files/q7q-enhancement.jpg';
-import q7qFuzzyImage from '@/public/products/tvs/q7q-Files/q7q-fuzzyImage.jpg';
-import q7qGameManagement from '@/public/products/tvs/q7q-Files/q7q-gameManagement.jpg';
-import q7qGaming from '@/public/products/tvs/q7q-Files/q7q-gaming.jpg';
-import q7qMovies from '@/public/products/tvs/q7q-Files/q7q-movies.jpg';
-import q7qNoBlur from '@/public/products/tvs/q7q-Files/q7q-noBlur.jpg';
-import q7qScreenTear from '@/public/products/tvs/q7q-Files/q7q-screenTear.jpg';
-import q7qVividColor from '@/public/products/tvs/q7q-Files/q7q-vividColor.jpg';
-import q7qVrr from '@/public/products/tvs/q7q-Files/q7q-vrr.jpg';
-import q7qVoiceCommand from '@/public/products/tvs/q7q-Files/q7q-voiceCommand.jpg';
+const q7qHero = productAsset('tvs/q7q-Files/q7q-Hero.jpg');
+const q7qBiggerScreen = productAsset('tvs/q7q-Files/q7q-biggerScreen.jpg');
+const q7qBrightness = productAsset('tvs/q7q-Files/q7q-brightness.jpg');
+const q7qEnhancement = productAsset('tvs/q7q-Files/q7q-enhancement.jpg');
+const q7qFuzzyImage = productAsset('tvs/q7q-Files/q7q-fuzzyImage.jpg');
+const q7qGameManagement = productAsset('tvs/q7q-Files/q7q-gameManagement.jpg');
+const q7qGaming = productAsset('tvs/q7q-Files/q7q-gaming.jpg');
+const q7qMovies = productAsset('tvs/q7q-Files/q7q-movies.jpg');
+const q7qNoBlur = productAsset('tvs/q7q-Files/q7q-noBlur.jpg');
+const q7qScreenTear = productAsset('tvs/q7q-Files/q7q-screenTear.jpg');
+const q7qVividColor = productAsset('tvs/q7q-Files/q7q-vividColor.jpg');
+const q7qVrr = productAsset('tvs/q7q-Files/q7q-vrr.jpg');
+const q7qVoiceCommand = productAsset('tvs/q7q-Files/q7q-voiceCommand.jpg');
 // Q6Q-series
-import q6qHero from '@/public/products/tvs/q6q-Files/q6q-Hero.jpg';
-import q6qDolby from '@/public/products/tvs/q6q-Files/q6q-dolby.jpg';
-import q6qFuzzyImage from '@/public/products/tvs/q6q-Files/q6q-fuzzyImage.jpg';
-import q6qGameManagement from '@/public/products/tvs/q6q-Files/q6q-gameManagement.jpg';
-import q6qMovies from '@/public/products/tvs/q6q-Files/q6q-movies.jpg';
-import q6qNoBlur from '@/public/products/tvs/q6q-Files/q6q-noBlur.jpg';
-import q6qVividColor from '@/public/products/tvs/q6q-Files/q6q-vividColor.jpg';
-import q6qVoiceCommand from '@/public/products/tvs/q6q-Files/q6q-voiceCommand.jpg';
-import q6qVrr from '@/public/products/tvs/q6q-Files/q6q-vrr.jpg';
-import q6qBrightness from '@/public/products/tvs/q6q-Files/q6q-brightness.jpg';
-import q6qSizes from '@/public/products/tvs/q6q-Files/q6q-sizes.jpg';
+const q6qHero = productAsset('tvs/q6q-Files/q6q-Hero.jpg');
+const q6qDolby = productAsset('tvs/q6q-Files/q6q-dolby.jpg');
+const q6qFuzzyImage = productAsset('tvs/q6q-Files/q6q-fuzzyImage.jpg');
+const q6qGameManagement = productAsset('tvs/q6q-Files/q6q-gameManagement.jpg');
+const q6qMovies = productAsset('tvs/q6q-Files/q6q-movies.jpg');
+const q6qNoBlur = productAsset('tvs/q6q-Files/q6q-noBlur.jpg');
+const q6qVividColor = productAsset('tvs/q6q-Files/q6q-vividColor.jpg');
+const q6qVoiceCommand = productAsset('tvs/q6q-Files/q6q-voiceCommand.jpg');
+const q6qVrr = productAsset('tvs/q6q-Files/q6q-vrr.jpg');
+const q6qBrightness = productAsset('tvs/q6q-Files/q6q-brightness.jpg');
+const q6qSizes = productAsset('tvs/q6q-Files/q6q-sizes.jpg');
+// A4AN-series
+const A4ANHero = productAsset('tvs/a4k-Files/a4k-Hero.png');
+const A4ANCrispClear = productAsset('tvs/a4k-Files/a4k-crispClear.jpg');
+const A4ANNature = productAsset('tvs/a4k-Files/a4k-nature.jpg');
+const A4ANVisuals = productAsset('tvs/a4k-Files/a4k-visuals.jpg');
+const A4ANDepth = productAsset('tvs/a4k-Files/a4k-depth.png');
+const A4ANEntertainment = productAsset('tvs/a4k-Files/a4k-entertainmet.jpg');
+const A4ANAudio = productAsset('tvs/a4k-Files/a4k-audio.jpg');
+const A4ANLeaderboard = productAsset('tvs/a4k-Files/a4k-leaderboard.jpg');
+const A4ANEasyFast = productAsset('tvs/a4k-Files/a4k-easyFast.jpg');
+const A4ANCast = productAsset('tvs/a4k-Files/a4k-cast.jpg');
+const A4ANConnect = productAsset('tvs/a4k-Files/a4k-connect.jpg');
+const dtsxLogo = productAsset('tvs/logos/dtsx-logo.png');
+const gameModeSimpleLogo = productAsset('tvs/logos/game-mode-logo.png');
+const shareToTvLogo = productAsset('tvs/logos/share-to-tv-logo.png');
+// A3Q-series
+const A3QHero = productAsset('tvs/a3q-Files/a3q-Hero.jpg');
 
 export const TV_PRODUCTS: TvProduct[] = [
   {
@@ -95,8 +119,8 @@ export const TV_PRODUCTS: TvProduct[] = [
         title: 'Dolby Vision-Atoms',
         description:
           'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
-        image: dolbyVisionAtomsLogo as StaticImageData,
-        imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
+        image: dolbyVisionAtomsLogo,
+        imageBlack: dolbyVisionAtomsLogo1,
       },
       {
         title: 'HDR',
@@ -404,8 +428,8 @@ export const TV_PRODUCTS: TvProduct[] = [
         title: 'Dolby Vision-Atmos',
         description:
           'Dolby Vision HDR picture with Dolby Atmos immersive sound for cinematic impact.',
-        image: dolbyVisionAtomsLogo as StaticImageData,
-        imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
+        image: dolbyVisionAtomsLogo,
+        imageBlack: dolbyVisionAtomsLogo1,
       },
       {
         title: 'AI Picture',
@@ -695,8 +719,8 @@ export const TV_PRODUCTS: TvProduct[] = [
       {
         title: 'Dolby Vision-Atmos',
         description: 'Dolby Vision HDR picture paired with Dolby Atmos sound for immersive nights.',
-        image: dolbyVisionAtomsLogo as StaticImageData,
-        imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
+        image: dolbyVisionAtomsLogo,
+        imageBlack: dolbyVisionAtomsLogo1,
       },
       {
         title: 'QLED Colour',
@@ -747,6 +771,40 @@ export const TV_PRODUCTS: TvProduct[] = [
         ],
       },
     ],
+    specs: {
+      en: [
+        'Smart TV with high-clarity picture',
+        'LED display technology',
+        '8MP 4K picture (3840 x 2160 resolution)',
+        'Google TV (Android 12) with Android apps',
+        'AI Upscaler boosts HD to 4K',
+        '178° viewing angle with HDR',
+        '60Hz refresh rate',
+        'Quantum Dot tech for wide colour gamut',
+        'Dolby surround sound with headphone and optical out',
+        'WiFi and Bluetooth 5.3 connectivity',
+        'SPDIF, AV, USB 2.0 x2, HDMI x3',
+        'Built-in DVB-T/T2 digital tuner',
+        'Mobile device connectivity',
+        'Bluetooth remote control',
+      ],
+      fa: [
+        'تلویزیون هوشمند Smart وضوح تصویر بالا و شفاف',
+        'تکنولوژی صفحه نمایش LED',
+        'تصویر هشت مگا پیکسل 4K رزولوشن 2160 * 3840',
+        'دارای سیستم عامل Google TV Android 12 با بهره گیری از اپلیکیشن های اندروید',
+        'ارتقاء تصویر HD to 4K توسط هوش مصنوعی AI Upscaler',
+        'زاویه دید 178 درجه ، تصویر HDR',
+        'نرخ تازه سازی تصویر 60HZ',
+        'مجهز به فناوری Quantum Dot (نمایش طیف وسیع رنگ ها با بهره گیری از تکنولوژی کوانتوم دات)',
+        'صدای فراگیر دالبی، خروجی هدفون و Optical',
+        'قابلیت اتصال به WIFI و Bluetooth 5.3',
+        'SPDIF AV USB2.0x2 HDMIx3',
+        'گیرنده دیجیتال داخلی DVB-T/T2',
+        'قابلیت اتصال به گوشی همراه',
+        'ریموت کنترل بلوتوثی',
+      ],
+    },
     copy: {
       en: {
         name: 'Hisense Q6Q 4K QLED TV',
@@ -866,6 +924,443 @@ export const TV_PRODUCTS: TvProduct[] = [
           sizes: {
             title: 'انتخاب سایزی که مناسب فضای شماست',
             text: 'مجموعه‌ای کامل از اندازه‌های صفحه‌نمایش در اختیار شماست تا بدون دغدغه، گزینه‌ای متناسب با دکور، فضا و نیاز خود انتخاب کنید.',
+          },
+        },
+      },
+    },
+  },
+  {
+    id: 'A4AN',
+    sku: 'A4AN',
+    sizes: ['32"', '43"'],
+    series: 'A4AN',
+    panel: 'Full HD Smart TV',
+    resolution: 'Full HD (1920 x 1080)',
+    refreshRate: '60Hz with Game Mode',
+    os: 'VIDAA Smart OS',
+    sound: 'Dolby Audio with DTS Virtual:X',
+    connectivity: [
+      'WiFi',
+      'Bluetooth',
+      'HDMI x2',
+      'USB 2.0 x2',
+      'AV/Component',
+      'Optical out',
+      'Headphone out',
+    ],
+    tuner: 'DVB-T/T2 tuner with Time Shift and TV recording (PVR)',
+    extras: [
+      'HDR support with 178° viewing angle',
+      'Natural Colour Enhancer',
+      'Noise Reduction and Depth Enhancer',
+      'AI Sports Mode',
+      'Game Mode (low input lag)',
+      'Share to TV casting',
+      'Smart menu, teletext, and hotel mode',
+    ],
+    image: A4ANHero,
+    banners: [{ id: 'A4AN-banner', desktop: A4ANHero, alt: 'Hisense A4AN hero' }],
+    featureCards: [
+      {
+        title: 'Depth Enhancer',
+        description:
+          'Adds contrast between foreground and background for a more immersive FHD picture.',
+        image: depthEnhancerLogo,
+      },
+      {
+        title: 'Noise Reduction',
+        description: 'Cleans every frame to cut grain and flicker across fast and dark scenes.',
+        image: noiseReductionLogo,
+      },
+      {
+        title: 'Natural Color Enhancer',
+        description: 'Optimizes colour gradients so skin tones and landscapes stay lifelike.',
+        image: colorEnhancerLogo,
+      },
+      {
+        title: 'Share to TV',
+        description: 'Cast photos, videos, and apps from your phone straight to the big screen.',
+        image: shareToTvLogo,
+      },
+      {
+        title: 'Game mode',
+        description: 'Reduces input lag to around 16 ms for quicker on-screen response.',
+        image: gameModeSimpleLogo,
+      },
+      {
+        title: 'DTS virtual X',
+        description: 'Virtual surround creates height and width without extra speakers.',
+        image: dtsxLogo,
+      },
+      {
+        title: 'Dolby Audio',
+        description: 'Clear dialogue and cinematic surround-style sound from built-in speakers.',
+        image: dolbyVisionAtomsLogo,
+        imageBlack: dolbyVisionAtomsLogo1,
+      },
+      {
+        title: 'AI Sports Mode',
+        description: 'Boosts motion clarity and crowd ambience to feel closer to live matches.',
+        image: aiSportsLogo,
+      },
+    ],
+    sectionGroups: [
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: A4ANCrispClear, copyKey: 'details' },
+          { image: A4ANNature, copyKey: 'nature' },
+        ],
+      },
+      {
+        kind: 'overlay',
+        sections: [
+          { image: A4ANVisuals, copyKey: 'visual', textPosition: 'right' },
+          { image: A4ANDepth, copyKey: 'depth' },
+        ],
+      },
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: A4ANEntertainment, copyKey: 'entertainment' },
+          { image: A4ANAudio, copyKey: 'audio' },
+          { image: A4ANLeaderboard, copyKey: 'leaderboard' },
+        ],
+      },
+      {
+        kind: 'overlay',
+        sections: [{ image: A4ANEasyFast, copyKey: 'easyFastSecure', textPosition: 'right' }],
+      },
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: A4ANCast, copyKey: 'cast' },
+          { image: A4ANConnect, copyKey: 'connect' },
+        ],
+      },
+    ],
+    specs: {
+      en: [
+        'Smart Full HD TV (1920 x 1080, 2MP) with HDR support',
+        '178° wide viewing angle',
+        'Full HD panel with crisp detail',
+        'TV program recording (PVR) support',
+        'Time Shift with built-in digital tuner',
+        'WiFi connectivity',
+        'Mobile device casting/connection',
+        'Bluetooth connectivity',
+        'DVB-T/T2 digital tuner',
+        'Dolby surround audio',
+        'Advanced DTS Virtual:X sound tuning',
+        'Smart menu, Teletext, and Hotel Mode',
+        'Headphone and Optical audio outputs',
+        'Component, AV, USB 2.0 x2, HDMI x2',
+      ],
+      fa: [
+        'تلویزیون هوشمند Smart وضوح تصویر بالا و شفاف',
+        'زاویه دید 178 درجه ، تصویر HDR',
+        'تصویر دو مگا پیکسل Full HD رزولوشن 1080 * 1920',
+        'قابلیت ضبط برنامه های تلویزیونی PVR',
+        'مجهز به Time Shift و گیرنده دیجیتال داخلی',
+        'مجهز به فناوری FHD',
+        'قابلیت اتصال به Wi-Fi',
+        'قابلیت اتصال به گوشی همراه',
+        'قابلیت اتصال به Bluetooth',
+        'تیونر دیجیتال داخلی DVB-T/T2',
+        'صدای فراگیر دالبی',
+        'تنظیمات پیشرفته صدا DTS',
+        'منوی هوشمند، تلتکست و تنظیمات هتل',
+        'خروجی هدفون و Optical',
+        'Component AV USB2.0x2 HDMIx2',
+      ],
+    },
+    copy: {
+      en: {
+        name: 'Hisense A4AN Full HD Smart TV',
+        tagline:
+          'Full HD clarity with VIDAA smarts, low-lag Game Mode, and immersive DTS Virtual:X audio.',
+        description:
+          'Hisense A4AN brings sharp Full HD with HDR support, Natural Colour Enhancer, Depth Enhancer, and frame-by-frame noise reduction. Enjoy Dolby Audio with DTS Virtual:X, low-latency Game Mode, AI Sports Mode, and easy casting with Share to TV on the fast and secure VIDAA Smart OS.',
+        highlights: [
+          'Full HD (1920 x 1080) panel with HDR and 178° wide viewing.',
+          'VIDAA Smart OS with easy, fast, secure access to global and local entertainment.',
+          'Natural Colour Enhancer, Depth Enhancer, and advanced Noise Reduction.',
+          'Game Mode trims input lag to about 16 ms; AI Sports Mode sharpens live action.',
+          'DTS Virtual:X and Dolby Audio for clear, spacious sound.',
+          'WiFi, Bluetooth, HDMI x2, USB 2.0 x2, AV/Component, optical, and headphone outputs.',
+          'PVR recording and Time Shift with DVB-T/T2 digital tuner.',
+        ],
+        blocks: {
+          featureIntro: {
+            title: 'More colours, More enjoyment',
+            text: 'FHD Smart TV',
+          },
+          details: {
+            title: 'See the details crisp and clear',
+            text: 'Enjoy the clear and consistently sharp visuals of FHD screens. A vibrant colour spectrum, and wide viewing angles, make daily viewing a consistent pleasure.',
+          },
+          nature: {
+            title: 'At one with nature',
+            text: `Ever noticed how lifeless nature looks on TV? With Natural Colour Enhancer, witness grass at the greenest and wildflowers in the vibrant bloom. Experience nature on screen as in real life.`,
+          },
+          visual: {
+            title: 'Spotless visuals await',
+            text: "Fed up with grainy videos disrupting your entertainment? Hisense's Noise Reduction scans and filters every frame, bringing exceptional clarity to both high-speed action and low-light scenes. Enjoy every detail.",
+          },
+          depth: {
+            title: 'Depth beyond display',
+            text: `Even vibrant scenes feel flat? Hisense's Depth Enhancer changes the game. From bustling marketplaces to serene sceneries, it crafts lifelike layers and striking details. Dive into a richer narrative.`,
+          },
+          entertainment: {
+            title: 'Stadium-level entertainment',
+            text: `AI Sports Mode leaps to the rescue of blurry movements in sports. The tailored mode creates truly stadium-like sports scenes, making every detail of the game crystal-clear. It also enhances sound effects of even the crowd and commentator's voices.`,
+          },
+          audio: {
+            title: 'Feel the vibe with immersive TV audio',
+            text: 'Movies, TV shows, sports, music—the entertainment you love is even better when you hear it on Hisense TV with DTS® Virtual:X™ and Dolby Audio. Its crystal clarity, easy-to-hear dialogue, great detail, and realistic surround sound effects all come together to dial up the impact of your favorite scenes and events.',
+          },
+          leaderboard: {
+            title: 'Climb the leaderboard',
+            text: 'Say goodbye to game-ruining lag. Hisense’s Game Mode cuts the delay down to 16ms. Move with precision, react in real time, and clinch those victories. Every millisecond counts.',
+          },
+          easyFastSecure: {
+            title: 'Easy. Fast. Secure. Global and Local Entertainment',
+            text: 'Welcome to the future of TV! Our state-of-the-art operating system seamlessly unifies your favorite international and local content, tailored to your unique preferences and easy to find. Immerse yourself in a world of endless entertainment, featuring top-rated shows, blockbuster movies, and more - all personalized and conveniently accessible. Upgrade your viewing experience today and take control of your entertainment options!',
+          },
+          cast: {
+            title: 'Click, cast, enjoy',
+            text: `Switching between devices is outdated. Hisense's Share to TV beams your favorite content from your device straight to your TV. Mirror or share—it’s your choice, and it's hassle-free.`,
+          },
+          connect: {
+            title: 'Fit, Connect, Enjoy',
+            text: 'Expand your possibilities. With HDMI ports, USB slots and Wi-Fi, the TV can connect to more devices for external sources playing.',
+          },
+        },
+      },
+      fa: {
+        name: 'تلویزیون هوشمند هایسنس A4AN',
+        tagline: 'وضوح فول اچ‌دی با VIDAA، حالت بازی کم‌تاخیر و صدای فراگیر DTS Virtual:X.',
+        description:
+          'تلویزیون A4AN هایسنس با تصویر شفاف فول اچ‌دی و پشتیبانی HDR، Natural Colour Enhancer، Depth Enhancer و حذف نویز فریم‌به‌فریم، صدای Dolby Audio و DTS Virtual:X، حالت بازی کم‌تاخیر، AI Sports Mode و پخش بی‌سیم Share to TV روی سیستم‌عامل سریع و امن VIDAA ارائه می‌شود.',
+        highlights: [
+          'پنل Full HD (1920x1080) با زاویه دید 178 درجه و پشتیبانی HDR.',
+          'سیستم‌عامل هوشمند VIDAA با دسترسی سریع و امن به محتوای جهانی و محلی.',
+          'Natural Colour Enhancer، Depth Enhancer و حذف نویز برای تصویر طبیعی و لایه‌دار.',
+          'Game Mode با تاخیر حدود 16 میلی‌ثانیه و AI Sports Mode برای پخش روان مسابقات.',
+          'صدای Dolby Audio و DTS Virtual:X برای میدان صوتی گسترده و شفاف.',
+          'اتصالات WiFi و Bluetooth به همراه HDMIx2، USB 2.0x2، AV/Component، خروجی اپتیکال و هدفون.',
+          'پشتیبانی از ضبط برنامه (PVR) و Time Shift با تیونر دیجیتال DVB-T/T2.',
+        ],
+        blocks: {
+          featureIntro: {
+            title: 'رنگ‌های بیشتر، لذت تماشای بیشتر',
+            text: 'تلویزیون هوشمند FHD',
+          },
+          details: {
+            title: 'جزئیات شفاف و دقیق را ببینید',
+            text: 'از وضوح بالای صفحه‌نمایش‌های FHD لذت ببرید. طیف رنگی زنده و زاویه دید گسترده، تماشای روزمره را به یک تجربه‌ی دلپذیر و همیشگی تبدیل می‌کند.',
+          },
+          nature: {
+            title: 'طبیعت را واقعی ببینید',
+            text: 'تا به حال دقت کرده‌اید که طبیعت روی برخی تلویزیون‌ها بی‌روح دیده می‌شود؟ با فناوری Natural Colour Enhancer، سبزی چمن و شکوفه‌های رنگارنگ را با طراوت واقعی مشاهده کنید—همان‌طور که در دنیای واقعی هستند.',
+          },
+          visual: {
+            title: 'تصویری شفاف در هر صحنه',
+            text: 'از ویدئوهای دانه‌دانه و بی‌کیفیت خسته شده‌اید؟ فناوری Noise Reduction هایسنس هر فریم را اسکن و فیلتر می‌کند تا صحنه‌های سریع یا کم‌نور با وضوحی عالی نمایش داده شوند. هر جزئیاتی ارزش دیدن دارد.',
+          },
+          depth: {
+            title: 'عمقی فراتر از نمایشگر',
+            text: 'اگر صحنه‌های رنگارنگ همچنان تخت و بی‌عمق به نظر می‌رسند، Depth Enhancer هایسنس تجربه را متحول می‌کند. از بازارهای شلوغ تا مناظر آرام، لایه‌های واقعی و جزئیات برجسته خلق می‌کند. وارد دنیایی غنی‌تر شوید.',
+          },
+          entertainment: {
+            title: 'هیجان ورزشگاه، در خانه شما',
+            text: 'AI Sports Mode به کمک صحنه‌های ورزشی می‌آید و حرکات سریع را شفاف‌تر می‌کند. این حالت اختصاصی، تجربه‌ای شبیه تماشای مسابقه در ورزشگاه را رقم می‌زند؛ با وضوح بالای حرکات و صدایی که هیاهوی تماشاگران و صدای گزارشگر را واقعی‌تر می‌کند.',
+          },
+          audio: {
+            title: 'صدایی فراگیر، احساسی عمیق‌تر',
+            text: 'فیلم‌ها، سریال‌ها، ورزش و موسیقی—همه زمانی بهتر شنیده می‌شوند که با DTS® Virtual:X™ و Dolby Audio همراه باشند. وضوح کریستالی، گفت‌وگوی قابل‌فهم، جزئیات دقیق و افکت‌های صدای فراگیر، تأثیر هر صحنه و رویداد را دوچندان می‌کنند.',
+          },
+          leaderboard: {
+            title: 'به صدر جدول برسید',
+            text: 'با خداحافظی با لگ‌های آزاردهنده، Game Mode هایسنس تأخیر ورودی را به 16 میلی‌ثانیه کاهش می‌دهد. دقیق حرکت کنید، در لحظه واکنش نشان دهید و پیروزی را از آن خود کنید—هر میلی‌ثانیه مهم است.',
+          },
+          easyFastSecure: {
+            title: 'آسان. سریع. امن. سرگرمی جهانی و محلی',
+            text: 'به آینده تلویزیون خوش آمدید! سیستم‌عامل پیشرفته ما محتوای بین‌المللی و محلی را یکپارچه و براساس سلیقه شما در دسترس قرار می‌دهد. از برنامه‌های محبوب، فیلم‌های پرفروش و سرگرمی‌های بی‌ پایان لذت ببرید—همه شخصی‌سازی‌شده و به‌سادگی قابل دسترسی. تجربه تماشای خود را ارتقا دهید و کنترل سرگرمی را به‌دست بگیرید.',
+          },
+          cast: {
+            title: 'کلیک کن، پخش کن، لذت ببر',
+            text: 'جابه‌جایی بین دستگاه‌ها دیگر قدیمی شده است. قابلیت Share to TV هایسنس محتوای موردعلاقه‌تان را مستقیم از دستگاه‌تان به تلویزیون می‌فرستد. آینه کنید یا اشتراک بگذارید—انتخاب با شماست و همه‌چیز بدون دردسر انجام می‌شود.',
+          },
+          connect: {
+            title: 'وصل شو، لذت ببر',
+            text: 'امکانات خود را گسترش دهید. با درگاه‌های HDMI، پورت‌های USB و اتصال Wi-Fi، تلویزیون می‌تواند به دستگاه‌های بیشتری متصل شده و محتوای خارجی را بدون مشکل پخش کند.',
+          },
+        },
+      },
+    },
+  },
+  {
+    id: 'A3Q',
+    sku: 'A3Q',
+    sizes: ['32"', '43"'],
+    series: 'A3Q',
+    panel: 'Full HD',
+    resolution: 'Full HD (1920 x 1080)',
+    refreshRate: '',
+    os: '',
+    sound: '',
+    connectivity: ['HDMI x2', 'USB 2.0 x2', 'AV/Component', 'Optical out', 'Headphone out'],
+    tuner: 'DVB-T/T2 tuner with Time Shift and TV recording (PVR)',
+    extras: ['HDR support with 178° viewing angle', 'Natural Colour Enhancer'],
+    image: A3QHero,
+    banners: [{ id: 'A3Q-banner', desktop: A3QHero, alt: 'Hisense A3Q hero' }],
+    sectionGroups: [
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: A4ANCrispClear, copyKey: 'details' },
+          { image: A4ANNature, copyKey: 'nature' },
+        ],
+      },
+      {
+        kind: 'overlay',
+        sections: [
+          { image: A4ANVisuals, copyKey: 'visual', textPosition: 'left' },
+          { image: A4ANDepth, copyKey: 'depth', textPosition: 'left' },
+        ],
+      },
+      {
+        kind: 'overlay',
+        sections: [{ image: A4ANEasyFast, copyKey: 'easyFastSecure', textPosition: 'left' }],
+      },
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [{ image: A4ANConnect, copyKey: 'connect' }],
+      },
+    ],
+    specs: {
+      en: [
+        'Smart Full HD TV (1920 x 1080, 2MP) with HDR support',
+        '178° wide viewing angle',
+        'Full HD panel with crisp detail',
+        'TV program recording (PVR) support',
+        'Time Shift with built-in digital tuner',
+        'DVB-T/T2 digital tuner',
+        'Headphone and Optical audio outputs',
+        'Component, AV, USB 2.0 x2, HDMI x2',
+      ],
+      fa: [
+        'تلویزیون هوشمند Smart وضوح تصویر بالا و شفاف',
+        'زاویه دید 178 درجه ، تصویر HDR',
+        'تصویر دو مگا پیکسل Full HD رزولوشن 1080 * 1920',
+        'قابلیت ضبط برنامه های تلویزیونی PVR',
+        'مجهز به Time Shift و گیرنده دیجیتال داخلی',
+        'تیونر دیجیتال داخلی DVB-T/T2',
+        'خروجی هدفون و Optical',
+        'Component AV USB2.0x2 HDMIx2',
+      ],
+    },
+    copy: {
+      en: {
+        name: 'Hisense A3Q Full HD',
+        tagline:
+          'Full HD clarity with VIDAA smarts, low-lag Game Mode, and immersive DTS Virtual:X audio.',
+        description:
+          'Hisense A3Q brings sharp Full HD with HDR support, Natural Colour Enhancer, Depth Enhancer, and frame-by-frame noise reduction. Enjoy Dolby Audio with DTS Virtual:X, low-latency Game Mode, AI Sports Mode, and easy casting with Share to TV on the fast and secure VIDAA Smart OS.',
+        highlights: [
+          'Full HD (1920 x 1080) panel with HDR and 178° wide viewing.',
+          'Natural Colour Enhancer, Depth Enhancer, and advanced Noise Reduction.',
+          'HDMI x2, USB 2.0 x2, AV/Component, optical, and headphone outputs.',
+          'PVR recording and Time Shift with DVB-T/T2 digital tuner.',
+        ],
+        blocks: {
+          featureIntro: {
+            title: 'More colours, More enjoyment',
+            text: 'FHD Smart TV',
+          },
+          details: {
+            title: 'See the details crisp and clear',
+            text: 'Enjoy the clear and consistently sharp visuals of FHD screens. A vibrant colour spectrum, and wide viewing angles, make daily viewing a consistent pleasure.',
+          },
+          nature: {
+            title: 'At one with nature',
+            text: `Ever noticed how lifeless nature looks on TV? With Natural Colour Enhancer, witness grass at the greenest and wildflowers in the vibrant bloom. Experience nature on screen as in real life.`,
+          },
+          visual: {
+            title: 'Spotless visuals await',
+            text: "Fed up with grainy videos disrupting your entertainment? Hisense's Noise Reduction scans and filters every frame, bringing exceptional clarity to both high-speed action and low-light scenes. Enjoy every detail.",
+          },
+          depth: {
+            title: 'Depth beyond display',
+            text: `Even vibrant scenes feel flat? Hisense's Depth Enhancer changes the game. From bustling marketplaces to serene sceneries, it crafts lifelike layers and striking details. Dive into a richer narrative.`,
+          },
+          audio: {
+            title: 'Feel the vibe with immersive TV audio',
+            text: 'Movies, TV shows, sports, music—the entertainment you love is even better when you hear it on Hisense TV with DTS® Virtual:X™ and Dolby Audio. Its crystal clarity, easy-to-hear dialogue, great detail, and realistic surround sound effects all come together to dial up the impact of your favorite scenes and events.',
+          },
+        },
+      },
+      fa: {
+        name: 'تلویزیون هایسنس A3Q',
+        tagline: 'وضوح فول اچ‌دی با VIDAA، حالت بازی کم‌تاخیر و صدای فراگیر DTS Virtual:X.',
+        description:
+          'تلویزیون A3Q هایسنس با تصویر شفاف فول اچ‌دی و پشتیبانی HDR، Natural Colour Enhancer، Depth Enhancer و حذف نویز فریم‌به‌فریم، صدای Dolby Audio و DTS Virtual:X، حالت بازی کم‌تاخیر، AI Sports Mode و پخش بی‌سیم Share to TV روی سیستم‌عامل سریع و امن VIDAA ارائه می‌شود.',
+        highlights: [
+          'پنل Full HD (1920x1080) با زاویه دید 178 درجه و پشتیبانی HDR.',
+          'Natural Colour Enhancer، Depth Enhancer و حذف نویز برای تصویر طبیعی و لایه‌دار.',
+          'Bluetooth به همراه HDMIx2، USB 2.0x2، AV/Component، خروجی اپتیکال و هدفون.',
+          'پشتیبانی از ضبط برنامه (PVR) و Time Shift با تیونر دیجیتال DVB-T/T2.',
+        ],
+        blocks: {
+          featureIntro: {
+            title: 'رنگ‌های بیشتر، لذت تماشای بیشتر',
+            text: 'تلویزیون هوشمند FHD',
+          },
+          details: {
+            title: 'جزئیات شفاف و دقیق را ببینید',
+            text: 'از وضوح بالای صفحه‌نمایش‌های FHD لذت ببرید. طیف رنگی زنده و زاویه دید گسترده، تماشای روزمره را به یک تجربه‌ی دلپذیر و همیشگی تبدیل می‌کند.',
+          },
+          nature: {
+            title: 'طبیعت را واقعی ببینید',
+            text: 'تا به حال دقت کرده‌اید که طبیعت روی برخی تلویزیون‌ها بی‌روح دیده می‌شود؟ با فناوری Natural Colour Enhancer، سبزی چمن و شکوفه‌های رنگارنگ را با طراوت واقعی مشاهده کنید—همان‌طور که در دنیای واقعی هستند.',
+          },
+          visual: {
+            title: 'تصویری شفاف در هر صحنه',
+            text: 'از ویدئوهای دانه‌دانه و بی‌کیفیت خسته شده‌اید؟ فناوری Noise Reduction هایسنس هر فریم را اسکن و فیلتر می‌کند تا صحنه‌های سریع یا کم‌نور با وضوحی عالی نمایش داده شوند. هر جزئیاتی ارزش دیدن دارد.',
+          },
+          depth: {
+            title: 'عمقی فراتر از نمایشگر',
+            text: 'اگر صحنه‌های رنگارنگ همچنان تخت و بی‌عمق به نظر می‌رسند، Depth Enhancer هایسنس تجربه را متحول می‌کند. از بازارهای شلوغ تا مناظر آرام، لایه‌های واقعی و جزئیات برجسته خلق می‌کند. وارد دنیایی غنی‌تر شوید.',
+          },
+          entertainment: {
+            title: 'هیجان ورزشگاه، در خانه شما',
+            text: 'AI Sports Mode به کمک صحنه‌های ورزشی می‌آید و حرکات سریع را شفاف‌تر می‌کند. این حالت اختصاصی، تجربه‌ای شبیه تماشای مسابقه در ورزشگاه را رقم می‌زند؛ با وضوح بالای حرکات و صدایی که هیاهوی تماشاگران و صدای گزارشگر را واقعی‌تر می‌کند.',
+          },
+          audio: {
+            title: 'صدایی فراگیر، احساسی عمیق‌تر',
+            text: 'فیلم‌ها، سریال‌ها، ورزش و موسیقی—همه زمانی بهتر شنیده می‌شوند که با DTS® Virtual:X™ و Dolby Audio همراه باشند. وضوح کریستالی، گفت‌وگوی قابل‌فهم، جزئیات دقیق و افکت‌های صدای فراگیر، تأثیر هر صحنه و رویداد را دوچندان می‌کنند.',
+          },
+          leaderboard: {
+            title: 'به صدر جدول برسید',
+            text: 'با خداحافظی با لگ‌های آزاردهنده، Game Mode هایسنس تأخیر ورودی را به 16 میلی‌ثانیه کاهش می‌دهد. دقیق حرکت کنید، در لحظه واکنش نشان دهید و پیروزی را از آن خود کنید—هر میلی‌ثانیه مهم است.',
+          },
+          easyFastSecure: {
+            title: 'آسان. سریع. امن. سرگرمی جهانی و محلی',
+            text: 'به آینده تلویزیون خوش آمدید! سیستم‌عامل پیشرفته ما محتوای بین‌المللی و محلی را یکپارچه و براساس سلیقه شما در دسترس قرار می‌دهد. از برنامه‌های محبوب، فیلم‌های پرفروش و سرگرمی‌های بی‌ پایان لذت ببرید—همه شخصی‌سازی‌شده و به‌سادگی قابل دسترسی. تجربه تماشای خود را ارتقا دهید و کنترل سرگرمی را به‌دست بگیرید.',
+          },
+          cast: {
+            title: 'کلیک کن، پخش کن، لذت ببر',
+            text: 'جابه‌جایی بین دستگاه‌ها دیگر قدیمی شده است. قابلیت Share to TV هایسنس محتوای موردعلاقه‌تان را مستقیم از دستگاه‌تان به تلویزیون می‌فرستد. آینه کنید یا اشتراک بگذارید—انتخاب با شماست و همه‌چیز بدون دردسر انجام می‌شود.',
+          },
+          connect: {
+            title: 'وصل شو، لذت ببر',
+            text: 'امکانات خود را گسترش دهید. با درگاه‌های HDMI، پورت‌های USB و اتصال Wi-Fi، تلویزیون می‌تواند به دستگاه‌های بیشتری متصل شده و محتوای خارجی را بدون مشکل پخش کند.',
           },
         },
       },

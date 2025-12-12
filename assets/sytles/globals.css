@@ -1,3 +1,4 @@
+/* Global design tokens and Tailwind base import. */
 @import 'tailwindcss';
 
 :root {
@@ -211,14 +212,14 @@ html[lang='fa'] body {
 }
 
 .header-submenu-card:hover {
-  border-color: var(--brand-color);
-  background-color: var(--brand-color);
-  color: var(--default-white-font);
+  border-color: transparent;
+  background-color: var(--surface-muted-color);
+  color: var(--default-black-font);
   transform: translateY(-4px);
 }
 
 .header-submenu-card:hover p {
-  color: var(--default-white-font);
+  color: var(--default-black-font);
 }
 
 @keyframes submenu-fade {

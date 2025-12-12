@@ -1,5 +1,6 @@
 'use client';
 
+// Manages light/dark theme, persisting preference and exposing a toggle hook.
 import {
   createContext,
   type ReactNode,

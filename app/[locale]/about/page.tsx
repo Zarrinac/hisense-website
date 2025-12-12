@@ -1,22 +1,23 @@
-import Image, { type StaticImageData } from 'next/image';
+import Image from 'next/image';
 import type { Metadata } from 'next';
 import { routing, type Locale } from '@/i18n/routing';
 import { getAboutContent } from '@/content/about';
 import type { AboutImageKey, AboutPageContent } from '@/content/about/types';
-import factoryImage from '@/public/images/factory.png';
-import hisenseImage from '@/public/images/hisense.png';
-import showroomImage from '@/public/images/showroom.png';
+import { mediaUrl } from '@/lib/mediaUrl';
 
+// About page hydrates structured content from locale-specific JSON files.
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const OG_LOCALE_MAP: Record<Locale, string> = {
   fa: 'fa_IR',
   en: 'en_US',
 };
 
-const ABOUT_IMAGES: Record<AboutImageKey, StaticImageData> = {
-  factory: factoryImage,
-  hisense: hisenseImage,
-  showroom: showroomImage,
+const aboutAsset = (path: string) => mediaUrl(`/images/${path}`);
+
+const ABOUT_IMAGES: Record<AboutImageKey, string> = {
+  factory: aboutAsset('factory.png'),
+  hisense: aboutAsset('hisense.png'),
+  showroom: aboutAsset('showroom.png'),
 };
 
 type AboutPageProps = {
@@ -27,7 +28,7 @@ function resolveAboutContent(locale: Locale): AboutPageContent {
   return getAboutContent(locale);
 }
 
-function getImageAsset(key: AboutImageKey): StaticImageData {
+function getImageAsset(key: AboutImageKey): string {
   return ABOUT_IMAGES[key] ?? ABOUT_IMAGES.factory;
 }
 
@@ -36,6 +37,8 @@ export async function generateMetadata(props: AboutPageProps): Promise<Metadata>
   const content = resolveAboutContent(locale);
   const metadataBase = new URL(SITE_URL);
   const localizedPath = `/${locale}/about`;
+  const showroomSrc = getImageAsset('showroom');
+  const ogImageUrl = showroomSrc.startsWith('http') ? showroomSrc : `${SITE_URL}${showroomSrc}`;
   const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
     acc[lang] = `${SITE_URL}/${lang}/about`;
     return acc;
@@ -59,7 +62,7 @@ export async function generateMetadata(props: AboutPageProps): Promise<Metadata>
       locale: OG_LOCALE_MAP[locale],
       images: [
         {
-          url: `${SITE_URL}/images/showroom.png`,
+          url: ogImageUrl,
           width: 1200,
           height: 800,
           alt: content.meta.title,
@@ -197,7 +200,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
                 <Image
                   src={imageAsset}
                   alt={section.image.alt}
-                  placeholder="blur"
+                  width={1200}
+                  height={800}
                   className="h-full w-full object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />

@@ -1,5 +1,7 @@
 import type { Locale } from '@/i18n/routing';
 
+// Navigation structure and localized submenu copy used by Header.
+
 export const NAV_ITEMS = [
   { key: 'tvAudio', href: '/tv-hisense' },
   { key: 'airConditioner', href: '/rac' },

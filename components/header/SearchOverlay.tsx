@@ -1,5 +1,6 @@
 'use client';
 
+// Full-screen search overlay; currently captures input without issuing a query.
 import { useEffect, useRef } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';

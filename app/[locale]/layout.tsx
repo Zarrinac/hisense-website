@@ -13,6 +13,8 @@ import StructuredData from '@/components/seo/StructuredData';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { routing, type Locale } from '@/i18n/routing';
 
+// Locale layout validates the locale, wires translations/theme, and applies shared page chrome.
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const OG_LOCALE_MAP: Record<Locale, string> = {
   fa: 'fa_IR',

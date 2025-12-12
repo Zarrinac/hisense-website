@@ -1,10 +1,12 @@
 'use client';
 
+// Animated stack of image/text sections with optional RTL + text-first ordering.
 import { useEffect, useRef, useState } from 'react';
-import Image, { type StaticImageData } from 'next/image';
+import Image from 'next/image';
+import type { ImageSource } from '@/types/tv';
 
 export type StackedSectionData = {
-  image: StaticImageData;
+  image: ImageSource;
   title: string;
   text: string;
 };
@@ -24,6 +26,7 @@ export default function StackedContentSections({
   const [visible, setVisible] = useState<boolean[]>(() => sections.map(() => false));
 
   useEffect(() => {
+    // Fade/slide sections in as they enter the viewport.
     const targets = [...refs.current];
     const observer = new IntersectionObserver(
       (entries) => {
@@ -74,14 +77,22 @@ export default function StackedContentSections({
               show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
           >
-            <Image
-              src={section.image}
-              alt={section.title}
-              fill
-              sizes="(min-width: 1024px) 80vw, 100vw"
-              className="object-cover rounded-3xl"
-              priority={idx === 0}
-            />
+            {/*
+             * Normalize the image source to the exact union Next.js expects to avoid any/unsafe lint noise.
+             */}
+            {(() => {
+              const imageSrc: ImageSource = section.image;
+              return (
+                <Image
+                  src={imageSrc}
+                  alt={section.title}
+                  fill
+                  sizes="(min-width: 1024px) 80vw, 100vw"
+                  className="object-cover rounded-3xl"
+                  priority={idx === 0}
+                />
+              );
+            })()}
           </div>
         );
 
