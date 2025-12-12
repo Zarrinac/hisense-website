@@ -2,16 +2,17 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import HeroBanner from '@/components/hero/HeroBanner';
 import CategorySpotlights from '@/components/home/CategorySpotlights';
 import type { SpotlightCard } from '@/components/home/CategorySpotlights';
-import Banner02 from '@/public/banner/Fix-Banner-02-Back.jpg';
-import Banner03 from '@/public/banner/Fix-Banner-03-Back.jpg';
-import Banner04 from '@/public/banner/Fix-Banner-04-Back.jpg';
-import Banner05 from '@/public/banner/Fix-Banner-05-Back.jpg';
+import { mediaUrl } from '@/lib/mediaUrl';
+
+// Locale-aware homepage renders the hero carousel and localized category spotlights.
+
+const bannerAsset = (path: string) => mediaUrl(`/banner/${path}`);
 
 const SPOTLIGHT_SOURCES = [
-  { id: 'tv', href: '/tv-hisense', image: Banner02 },
-  { id: 'refrigerator', href: '/refrigerator', image: Banner03 },
-  { id: 'washingMachine', href: '/washing-machine', image: Banner04 },
-  { id: 'rac', href: '/rac', image: Banner05 },
+  { id: 'tv', href: '/tv-hisense', image: bannerAsset('Fix-Banner-02-Back.jpg') },
+  { id: 'refrigerator', href: '/refrigerator', image: bannerAsset('Fix-Banner-03-Back.jpg') },
+  { id: 'washingMachine', href: '/washing-machine', image: bannerAsset('Fix-Banner-04-Back.jpg') },
+  { id: 'rac', href: '/rac', image: bannerAsset('Fix-Banner-05-Back.jpg') },
 ] as const satisfies ReadonlyArray<Pick<SpotlightCard, 'id' | 'href' | 'image'>>;
 
 export default async function HomePage() {

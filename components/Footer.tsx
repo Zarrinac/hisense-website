@@ -1,5 +1,6 @@
 'use client';
 
+// Footer renders localized navigation, contact info, and theme-aware branding.
 import Image from 'next/image';
 import Link from 'next/link';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';

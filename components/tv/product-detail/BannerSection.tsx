@@ -2,6 +2,8 @@ import Image from 'next/image';
 import type { TvBanner } from '@/types/tv';
 import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 
+// Hero banner for TV detail pages with breadcrumb trail and size badges.
+
 type BannerSectionProps = {
   banner: TvBanner;
   breadcrumbItems: BreadcrumbItem[];
@@ -29,7 +31,6 @@ const BannerSection = ({
           sizes="(max-width: 768px) 100vw, 100vw"
           priority
           loading="eager"
-          placeholder="blur"
           className="object-cover"
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/35 to-transparent" />

@@ -1,4 +1,5 @@
 /** @type {import('next-sitemap').IConfig} */
+// Locale-aware sitemap generation; defaults root to the FA locale.
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const locales = ['fa', 'en'];
 const staticPaths = [

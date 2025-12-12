@@ -2,6 +2,8 @@ import ContentSections, { type ContentSectionData } from '@/components/tv/Conten
 import OverlayContentSections from '@/components/tv/OverlayContentSections';
 import StackedContentSections from '@/components/tv/StackedContentSections';
 
+// Dispatches normalized section groups to the appropriate layout component.
+
 export type NormalizedSectionGroup = {
   kind: 'content' | 'stacked' | 'overlay';
   sections: ContentSectionData[];
