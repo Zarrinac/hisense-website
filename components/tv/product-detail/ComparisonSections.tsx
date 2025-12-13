@@ -1,4 +1,4 @@
-import type { StaticImageData } from 'next/image';
+import type { ImageSource } from '@/types/tv';
 import BeforeAfterSlider from '@/components/tv/BeforeAfterSlider';
 
 // Renders before/after image comparisons with alternating layout per section.
@@ -6,8 +6,8 @@ import BeforeAfterSlider from '@/components/tv/BeforeAfterSlider';
 export type ComparisonSection = {
   title: string;
   text: string;
-  before: StaticImageData;
-  after: StaticImageData;
+  before: ImageSource;
+  after: ImageSource;
 };
 
 type ComparisonLabels = {
