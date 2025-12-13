@@ -25,6 +25,7 @@ export default async function NotFoundPage() {
               width={150}
               height={40}
               className="h-8 w-auto sm:h-10 lg:h-14"
+              unoptimized
               priority
             />
             <span className="h-8 w-px bg-(--border-color) sm:h-10" aria-hidden="true" />
