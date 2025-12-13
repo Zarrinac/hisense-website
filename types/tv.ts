@@ -1,5 +1,7 @@
 import { type StaticImageData } from 'next/image';
 
+export type ImageSource = StaticImageData | string;
+
 // Shape of the TV catalog content used by both pages and API fallbacks.
 export type Locale = 'en' | 'fa';
 
@@ -55,14 +57,14 @@ export type TvProductCopy = {
 };
 
 export type TvSectionConfig = {
-  image: StaticImageData;
+  image: ImageSource;
   copyKey: CopyBlockKey;
   textPosition?: 'left' | 'right';
 };
 
 export type TvComparisonConfig = {
-  before: StaticImageData;
-  after: StaticImageData;
+  before: ImageSource;
+  after: ImageSource;
   copyKey: CopyBlockKey;
 };
 
@@ -75,14 +77,14 @@ export type TvSectionGroup = {
 export type TvFeatureCard = {
   title: string;
   description: string;
-  image: StaticImageData;
-  imageBlack?: StaticImageData;
+  image: ImageSource;
+  imageBlack?: ImageSource;
 };
 
 export type TvBanner = {
   id: string;
-  desktop: StaticImageData;
-  mobile?: StaticImageData;
+  desktop: ImageSource;
+  mobile?: ImageSource;
   alt: string;
 };
 
@@ -101,10 +103,10 @@ export type TvProduct = {
   connectivity: string[];
   tuner: string;
   extras: string[];
-  image: StaticImageData;
+  image: ImageSource;
   heroVideo?: string;
-  posterImage?: StaticImageData;
-  gallery?: StaticImageData[];
+  posterImage?: ImageSource;
+  gallery?: ImageSource[];
   contentSections?: TvSectionConfig[];
   stackedSections?: TvSectionConfig[];
   bottomStackedSections?: TvSectionConfig[];
@@ -112,7 +114,7 @@ export type TvProduct = {
   comparisonSections?: TvComparisonConfig[];
   experienceSection?: TvSectionConfig;
   featureCards?: TvFeatureCard[];
-  badges?: StaticImageData[];
+  badges?: ImageSource[];
   banners?: TvBanner[];
   specs?: Record<Locale, string[]>;
   copy: Record<Locale, TvProductCopy>;

@@ -4,18 +4,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Visibility } from '@mui/icons-material';
 import TvHeroCarousel from '@/components/tv/TvHeroCarousel';
-import tv01 from '@/public/tv-banner/tv01.ux-mini-led-tv.jpg';
-import tv02 from '@/public/tv-banner/tv02.u8-mini-led-tv.jpg';
-import tv03 from '@/public/tv-banner/tv03.u7-mini-led-tv.jpg';
-import tv04 from '@/public/tv-banner/tv04.tv-rgb-ban.jpg';
 import { FALLBACK_PRODUCTS } from '@/lib/api/products/normalizers';
 import type { ApiProduct } from '@/lib/api/products/types';
+import { mediaUrl } from '@/lib/mediaUrl';
+
+const bannerAsset = (path: string) => mediaUrl(`/tv-banner/${path}`);
 
 const HERO_SLIDES = [
-  { id: 'rgb', image: tv04 },
-  { id: 'ux', image: tv01 },
-  { id: 'u8', image: tv02 },
-  { id: 'u7', image: tv03 },
+  { id: 'rgb', image: bannerAsset('tv04.tv-rgb-ban.jpg') },
+  { id: 'ux', image: bannerAsset('tv01.ux-mini-led-tv.jpg') },
+  { id: 'u8', image: bannerAsset('tv02.u8-mini-led-tv.jpg') },
+  { id: 'u7', image: bannerAsset('tv03.u7-mini-led-tv.jpg') },
 ] as const;
 
 export async function generateMetadata(): Promise<Metadata> {

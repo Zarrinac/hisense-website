@@ -12,7 +12,7 @@ const DEFAULT_HEADERS = {
 type DataSource = 'database' | 'fallback';
 
 const loadProducts = async (): Promise<{ products: ApiProduct[]; source: DataSource }> => {
-  if (process.env.DATABASE_URL) {
+  if (prisma) {
     try {
       const products = await prisma.product.findMany({
         orderBy: { series: 'asc' },
