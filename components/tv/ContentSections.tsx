@@ -2,10 +2,11 @@
 
 // Alternating image/text sections with intersection observer reveal animations.
 import { useEffect, useRef, useState } from 'react';
-import Image, { type StaticImageData } from 'next/image';
+import Image from 'next/image';
+import type { ImageSource } from '@/types/tv';
 
 export type ContentSectionData = {
-  image: StaticImageData;
+  image: ImageSource;
   title: string;
   text: string;
   textPosition?: 'left' | 'right';
@@ -90,6 +91,8 @@ export default function ContentSections({
               <Image
                 src={section.image}
                 alt={section.title}
+                width={1200}
+                height={800}
                 className="object-cover w-full h-full"
               />
             </div>

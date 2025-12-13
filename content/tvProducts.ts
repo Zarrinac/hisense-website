@@ -1,89 +1,91 @@
-import { type StaticImageData } from 'next/image';
+import { mediaUrl } from '@/lib/mediaUrl';
 import { type TvProduct } from '@/types/tv';
 // Bundled fallback TV catalog used when a database is not available.
 // logos
-import dolbyVisionAtomsLogo from '@/public/products/tvs/logos/Dolby-Vision-Atmos-svg-dark.svg';
-import dolbyVisionAtomsLogo1 from '@/public/products/tvs/logos/Dolby-Vision-Atmos-svg-white.svg';
-import HdrLogo from '@/public/products/tvs/logos/HDR-logo-black.png';
-import HdrLogo1 from '@/public/products/tvs/logos/HDR-logo.png';
-import filmmakerLogo from '@/public/products/tvs/logos/Filmmaker-Mode-logo.png';
-import ImaxLogo from '@/public/products/tvs/logos/IMAX-logo.png';
-import ImaxLogo1 from '@/public/products/tvs/logos/IMAX-logo-reverse.png';
-import HiViewLogo from '@/public/products/tvs/logos/Hi-view-green-logo.png';
-import u7kFeature6 from '@/public/products/tvs/logos/Feature_Mini-LED-X_b.png';
-import quantumDotLogo from '@/public/products/tvs/logos/Feature_Quantum-Dot-Colour_m.png';
-import dynamicXDisplayLogo from '@/public/products/tvs/logos/Feature_Dynamic-X-Display_m.png';
-import gameModeLogo from '@/public/products/tvs/logos/Feature_144Hz_Game_Mode_PRO_m.png';
-import dolbyVisionAtomsLogo0 from '@/public/products/tvs/logos/Feature_CineStage-X-Surround_m.png';
-import aiPicLogo from '@/public/products/tvs/logos/logo-ai-picture-white.png';
-import aiUpscalerLogo from '@/public/products/tvs/logos/logo-ai-upscaler.png';
-import amdLogo from '@/public/products/tvs/logos/logo-amd-white.png';
-import gameBarLogo from '@/public/products/tvs/logos/logo-game-bar.png';
-import smoothMotionLogo from '@/public/products/tvs/logos/logo-smooth-motion.png';
-import voiceRemoteLogo from '@/public/products/tvs/logos/logo-voice-remote-white.png';
-import aiSportsLogo from '@/public/products/tvs/logos/ai-sports-logo.png';
-import colorEnhancerLogo from '@/public/products/tvs/logos/colour-enhancer-logo.png';
-import depthEnhancerLogo from '@/public/products/tvs/logos/depth-enhancer-logo.png';
-import noiseReductionLogo from '@/public/products/tvs/logos/noise-reduction-logo.png';
+const productAsset = (path: string) => mediaUrl(`/products/${path}`);
+
+const dolbyVisionAtomsLogo = productAsset('tvs/logos/Dolby-Vision-Atmos-svg-dark.png');
+const dolbyVisionAtomsLogo1 = productAsset('tvs/logos/Dolby-Vision-Atmos-svg-white.png');
+const HdrLogo = productAsset('tvs/logos/HDR-logo-black.png');
+const HdrLogo1 = productAsset('tvs/logos/HDR-logo.png');
+const filmmakerLogo = productAsset('tvs/logos/Filmmaker-Mode-logo.png');
+const ImaxLogo = productAsset('tvs/logos/IMAX-logo.png');
+const ImaxLogo1 = productAsset('tvs/logos/IMAX-logo-reverse.png');
+const HiViewLogo = productAsset('tvs/logos/Hi-view-green-logo.png');
+const u7kFeature6 = productAsset('tvs/logos/Feature_Mini-LED-X_b.png');
+const quantumDotLogo = productAsset('tvs/logos/Feature_Quantum-Dot-Colour_m.png');
+const dynamicXDisplayLogo = productAsset('tvs/logos/Feature_Dynamic-X-Display_m.png');
+const gameModeLogo = productAsset('tvs/logos/Feature_144Hz_Game_Mode_PRO_m.png');
+const dolbyVisionAtomsLogo0 = productAsset('tvs/logos/Feature_CineStage-X-Surround_m.png');
+const aiPicLogo = productAsset('tvs/logos/logo-ai-picture-white.png');
+const aiUpscalerLogo = productAsset('tvs/logos/logo-ai-upscaler.png');
+const amdLogo = productAsset('tvs/logos/logo-amd-white.png');
+const gameBarLogo = productAsset('tvs/logos/logo-game-bar.png');
+const smoothMotionLogo = productAsset('tvs/logos/logo-smooth-motion.png');
+const voiceRemoteLogo = productAsset('tvs/logos/logo-voice-remote-white.png');
+const aiSportsLogo = productAsset('tvs/logos/ai-sports-logo.png');
+const colorEnhancerLogo = productAsset('tvs/logos/colour-enhancer-logo.png');
+const depthEnhancerLogo = productAsset('tvs/logos/depth-enhancer-logo.png');
+const noiseReductionLogo = productAsset('tvs/logos/noise-reduction-logo.png');
 
 // U7K-series
-import u7kHero from '@/public/products/tvs/U7K-Files/U7K-Hero.png';
-import u7kVideoPoster from '@/public/products/tvs/U7K-Files/gamePlaySection-image.jpg';
-import u7kIntelligentProcessor from '@/public/products/tvs/U7K-Files/HI-VIEW-engine.jpg';
-import u7kDetailSection from '@/public/products/tvs/U7K-Files/detailSection-image.jpg';
-import u7kDolbySection from '@/public/products/tvs/U7K-Files/dolbySection-image.jpg';
-import u7kImaxSection from '@/public/products/tvs/U7K-Files/imaxSection-image.jpg';
-import u7kfilmMakerSection from '@/public/products/tvs/U7K-Files/filmMakerSection-image.jpg';
-import u7kAutoLightAfterSection from '@/public/products/tvs/U7K-Files/autoLight-after-image.jpg';
-import u7kAutoLightBeforeSection from '@/public/products/tvs/U7K-Files/autoLight-before-image.jpg';
-import u7kSportsModeBeforeSection from '@/public/products/tvs/U7K-Files/sportsMode-before-image.jpg';
-import u7kSportsModeAfterSection from '@/public/products/tvs/U7K-Files/sportsMode-after-image.jpg';
-import u7kOptimizationSection from '@/public/products/tvs/U7K-Files/optimization-image.jpg';
-import u7kStayConnectedSection from '@/public/products/tvs/U7K-Files/stayConnected-image.jpg';
-import u7kExperienceSection from '@/public/products/tvs/U7K-Files/experience-image.jpg';
+const u7kHero = productAsset('tvs/U7K-Files/U7K-Hero.png');
+const u7kVideoPoster = productAsset('tvs/U7K-Files/gamePlaySection-image.jpg');
+const u7kIntelligentProcessor = productAsset('tvs/U7K-Files/HI-VIEW-engine.jpg');
+const u7kDetailSection = productAsset('tvs/U7K-Files/detailSection-image.jpg');
+const u7kDolbySection = productAsset('tvs/U7K-Files/dolbySection-image.jpg');
+const u7kImaxSection = productAsset('tvs/U7K-Files/imaxSection-image.jpg');
+const u7kfilmMakerSection = productAsset('tvs/U7K-Files/filmMakerSection-image.jpg');
+const u7kAutoLightAfterSection = productAsset('tvs/U7K-Files/autoLight-after-image.jpg');
+const u7kAutoLightBeforeSection = productAsset('tvs/U7K-Files/autoLight-before-image.jpg');
+const u7kSportsModeBeforeSection = productAsset('tvs/U7K-Files/sportsMode-before-image.jpg');
+const u7kSportsModeAfterSection = productAsset('tvs/U7K-Files/sportsMode-after-image.jpg');
+const u7kOptimizationSection = productAsset('tvs/U7K-Files/optimization-image.jpg');
+const u7kStayConnectedSection = productAsset('tvs/U7K-Files/stayConnected-image.jpg');
+const u7kExperienceSection = productAsset('tvs/U7K-Files/experience-image.jpg');
 // Q7Q-series
-import q7qHero from '@/public/products/tvs/q7q-Files/q7q-Hero.jpg';
-import q7qBiggerScreen from '@/public/products/tvs/q7q-Files/q7q-biggerScreen.jpg';
-import q7qBrightness from '@/public/products/tvs/q7q-Files/q7q-brightness.jpg';
-import q7qEnhancement from '@/public/products/tvs/q7q-Files/q7q-enhancement.jpg';
-import q7qFuzzyImage from '@/public/products/tvs/q7q-Files/q7q-fuzzyImage.jpg';
-import q7qGameManagement from '@/public/products/tvs/q7q-Files/q7q-gameManagement.jpg';
-import q7qGaming from '@/public/products/tvs/q7q-Files/q7q-gaming.jpg';
-import q7qMovies from '@/public/products/tvs/q7q-Files/q7q-movies.jpg';
-import q7qNoBlur from '@/public/products/tvs/q7q-Files/q7q-noBlur.jpg';
-import q7qScreenTear from '@/public/products/tvs/q7q-Files/q7q-screenTear.jpg';
-import q7qVividColor from '@/public/products/tvs/q7q-Files/q7q-vividColor.jpg';
-import q7qVrr from '@/public/products/tvs/q7q-Files/q7q-vrr.jpg';
-import q7qVoiceCommand from '@/public/products/tvs/q7q-Files/q7q-voiceCommand.jpg';
+const q7qHero = productAsset('tvs/q7q-Files/q7q-Hero.jpg');
+const q7qBiggerScreen = productAsset('tvs/q7q-Files/q7q-biggerScreen.jpg');
+const q7qBrightness = productAsset('tvs/q7q-Files/q7q-brightness.jpg');
+const q7qEnhancement = productAsset('tvs/q7q-Files/q7q-enhancement.jpg');
+const q7qFuzzyImage = productAsset('tvs/q7q-Files/q7q-fuzzyImage.jpg');
+const q7qGameManagement = productAsset('tvs/q7q-Files/q7q-gameManagement.jpg');
+const q7qGaming = productAsset('tvs/q7q-Files/q7q-gaming.jpg');
+const q7qMovies = productAsset('tvs/q7q-Files/q7q-movies.jpg');
+const q7qNoBlur = productAsset('tvs/q7q-Files/q7q-noBlur.jpg');
+const q7qScreenTear = productAsset('tvs/q7q-Files/q7q-screenTear.jpg');
+const q7qVividColor = productAsset('tvs/q7q-Files/q7q-vividColor.jpg');
+const q7qVrr = productAsset('tvs/q7q-Files/q7q-vrr.jpg');
+const q7qVoiceCommand = productAsset('tvs/q7q-Files/q7q-voiceCommand.jpg');
 // Q6Q-series
-import q6qHero from '@/public/products/tvs/q6q-Files/q6q-Hero.jpg';
-import q6qDolby from '@/public/products/tvs/q6q-Files/q6q-dolby.jpg';
-import q6qFuzzyImage from '@/public/products/tvs/q6q-Files/q6q-fuzzyImage.jpg';
-import q6qGameManagement from '@/public/products/tvs/q6q-Files/q6q-gameManagement.jpg';
-import q6qMovies from '@/public/products/tvs/q6q-Files/q6q-movies.jpg';
-import q6qNoBlur from '@/public/products/tvs/q6q-Files/q6q-noBlur.jpg';
-import q6qVividColor from '@/public/products/tvs/q6q-Files/q6q-vividColor.jpg';
-import q6qVoiceCommand from '@/public/products/tvs/q6q-Files/q6q-voiceCommand.jpg';
-import q6qVrr from '@/public/products/tvs/q6q-Files/q6q-vrr.jpg';
-import q6qBrightness from '@/public/products/tvs/q6q-Files/q6q-brightness.jpg';
-import q6qSizes from '@/public/products/tvs/q6q-Files/q6q-sizes.jpg';
+const q6qHero = productAsset('tvs/q6q-Files/q6q-Hero.jpg');
+const q6qDolby = productAsset('tvs/q6q-Files/q6q-dolby.jpg');
+const q6qFuzzyImage = productAsset('tvs/q6q-Files/q6q-fuzzyImage.jpg');
+const q6qGameManagement = productAsset('tvs/q6q-Files/q6q-gameManagement.jpg');
+const q6qMovies = productAsset('tvs/q6q-Files/q6q-movies.jpg');
+const q6qNoBlur = productAsset('tvs/q6q-Files/q6q-noBlur.jpg');
+const q6qVividColor = productAsset('tvs/q6q-Files/q6q-vividColor.jpg');
+const q6qVoiceCommand = productAsset('tvs/q6q-Files/q6q-voiceCommand.jpg');
+const q6qVrr = productAsset('tvs/q6q-Files/q6q-vrr.jpg');
+const q6qBrightness = productAsset('tvs/q6q-Files/q6q-brightness.jpg');
+const q6qSizes = productAsset('tvs/q6q-Files/q6q-sizes.jpg');
 // A4AN-series
-import A4ANHero from '@/public/products/tvs/a4k-Files/a4k-Hero.png';
-import A4ANCrispClear from '@/public/products/tvs/a4k-Files/a4k-crispClear.jpg';
-import A4ANNature from '@/public/products/tvs/a4k-Files/a4k-nature.jpg';
-import A4ANVisuals from '@/public/products/tvs/a4k-Files/a4k-visuals.jpg';
-import A4ANDepth from '@/public/products/tvs/a4k-Files/a4k-depth.png';
-import A4ANEntertainment from '@/public/products/tvs/a4k-Files/a4k-entertainmet.jpg';
-import A4ANAudio from '@/public/products/tvs/a4k-Files/a4k-audio.jpg';
-import A4ANLeaderboard from '@/public/products/tvs/a4k-Files/a4k-leaderboard.jpg';
-import A4ANEasyFast from '@/public/products/tvs/a4k-Files/a4k-easyFast.jpg';
-import A4ANCast from '@/public/products/tvs/a4k-Files/a4k-cast.jpg';
-import A4ANConnect from '@/public/products/tvs/a4k-Files/a4k-connect.jpg';
-import dtsxLogo from '@/public/products/tvs/logos/dtsx-logo.png';
-import gameModeSimpleLogo from '@/public/products/tvs/logos/game-mode-logo.png';
-import shareToTvLogo from '@/public/products/tvs/logos/share-to-tv-logo.png';
+const A4ANHero = productAsset('tvs/a4k-Files/a4k-Hero.png');
+const A4ANCrispClear = productAsset('tvs/a4k-Files/a4k-crispClear.jpg');
+const A4ANNature = productAsset('tvs/a4k-Files/a4k-nature.jpg');
+const A4ANVisuals = productAsset('tvs/a4k-Files/a4k-visuals.jpg');
+const A4ANDepth = productAsset('tvs/a4k-Files/a4k-depth.png');
+const A4ANEntertainment = productAsset('tvs/a4k-Files/a4k-entertainmet.jpg');
+const A4ANAudio = productAsset('tvs/a4k-Files/a4k-audio.jpg');
+const A4ANLeaderboard = productAsset('tvs/a4k-Files/a4k-leaderboard.jpg');
+const A4ANEasyFast = productAsset('tvs/a4k-Files/a4k-easyFast.jpg');
+const A4ANCast = productAsset('tvs/a4k-Files/a4k-cast.jpg');
+const A4ANConnect = productAsset('tvs/a4k-Files/a4k-connect.jpg');
+const dtsxLogo = productAsset('tvs/logos/dtsx-logo.png');
+const gameModeSimpleLogo = productAsset('tvs/logos/game-mode-logo.png');
+const shareToTvLogo = productAsset('tvs/logos/share-to-tv-logo.png');
 // A3Q-series
-import A3QHero from '@/public/products/tvs/a3q-Files/a3q-Hero.jpg';
+const A3QHero = productAsset('tvs/a3q-Files/a3q-Hero.jpg');
 
 export const TV_PRODUCTS: TvProduct[] = [
   {
@@ -117,8 +119,8 @@ export const TV_PRODUCTS: TvProduct[] = [
         title: 'Dolby Vision-Atoms',
         description:
           'Dense Mini-LED backlight with precise local dimming for deep blacks and bright highlights.',
-        image: dolbyVisionAtomsLogo as StaticImageData,
-        imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
+        image: dolbyVisionAtomsLogo,
+        imageBlack: dolbyVisionAtomsLogo1,
       },
       {
         title: 'HDR',
@@ -426,8 +428,8 @@ export const TV_PRODUCTS: TvProduct[] = [
         title: 'Dolby Vision-Atmos',
         description:
           'Dolby Vision HDR picture with Dolby Atmos immersive sound for cinematic impact.',
-        image: dolbyVisionAtomsLogo as StaticImageData,
-        imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
+        image: dolbyVisionAtomsLogo,
+        imageBlack: dolbyVisionAtomsLogo1,
       },
       {
         title: 'AI Picture',
@@ -717,8 +719,8 @@ export const TV_PRODUCTS: TvProduct[] = [
       {
         title: 'Dolby Vision-Atmos',
         description: 'Dolby Vision HDR picture paired with Dolby Atmos sound for immersive nights.',
-        image: dolbyVisionAtomsLogo as StaticImageData,
-        imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
+        image: dolbyVisionAtomsLogo,
+        imageBlack: dolbyVisionAtomsLogo1,
       },
       {
         title: 'QLED Colour',
@@ -993,8 +995,8 @@ export const TV_PRODUCTS: TvProduct[] = [
       {
         title: 'Dolby Audio',
         description: 'Clear dialogue and cinematic surround-style sound from built-in speakers.',
-        image: dolbyVisionAtomsLogo as StaticImageData,
-        imageBlack: dolbyVisionAtomsLogo1 as StaticImageData,
+        image: dolbyVisionAtomsLogo,
+        imageBlack: dolbyVisionAtomsLogo1,
       },
       {
         title: 'AI Sports Mode',

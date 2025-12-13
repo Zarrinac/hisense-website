@@ -7,18 +7,24 @@ const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient;
 };
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
-const adapter = new PrismaPg(pool);
+const connectionString = process.env.DATABASE_URL;
 
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
-    adapter,
-  });
+let prisma: PrismaClient | undefined;
 
-if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.prisma = prisma;
+if (connectionString) {
+  const pool = new Pool({ connectionString });
+  const adapter = new PrismaPg(pool);
+
+  prisma =
+    globalForPrisma.prisma ??
+    new PrismaClient({
+      log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
+      adapter,
+    });
+
+  if (process.env.NODE_ENV !== 'production') {
+    globalForPrisma.prisma = prisma;
+  }
 }
+
+export { prisma };

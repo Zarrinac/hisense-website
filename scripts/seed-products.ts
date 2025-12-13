@@ -1,10 +1,20 @@
 /* eslint-disable no-console */
-import 'dotenv/config';
 import Module from 'module';
+import fs from 'node:fs';
 import path from 'node:path';
 import { Prisma, PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
+import dotenv from 'dotenv';
+
+const envFiles = ['.env.local', '.env', '.env.production'];
+for (const file of envFiles) {
+  const full = path.resolve(process.cwd(), file);
+  if (fs.existsSync(full)) {
+    dotenv.config({ path: full });
+    break;
+  }
+}
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
@@ -16,16 +26,24 @@ const toJsonField = (value: unknown): Prisma.NullableJsonNullValueInput | Prisma
   value === null || value === undefined ? Prisma.DbNull : (value as Prisma.InputJsonValue);
 const toStringArray = (value: unknown): string[] =>
   Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [];
+type ResolveFilename = (
+  request: string,
+  parent: unknown,
+  isMain: unknown,
+  options: unknown,
+) => string;
+type ModuleInternals = typeof Module & {
+  _resolveFilename?: ResolveFilename;
+  _extensions: NodeJS.RequireExtensions;
+};
+const moduleInternals = Module as ModuleInternals;
+
 const registerModuleStubs = () => {
-  const originalResolveFilename = (Module as unknown as { _resolveFilename?: unknown })
-    ._resolveFilename as
-    | ((request: string, parent: unknown, isMain: unknown, options: unknown) => string)
-    | undefined;
+  const originalResolveFilename = moduleInternals._resolveFilename;
 
   if (!originalResolveFilename) return;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (Module as any)._resolveFilename = function patchedResolve(
+  moduleInternals._resolveFilename = function patchedResolve(
     request: string,
     parent: unknown,
     isMain: unknown,
@@ -35,27 +53,35 @@ const registerModuleStubs = () => {
       return path.resolve(process.cwd(), 'scripts/stubs/next-image.cjs');
     }
     if (request.startsWith('@/')) {
-      return path.resolve(process.cwd(), request.replace('@/', ''));
+      const basePath = path.resolve(process.cwd(), request.replace('@/', ''));
+      const tsPath = `${basePath}.ts`;
+      if (fs.existsSync(tsPath)) return tsPath;
+      const jsPath = `${basePath}.js`;
+      if (fs.existsSync(jsPath)) return jsPath;
+      return basePath;
     }
     return originalResolveFilename.call(this, request, parent, isMain, options);
   };
 };
 const registerAssetHooks = () => {
-  const noop = () => null;
+  const stubExtension: NodeJS.RequireExtensions[string] = () => null;
   const exts = ['.svg', '.png', '.jpg', '.jpeg', '.webp', '.mp4'];
   exts.forEach((ext) => {
-    // @ts-expect-error - _extensions is a Node internals hook used here to stub asset imports
-    Module._extensions[ext] = noop;
+    moduleInternals._extensions[ext] = stubExtension;
   });
 };
 
 async function seed() {
   registerModuleStubs();
   registerAssetHooks();
-  const [{ normalizeContentProduct }, { TV_PRODUCTS }] = await Promise.all([
-    import('../lib/api/products/normalizers'),
-    import('../content/tvProducts'),
-  ]);
+  const { normalizeContentProduct } = await import('../lib/api/products/normalizers');
+  const tvModuleUnknown = (await import(
+    path.resolve(process.cwd(), 'content/tvProducts.ts')
+  )) as unknown;
+  const { TV_PRODUCTS } = tvModuleUnknown as { TV_PRODUCTS: unknown };
+  if (!Array.isArray(TV_PRODUCTS)) {
+    throw new Error('TV_PRODUCTS content module did not export a product array');
+  }
   const normalized = TV_PRODUCTS.map(normalizeContentProduct);
 
   console.log(`Seeding ${normalized.length} products...`);
