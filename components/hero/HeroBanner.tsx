@@ -6,28 +6,51 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
-import Banner01 from '@/public/banner/Fix-Banner-02-Back.jpg';
-import Banner02 from '@/public/banner/Fix-Banner-03-Back.jpg';
-import Banner03 from '@/public/banner/Fix-Banner-04-Back.jpg';
-import Banner04 from '@/public/banner/Fix-Banner-05-Back.jpg';
-import Banner05 from '@/public/banner/Fix-Banner-06-Back.jpg';
+import { mediaUrl } from '@/lib/mediaUrl';
+
+type ImageSource = StaticImageData | string;
 
 type Banner = {
   id: string;
-  desktop: StaticImageData;
-  mobile?: StaticImageData;
+  desktop: ImageSource;
+  mobile?: ImageSource;
   alt: string;
 };
 
+const bannerAsset = (path: string) => mediaUrl(`/banner/${path}`);
+
 const BANNERS: Banner[] = [
-  { id: 'banner-1', desktop: Banner01, alt: 'Hisense flagship lineup hero 1' },
-  { id: 'banner-2', desktop: Banner02, alt: 'Hisense flagship lineup hero 2' },
-  { id: 'banner-3', desktop: Banner03, alt: 'Hisense flagship lineup hero 3' },
-  { id: 'banner-4', desktop: Banner04, alt: 'Hisense flagship lineup hero 4' },
-  { id: 'banner-5', desktop: Banner05, alt: 'Hisense flagship lineup hero 5' },
+  {
+    id: 'banner-1',
+    desktop: bannerAsset('Fix-Banner-02-Back.jpg'),
+    alt: 'Hisense flagship lineup hero 1',
+  },
+  {
+    id: 'banner-2',
+    desktop: bannerAsset('Fix-Banner-03-Back.jpg'),
+    alt: 'Hisense flagship lineup hero 2',
+  },
+  {
+    id: 'banner-3',
+    desktop: bannerAsset('Fix-Banner-04-Back.jpg'),
+    alt: 'Hisense flagship lineup hero 3',
+  },
+  {
+    id: 'banner-4',
+    desktop: bannerAsset('Fix-Banner-05-Back.jpg'),
+    alt: 'Hisense flagship lineup hero 4',
+  },
+  {
+    id: 'banner-5',
+    desktop: bannerAsset('Fix-Banner-06-Back.jpg'),
+    alt: 'Hisense flagship lineup hero 5',
+  },
 ];
 
-function useImagePreloader(images: StaticImageData[]) {
+const getSrc = (imageData: ImageSource) =>
+  typeof imageData === 'string' ? imageData : imageData.src;
+
+function useImagePreloader(images: ImageSource[]) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -39,10 +62,10 @@ function useImagePreloader(images: StaticImageData[]) {
 
     let canceled = false;
 
-    const loadImage = (imageData: StaticImageData) =>
+    const loadImage = (imageData: ImageSource) =>
       new Promise<void>((resolve) => {
         const img = new window.Image();
-        img.src = imageData.src;
+        img.src = getSrc(imageData);
         if (img.complete) {
           resolve();
           return;
@@ -77,7 +100,7 @@ export default function HeroBanner() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const preloadSources = useMemo(() => {
-    return BANNERS.reduce<StaticImageData[]>((sources, banner) => {
+    return BANNERS.reduce<ImageSource[]>((sources, banner) => {
       sources.push(banner.desktop);
       if (banner.mobile) {
         sources.push(banner.mobile);
@@ -161,7 +184,6 @@ export default function HeroBanner() {
                   sizes="(max-width: 768px) 100vw, 100vw"
                   priority
                   loading="eager"
-                  placeholder="blur"
                   className="object-cover"
                 />
               </div>
