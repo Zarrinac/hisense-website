@@ -4,8 +4,8 @@ import { type TvProduct } from '@/types/tv';
 // logos
 const productAsset = (path: string) => mediaUrl(`/products/${path}`);
 
-const dolbyVisionAtomsLogo = productAsset('tvs/logos/Dolby-Vision-Atoms-svg-dark.svg');
-const dolbyVisionAtomsLogo1 = productAsset('tvs/logos/Dolby-Vision-Atoms-svg-white.svg');
+const dolbyVisionAtomsLogo = productAsset('tvs/logos/Dolby-Vision-Atmos-svg-dark.png');
+const dolbyVisionAtomsLogo1 = productAsset('tvs/logos/Dolby-Vision-Atmos-svg-white.png');
 const HdrLogo = productAsset('tvs/logos/HDR-logo-black.png');
 const HdrLogo1 = productAsset('tvs/logos/HDR-logo.png');
 const filmmakerLogo = productAsset('tvs/logos/Filmmaker-Mode-logo.png');
