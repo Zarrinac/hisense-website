@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { FALLBACK_PRODUCTS, normalizeDbProducts } from '@/lib/api/products/normalizers';
 import type { ApiProduct } from '@/lib/api/products/types';
+import { mapProductMedia } from '@/lib/api/products/mediaPaths';
 
 // Returns the product catalog; prefers the database but falls back to bundled static content.
 
@@ -32,7 +33,7 @@ const loadProducts = async (): Promise<{ products: ApiProduct[]; source: DataSou
 export async function GET() {
   const { products, source } = await loadProducts();
 
-  return NextResponse.json(products, {
+  return NextResponse.json(products.map(mapProductMedia), {
     status: 200,
     headers: {
       ...DEFAULT_HEADERS,
