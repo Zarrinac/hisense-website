@@ -4,8 +4,8 @@ import { type TvProduct } from '@/types/tv';
 // logos
 const productAsset = (path: string) => mediaUrl(`/products/${path}`);
 
-const dolbyVisionAtomsLogo = productAsset('tvs/logos/Dolby-Vision-Atmos-svg-dark.png');
-const dolbyVisionAtomsLogo1 = productAsset('tvs/logos/Dolby-Vision-Atmos-svg-white.png');
+const dolbyVisionAtomsLogo = productAsset('tvs/logos/Dolby-Vision-Atoms-svg-dark.png');
+const dolbyVisionAtomsLogo1 = productAsset('tvs/logos/Dolby-Vision-Atoms-svg-white.png');
 const HdrLogo = productAsset('tvs/logos/HDR-logo-black.png');
 const HdrLogo1 = productAsset('tvs/logos/HDR-logo.png');
 const filmmakerLogo = productAsset('tvs/logos/Filmmaker-Mode-logo.png');
@@ -425,9 +425,9 @@ export const TV_PRODUCTS: TvProduct[] = [
     heroVideo: 'https://hisenseme.com/storage/20093/E7-PRO(Q7)_2K.mp4',
     featureCards: [
       {
-        title: 'Dolby Vision-Atmos',
+        title: 'Dolby Vision-Atoms',
         description:
-          'Dolby Vision HDR picture with Dolby Atmos immersive sound for cinematic impact.',
+          'Dolby Vision HDR picture with Dolby Atoms immersive sound for cinematic impact.',
         image: dolbyVisionAtomsLogo,
         imageBlack: dolbyVisionAtomsLogo1,
       },
@@ -697,7 +697,7 @@ export const TV_PRODUCTS: TvProduct[] = [
     resolution: '4K (3840x2160)',
     refreshRate: 'Game Mode Plus (VRR/ALLM)',
     os: 'VIDAA Smart OS',
-    sound: 'Dolby Atmos ready (details TBD)',
+    sound: 'Dolby Atoms ready (details TBD)',
     connectivity: ['WiFi', 'Bluetooth', 'HDMI', 'USB'],
     tuner: 'To be confirmed',
     extras: ['QLED Colour', '4K AI Upscaler', 'Game Mode Plus (VRR + ALLM)'],
@@ -717,8 +717,8 @@ export const TV_PRODUCTS: TvProduct[] = [
         imageBlack: aiUpscalerLogo,
       },
       {
-        title: 'Dolby Vision-Atmos',
-        description: 'Dolby Vision HDR picture paired with Dolby Atmos sound for immersive nights.',
+        title: 'Dolby Vision-Atoms',
+        description: 'Dolby Vision HDR picture paired with Dolby Atoms sound for immersive nights.',
         image: dolbyVisionAtomsLogo,
         imageBlack: dolbyVisionAtomsLogo1,
       },
@@ -808,12 +808,12 @@ export const TV_PRODUCTS: TvProduct[] = [
     copy: {
       en: {
         name: 'Hisense Q6Q 4K QLED TV',
-        tagline: 'QLED 4K Smart TV with Dolby Vision Atmos and Game Mode Plus.',
+        tagline: 'QLED 4K Smart TV with Dolby Vision Atoms and Game Mode Plus.',
         description:
-          'QLED colour, Dolby Vision Atmos, AI 4K upscaling, and Game Mode Plus with VRR/ALLM on a VIDAA smart TV.',
+          'QLED colour, Dolby Vision Atoms, AI 4K upscaling, and Game Mode Plus with VRR/ALLM on a VIDAA smart TV.',
         highlights: [
           'QLED 4K panel with HDR and high colour volume.',
-          'Dolby Vision HDR and Dolby Atmos audio support.',
+          'Dolby Vision HDR and Dolby Atoms audio support.',
           'Game Mode Plus with VRR/ALLM and Game Bar controls.',
           'AI 4K Upscaler with MEMC smooth motion.',
           'Voice Remote for hands-free commands and search.',
@@ -829,8 +829,8 @@ export const TV_PRODUCTS: TvProduct[] = [
             text: 'Experience a visual treat with QLED Colour. Every frame is rich, vibrant, and true-to-life, ensuring every colour, from the most subtle to the most vibrant, stands out.',
           },
           dolby: {
-            title: 'Dolby Vision & Atmos',
-            text: 'The fusion of Dolby Vision™ HDR imaging and Dolby Atmos® sound transforms your TV into an entertainment powerhouse.',
+            title: 'Dolby Vision & Atoms',
+            text: 'The fusion of Dolby Vision™ HDR imaging and Dolby Atoms® sound transforms your TV into an entertainment powerhouse.',
           },
           fuzzyImage: {
             title: 'Fuzzy images are upscaled close to 4K quality',
@@ -868,12 +868,12 @@ export const TV_PRODUCTS: TvProduct[] = [
       },
       fa: {
         name: 'تلویزیون Q6Q هایسنس',
-        tagline: 'QLED 4K Smart TV with Dolby Vision Atmos and Game Mode Plus.',
+        tagline: 'QLED 4K Smart TV with Dolby Vision Atoms and Game Mode Plus.',
         description:
-          'QLED colour, Dolby Vision Atmos, AI 4K upscaling, and Game Mode Plus with VRR/ALLM on a VIDAA smart TV.',
+          'QLED colour, Dolby Vision Atoms, AI 4K upscaling, and Game Mode Plus with VRR/ALLM on a VIDAA smart TV.',
         highlights: [
           'QLED 4K panel with HDR and high colour volume.',
-          'Dolby Vision HDR and Dolby Atmos audio support.',
+          'Dolby Vision HDR and Dolby Atoms audio support.',
           'Game Mode Plus with VRR/ALLM and Game Bar controls.',
           'AI 4K Upscaler with MEMC smooth motion.',
           'Voice Remote for hands-free commands and search.',
@@ -889,8 +889,8 @@ export const TV_PRODUCTS: TvProduct[] = [
             text: 'با فناوری QLED Colour، هر فریم سرشار از رنگ‌های غنی، پویا و طبیعی است. از لطیف‌ترین تون‌ها تا درخشان‌ترین رنگ‌ها، همه با وضوحی چشمگیر دیده می‌شوند و تصویری واقعی و زنده را پیش چشم شما قرار می‌دهند.',
           },
           dolby: {
-            title: 'Dolby Vision & Atmos',
-            text: 'ترکیب تصویر پیشرفته Dolby Vision™ و صدای فراگیر Dolby Atmos® تلویزیون شما را به یک مرکز قدرتمند سرگرمی تبدیل می‌کند—با تصویری سینمایی و صدایی فراگیر و عمیق.',
+            title: 'Dolby Vision & Atoms',
+            text: 'ترکیب تصویر پیشرفته Dolby Vision™ و صدای فراگیر Dolby Atoms® تلویزیون شما را به یک مرکز قدرتمند سرگرمی تبدیل می‌کند—با تصویری سینمایی و صدایی فراگیر و عمیق.',
           },
           fuzzyImage: {
             title: 'بهبود هوشمند تصویر تا مرز وضوح 4K',
