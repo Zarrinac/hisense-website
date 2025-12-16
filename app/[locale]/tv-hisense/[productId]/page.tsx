@@ -362,7 +362,7 @@ export default async function TvProductDetailPage({ params }: PageProps) {
   const comparisonSections = buildComparisonSections(product, blocks);
   const specDetails: string[] = resolveSpecs(product.specs, lang);
   const featureCards = product.featureCards ?? [];
-  const compactFeatureTitles = new Set(['Dolby Vision-Atmos', 'Filmmaker', 'IMAX']);
+  const compactFeatureTitles = new Set(['Dolby Vision-Atoms', 'Filmmaker', 'IMAX']);
   const availableSizes = getAvailableSizes(product);
   const seriesDisplay = getSeriesDisplay(product);
   const breadcrumbItems = buildBreadcrumbItems(locale, copy.name || product.id, productId, lang);
