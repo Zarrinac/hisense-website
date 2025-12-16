@@ -8,6 +8,8 @@ import { mediaUrl } from '@/lib/mediaUrl';
 
 const bannerAsset = (path: string) => mediaUrl(`/banner/${path}`);
 
+// Locale-aware homepage renders the hero carousel and localized category spotlights.
+
 const SPOTLIGHT_SOURCES = [
   { id: 'tv', href: '/tv-hisense', image: bannerAsset('Fix-Banner-02-Back.jpg') },
   { id: 'refrigerator', href: '/refrigerator', image: bannerAsset('Fix-Banner-03-Back.jpg') },
