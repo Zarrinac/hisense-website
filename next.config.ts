@@ -5,8 +5,8 @@ type RemotePattern = { protocol: 'http' | 'https'; hostname: string; pathname?: 
 
 // Base Next config wrapped with next-intl to inject locale support.
 const remotePatterns: RemotePattern[] = [
-  { protocol: 'https', hostname: 'media.hisense-ir.com' },
-  { protocol: 'http', hostname: 'media.hisense-ir.com' },
+  { protocol: 'http', hostname: 'www.hisense-ir.com' },
+  { protocol: 'https', hostname: 'www.hisense-ir.com' },
 ];
 
 const mediaBase = process.env.NEXT_PUBLIC_MEDIA_BASE_URL;
