@@ -2,6 +2,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { findFallbackProduct, normalizeDbProduct } from '@/lib/api/products/normalizers';
+import { mapProductMedia } from '@/lib/api/products/mediaPaths';
 
 type DataSource = 'database' | 'fallback';
 
@@ -44,7 +45,7 @@ export async function GET(_: NextRequest, { params }: { params: Promise<{ id: st
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
 
-  return NextResponse.json(product, {
+  return NextResponse.json(mapProductMedia(product), {
     status: 200,
     headers: {
       ...DEFAULT_HEADERS,
