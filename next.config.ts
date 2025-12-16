@@ -37,7 +37,7 @@ if (mediaBase) {
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    remotePatterns,
+    unoptimized: true,
   },
 };
 
