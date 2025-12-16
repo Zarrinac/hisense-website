@@ -25,6 +25,8 @@ import type { ApiProduct } from '@/lib/api/products/types';
 
 // Builds the TV detail page from the API (DB-first) with bundled content as fallback via the API layer.
 
+// Builds the TV detail page from the bundled content, normalizing copy blocks per locale.
+
 type PageParams = {
   locale?: string;
   productId?: string;
