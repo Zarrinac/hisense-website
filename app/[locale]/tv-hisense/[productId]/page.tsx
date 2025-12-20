@@ -22,6 +22,7 @@ import type {
   TvSectionGroup,
 } from '@/types/tv';
 import type { ApiProduct } from '@/lib/api/products/types';
+import { routing } from '@/i18n/routing';
 
 // Builds the TV detail page from the API (DB-first) with bundled content as fallback via the API layer.
 
@@ -309,6 +310,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const lang = resolveLocale(localeParam);
   const copy = product.copy[lang];
   const imageUrl = toSrc(product.posterImageUrl ?? product.imageUrl);
+  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
+    acc[lang] = `/${lang}/tv-hisense/${productId}`;
+    return acc;
+  }, {});
+  languageAlternates['x-default'] = `/${routing.defaultLocale}/tv-hisense/${productId}`;
 
   return {
     title: copy.name,
@@ -328,9 +334,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: copy.tagline,
       images: [{ url: imageUrl }],
       url: `/${localeParam}/tv-hisense/${productId}`,
+      type: 'website',
     },
     alternates: {
       canonical: `/${localeParam}/tv-hisense/${productId}`,
+      languages: languageAlternates,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: copy.name,
+      description: copy.tagline,
+      images: [imageUrl],
     },
   };
 }

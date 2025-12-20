@@ -1,20 +1,27 @@
+import { useLocalContent } from '@/lib/contentSource';
 import type { ApiBanner, ApiFeatureCard, ApiProduct, ApiSection } from './types';
 
 // Normalize a media path to a public URL while preserving absolute paths.
-export const toPublicMediaPath = (p?: string | null): string => {
-  if (!p) return '';
-  if (p.startsWith('http')) return p; // keep absolute URLs
-  if (p.startsWith('/media/')) return p;
+export const toPublicMediaPath = (input?: string | null): string => {
+  if (!input) return '';
+  if (input.startsWith('http')) return input; // keep absolute URLs
+  const path = input.startsWith('/') ? input : `/${input}`;
+
+  if (useLocalContent) {
+    return path.startsWith('/media/') ? path.replace(/^\/media/, '') : path;
+  }
+
+  if (path.startsWith('/media/')) return path;
 
   // DB convention
-  if (p.startsWith('/products/')) return `/media${p}`;
+  if (path.startsWith('/products/')) return `/media${path}`;
 
   // other media dirs if any exist in DB
-  if (p.startsWith('/banner/')) return `/media${p}`;
-  if (p.startsWith('/images/')) return `/media${p}`;
-  if (p.startsWith('/tv-banner/')) return `/media${p}`;
+  if (path.startsWith('/banner/')) return `/media${path}`;
+  if (path.startsWith('/images/')) return `/media${path}`;
+  if (path.startsWith('/tv-banner/')) return `/media${path}`;
 
-  return p.startsWith('/') ? p : `/${p}`;
+  return path;
 };
 
 type ProductWithMedia = Pick<
