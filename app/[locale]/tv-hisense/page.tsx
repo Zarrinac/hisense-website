@@ -8,6 +8,8 @@ import { FALLBACK_PRODUCTS } from '@/lib/api/products/normalizers';
 import type { ApiProduct } from '@/lib/api/products/types';
 import { mediaUrl } from '@/lib/mediaUrl';
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
+
 const bannerAsset = (path: string) => mediaUrl(`/tv-banner/${path}`);
 
 const HERO_SLIDES = [
@@ -22,6 +24,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const routeTranslations = await getTranslations('Routes.tvHisense');
   const pageTranslations = await getTranslations('TvHisensePage');
   const keywordsRaw: unknown = pageTranslations.raw('metadata.keywords');
+  const ogImage = HERO_SLIDES[0]?.image;
+  const ogImageUrl =
+    typeof ogImage === 'string' && ogImage.length > 0
+      ? ogImage.startsWith('http')
+        ? ogImage
+        : `${SITE_URL}${ogImage}`
+      : undefined;
 
   return {
     title: routeTranslations('title'),
@@ -31,6 +40,23 @@ export async function generateMetadata(): Promise<Metadata> {
       title: routeTranslations('title'),
       description: routeTranslations('description'),
       url: `/${locale}/tv-hisense`,
+      type: 'website',
+      images: ogImageUrl
+        ? [
+            {
+              url: ogImageUrl,
+              width: 1200,
+              height: 630,
+              alt: routeTranslations('title'),
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: routeTranslations('title'),
+      description: routeTranslations('description'),
+      images: ogImageUrl ? [ogImageUrl] : undefined,
     },
     alternates: {
       canonical: `/${locale}/tv-hisense`,

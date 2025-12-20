@@ -12,6 +12,7 @@ import Footer from '@/components/Footer';
 import StructuredData from '@/components/seo/StructuredData';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { routing, type Locale } from '@/i18n/routing';
+import { getSeoKeywords } from '@/lib/seo/keywords';
 
 // Locale layout validates the locale, wires translations/theme, and applies shared page chrome.
 
@@ -57,6 +58,9 @@ export async function generateMetadata(
     namespace: 'Metadata',
   });
   const keywords = t.raw('keywords') as string[] | undefined;
+  const keywordSeed = Array.isArray(keywords) ? keywords : [];
+  const seoKeywords = getSeoKeywords(typedLocale, 12);
+  const combinedKeywords = Array.from(new Set([...keywordSeed, ...seoKeywords])).slice(0, 20);
   const metadataBase = new URL(SITE_URL);
   const localizedPath = `/${typedLocale}`;
   const canonicalUrl = `${SITE_URL}${localizedPath}`;
@@ -66,22 +70,47 @@ export async function generateMetadata(
   }, {});
   languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}`;
   const openGraphLocale = OG_LOCALE_MAP[typedLocale];
+  const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+  const bingVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
+  const verificationOther = {
+    ...(bingVerification ? { 'msvalidate.01': bingVerification } : {}),
+  };
 
   return {
     metadataBase,
     title: t('title'),
     description: t('description'),
-    keywords,
+    keywords: combinedKeywords.length > 0 ? combinedKeywords : undefined,
+    applicationName: 'Hisense Iran',
     alternates: {
       canonical: localizedPath,
       languages: languageAlternates,
     },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
+    },
+    verification:
+      googleVerification || Object.keys(verificationOther).length > 0
+        ? {
+            google: googleVerification,
+            other: verificationOther,
+          }
+        : undefined,
     openGraph: {
       title: t('title'),
       description: t('description'),
       url: canonicalUrl,
       siteName: 'Zarrin Namaye caspian | Hisense Iran',
       locale: openGraphLocale,
+      type: 'website',
       images: [
         {
           url: `${SITE_URL}/banner/Fix-Banner-07.jpg`,
@@ -93,6 +122,9 @@ export async function generateMetadata(
     },
     twitter: {
       card: 'summary_large_image',
+      title: t('title'),
+      description: t('description'),
+      images: [`${SITE_URL}/banner/Fix-Banner-07.jpg`],
     },
   };
 }
