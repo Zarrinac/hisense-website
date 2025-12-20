@@ -1,6 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { useLocalContent } from '@/lib/contentSource';
 import { findFallbackProduct, normalizeDbProduct } from '@/lib/api/products/normalizers';
 import { mapProductMedia } from '@/lib/api/products/mediaPaths';
 
@@ -11,7 +12,7 @@ const DEFAULT_HEADERS = {
 };
 
 const loadProduct = async (idOrSlug: string) => {
-  if (prisma) {
+  if (!useLocalContent && prisma) {
     try {
       const product = await prisma.product.findFirst({
         where: {
