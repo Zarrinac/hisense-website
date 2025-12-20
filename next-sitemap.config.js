@@ -1,5 +1,25 @@
 /** @type {import('next-sitemap').IConfig} */
 // Locale-aware sitemap generation; defaults root to the FA locale.
+const path = require('node:path');
+
+const loadProductSlugs = () => {
+  try {
+    require('ts-node/register/transpile-only');
+    require('tsconfig-paths/register');
+    const { TV_PRODUCTS } = require(path.join(__dirname, 'content', 'tvProducts.ts'));
+    if (!Array.isArray(TV_PRODUCTS)) return [];
+    return Array.from(
+      new Set(
+        TV_PRODUCTS.map((product) => (product?.slug ?? product?.id ?? '').toString().trim())
+          .filter(Boolean)
+          .map((value) => value.toLowerCase()),
+      ),
+    );
+  } catch {
+    return [];
+  }
+};
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const locales = ['fa', 'en'];
 const staticPaths = [
@@ -17,6 +37,7 @@ const staticPaths = [
   '/warranty-and-guarantee',
   '/portal',
 ];
+const productPaths = loadProductSlugs().map((slug) => `/tv-hisense/${slug}`);
 
 module.exports = {
   siteUrl,
@@ -39,6 +60,7 @@ module.exports = {
       localizedStaticPaths.push(
         config.transform(config, `/${locale}`),
         ...staticPaths.map((path) => config.transform(config, `/${locale}${path}`)),
+        ...productPaths.map((path) => config.transform(config, `/${locale}${path}`)),
       );
     }
 

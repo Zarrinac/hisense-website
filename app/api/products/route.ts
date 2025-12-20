@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { useLocalContent } from '@/lib/contentSource';
 import { FALLBACK_PRODUCTS, normalizeDbProducts } from '@/lib/api/products/normalizers';
 import type { ApiProduct } from '@/lib/api/products/types';
 import { mapProductMedia } from '@/lib/api/products/mediaPaths';
@@ -13,7 +14,7 @@ const DEFAULT_HEADERS = {
 type DataSource = 'database' | 'fallback';
 
 const loadProducts = async (): Promise<{ products: ApiProduct[]; source: DataSource }> => {
-  if (prisma) {
+  if (!useLocalContent && prisma) {
     try {
       const products = await prisma.product.findMany({
         orderBy: { series: 'asc' },

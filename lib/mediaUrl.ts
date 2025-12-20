@@ -1,9 +1,15 @@
+import { useLocalContent } from '@/lib/contentSource';
+
 export const mediaUrl = (path: string) => {
   if (!path) return '';
   if (path.startsWith('http')) return path;
 
-  if (!path.startsWith('/')) path = `/${path}`;
+  const normalized = path.startsWith('/') ? path : `/${path}`;
+
+  if (useLocalContent) {
+    return normalized.startsWith('/media/') ? normalized.replace(/^\/media/, '') : normalized;
+  }
 
   const base = process.env.NEXT_PUBLIC_MEDIA_BASE_URL ?? '';
-  return base ? `${base}${path}` : path;
+  return base ? `${base}${normalized}` : normalized;
 };
