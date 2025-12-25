@@ -26,8 +26,8 @@ export default function UnderConstruction({
   description,
   locale,
   actions,
-  supportingText,
-  statusItems = [],
+  // supportingText,
+  // statusItems = [],
   className,
 }: UnderConstructionProps) {
   const isRTL = locale === 'fa';
@@ -52,7 +52,7 @@ export default function UnderConstruction({
   return (
     <section className={containerClassName}>
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(0,179,172,0.12),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(0,139,134,0.1),transparent_30%)]" />
-      <div className="relative grid gap-8 px-6 py-10 sm:px-12 sm:py-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      <div className="relative px-6 py-10 sm:px-12 sm:py-12 lg:items-center">
         <div className="space-y-4 sm:space-y-6">
           <div className="inline-flex w-fit items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.35em] text-(--brand-color) shadow-sm ring-1 ring-(--border-color)">
             <HiOutlineWrenchScrewdriver className="h-4 w-4" aria-hidden="true" />
@@ -114,7 +114,7 @@ export default function UnderConstruction({
           )}
         </div>
 
-        <div className="rounded-3xl border border-(--border-color) bg-(--surface-muted-color) p-6 shadow-inner">
+        {/* <div className="rounded-3xl border border-(--border-color) bg-(--surface-muted-color) p-6 shadow-inner">
           <div className="flex items-center gap-3 text-sm font-semibold text-(--brand-color)">
             <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-(--brand-color) shadow-sm ring-1 ring-(--border-color)">
               <HiOutlineWrenchScrewdriver className="h-5 w-5" aria-hidden="true" />
@@ -141,7 +141,7 @@ export default function UnderConstruction({
               ))}
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </section>
   );

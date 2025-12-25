@@ -41,7 +41,14 @@ export type CopyBlockKey =
   | 'easyFastSecure'
   | 'cast'
   | 'connect'
-  | 'visual';
+  | 'visual'
+  | 'quickWash'
+  | 'allergySteam'
+  | 'stains'
+  | 'selfDiagnostic'
+  | 'durableInverter'
+  | 'quickWashDry'
+  | 'lintClean';
 
 export type CopyBlock = {
   title?: string;
