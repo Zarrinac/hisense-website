@@ -105,7 +105,7 @@ export default async function TvHisensePage() {
 
   return (
     <div className="pb-16 space-y-14 lg:space-y-20 lg:pb-24">
-      <div className="-mx-4 sm:-mx-6 lg:-mx-10 max-w-[1440px] 3xl:mx-auto">
+      <div className="-mx-4 sm:-mx-6 lg:-mx-10 max-w-360 3xl:mx-auto">
         <TvHeroCarousel slides={heroSlides} locale={locale} />
       </div>
 
