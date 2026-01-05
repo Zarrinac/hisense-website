@@ -52,6 +52,9 @@ export default async function WashingMachinePage() {
         <div className="grid gap-6 lg:grid-cols-3">
           {WM_PRODUCTS.map((product) => {
             const copy = product.copy[lang] ?? product.copy.en;
+            const seriesLabel = product.seriesLabel ?? product.series;
+            const seriesLabelDir =
+              lang === 'fa' && /[A-Za-z]/.test(seriesLabel) ? 'ltr' : undefined;
             const featureTags = (product.extras ?? []).slice(0, 3).filter(Boolean);
             const overlayFeatures =
               featureTags.length > 0
@@ -99,7 +102,7 @@ export default async function WashingMachinePage() {
                 </div>
                 <div className="flex flex-col flex-1 gap-2 p-6">
                   <p className="text-xs font-semibold uppercase tracking-[0.35em] text-(--text-subtle-color)">
-                    {product.seriesLabel ?? product.series}
+                    <span dir={seriesLabelDir}>{seriesLabel}</span>
                   </p>
                   <h3 className="text-lg font-bold text-(--default-black-font) sm:text-xl">
                     {copy.name}

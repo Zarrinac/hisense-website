@@ -119,7 +119,7 @@ const buildDefaultSectionGroups = (product: (typeof WM_PRODUCTS)[number]): TvSec
       kind: 'content',
       sections: product.contentSections.map((section) => ({
         ...section,
-        copyKey: section.copyKey as CopyBlockKey,
+        copyKey: section.copyKey,
       })),
     });
   }
@@ -128,7 +128,7 @@ const buildDefaultSectionGroups = (product: (typeof WM_PRODUCTS)[number]): TvSec
       kind: 'stacked',
       sections: product.stackedSections.map((section) => ({
         ...section,
-        copyKey: section.copyKey as CopyBlockKey,
+        copyKey: section.copyKey,
       })),
     });
   }
@@ -138,7 +138,7 @@ const buildDefaultSectionGroups = (product: (typeof WM_PRODUCTS)[number]): TvSec
       textFirst: true,
       sections: product.bottomStackedSections.map((section) => ({
         ...section,
-        copyKey: section.copyKey as CopyBlockKey,
+        copyKey: section.copyKey,
       })),
     });
   }
@@ -161,7 +161,7 @@ const buildSectionGroups = (
           ...group,
           sections: group.sections.map((section) => ({
             ...section,
-            copyKey: section.copyKey as CopyBlockKey,
+            copyKey: section.copyKey,
           })),
         }))
         .map((group) => group as unknown as TvSectionGroup)
@@ -238,6 +238,9 @@ const getAvailableSizes = (product: (typeof WM_PRODUCTS)[number]): string[] =>
 
 const getSeriesDisplay = (product: (typeof WM_PRODUCTS)[number]) =>
   product.seriesLabel ?? [product.series, product.panel].filter(Boolean).join(' ');
+
+const formatSeriesDisplay = (value: string, lang: 'fa' | 'en') =>
+  lang === 'fa' && /[A-Za-z]/.test(value) ? `\u200E${value}\u200E` : value;
 
 const buildBreadcrumbItems = (
   locale: string,
@@ -343,7 +346,7 @@ export default async function WashingMachineProductPage({ params }: PageProps) {
   const featureCards = product.featureCards ?? [];
   const compactFeatureTitles = new Set(['Quick Wash', 'Allergy Steam']);
   const availableSizes = getAvailableSizes(product);
-  const seriesDisplay = getSeriesDisplay(product);
+  const seriesDisplay = formatSeriesDisplay(getSeriesDisplay(product), lang);
   const breadcrumbItems = buildBreadcrumbItems(
     locale,
     routeTranslations('title'),

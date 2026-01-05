@@ -28,7 +28,7 @@ export default function createRoutePage(routeKey: string, options?: RoutePageOpt
       },
       {
         label: underConstructionTranslations('actions.contact'),
-        href: 'mailto:info@hisense-ir.com',
+        href: `/${locale}/contact-us`,
       },
     ];
     const actions = options?.actions ?? defaultActions;

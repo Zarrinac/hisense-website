@@ -51,6 +51,7 @@ const FOOTER_SECTIONS: Array<{
     linkKeys: [
       { key: 'faq', href: '/faq' },
       { key: 'warranty', href: '/warranty-and-guarantee' },
+      { key: 'hisenseRepair', href: '/hisense-repair' },
       { key: 'dealerPortal', href: '/portal' },
       { key: 'dealerList', href: '/portal' },
       { key: 'becomeDealer', href: '/portal' },

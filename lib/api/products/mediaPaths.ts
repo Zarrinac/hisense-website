@@ -1,5 +1,12 @@
 import { useLocalContent } from '@/lib/contentSource';
-import type { ApiBanner, ApiFeatureCard, ApiProduct, ApiSection } from './types';
+import type {
+  ApiBanner,
+  ApiComparisonSection,
+  ApiExperienceSection,
+  ApiFeatureCard,
+  ApiProduct,
+  ApiSection,
+} from './types';
 
 // Normalize a media path to a public URL while preserving absolute paths.
 export const toPublicMediaPath = (input?: string | null): string => {
@@ -26,7 +33,17 @@ export const toPublicMediaPath = (input?: string | null): string => {
 
 type ProductWithMedia = Pick<
   ApiProduct,
-  'imageUrl' | 'posterImageUrl' | 'banners' | 'featureCards' | 'sectionGroups' | 'gallery'
+  | 'imageUrl'
+  | 'posterImageUrl'
+  | 'banners'
+  | 'featureCards'
+  | 'sectionGroups'
+  | 'contentSections'
+  | 'stackedSections'
+  | 'bottomStackedSections'
+  | 'comparisonSections'
+  | 'experienceSection'
+  | 'gallery'
 > &
   Record<string, unknown>;
 
@@ -73,6 +90,54 @@ export const mapProductMedia = <T extends ProductWithMedia | null | undefined>(p
           )
         : group.sections,
     }));
+  }
+
+  if (Array.isArray(product.contentSections)) {
+    product.contentSections = product.contentSections.map(
+      (section) =>
+        ({
+          ...section,
+          image: toPublicMediaPath(section.image),
+        }) satisfies ApiSection,
+    );
+  }
+
+  if (Array.isArray(product.stackedSections)) {
+    product.stackedSections = product.stackedSections.map(
+      (section) =>
+        ({
+          ...section,
+          image: toPublicMediaPath(section.image),
+        }) satisfies ApiSection,
+    );
+  }
+
+  if (Array.isArray(product.bottomStackedSections)) {
+    product.bottomStackedSections = product.bottomStackedSections.map(
+      (section) =>
+        ({
+          ...section,
+          image: toPublicMediaPath(section.image),
+        }) satisfies ApiSection,
+    );
+  }
+
+  if (Array.isArray(product.comparisonSections)) {
+    product.comparisonSections = product.comparisonSections.map(
+      (section) =>
+        ({
+          ...section,
+          before: toPublicMediaPath(section.before),
+          after: toPublicMediaPath(section.after),
+        }) satisfies ApiComparisonSection,
+    );
+  }
+
+  if (product.experienceSection) {
+    product.experienceSection = {
+      ...product.experienceSection,
+      image: toPublicMediaPath(product.experienceSection.image),
+    } satisfies ApiExperienceSection;
   }
 
   if (Array.isArray(product.gallery)) {
