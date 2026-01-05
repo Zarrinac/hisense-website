@@ -3,7 +3,7 @@ import type { Locale } from '@/i18n/routing';
 // Navigation structure and localized submenu copy used by Header.
 
 export const NAV_ITEMS = [
-  { key: 'tvAudio', href: '/tv-hisense' },
+  { key: 'tvAudio', href: '/products/tvs' },
   { key: 'airConditioner', href: '/rac' },
   { key: 'homeAppliances', href: '/refrigerator' },
   { key: 'dcode', href: '/led-dcode' },
@@ -34,7 +34,7 @@ export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
         en: 'Mini-LED, ULED, and Laser TV lines for a world-class viewing experience.',
         fa: 'تلویزیون‌های Mini-LED، ULED و Laser برای تجربه تصویری جهانی.',
       },
-      href: '/tv-hisense',
+      href: '/products/tvs',
     },
   ],
   airConditioner: [
@@ -70,7 +70,7 @@ export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
         en: 'Steam-care washing machines with silent inverter motors.',
         fa: 'ماشین‌های لباسشویی با بخار ضدآلرژی و موتور اینورتر سایلنت.',
       },
-      href: '/washing-machine',
+      href: '/products/wms',
     },
   ],
   dcode: [

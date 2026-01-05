@@ -7,21 +7,24 @@ datasource db {
   provider = "postgresql"
 }
 
+enum ProductCategory {
+  TVS
+  WMS
+  RAC
+  CAC
+  REFRIGERATOR
+  TV_DCODE
+}
+
 model Product {
   id                    String   @id
   slug                  String   @unique
+  category              ProductCategory @default(TVS)
   sku                   String?
   series                String
   seriesLabel           String?
   size                  String?
   sizes                 String[] @default([])
-  panel                 String
-  resolution            String
-  refreshRate           String
-  os                    String
-  sound                 String
-  connectivity          String[] @default([])
-  tuner                 String
   extras                String[] @default([])
   imageUrl              String
   posterImageUrl        String?
@@ -41,6 +44,20 @@ model Product {
   updatedAt             DateTime @updatedAt
 
   copies ProductCopy[]
+  tvSpec TvSpec?
+}
+
+model TvSpec {
+  productId    String   @id
+  panel        String
+  resolution   String
+  refreshRate  String
+  os           String
+  sound        String
+  connectivity String[] @default([])
+  tuner        String
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model ProductCopy {

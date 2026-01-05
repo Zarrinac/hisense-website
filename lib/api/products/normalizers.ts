@@ -1,5 +1,6 @@
-import type { Prisma, Product, ProductCopy } from '@prisma/client';
+import type { Prisma, Product, ProductCopy, TvSpec } from '@prisma/client';
 import { TV_PRODUCTS } from '@/content/tvProducts';
+import { WM_PRODUCTS } from '@/content/WmProducts';
 import type {
   TvBanner,
   TvComparisonConfig,
@@ -7,6 +8,7 @@ import type {
   TvSectionConfig,
   TvSectionGroup,
 } from '@/types/tv';
+import type { WmProduct } from '@/types/wm';
 import type {
   ApiBanner,
   ApiComparisonSection,
@@ -19,6 +21,7 @@ import type {
   ApiSection,
   ApiSectionGroup,
 } from './types';
+import type { ProductCategory } from './categories';
 
 // Normalizes Prisma records and static TV content into the API-facing product shape.
 
@@ -224,29 +227,33 @@ const pickLocaleCopy = (copies: ProductCopy[], locale: ApiLocale): ApiCopy => {
   return fallbackCopy(locale, '');
 };
 
-export const normalizeDbProduct = (product: Product & { copies: ProductCopy[] }): ApiProduct => {
+type DbProduct = Product & { copies: ProductCopy[]; tvSpec?: TvSpec | null };
+
+export const normalizeDbProduct = (product: DbProduct): ApiProduct => {
   const copyByLocale: Record<ApiLocale, ApiCopy> = {
     en: pickLocaleCopy(product.copies, 'en'),
     fa: pickLocaleCopy(product.copies, 'fa'),
   };
 
   const slug = product.slug || product.id.toLowerCase();
+  const tvSpec = product.tvSpec;
 
   return {
     id: product.id,
     slug,
+    category: product.category,
     sku: product.sku,
     size: product.size,
     sizes: Array.isArray(product.sizes) ? product.sizes : [],
     series: product.series,
     seriesLabel: product.seriesLabel,
-    panel: product.panel,
-    resolution: product.resolution,
-    refreshRate: product.refreshRate,
-    os: product.os,
-    sound: product.sound,
-    connectivity: Array.isArray(product.connectivity) ? product.connectivity : [],
-    tuner: product.tuner,
+    panel: tvSpec?.panel ?? '',
+    resolution: tvSpec?.resolution ?? '',
+    refreshRate: tvSpec?.refreshRate ?? '',
+    os: tvSpec?.os ?? '',
+    sound: tvSpec?.sound ?? '',
+    connectivity: Array.isArray(tvSpec?.connectivity) ? (tvSpec?.connectivity ?? []) : [],
+    tuner: tvSpec?.tuner ?? '',
     extras: Array.isArray(product.extras) ? product.extras : [],
     imageUrl: product.imageUrl,
     posterImageUrl: product.posterImageUrl,
@@ -331,7 +338,7 @@ const normalizeBannerFromContent = (
   });
 };
 
-const buildDefaultSectionGroups = (product: TvProduct): TvSectionGroup[] => {
+const buildDefaultSectionGroups = (product: ContentProduct): TvSectionGroup[] => {
   const groups: TvSectionGroup[] = [];
   if (product.contentSections) {
     groups.push({ kind: 'content', sections: product.contentSections });
@@ -345,7 +352,13 @@ const buildDefaultSectionGroups = (product: TvProduct): TvSectionGroup[] => {
   return groups;
 };
 
-export const normalizeContentProduct = (product: TvProduct): ApiProduct => {
+type ContentProduct = TvProduct | WmProduct;
+
+export const normalizeContentProduct = (
+  product: ContentProduct,
+  category: ProductCategory = 'TVS',
+): ApiProduct => {
+  const tvFields = product as Partial<TvProduct>;
   const slug = product.id.toLowerCase();
   const bannerList =
     Array.isArray(product.banners) && product.banners.length > 0
@@ -365,22 +378,23 @@ export const normalizeContentProduct = (product: TvProduct): ApiProduct => {
   return {
     id: product.id,
     slug,
+    category,
     sku: product.sku,
-    size: product.size,
+    size: tvFields.size,
     sizes: Array.isArray(product.sizes) ? product.sizes : [],
     series: product.series,
     seriesLabel: product.seriesLabel,
-    panel: product.panel,
-    resolution: product.resolution,
-    refreshRate: product.refreshRate,
-    os: product.os,
-    sound: product.sound,
-    connectivity: product.connectivity,
-    tuner: product.tuner,
+    panel: typeof tvFields.panel === 'string' ? tvFields.panel : '',
+    resolution: typeof tvFields.resolution === 'string' ? tvFields.resolution : '',
+    refreshRate: typeof tvFields.refreshRate === 'string' ? tvFields.refreshRate : '',
+    os: typeof tvFields.os === 'string' ? tvFields.os : '',
+    sound: typeof tvFields.sound === 'string' ? tvFields.sound : '',
+    connectivity: Array.isArray(tvFields.connectivity) ? tvFields.connectivity : [],
+    tuner: typeof tvFields.tuner === 'string' ? tvFields.tuner : '',
     extras: product.extras,
     imageUrl: toSrc(product.image),
     posterImageUrl: product.posterImage ? toSrc(product.posterImage) : undefined,
-    heroVideoUrl: product.heroVideo,
+    heroVideoUrl: typeof tvFields.heroVideo === 'string' ? tvFields.heroVideo : undefined,
     gallery: Array.isArray(product.gallery) ? product.gallery.map(toSrc).filter(Boolean) : [],
     banners: bannerList
       .map((banner) => normalizeBannerFromContent(banner, toSrc(product.image)))
@@ -424,15 +438,24 @@ export const normalizeContentProduct = (product: TvProduct): ApiProduct => {
   };
 };
 
-export const FALLBACK_PRODUCTS: ApiProduct[] = TV_PRODUCTS.map(normalizeContentProduct);
+export const FALLBACK_PRODUCTS: ApiProduct[] = [
+  ...TV_PRODUCTS.map((product) => normalizeContentProduct(product, 'TVS')),
+  ...WM_PRODUCTS.map((product) => normalizeContentProduct(product, 'WMS')),
+];
 
-export const findFallbackProduct = (idOrSlug: string): ApiProduct | null =>
-  FALLBACK_PRODUCTS.find(
-    (product) =>
-      product.id.toLowerCase() === idOrSlug.toLowerCase() ||
-      product.slug.toLowerCase() === idOrSlug.toLowerCase(),
-  ) ?? null;
+export const findFallbackProduct = (
+  idOrSlug: string,
+  category?: ProductCategory,
+): ApiProduct | null => {
+  const normalized = idOrSlug.toLowerCase();
+  return (
+    FALLBACK_PRODUCTS.find(
+      (product) =>
+        (product.id.toLowerCase() === normalized || product.slug.toLowerCase() === normalized) &&
+        (!category || product.category === category),
+    ) ?? null
+  );
+};
 
-export const normalizeDbProducts = (
-  products: (Product & { copies: ProductCopy[] })[],
-): ApiProduct[] => products.map(normalizeDbProduct);
+export const normalizeDbProducts = (products: DbProduct[]): ApiProduct[] =>
+  products.map(normalizeDbProduct);

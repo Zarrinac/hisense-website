@@ -1,4 +1,6 @@
 // Shared product contract returned by the product API routes.
+import type { ProductCategory } from './categories';
+
 export type ApiLocale = 'en' | 'fa';
 
 export type ApiCopyBlock = {
@@ -55,6 +57,7 @@ export type ApiExperienceSection = {
 export type ApiProduct = {
   id: string;
   slug: string;
+  category: ProductCategory;
   sku?: string | null;
   size?: string | null;
   sizes: string[];
