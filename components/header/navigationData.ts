@@ -119,10 +119,18 @@ export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
       href: '/portal',
     },
     {
-      title: { en: 'Service & Repairs', fa: 'خدمات و تعمیرات' },
+      title: { en: 'Hisense Repair', fa: 'تعمیرکار هایسنس' },
       description: {
-        en: 'Book authorized service visits with ease.',
-        fa: 'بازدید سرویس مجاز را به‌سادگی رزرو کنید.',
+        en: 'Book official repair and service with certified technicians.',
+        fa: 'ثبت درخواست تعمیر و سرویس رسمی با تکنسین‌های آموزش‌دیده.',
+      },
+      href: '/hisense-repair',
+    },
+    {
+      title: { en: 'Contact us', fa: 'تماس با ما' },
+      description: {
+        en: 'Reach our team for service, warranty, or sales questions.',
+        fa: 'برای خدمات، گارانتی یا سوالات فروش با ما در ارتباط باشید.',
       },
       href: '/contact-us',
     },

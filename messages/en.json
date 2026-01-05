@@ -134,6 +134,7 @@
       "industrialVentilation": "Industrial HVAC",
       "faq": "FAQ",
       "warranty": "Warranty conditions",
+      "hisenseRepair": "Hisense repair",
       "dealerPortal": "Dealer portal",
       "dealerList": "Dealer list",
       "becomeDealer": "Become a dealer",
@@ -274,6 +275,11 @@
       "eyebrow": "Contact",
       "title": "Contact Hisense Iran",
       "description": "Reach our Tehran HQ, customer care lines, and regional teams for sales, installation, or partnership requests."
+    },
+    "hisenseRepair": {
+      "eyebrow": "Service",
+      "title": "Hisense repair technician",
+      "description": "Official Hisense repair service with certified technicians, genuine parts, and fast nationwide support."
     },
     "complaint": {
       "eyebrow": "Support",
