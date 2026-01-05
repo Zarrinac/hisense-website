@@ -31,6 +31,7 @@ const staticPaths = [
   '/washing-machine',
   '/about',
   '/contact-us',
+  '/hisense-repair',
   '/complaint',
   '/survey',
   '/faq',

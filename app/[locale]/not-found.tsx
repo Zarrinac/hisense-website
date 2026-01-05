@@ -60,7 +60,7 @@ export default async function NotFoundPage() {
               {t('actions.home')}
             </Link>
             <Link
-              href={`${homeHref}/contact`}
+              href={`${homeHref}/contact-us`}
               className="inline-flex w-full items-center gap-2 rounded-full border border-(--border-color) bg-white/70 px-5 py-3 text-sm font-semibold justify-center text-(--default-black-font) transition hover:-translate-y-0.5 hover:border-(--brand-color) hover:text-(--brand-color) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
             >
               {t('actions.contact')}

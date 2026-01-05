@@ -48,5 +48,6 @@ next-env.d.ts
 /public/images/
 /public/tv-banner/
 /public/banner/
+/public/contact-us/
 
 /app/generated/prisma
