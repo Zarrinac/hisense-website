@@ -38,11 +38,11 @@ const FOOTER_SECTIONS: Array<{
   {
     titleKey: 'products.title',
     linkKeys: [
-      { key: 'television', href: '/tv-hisense' },
       { key: 'ventilation', href: '/rac' },
       { key: 'industrialVentilation', href: '/cac' },
       { key: 'refrigerator', href: '/refrigerator' },
-      { key: 'washingMachine', href: '/washing-machine' },
+      { key: 'television', href: '/products/tvs' },
+      { key: 'washingMachine', href: '/products/wms' },
       { key: 'dcode', href: '/led-dcode' },
     ],
   },
