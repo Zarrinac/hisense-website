@@ -7,28 +7,34 @@ const loadProductSlugs = () => {
     require('ts-node/register/transpile-only');
     require('tsconfig-paths/register');
     const { TV_PRODUCTS } = require(path.join(__dirname, 'content', 'tvProducts.ts'));
-    if (!Array.isArray(TV_PRODUCTS)) return [];
-    return Array.from(
-      new Set(
-        TV_PRODUCTS.map((product) => (product?.slug ?? product?.id ?? '').toString().trim())
-          .filter(Boolean)
-          .map((value) => value.toLowerCase()),
-      ),
-    );
+    const { WM_PRODUCTS } = require(path.join(__dirname, 'content', 'WmProducts.ts'));
+    const normalize = (products) =>
+      Array.from(
+        new Set(
+          (Array.isArray(products) ? products : [])
+            .map((product) => (product?.slug ?? product?.id ?? '').toString().trim())
+            .filter(Boolean)
+            .map((value) => value.toLowerCase()),
+        ),
+      );
+    return {
+      tvs: normalize(TV_PRODUCTS),
+      wms: normalize(WM_PRODUCTS),
+    };
   } catch {
-    return [];
+    return { tvs: [], wms: [] };
   }
 };
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const locales = ['fa', 'en'];
 const staticPaths = [
-  '/tv-hisense',
+  '/products/tvs',
   '/rac',
   '/cac',
   '/refrigerator',
   '/led-dcode',
-  '/washing-machine',
+  '/products/wms',
   '/about',
   '/contact-us',
   '/hisense-repair',
@@ -38,7 +44,11 @@ const staticPaths = [
   '/warranty-and-guarantee',
   '/portal',
 ];
-const productPaths = loadProductSlugs().map((slug) => `/tv-hisense/${slug}`);
+const { tvs: tvSlugs, wms: wmSlugs } = loadProductSlugs();
+const productPaths = [
+  ...tvSlugs.map((slug) => `/products/tvs/${slug}`),
+  ...wmSlugs.map((slug) => `/products/wms/${slug}`),
+];
 
 module.exports = {
   siteUrl,

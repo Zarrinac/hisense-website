@@ -56,7 +56,7 @@ export default function MobileNavPanel({
   const tvModelLinks = TV_PRODUCTS.map((product) => ({
     id: product.id.toLowerCase(),
     name: product.copy?.[localeKey]?.name ?? product.id,
-    href: toLocalePath(`/tv-hisense/${product.id.toLowerCase()}`),
+    href: toLocalePath(`/products/tvs/${product.id.toLowerCase()}`),
   }));
 
   return (
@@ -123,7 +123,7 @@ export default function MobileNavPanel({
                   >
                     {subItem.title[localeKey]}
                   </Link>
-                  {subItem.href === '/tv-hisense' && tvModelLinks.length > 0 ? (
+                  {subItem.href === '/products/tvs' && tvModelLinks.length > 0 ? (
                     <ul className="mt-2 space-y-2 text-sm text-(--text-muted-color)">
                       {tvModelLinks.map((model) => (
                         <li key={model.id}>

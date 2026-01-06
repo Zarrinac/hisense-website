@@ -4,6 +4,7 @@ import { prisma } from '@/lib/db';
 import { useLocalContent } from '@/lib/contentSource';
 import { findFallbackProduct, normalizeDbProduct } from '@/lib/api/products/normalizers';
 import { mapProductMedia } from '@/lib/api/products/mediaPaths';
+import { categoryFromSlug, type ProductCategory } from '@/lib/api/products/categories';
 
 type DataSource = 'database' | 'fallback';
 
@@ -11,14 +12,15 @@ const DEFAULT_HEADERS = {
   'Cache-Control': 's-maxage=60, stale-while-revalidate=300',
 };
 
-const loadProduct = async (idOrSlug: string) => {
+const loadProduct = async (idOrSlug: string, category?: ProductCategory) => {
   if (!useLocalContent && prisma) {
     try {
       const product = await prisma.product.findFirst({
         where: {
           OR: [{ id: idOrSlug }, { slug: idOrSlug }],
+          ...(category ? { category } : {}),
         },
-        include: { copies: true },
+        include: { copies: true, tvSpec: true },
       });
 
       if (product) {
@@ -29,7 +31,7 @@ const loadProduct = async (idOrSlug: string) => {
     }
   }
 
-  const fallback = findFallbackProduct(idOrSlug);
+  const fallback = findFallbackProduct(idOrSlug, category);
   if (fallback) {
     return { product: fallback, source: 'fallback' as DataSource };
   }
@@ -37,10 +39,11 @@ const loadProduct = async (idOrSlug: string) => {
   return { product: null, source: 'fallback' as DataSource };
 };
 
-export async function GET(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const resolved = await params;
   const idOrSlug = resolved.id;
-  const { product, source } = await loadProduct(idOrSlug);
+  const category = categoryFromSlug(new URL(request.url).searchParams.get('category'));
+  const { product, source } = await loadProduct(idOrSlug, category);
 
   if (!product) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });

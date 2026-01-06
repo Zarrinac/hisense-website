@@ -82,7 +82,16 @@ async function seed() {
   if (!Array.isArray(TV_PRODUCTS)) {
     throw new Error('TV_PRODUCTS content module did not export a product array');
   }
-  const normalized = TV_PRODUCTS.map(normalizeContentProduct);
+  const wmModuleUnknown = (await import(
+    path.resolve(process.cwd(), 'content/WmProducts.ts')
+  )) as unknown;
+  const { WM_PRODUCTS } = wmModuleUnknown as { WM_PRODUCTS: unknown };
+  if (!Array.isArray(WM_PRODUCTS)) {
+    throw new Error('WM_PRODUCTS content module did not export a product array');
+  }
+  const normalizedTv = TV_PRODUCTS.map((product) => normalizeContentProduct(product, 'TVS'));
+  const normalizedWm = WM_PRODUCTS.map((product) => normalizeContentProduct(product, 'WMS'));
+  const normalized = [...normalizedTv, ...normalizedWm];
 
   console.log(`Seeding ${normalized.length} products...`);
 
@@ -90,22 +99,28 @@ async function seed() {
     const sizes = toStringArray(product.sizes);
     const connectivity = toStringArray(product.connectivity);
     const extras = toStringArray(product.extras);
+    const tvSpecData =
+      product.category === 'TVS'
+        ? {
+            panel: product.panel,
+            resolution: product.resolution,
+            refreshRate: product.refreshRate,
+            os: product.os,
+            sound: product.sound,
+            connectivity,
+            tuner: product.tuner,
+          }
+        : null;
 
     const createData: Prisma.ProductCreateInput = {
       id: product.id,
       slug: toSlug(product.id, product.slug),
+      category: product.category,
       sku: product.sku ?? null,
       series: product.series,
       seriesLabel: product.seriesLabel ?? null,
       size: product.size ?? null,
       sizes,
-      panel: product.panel,
-      resolution: product.resolution,
-      refreshRate: product.refreshRate,
-      os: product.os,
-      sound: product.sound,
-      connectivity,
-      tuner: product.tuner,
       extras,
       imageUrl: product.imageUrl,
       posterImageUrl: product.posterImageUrl ?? null,
@@ -121,22 +136,17 @@ async function seed() {
       experienceSection: toJsonField(product.experienceSection),
       badges: toJsonField(product.badges ?? []),
       specs: toJsonField(product.specs ?? {}),
+      ...(tvSpecData ? { tvSpec: { create: tvSpecData } } : {}),
     };
 
     const updateData: Prisma.ProductUpdateInput = {
       slug: createData.slug,
+      category: createData.category,
       sku: createData.sku ?? null,
       series: createData.series,
       seriesLabel: createData.seriesLabel ?? null,
       size: createData.size ?? null,
       sizes: { set: sizes },
-      panel: createData.panel,
-      resolution: createData.resolution,
-      refreshRate: createData.refreshRate,
-      os: createData.os,
-      sound: createData.sound,
-      connectivity: { set: connectivity },
-      tuner: createData.tuner,
       extras: { set: extras },
       imageUrl: createData.imageUrl,
       posterImageUrl: createData.posterImageUrl ?? null,
@@ -152,6 +162,16 @@ async function seed() {
       experienceSection: toJsonField(product.experienceSection),
       badges: toJsonField(product.badges ?? []),
       specs: toJsonField(product.specs ?? {}),
+      ...(tvSpecData
+        ? {
+            tvSpec: {
+              upsert: {
+                update: tvSpecData,
+                create: tvSpecData,
+              },
+            },
+          }
+        : {}),
     };
 
     console.log(`- upserting ${product.id}`);

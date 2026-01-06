@@ -57,9 +57,9 @@ This document captures how the app is wired today so we can keep it maintainable
 - Root (`app/page.tsx`) redirects to the default locale (`fa`).
 - `app/[locale]/layout.tsx` guards locale validity, wires `next-intl`, renders `<Header/>` + `<Footer/>`, sets page metadata and structured data.
 - Home (`app/[locale]/page.tsx`): hero carousel plus localized category spotlights that deep-link into product families.
-- TV catalog (`app/[locale]/tv-hisense/page.tsx`): builds slides and product cards from `TV_PRODUCTS`.
-- TV detail (`app/[locale]/tv-hisense/[productId]/page.tsx`): resolves a product by ID, hydrates copy blocks into sections (hero, feature cards, comparisons, specs) and breadcrumbs, supports RTL/LTR layouts.
-- Other routes (`/rac`, `/cac`, `/refrigerator`, `/washing-machine`, `/led-dcode`, `/faq`, `/warranty-and-guarantee`, `/contact-us`, `/portal`, `/complaint`, `/survey`) are scaffolded via `createRoutePage` and currently render an under-construction experience.
+- TV catalog (`app/[locale]/products/[category]/page.tsx` with `category=tvs`): builds slides and product cards from `TV_PRODUCTS`.
+- Product detail (`app/[locale]/products/[category]/[productId]/page.tsx`): resolves a product by ID, hydrates copy blocks into sections (hero, feature cards, comparisons, specs) and breadcrumbs, supports RTL/LTR layouts.
+- Other routes (`/rac`, `/cac`, `/refrigerator`, `/led-dcode`, `/faq`, `/warranty-and-guarantee`, `/contact-us`, `/portal`, `/complaint`, `/survey`) are scaffolded via `createRoutePage` and currently render an under-construction experience.
 - Not-found: locale-aware 404 with brand logos at `app/[locale]/not-found.tsx` (re-exported as `app/not-found.tsx`).
 
 ## Internationalization

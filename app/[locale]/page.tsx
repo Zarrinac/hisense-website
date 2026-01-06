@@ -11,9 +11,9 @@ const bannerAsset = (path: string) => mediaUrl(`/banner/${path}`);
 // Locale-aware homepage renders the hero carousel and localized category spotlights.
 
 const SPOTLIGHT_SOURCES = [
-  { id: 'tv', href: '/tv-hisense', image: bannerAsset('Fix-Banner-02-Back.jpg') },
+  { id: 'tv', href: '/products/tvs', image: bannerAsset('Fix-Banner-02-Back.jpg') },
   { id: 'refrigerator', href: '/refrigerator', image: bannerAsset('Fix-Banner-03-Back.jpg') },
-  { id: 'washingMachine', href: '/washing-machine', image: bannerAsset('Fix-Banner-04-Back.jpg') },
+  { id: 'washingMachine', href: '/products/wms', image: bannerAsset('Fix-Banner-04-Back.jpg') },
   { id: 'rac', href: '/rac', image: bannerAsset('Fix-Banner-05-Back.jpg') },
 ] as const satisfies ReadonlyArray<Pick<SpotlightCard, 'id' | 'href' | 'image'>>;
 

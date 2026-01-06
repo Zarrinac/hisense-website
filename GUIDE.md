@@ -38,8 +38,8 @@ This is a simplified, reader-friendly overview of how to run and understand the 
 - Locale layout: `app/[locale]/layout.tsx` loads translations, header/footer, metadata.
 - Key pages:
   - Home: `app/[locale]/page.tsx`
-  - TV catalog: `app/[locale]/tv-hisense/page.tsx`
-  - TV detail: `app/[locale]/tv-hisense/[productId]/page.tsx`
+  - TV catalog: `app/[locale]/products/[category]/page.tsx` (category `tvs`)
+  - Product detail: `app/[locale]/products/[category]/[productId]/page.tsx`
   - Other routes (rac, cac, refrigerator, washing-machine, led-dcode, faq, warranty-and-guarantee, contact-us, portal, complaint, survey) currently show an under-construction page via `createRoutePage`.
 - 404: `app/[locale]/not-found.tsx` (re-exported at `app/not-found.tsx`).
 

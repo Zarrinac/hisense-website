@@ -24,7 +24,7 @@ export default function createRoutePage(routeKey: string, options?: RoutePageOpt
       { label: underConstructionTranslations('actions.backHome'), href: `/${locale}` },
       {
         label: underConstructionTranslations('actions.viewProducts'),
-        href: `/${locale}/tv-hisense`,
+        href: `/${locale}/products/tvs`,
       },
       {
         label: underConstructionTranslations('actions.contact'),
