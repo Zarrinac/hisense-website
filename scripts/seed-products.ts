@@ -6,6 +6,8 @@ import { Prisma, PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
+import type { TvProduct } from '@/types/tv';
+import type { WmProduct } from '@/types/wm';
 
 const envFiles = ['.env.local', '.env', '.env.production'];
 for (const file of envFiles) {
@@ -71,6 +73,16 @@ const registerAssetHooks = () => {
   });
 };
 
+type ContentProduct = TvProduct | WmProduct;
+
+const isContentProduct = (value: unknown): value is ContentProduct => {
+  if (!value || typeof value !== 'object') return false;
+  const record = value as { id?: unknown; copy?: unknown };
+  if (typeof record.id !== 'string') return false;
+  if (!record.copy || typeof record.copy !== 'object') return false;
+  return true;
+};
+
 async function seed() {
   registerModuleStubs();
   registerAssetHooks();
@@ -82,6 +94,10 @@ async function seed() {
   if (!Array.isArray(TV_PRODUCTS)) {
     throw new Error('TV_PRODUCTS content module did not export a product array');
   }
+  const tvProducts = TV_PRODUCTS.filter(isContentProduct);
+  if (tvProducts.length !== TV_PRODUCTS.length) {
+    throw new Error('TV_PRODUCTS contains invalid product entries');
+  }
   const wmModuleUnknown = (await import(
     path.resolve(process.cwd(), 'content/WmProducts.ts')
   )) as unknown;
@@ -89,8 +105,12 @@ async function seed() {
   if (!Array.isArray(WM_PRODUCTS)) {
     throw new Error('WM_PRODUCTS content module did not export a product array');
   }
-  const normalizedTv = TV_PRODUCTS.map((product) => normalizeContentProduct(product, 'TVS'));
-  const normalizedWm = WM_PRODUCTS.map((product) => normalizeContentProduct(product, 'WMS'));
+  const wmProducts = WM_PRODUCTS.filter(isContentProduct);
+  if (wmProducts.length !== WM_PRODUCTS.length) {
+    throw new Error('WM_PRODUCTS contains invalid product entries');
+  }
+  const normalizedTv = tvProducts.map((product) => normalizeContentProduct(product, 'TVS'));
+  const normalizedWm = wmProducts.map((product) => normalizeContentProduct(product, 'WMS'));
   const normalized = [...normalizedTv, ...normalizedWm];
 
   console.log(`Seeding ${normalized.length} products...`);
