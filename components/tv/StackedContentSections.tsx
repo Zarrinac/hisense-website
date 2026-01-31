@@ -15,12 +15,18 @@ type StackedContentSectionsProps = {
   sections: StackedSectionData[];
   isRTL?: boolean;
   textFirst?: boolean;
+  className?: string;
+  cardClassName?: string;
+  imageClassName?: string;
 };
 
 export default function StackedContentSections({
   sections,
   isRTL = false,
   textFirst = false,
+  className,
+  cardClassName,
+  imageClassName,
 }: StackedContentSectionsProps) {
   const refs = useRef<(HTMLDivElement | null)[]>([]);
   const [visible, setVisible] = useState<boolean[]>(() => sections.map(() => false));
@@ -53,8 +59,18 @@ export default function StackedContentSections({
     };
   }, [sections.length]);
 
+  const containerClassName = className
+    ? `w-full mx-auto space-y-12 max-w-360 ${className}`
+    : 'w-full mx-auto space-y-12 max-w-360';
+  const resolvedCardClassName = cardClassName
+    ? `overflow-hidden rounded-3xl ${cardClassName}`
+    : 'overflow-hidden rounded-3xl';
+  const resolvedImageClassName = imageClassName
+    ? `object-cover rounded-3xl ${imageClassName}`
+    : 'object-cover rounded-3xl';
+
   return (
-    <div className="w-full mx-auto space-y-12 max-w-360" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className={containerClassName} dir={isRTL ? 'rtl' : 'ltr'}>
       {sections.map((section, idx) => {
         const show = visible[idx];
         const textBlock = (
@@ -88,7 +104,7 @@ export default function StackedContentSections({
                   alt={section.title}
                   fill
                   sizes="(min-width: 1024px) 80vw, 100vw"
-                  className="object-cover rounded-3xl"
+                  className={resolvedImageClassName}
                   priority={idx === 0}
                 />
               );
@@ -103,7 +119,7 @@ export default function StackedContentSections({
             ref={(el) => {
               refs.current[idx] = el;
             }}
-            className="overflow-hidden rounded-3xl"
+            className={resolvedCardClassName}
           >
             {textFirst ? (
               <>

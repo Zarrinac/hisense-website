@@ -48,7 +48,22 @@ export type CopyBlockKey =
   | 'selfDiagnostic'
   | 'durableInverter'
   | 'quickWashDry'
-  | 'lintClean';
+  | 'lintClean'
+  | 'premiumFlatDoor'
+  | 'myFreshChoice'
+  | 'tripleZone'
+  | 'bigCapacity'
+  | 'metalGlideDrawers'
+  | 'metalCooling'
+  | 'adjustableShelves'
+  | 'waterDispenser'
+  | 'inverterTechnology'
+  | 'preciseTempControl'
+  | 'metalRecessedHandle'
+  | 'bigDoorBalcony'
+  | 'biggerDrawers'
+  | 'superCool'
+  | 'doorAlarm';
 
 export type CopyBlock = {
   title?: string;

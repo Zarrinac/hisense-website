@@ -76,7 +76,7 @@ export default function OverlayContentSections({
               </div>
 
               <div
-                className={`relative overflow-hidden aspect-video w-full rounded-3xl transition-all duration-900 ease-out lg:aspect-21/9 lg:min-h-[420px] ${
+                className={`relative overflow-hidden aspect-video w-full rounded-3xl transition-all duration-900 ease-out lg:aspect-21/9 lg:min-h-105 ${
                   show ? 'opacity-100 translate-y-0' : `opacity-0 ${textOffset}`
                 }`}
               >
@@ -96,7 +96,7 @@ export default function OverlayContentSections({
                   }`}
                 >
                   <div
-                    className={`max-w-[420px] space-y-4 text-white drop-shadow-[0_14px_32px_rgba(0,0,0,0.65)] transition-all duration-900 ease-out ${
+                    className={`max-w-105 space-y-4 text-white drop-shadow-[0_14px_32px_rgba(0,0,0,0.65)] transition-all duration-900 ease-out ${
                       show
                         ? 'opacity-100 translate-y-0 translate-x-0'
                         : `opacity-0 translate-y-4 ${textOffset}`
