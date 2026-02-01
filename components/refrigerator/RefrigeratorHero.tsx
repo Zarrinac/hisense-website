@@ -43,14 +43,14 @@ export default function RefrigeratorHero({
 
         <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
           <div>
-            <div className="relative w-full aspect-3/4 rounded-3xl bg-[linear-gradient(135deg,#fafafa,#eef1f4)] shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
+            <div className="relative w-full aspect-218/149 rounded-3xl bg-[linear-gradient(135deg,#fafafa,#eef1f4)] shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
               {activeImage && (
                 <Image
                   src={activeImage}
                   alt={productName}
                   fill
                   sizes="(min-width: 1024px) 48vw, 90vw"
-                  className="object-contain p-3 sm:p-4 md:p-5"
+                  className="object-contain p-2 sm:p-3 md:p-4"
                   priority
                 />
               )}

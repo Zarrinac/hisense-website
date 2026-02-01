@@ -42,6 +42,11 @@ const COPY_BLOCK_KEYS: CopyBlockKey[] = [
   'biggerDrawers',
   'superCool',
   'doorAlarm',
+  'iceWaterDispenser',
+  'independentZones',
+  'selfClosingSystem',
+  'multiAirFlow',
+  'digitalSensors',
 ];
 
 const COPY_BLOCK_KEYS_SET = new Set(COPY_BLOCK_KEYS);

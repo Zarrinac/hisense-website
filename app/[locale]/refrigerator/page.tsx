@@ -14,15 +14,32 @@ const HERO_BANNERS = {
   mobile: bannerAsset('refrigerator-no-1-mob.webp'),
 };
 
+type ProductTitle = Partial<Record<'en' | 'fa', string>>;
+
+type RefrigeratorProduct = {
+  id: string;
+  label: string;
+  image: string;
+  title?: string | ProductTitle;
+};
+
 const REFRIGERATOR_PRODUCTS = [
-  { id: 'sbs-650', label: 'SBS-650', image: productAsset('sbs-650/product_image_1.png') },
+  {
+    id: 'sbs-650',
+    label: 'SBS-650',
+    image: productAsset('sbs-650/Sbs-650-card.png'),
+    title: {
+      fa: 'یخچال فریزر ساید بای ساید 650',
+      en: 'Side-by-Side Refrigerator 650',
+    },
+  },
   { id: 'rft-560', label: 'RFT-560', image: productAsset('rft-560/new-image-66c2e70071a8e.png') },
   { id: 'rfc500', label: 'RFC500', image: productAsset('rfc-500/new-image-66c2e70071a8e.png') },
   { id: 'rfc300', label: 'RFC300', image: productAsset('rfc-300/bd_96_product_image_1_1.png') },
   { id: 'twin270-370', label: 'Twin 270-370', image: bannerAsset('refrigerator-no-2.webp') },
   { id: 'fc-310', label: 'FC-310', image: productAsset('fc-310/product_image_1.png') },
   { id: 'fc-210', label: 'FC-210', image: productAsset('fc-210/product_image_1.jpg') },
-] as const;
+] satisfies readonly RefrigeratorProduct[];
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -111,11 +128,10 @@ export default async function RefrigeratorPage() {
                   {product.label}
                 </p>
                 <h3 className="text-lg font-bold text-(--default-black-font) sm:text-xl">
-                  {product.label}
+                  {typeof product.title === 'object'
+                    ? (product.title?.[locale as keyof ProductTitle] ?? product.label)
+                    : (product.title ?? product.label)}
                 </h3>
-                <p className="text-sm text-(--text-muted-color)">
-                  {routeTranslations('description')}
-                </p>
               </div>
             </Link>
           ))}
