@@ -51,3 +51,7 @@ next-env.d.ts
 /public/contact-us/
 
 /app/generated/prisma
+
+
+# temp files
+/temp-files

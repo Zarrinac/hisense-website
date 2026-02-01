@@ -63,7 +63,12 @@ export type CopyBlockKey =
   | 'bigDoorBalcony'
   | 'biggerDrawers'
   | 'superCool'
-  | 'doorAlarm';
+  | 'doorAlarm'
+  | 'iceWaterDispenser'
+  | 'independentZones'
+  | 'selfClosingSystem'
+  | 'multiAirFlow'
+  | 'digitalSensors';
 
 export type CopyBlock = {
   title?: string;
