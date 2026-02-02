@@ -46,7 +46,6 @@ export type CopyBlockKey =
   | 'allergySteam'
   | 'stains'
   | 'selfDiagnostic'
-  | 'durableInverter'
   | 'quickWashDry'
   | 'lintClean'
   | 'premiumFlatDoor'
@@ -68,7 +67,18 @@ export type CopyBlockKey =
   | 'independentZones'
   | 'selfClosingSystem'
   | 'multiAirFlow'
-  | 'digitalSensors';
+  | 'digitalSensors'
+  | 'sleekWaterDispenser'
+  | 'durableInverter'
+  | 'totalNoFrost'
+  | 'largeCrisperPlus'
+  | 'premiumDesign'
+  | 'counterDepth'
+  | 'freshZone'
+  | 'removableTwistIceMaker'
+  | 'electronicTouchControl'
+  | 'softLedLighting'
+  | 'superFreeze';
 
 export type CopyBlock = {
   title?: string;
@@ -133,6 +143,8 @@ export type TvProduct = {
   image: ImageSource;
   heroVideo?: string;
   posterImage?: ImageSource;
+  topBanner?: ImageSource;
+  availableColors?: Partial<Record<Locale, string[]>>;
   gallery?: ImageSource[];
   contentSections?: TvSectionConfig[];
   stackedSections?: TvSectionConfig[];

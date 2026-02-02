@@ -42,6 +42,54 @@ const sbs650FeatureCards = [
   },
 ];
 
+const rft560FeatureCards = [
+  {
+    title: 'SLEEK WATER DISPENSER',
+    description: 'Sleek water dispenser',
+    image: logoAsset('rft-560/1-sleek-water-dispenser-icon.png'),
+  },
+  {
+    title: 'DURABLE INVERTER',
+    description: 'Durable inverter',
+    image: logoAsset('rft-560/2-durable-inverter-icon.png'),
+  },
+  {
+    title: 'TOTAL NO FROST',
+    description: 'Total no frost',
+    image: logoAsset('rft-560/3-total-no-frost-icon.png'),
+  },
+  {
+    title: 'MULTI AIR FLOW',
+    description: 'Multi air flow',
+    image: logoAsset('rft-560/5-multiair-flow.png'),
+  },
+  {
+    title: 'ELECTRONIC TOUCH CONTROL',
+    description: 'Electronic touch control',
+    image: logoAsset('rft-560/6-electronic-touch-control.png'),
+  },
+  {
+    title: 'SOFT LED LIGHTING',
+    description: 'Soft LED lighting',
+    image: logoAsset('rft-560/7-soft-led-lighting.png'),
+  },
+  {
+    title: 'SUPER FREEZE',
+    description: 'Super freeze',
+    image: logoAsset('rft-560/8-super-freeze.png'),
+  },
+];
+
+const rft560Hero = productAsset('rft-560/rft-560-2.png');
+const rft560Poster = productAsset('rft-560/rft-560-3.png');
+const rft560Gallery = [
+  productAsset('rft-560/rft-560-2.png'),
+  productAsset('rft-560/rft-560-3.png'),
+  productAsset('rft-560/rft-560-4.png'),
+  productAsset('rft-560/rft-560-5.png'),
+];
+const rft560Banner = productAsset('rft-560/top-page-banner.png');
+
 const sbs650CopyEn = {
   name: 'Hisense SBS-650 Side-by-Side Refrigerator',
   tagline: 'Ice & water dispenser, independent cooling, and multi-air flow freshness.',
@@ -124,6 +172,150 @@ const sbs650CopyFa = {
     digitalSensors: {
       title: 'سنسورهای دیجیتال',
       text: 'همیشه دقیق، همیشه بهینه. پنج سنسور دیجیتال دماییِ پربازده در یخچال تعبیه شده است که برای تنظیم هوشمند سرمایش طراحی شده‌اند.',
+    },
+  },
+};
+
+const rft560CopyEn = {
+  name: 'Hisense RFT-560 Top-Mount Refrigerator',
+  tagline: 'Space beyond imagination.',
+  description:
+    'RFT-560 combines generous capacity with precise cooling, advanced no-frost performance, and flexible storage to keep everything fresh and organized.',
+  highlights: [
+    'Sleek water dispenser integrated into the flat door.',
+    'Durable inverter cooling for stable temperatures and lower energy use.',
+    'Total No Frost circulation prevents ice build-up.',
+    'Fresh Zone keeps meat and fish at an ideal temperature.',
+    'Multi Air Flow distributes cold air evenly.',
+  ],
+  blocks: {
+    featureIntro: {
+      title: 'Space beyond imagination',
+      text: 'Top-Mount RT Series',
+    },
+    sleekWaterDispenser: {
+      title: 'SLEEK WATER DISPENSER',
+      text: 'Our sleek water dispenser seamlessly integrates into the flat door of the refrigerator. Simply fill the water tank with fresh water and enjoy perfectly chilled water anytime.',
+    },
+    durableInverter: {
+      title: 'DURABLE INVERTER',
+      text: "Durable Inverter technology adjusts power as needed, keeping your food perfectly chilled while reducing energy consumption. This innovative system saves you money on energy bills and ensures quieter, more stable performance. Enjoy a whisper-quiet kitchen, reduced spending, and a refrigerator that's built to last.",
+    },
+    totalNoFrost: {
+      title: 'TOTAL NO FROST',
+      text: "More advanced than traditional frost-free systems, Hisense's innovative Total No Frost Technology circulates cold air throughout the fridge and freezer, preventing ice crystals from forming and eliminating the need for manual defrosting.",
+    },
+    bigCapacity: {
+      title: 'BIG CAPACITY',
+      text: 'Enjoy ample storage space in both the fridge and freezer, accommodating any shape or type of food. The doors open wide, providing a clear view of everything at a glance.',
+    },
+    largeCrisperPlus: {
+      title: 'LARGE CRISPER PLUS',
+      text: 'The deeper and wider crisper provides ample space to store large quantities of groceries, allowing you to take the supermarket home.',
+    },
+    premiumDesign: {
+      title: 'PREMIUM DESIGN',
+      text: 'The premium door and handle, along with the inox panel, perfectly complement this series of refrigerators. They offer a high-quality texture, are easy to clean, and fit seamlessly into any kitchen.',
+    },
+    counterDepth: {
+      title: 'COUNTER DEPTH',
+      text: 'The new design of this series, at 600 mm, ensures a perfect fit in your kitchen while offering plenty of flexible storage.',
+    },
+    freshZone: {
+      title: 'FRESH ZONE',
+      text: "A separate zone in the upper fridge maintains a constant critical temperature and ideal humidity. This lower temperature zone keeps fish and meat fresh and hygienic for longer, ensuring they are perfectly preserved until it's time to cook.",
+    },
+    removableTwistIceMaker: {
+      title: 'REMOVABLE TWIST ICE MAKER',
+      text: 'The detachable Hisense twist ice maker is the perfect accessory for all your small-scale needs. The simple twist feature makes removing the ice from the mold incredibly simple and the dedicated container makes it easy to store.',
+    },
+    multiAirFlow: {
+      title: 'MULTI AIR FLOW',
+      text: 'The Multi Air Flow System ensures even distribution of cold air, maintaining an optimal temperature throughout the fridge freezer. This keeps food perfectly chilled, no matter where it is placed.',
+    },
+    electronicTouchControl: {
+      title: 'ELECTRONIC TOUCH CONTROL',
+      text: "This user-friendly control lets you easily set the fridge or freezer temperature to suit your food needs. It's clear, easy to reach, and simple to use.",
+    },
+    softLedLighting: {
+      title: 'SOFT LED LIGHTING',
+      text: "Illuminate every corner with soft, cool light to help you quickly find food items. The cold light doesn't raise the internal temperature and is environmentally friendly.",
+    },
+    superFreeze: {
+      title: 'SUPER FREEZE',
+      text: 'Super Freeze rapidly lowers the freezer temperature, freezing your food faster than usual. This helps lock in the vitamins and nutritional content of food, preserving freshness like when you first bought it and extending the shelf life of your food.',
+    },
+  },
+};
+
+const rft560CopyFa = {
+  name: 'یخچال فریزر هایسنس RFT-560',
+  tagline: 'فضایی فراتر از تصور.',
+  description:
+    'RFT-560 با ظرفیت بالا، سرمایش دقیق، عملکرد بدون برفک و فضای ذخیره‌سازی منعطف، تازگی و نظم مواد غذایی را حفظ می‌کند.',
+  highlights: [
+    'آبریز شیک یکپارچه با درِ تخت.',
+    'فناوری اینورتر بادوام با مصرف انرژی کمتر.',
+    'سیستم Total No Frost برای جلوگیری از برفک.',
+    'ناحیه Fresh Zone برای حفظ تازگی گوشت و ماهی.',
+    'جریان هوای چندگانه برای سرمایش یکنواخت.',
+  ],
+  blocks: {
+    featureIntro: {
+      title: 'فضایی فراتر از تصور',
+      text: 'سری RT فریزر بالا',
+    },
+    sleekWaterDispenser: {
+      title: 'آبریز شیک',
+      text: 'آبریز شیک به‌صورت یکپارچه در درِ تخت یخچال ادغام شده است. کافی است مخزن را با آب تازه پر کنید تا هر زمان از آب خنک لذت ببرید.',
+    },
+    durableInverter: {
+      title: 'اینورتر بادوام',
+      text: 'فناوری اینورتر بادوام توان را متناسب با نیاز تنظیم می‌کند تا مواد غذایی کاملاً خنک بمانند و مصرف انرژی کاهش یابد. این سیستم نوآورانه هزینه برق را کم کرده و عملکردی آرام‌تر و پایدارتر فراهم می‌کند. نتیجه‌اش آشپزخانه‌ای کم‌صدا، هزینه کمتر و یخچالی ماندگار است.',
+    },
+    totalNoFrost: {
+      title: 'بدون برفک کامل',
+      text: 'فناوری نوآورانه Total No Frost هایسنس، هوای سرد را در یخچال و فریزر به گردش درمی‌آورد و از تشکیل کریستال‌های یخ جلوگیری می‌کند؛ بنابراین نیازی به برفک‌زدایی دستی نیست.',
+    },
+    bigCapacity: {
+      title: 'ظرفیت بالا',
+      text: 'فضای ذخیره‌سازی گسترده در یخچال و فریزر، برای هر نوع مواد غذایی. درها به‌طور کامل باز می‌شوند تا همه چیز را یکجا ببینید.',
+    },
+    largeCrisperPlus: {
+      title: 'کشوی بزرگ Crisper Plus',
+      text: 'کشوی عمیق‌تر و عریض‌تر، فضای کافی برای نگهداری حجم زیاد مواد غذایی فراهم می‌کند تا خرید بزرگ را یکجا در خانه داشته باشید.',
+    },
+    premiumDesign: {
+      title: 'طراحی پریمیوم',
+      text: 'در و دستگیره پریمیوم به‌همراه پنل اینوکس، این سری یخچال‌ها را کامل می‌کنند؛ بافتی باکیفیت، تمیزکاری آسان و هماهنگی با هر آشپزخانه.',
+    },
+    counterDepth: {
+      title: 'عمق کانتری',
+      text: 'طراحی جدید این سری با عمق ۶۰۰ میلی‌متر، نصب کاملاً هم‌سطح با کابینت را ممکن می‌کند و در عین حال فضای ذخیره‌سازی منعطف فراهم می‌آورد.',
+    },
+    freshZone: {
+      title: 'ناحیه Fresh Zone',
+      text: 'ناحیه‌ای مجزا در بخش بالایی یخچال با دمای ثابت و رطوبت ایده‌آل. این ناحیه با دمای پایین‌تر، گوشت و ماهی را برای مدت بیشتری تازه و بهداشتی نگه می‌دارد تا زمان پخت کاملاً سالم بمانند.',
+    },
+    removableTwistIceMaker: {
+      title: 'یخ‌ساز پیچشی قابل جداسازی',
+      text: 'یخ‌ساز پیچشی قابل جداسازی هایسنس برای نیازهای روزمره ایده‌آل است. با پیچاندن ساده، یخ‌ها به‌راحتی جدا می‌شوند و محفظه اختصاصی نگهداری یخ را آسان می‌کند.',
+    },
+    multiAirFlow: {
+      title: 'جریان هوای چندگانه',
+      text: 'سیستم Multi Air Flow با توزیع یکنواخت هوای سرد، دمای بهینه را در سراسر یخچال‌فریزر حفظ می‌کند تا مواد غذایی در هر قفسه‌ای کاملاً خنک بمانند.',
+    },
+    electronicTouchControl: {
+      title: 'کنترل لمسی الکترونیکی',
+      text: 'کنترل کاربرپسند لمسی به شما امکان می‌دهد دمای یخچال یا فریزر را متناسب با نیازتان تنظیم کنید؛ واضح، در دسترس و ساده.',
+    },
+    softLedLighting: {
+      title: 'نورپردازی LED ملایم',
+      text: 'با نور ملایم و خنک LED تمام گوشه‌ها روشن می‌شوند تا سریع‌تر مواد غذایی را پیدا کنید. این نور دمای داخلی را بالا نمی‌برد و دوستدار محیط زیست است.',
+    },
+    superFreeze: {
+      title: 'انجماد سریع',
+      text: 'انجماد سریع دمای فریزر را به‌سرعت پایین می‌آورد تا مواد غذایی زودتر منجمد شوند. این کار ویتامین‌ها و ارزش غذایی را حفظ کرده و تازگی را مانند روز اول نگه می‌دارد.',
     },
   },
 };
@@ -268,7 +460,126 @@ export const REF_PRODUCTS: TvProduct[] = [
       fa: sbs650CopyFa,
     },
   },
-  createPlaceholder('rft-560', 'RFT-560', productAsset('rft-560/new-image-66c2e70071a8e.png')),
+  {
+    id: 'rft-560',
+    sku: 'RFT-560',
+    series: 'RFT-560',
+    seriesLabel: 'Top-Mount RT Series',
+    panel: '',
+    resolution: '',
+    refreshRate: '',
+    os: '',
+    sound: '',
+    connectivity: [],
+    tuner: '',
+    extras: ['Sleek Water Dispenser', 'Durable Inverter', 'Total No Frost'],
+    availableColors: {
+      en: ['White', 'Silver'],
+      fa: ['سفید', 'نقره‌ای'],
+    },
+    image: rft560Hero,
+    posterImage: rft560Poster,
+    topBanner: rft560Banner,
+    gallery: rft560Gallery,
+    featureCards: rft560FeatureCards,
+    sectionGroups: [
+      {
+        kind: 'content',
+        sections: [
+          {
+            image: productAsset('rft-560/1-sleek-water-dispenser.png'),
+            copyKey: 'sleekWaterDispenser',
+          },
+          { image: productAsset('rft-560/2-durable-inverter.png'), copyKey: 'durableInverter' },
+          { image: productAsset('rft-560/3-total-no-frost.png'), copyKey: 'totalNoFrost' },
+        ],
+      },
+      {
+        kind: 'overlay',
+        sections: [
+          { image: productAsset('rft-560/4-big-capacity.png'), copyKey: 'bigCapacity' },
+          { image: productAsset('rft-560/5-large-crisper-plus.png'), copyKey: 'largeCrisperPlus' },
+        ],
+      },
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: productAsset('rft-560/6-premium-design.png'), copyKey: 'premiumDesign' },
+        ],
+      },
+      {
+        kind: 'overlay',
+        sections: [{ image: productAsset('rft-560/7-counter-depth.png'), copyKey: 'counterDepth' }],
+      },
+      {
+        kind: 'content',
+        sections: [
+          { image: productAsset('rft-560/8-fresh-zone.png'), copyKey: 'freshZone' },
+          {
+            image: productAsset('rft-560/9-removeable-twist-ice-maker.jpg'),
+            copyKey: 'removableTwistIceMaker',
+          },
+          { image: productAsset('rft-560/10-multi-air-flow.png'), copyKey: 'multiAirFlow' },
+        ],
+      },
+      {
+        kind: 'overlay',
+        sections: [
+          {
+            image: productAsset('rft-560/11-electronic-touch-control.png'),
+            copyKey: 'electronicTouchControl',
+          },
+          { image: productAsset('rft-560/12-soft-led-lighting.png'), copyKey: 'softLedLighting' },
+          { image: productAsset('rft-560/13-super-freeze.png'), copyKey: 'superFreeze' },
+        ],
+      },
+    ],
+    specs: {
+      en: [
+        'Super Freeze',
+        'Water dispenser',
+        'No-frost system',
+        'Digital display',
+        'Adjustable shelves',
+        'Automatic defrost system',
+        'Self-diagnostic system',
+        'Multi-air flow circulation',
+        'Uniform cabinet lighting',
+        'Easy-access drawers',
+        'Height (cm): 185',
+        'Width (cm): 80',
+        'Depth (cm): 68',
+        'Net weight (kg): 79',
+        'Net fridge capacity (L): 431',
+        'Net freezer capacity (L): 117',
+        'Refrigerant: R600a',
+      ],
+      fa: [
+        'انجماد سریع',
+        'مجهز به آبریز',
+        'سیستم بدون برفک',
+        'صفحه نمایش دیجیتال',
+        'قابلیت جابجایی طبقات',
+        'سیستم یخ‌زدایی خودکار',
+        'سیستم عیب‌یابی خودکار',
+        'سیستم گردش هوا در طبقات',
+        'نور یکنواخت در فضای کابین یخچال',
+        'قابلیت دسترسی سریع و آسان به مواد غذایی در کشو',
+        'ارتفاع (cm): 185',
+        'پهنا (cm): 80',
+        'عمق (cm): 68',
+        'وزن خالص (kg): 79',
+        'ظرفیت خالص یخچال (L): 431',
+        'ظرفیت خالص فریزر (L): 117',
+        'گاز مبرد: R600a',
+      ],
+    },
+    copy: {
+      en: rft560CopyEn,
+      fa: rft560CopyFa,
+    },
+  },
   createPlaceholder('rfc500', 'RFC500', productAsset('rfc-500/new-image-66c2e70071a8e.png')),
   createPlaceholder('rfc300', 'RFC300', productAsset('rfc-300/bd_96_product_image_1_1.png')),
   createPlaceholder('twin270-370', 'Twin 270-370', productAsset('banner/refrigerator-no-2.webp')),

@@ -14,6 +14,7 @@ type RefrigeratorHeroProps = {
   seriesDisplay: string;
   tagline?: string;
   gallery: ImageSource[];
+  availableColors?: string[];
 };
 
 export default function RefrigeratorHero({
@@ -23,16 +24,18 @@ export default function RefrigeratorHero({
   seriesDisplay,
   tagline,
   gallery,
+  availableColors,
 }: RefrigeratorHeroProps) {
   const images = useMemo(
     () => (Array.isArray(gallery) && gallery.length > 0 ? gallery : []),
     [gallery],
   );
   const [activeIndex, setActiveIndex] = useState(0);
+  const [activeRatio, setActiveRatio] = useState('1 / 1');
   const activeImage = images[activeIndex] ?? images[0];
 
   return (
-    <section className="w-full">
+    <section className="w-full pt-6 sm:pt-8">
       <div className="w-full mx-auto max-w-360 px-6 sm:px-8 lg:px-10">
         <Breadcrumbs
           items={breadcrumbItems}
@@ -43,15 +46,21 @@ export default function RefrigeratorHero({
 
         <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
           <div>
-            <div className="relative w-full aspect-218/149 rounded-3xl bg-[linear-gradient(135deg,#fafafa,#eef1f4)] shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
+            <div
+              className="relative w-full overflow-hidden rounded-3xl bg-[linear-gradient(135deg,#fafafa,#eef1f4)] shadow-[0_18px_40px_rgba(15,23,42,0.12)]"
+              style={{ aspectRatio: activeRatio }}
+            >
               {activeImage && (
                 <Image
                   src={activeImage}
                   alt={productName}
                   fill
                   sizes="(min-width: 1024px) 48vw, 90vw"
-                  className="object-contain p-2 sm:p-3 md:p-4"
+                  className="object-contain"
                   priority
+                  onLoadingComplete={(image) =>
+                    setActiveRatio(`${image.naturalWidth} / ${image.naturalHeight}`)
+                  }
                 />
               )}
             </div>
@@ -91,6 +100,23 @@ export default function RefrigeratorHero({
             <h1 className="mt-3 text-3xl font-black leading-tight text-(--text-color) sm:text-4xl lg:text-5xl">
               {productName}
             </h1>
+            {availableColors && availableColors.length > 0 && (
+              <div className="mt-4 flex flex-wrap items-center gap-4">
+                <div className="inline-flex h-3 w-5 items-center justify-center rounded-full border border-(--brand-color) bg-(--brand-color)" />
+                <ul className="flex flex-wrap items-center gap-4 text-sm font-semibold text-(--text-muted-color) sm:text-base">
+                  {availableColors.map((color, idx) => (
+                    <li key={`${color}-${idx}`} className="flex items-center gap-2">
+                      <span>{color}</span>
+                      {idx < availableColors.length - 1 && (
+                        <span aria-hidden className="opacity-70">
+                          |
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             {tagline && (
               <p className="mt-4 text-base leading-relaxed text-(--text-muted-color) sm:text-lg">
                 {tagline}
