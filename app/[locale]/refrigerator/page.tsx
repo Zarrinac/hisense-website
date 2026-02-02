@@ -2,6 +2,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Visibility } from '@mui/icons-material';
 import { mediaUrl } from '@/lib/mediaUrl';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
@@ -33,7 +34,15 @@ const REFRIGERATOR_PRODUCTS = [
       en: 'Side-by-Side Refrigerator 650',
     },
   },
-  { id: 'rft-560', label: 'RFT-560', image: productAsset('rft-560/new-image-66c2e70071a8e.png') },
+  {
+    id: 'rft-560',
+    label: 'RFT-560',
+    image: productAsset('rft-560/rft-560-card.png'),
+    title: {
+      fa: 'یخچال فریزر بالا مدل 560',
+      en: 'Top-Mount Refrigerator 560',
+    },
+  },
   { id: 'rfc500', label: 'RFC500', image: productAsset('rfc-500/new-image-66c2e70071a8e.png') },
   { id: 'rfc300', label: 'RFC300', image: productAsset('rfc-300/bd_96_product_image_1_1.png') },
   { id: 'twin270-370', label: 'Twin 270-370', image: bannerAsset('refrigerator-no-2.webp') },
@@ -78,6 +87,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RefrigeratorPage() {
   const locale = await getLocale();
   const routeTranslations = await getTranslations('Routes.refrigerator');
+  const detailsLabel = (await getTranslations('TvHisensePage'))('actions.details');
 
   return (
     <div className="pb-16 space-y-12 lg:space-y-16 lg:pb-24">
@@ -121,6 +131,22 @@ export default async function RefrigeratorPage() {
                     className="object-contain transition duration-700 group-hover:scale-105"
                     sizes="(max-width: 1024px) 100vw, 33vw"
                   />
+                </div>
+                <div className="absolute inset-0 flex items-end justify-center bg-linear-to-t from-(--overlay-color) via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100">
+                  <div className="flex justify-center pb-5">
+                    <div className="relative inline-flex">
+                      <span className="pointer-events-none absolute -top-11 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-(--default-black-font) px-3 py-1 text-xs font-semibold text-white opacity-0 shadow-md transition duration-200 peer-hover:opacity-100 peer-focus-visible:opacity-100">
+                        {detailsLabel}
+                      </span>
+                      <span
+                        className="peer inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-(--default-black-font) shadow-sm ring-1 ring-(--border-color) transition duration-200 hover:bg-(--brand-color) hover:text-white hover:ring-(--brand-color) focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
+                        aria-label={detailsLabel}
+                      >
+                        <Visibility fontSize="small" className="h-5 w-5" aria-hidden="true" />
+                        <span className="sr-only">{detailsLabel}</span>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col flex-1 gap-2 p-6">

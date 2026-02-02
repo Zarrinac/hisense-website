@@ -1,14 +1,23 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import type { ContentSectionData } from '@/components/tv/ContentSections';
 import FeatureIntro from '@/components/tv/product-detail/FeatureIntro';
+import FeatureCardsGrid from '@/components/tv/product-detail/FeatureCardsGrid';
 import SectionGroupsRenderer, {
   type NormalizedSectionGroup,
 } from '@/components/tv/product-detail/SectionGroupsRenderer';
 import SpecsSection from '@/components/tv/product-detail/SpecsSection';
 import type { BreadcrumbItem } from '@/components/tv/product-detail/Breadcrumbs';
-import type { CopyBlock, CopyBlockKey, TvSectionConfig, TvSectionGroup } from '@/types/tv';
+import type {
+  CopyBlock,
+  CopyBlockKey,
+  ImageSource,
+  TvProduct,
+  TvSectionConfig,
+  TvSectionGroup,
+} from '@/types/tv';
 import RefrigeratorHero from '@/components/refrigerator/RefrigeratorHero';
 import { REF_PRODUCTS } from '@/content/RefProducts';
 import { routing } from '@/i18n/routing';
@@ -47,6 +56,17 @@ const COPY_BLOCK_KEYS: CopyBlockKey[] = [
   'selfClosingSystem',
   'multiAirFlow',
   'digitalSensors',
+  'sleekWaterDispenser',
+  'durableInverter',
+  'totalNoFrost',
+  'largeCrisperPlus',
+  'premiumDesign',
+  'counterDepth',
+  'freshZone',
+  'removableTwistIceMaker',
+  'electronicTouchControl',
+  'softLedLighting',
+  'superFreeze',
 ];
 
 const COPY_BLOCK_KEYS_SET = new Set(COPY_BLOCK_KEYS);
@@ -55,9 +75,32 @@ export const dynamic = 'force-dynamic';
 
 const resolveLocale = (locale?: string): 'fa' | 'en' => (locale === 'fa' ? 'fa' : 'en');
 
-type CopyBlocksInput = (typeof REF_PRODUCTS)[number]['copy']['en']['blocks'];
+type RefProduct = TvProduct;
+
+type CopyBlocksInput = RefProduct['copy']['en']['blocks'];
 
 type Blocks = Partial<Record<CopyBlockKey, CopyBlock>>;
+
+type AvailableColors = Partial<Record<'fa' | 'en', string[]>>;
+
+const toStringArray = (value: unknown): string[] | undefined => {
+  if (!Array.isArray(value)) return undefined;
+  const filtered = value.filter((item): item is string => typeof item === 'string');
+  return filtered.length > 0 ? filtered : undefined;
+};
+
+const normalizeAvailableColors = (value: unknown): AvailableColors | undefined => {
+  if (!value || typeof value !== 'object') return undefined;
+  const record = value as Record<string, unknown>;
+  const fa = toStringArray(record.fa);
+  const en = toStringArray(record.en);
+  if (!fa && !en) return undefined;
+  return { ...(fa ? { fa } : {}), ...(en ? { en } : {}) };
+};
+
+const isImageSource = (value: unknown): value is ImageSource =>
+  typeof value === 'string' ||
+  (typeof value === 'object' && value !== null && 'src' in value && value.src != null);
 
 const filterBlocks = (copyBlocks: CopyBlocksInput): Blocks => {
   const filtered: Blocks = {};
@@ -102,7 +145,7 @@ const resolveSections = (
   }, []);
 };
 
-const buildDefaultSectionGroups = (product: (typeof REF_PRODUCTS)[number]): TvSectionGroup[] => {
+const buildDefaultSectionGroups = (product: RefProduct): TvSectionGroup[] => {
   const defaults: TvSectionGroup[] = [];
 
   if (product.contentSections) {
@@ -137,10 +180,7 @@ const buildDefaultSectionGroups = (product: (typeof REF_PRODUCTS)[number]): TvSe
   return defaults;
 };
 
-const buildSectionGroups = (
-  product: (typeof REF_PRODUCTS)[number],
-  blocks: Blocks,
-): NormalizedSectionGroup[] => {
+const buildSectionGroups = (product: RefProduct, blocks: Blocks): NormalizedSectionGroup[] => {
   const defaultSectionGroups = buildDefaultSectionGroups(product);
   const sectionGroupConfigs: TvSectionGroup[] = Array.isArray(product.sectionGroups)
     ? (product.sectionGroups ?? [])
@@ -181,8 +221,7 @@ const resolveSpecs = (
   return [];
 };
 
-const getSeriesDisplay = (product: (typeof REF_PRODUCTS)[number]) =>
-  product.seriesLabel ?? product.series;
+const getSeriesDisplay = (product: RefProduct) => product.seriesLabel ?? product.series;
 
 const buildBreadcrumbItems = (
   locale: string,
@@ -194,7 +233,7 @@ const buildBreadcrumbItems = (
   { label: productLabel, href: `/${locale}/refrigerator/${productId}` },
 ];
 
-const findProduct = (productId: string) => {
+const findProduct = (productId: string): RefProduct | null => {
   const normalized = productId.toLowerCase();
   return (
     REF_PRODUCTS.find(
@@ -275,6 +314,13 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
   const sectionGroups = buildSectionGroups(product, blocks);
   const specDetails: string[] = resolveSpecs(product.specs, lang);
   const seriesDisplay = getSeriesDisplay(product);
+  const featureCards = product.featureCards ?? [];
+  const compactFeatureTitles = new Set<string>();
+  const productMeta = product as unknown as { availableColors?: unknown; topBanner?: unknown };
+  const normalizedColors = normalizeAvailableColors(productMeta.availableColors);
+  const availableColors =
+    lang === 'fa' ? (normalizedColors?.fa ?? []) : (normalizedColors?.en ?? []);
+  const topBanner = isImageSource(productMeta.topBanner) ? productMeta.topBanner : undefined;
   const breadcrumbItems = buildBreadcrumbItems(
     locale,
     routeTranslations('title'),
@@ -291,6 +337,7 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
         productName={copy.name || product.id}
         seriesDisplay={seriesDisplay}
         tagline={copy.tagline}
+        availableColors={availableColors}
         gallery={
           Array.isArray(product.gallery) && product.gallery.length > 0
             ? product.gallery
@@ -299,6 +346,24 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
       />
 
       <FeatureIntro title={featureIntroTitle} text={featureIntroText} />
+
+      {topBanner && (
+        <div className="w-full mx-auto max-w-360">
+          <div className="relative w-full overflow-hidden rounded-3xl shadow-(--panel-shadow)">
+            <div className="relative w-full aspect-2/1">
+              <Image
+                src={topBanner}
+                alt={copy.name}
+                fill
+                sizes="(max-width: 1024px) 100vw, 1200px"
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <FeatureCardsGrid featureCards={featureCards} compactFeatureTitles={compactFeatureTitles} />
 
       {masterMomentTitle && (
         <div className="w-full mx-auto max-w-360">
