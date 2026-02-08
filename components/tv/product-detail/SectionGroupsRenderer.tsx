@@ -13,9 +13,14 @@ export type NormalizedSectionGroup = {
 type SectionGroupsRendererProps = {
   sectionGroups: NormalizedSectionGroup[];
   lang: 'fa' | 'en';
+  overlayTone?: 'light' | 'dark';
 };
 
-const SectionGroupsRenderer = ({ sectionGroups, lang }: SectionGroupsRendererProps) => (
+const SectionGroupsRenderer = ({
+  sectionGroups,
+  lang,
+  overlayTone = 'light',
+}: SectionGroupsRendererProps) => (
   <>
     {sectionGroups.map((group, idx) => {
       if (group.kind === 'content') {
@@ -29,6 +34,7 @@ const SectionGroupsRenderer = ({ sectionGroups, lang }: SectionGroupsRendererPro
             key={`overlay-${idx}`}
             sections={group.sections}
             isRTL={lang === 'fa'}
+            tone={overlayTone}
           />
         );
       }
