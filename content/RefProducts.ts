@@ -1,5 +1,5 @@
 import { mediaUrl } from '@/lib/mediaUrl';
-import { type TvProduct } from '@/types/tv';
+import { type TvFeatureCard, type TvProduct } from '@/types/tv';
 
 // Bundled refrigerator catalog used when a database is not available.
 const productAsset = (path: string) => mediaUrl(`/products/Refrigerator/${path}`);
@@ -80,6 +80,45 @@ const rft560FeatureCards = [
   },
 ];
 
+const rfc500FeatureCards: TvFeatureCard[] = [
+  {
+    title: 'PREMIUM FLAT DOOR DESIGN',
+    description: 'Designed with attention to details',
+    image: logoAsset('rfc-500/1-premium-flat-door-icon.png'),
+  },
+  {
+    title: 'BIG CAPACITY',
+    description: 'Big capacity for more storage space',
+    image: logoAsset('rfc-500/2-big-capacity-icon.png'),
+    layout: 'inline',
+  },
+  {
+    title: 'METAL COOLING',
+    description: 'Cool air in every corner',
+    image: logoAsset('rfc-500/3-metal-cooling-icon.png'),
+  },
+  {
+    title: 'MICRO VENTS TECHNOLOGY',
+    description: 'Same temperature on every shelf',
+    image: logoAsset('rfc-500/4-micro-vents-technology-icon.png'),
+  },
+  {
+    title: 'DURABLE INVERTER',
+    description: 'For energy savings and longer lifespan',
+    image: logoAsset('rfc-500/5-durable-inverter-icon.png'),
+  },
+  {
+    title: 'MOISTURE FRESH CRISPER',
+    description: 'Keep your produce fresh',
+    image: logoAsset('rfc-500/6-moisture-fresh-crisper-icon.png'),
+  },
+  {
+    title: 'SLEEK WATER DISPENSER',
+    description: 'Always refreshed',
+    image: logoAsset('rfc-500/7-sleek-water-dispenser-icon.png'),
+  },
+];
+
 const rft560Hero = productAsset('rft-560/rft-560-2.png');
 const rft560Poster = productAsset('rft-560/rft-560-3.png');
 const rft560Gallery = [
@@ -89,6 +128,16 @@ const rft560Gallery = [
   productAsset('rft-560/rft-560-5.png'),
 ];
 const rft560Banner = productAsset('rft-560/top-page-banner.png');
+
+const rfc500Hero = productAsset('rfc-500/rfc-500-1.png');
+const rfc500Poster = productAsset('rfc-500/rfc-500-2.png');
+const rfc500Gallery = [
+  productAsset('rfc-500/rfc-500-1.png'),
+  productAsset('rfc-500/rfc-500-2.png'),
+  productAsset('rfc-500/rfc-500-3.png'),
+  productAsset('rfc-500/rfc-500-4.png'),
+  productAsset('rfc-500/rfc-500-5.png'),
+];
 
 const sbs650CopyEn = {
   name: 'Hisense SBS-650 Side-by-Side Refrigerator',
@@ -124,7 +173,7 @@ const sbs650CopyEn = {
     },
     multiAirFlow: {
       title: 'MULTI-AIR FLOW',
-      text: 'Constant temp keeps things fresh. Thanks to the even distribution of cold air achieved by the Hisense Multi Air Flow System, an optimum temperature is consistently maintained throughout your fridge freezer – keeping food chilled to perfection no matter where it is placed.',
+      text: 'Constant temp keeps things fresh. Thanks to the even distribution of cold air achieved by the Hisense Multi Air Flow System, an optimum temperature is consistently maintained throughout your fridge freezer - keeping food chilled to perfection no matter where it is placed.',
     },
     digitalSensors: {
       title: 'DIGITAL SENSORS',
@@ -316,6 +365,94 @@ const rft560CopyFa = {
     superFreeze: {
       title: 'انجماد سریع',
       text: 'انجماد سریع دمای فریزر را به‌سرعت پایین می‌آورد تا مواد غذایی زودتر منجمد شوند. این کار ویتامین‌ها و ارزش غذایی را حفظ کرده و تازگی را مانند روز اول نگه می‌دارد.',
+    },
+  },
+};
+
+const rfc500CopyEn = {
+  name: 'Hisense RFC-500 French Door Refrigerator',
+  tagline: 'Premium flat-door design with advanced cooling and flexible storage.',
+  description:
+    'RFC-500 combines a premium flat-door design with advanced cooling technologies, big capacity storage, and practical daily convenience.',
+  highlights: [
+    'Premium flat door design that fits any kitchen.',
+    'Big capacity with four wide-opening doors.',
+    'Metal Cooling keeps temperature and humidity consistent.',
+    'Micro Vents Technology maintains even cooling on every shelf.',
+    'Durable inverter for quieter, efficient performance.',
+  ],
+  blocks: {
+    premiumFlatDoor: {
+      title: 'PREMIUM FLAT DOOR DESIGN',
+      text: 'Designed with attention to details. With its perfect width and flat doors design, this premium flat door refrigerator fits every kitchen. Seamlessly fits into any kitchen. No chance accidental collisions with protruding surfaces. Premium design and feel.',
+    },
+    bigCapacity: {
+      title: 'BIG CAPACITY',
+      text: "Big capacity for more storage space. There's plenty of space in the fridge and freezer to store any shape or type of food. It also has four doors that open out wide, so you can see everything at a glance. Better organization and easier to access. Less trips to the store. Everything is more visible.",
+    },
+    metalCooling: {
+      title: 'METAL COOLING',
+      text: 'Cool air in every corner. The innovative fridge has multiple air vents that evenly distribute the cool air in every corner of the fridge. In addition, the rear wall of the fridge is covered in metal, ensuring the cool air is distributed evenly from the inside out. The combination of advanced technology guarantees ideal temperature and humidity levels throughout. Even cooling throughout the refrigerator. Good level of humidity control. More consistent temperature control.',
+    },
+    microVentsTechnology: {
+      title: 'MICRO VENTS TECHNOLOGY',
+      text: "Same temperature on every shelf. This smart cooling technology maintains even temperature throughout entire fridge. Small vents on the back column and its sides keep a stable environment inside the compartment, so you can simply place your groceries on whatever shelf you'd like. However, drawers for meat and fresh produce have specially dedicated temperature to keep them fresh for longer. Even cooling throughout the fridge. Locks in nutrients in food faster. Keeps food fresh longer.",
+    },
+    durableInverter: {
+      title: 'DURABLE INVERTER',
+      text: "For energy savings and a longer lasting appliance. Modern inverter compressors measure the conditions inside your fridge and adjust the cooling output accordingly, to ensure a stable temperature, save energy and run quieter, while also extending your appliance's lifespan. More consistent refrigerator temperature. Longer appliance lifespan. Quieter operation.",
+    },
+    moistureFreshCrisper: {
+      title: 'MOISTURE - FRESH CRISPER',
+      text: "Keep your produce fresh with just the right humidity. Fruit and vegetable box has a moisture adjustable system, which you regulate manually to meet different food's storage requirements in order to keep it fresh for longer time. Prolonged freshness. Preservation of nutritional properties. Freshly hydrated food.",
+    },
+    sleekWaterDispenser: {
+      title: 'SLEEK WATER DISPENSER',
+      text: 'Always refreshed. A sleek water dispenser that seamlessly integrated to the flat door of the refrigerator. Just pour fresh water in the water tank and enjoy it perfectly chilled, anytime. Constantly freshly chilled water. Cool - sleek design. Easy and quick function.',
+    },
+  },
+};
+
+const rfc500CopyFa = {
+  name: 'یخچال فریزر هایسنس RFC-500',
+  tagline: 'طراحی تخت پریمیوم با سرمایش پیشرفته و فضای ذخیره‌سازی منعطف.',
+  description:
+    'RFC-500 با طراحی تخت پریمیوم، فناوری‌های سرمایش پیشرفته، ظرفیت بالا و امکانات کاربردی روزانه، تجربه‌ای مدرن برای نگهداری مواد غذایی فراهم می‌کند.',
+  highlights: [
+    'طراحی تخت پریمیوم هماهنگ با هر آشپزخانه.',
+    'ظرفیت بالا با چهار درب عریض.',
+    'Metal Cooling برای پایداری دما و رطوبت.',
+    'Micro Vents Technology برای سرمایش یکنواخت در هر طبقه.',
+    'اینورتر بادوام برای عملکرد کم‌مصرف و کم‌صدا.',
+  ],
+  blocks: {
+    premiumFlatDoor: {
+      title: 'طراحی درِ تخت پریمیوم',
+      text: 'طراحی با دقت بالا. با پهنای مناسب و درهای تخت، این یخچال‌فریزر در هر آشپزخانه‌ای به‌خوبی می‌نشیند. هماهنگی کامل با فضای آشپزخانه. بدون برخورد ناخواسته با سطوح بیرون‌زده. طراحی و حس پریمیوم.',
+    },
+    bigCapacity: {
+      title: 'ظرفیت بالا',
+      text: 'ظرفیت بالا برای فضای ذخیره‌سازی بیشتر. فضای کافی در یخچال و فریزر برای هر شکل و نوع مواد غذایی وجود دارد. چهار درب عریض با بازشوی کامل، دید یکپارچه به همه چیز را فراهم می‌کند. نظم بهتر و دسترسی آسان‌تر. رفت‌وآمد کمتر برای خرید. دید بهتر به محتویات.',
+    },
+    metalCooling: {
+      title: 'خنک‌سازی فلزی',
+      text: 'هوای خنک در هر گوشه. این یخچال با دریچه‌های متعدد، هوای خنک را در تمام بخش‌ها پخش می‌کند. همچنین دیواره پشتی فلزی باعث توزیع یکنواخت سرما از داخل به بیرون می‌شود. ترکیب این فناوری‌ها دما و رطوبت ایده‌آل را در تمام فضا حفظ می‌کند. سرمایش یکنواخت در کل یخچال. کنترل رطوبت مناسب. پایداری بیشتر دما.',
+    },
+    microVentsTechnology: {
+      title: 'فناوری Micro Vents',
+      text: 'دمای یکسان در تمام طبقات. این فناوری هوشمند، دمای یکنواخت را در کل یخچال حفظ می‌کند. دریچه‌های کوچک در ستون پشتی و کناره‌ها محیطی پایدار ایجاد می‌کنند تا مواد غذایی را روی هر طبقه‌ای قرار دهید. کشوهای گوشت و سبزیجات نیز دمای اختصاصی دارند تا مدت بیشتری تازه بمانند. سرمایش یکنواخت در سراسر یخچال. حفظ سریع‌تر مواد مغذی. ماندگاری بیشتر تازگی.',
+    },
+    durableInverter: {
+      title: 'اینورتر بادوام',
+      text: 'برای صرفه‌جویی در انرژی و طول عمر بیشتر دستگاه. کمپرسورهای اینورتر مدرن شرایط داخل یخچال را سنجیده و خروجی سرمایش را تنظیم می‌کنند تا دما پایدار بماند، مصرف انرژی کاهش یابد و صدای عملکرد کمتر شود؛ همچنین طول عمر دستگاه افزایش می‌یابد. دمای یکنواخت‌تر. عمر مفید بیشتر. عملکرد کم‌صدا.',
+    },
+    moistureFreshCrisper: {
+      title: 'کشوی رطوبت‌دار Fresh Crisper',
+      text: 'تازگی میوه و سبزیجات با رطوبت مناسب. کشوی میوه و سبزی دارای سیستم تنظیم رطوبت است که به‌صورت دستی تنظیم می‌شود تا شرایط نگهداری برای هر نوع ماده غذایی فراهم شود و مدت بیشتری تازه بمانند. تازگی طولانی‌تر. حفظ ارزش غذایی. مواد غذایی با رطوبت مناسب.',
+    },
+    sleekWaterDispenser: {
+      title: 'آبریز شیک',
+      text: 'همیشه تازه. آبریز شیک به‌صورت یکپارچه در درِ تخت یخچال ادغام شده است. فقط مخزن را با آب تازه پر کنید تا هر زمان آب خنک در دسترس باشد. آب خنک همیشه تازه. طراحی شیک و خنک. عملکرد سریع و آسان.',
     },
   },
 };
@@ -580,7 +717,108 @@ export const REF_PRODUCTS: TvProduct[] = [
       fa: rft560CopyFa,
     },
   },
-  createPlaceholder('rfc500', 'RFC500', productAsset('rfc-500/new-image-66c2e70071a8e.png')),
+  {
+    id: 'rfc500',
+    sku: 'RFC500',
+    series: 'RFC500',
+    seriesLabel: 'RFC-500 French Door',
+    panel: '',
+    resolution: '',
+    refreshRate: '',
+    os: '',
+    sound: '',
+    connectivity: [],
+    tuner: '',
+    extras: ['Premium Flat Door Design', 'Big Capacity', 'Metal Cooling'],
+    image: rfc500Hero,
+    posterImage: rfc500Poster,
+    gallery: rfc500Gallery,
+    availableColors: {
+      en: ['White', 'Silver'],
+      fa: ['سفید', 'نقره‌ای'],
+    },
+    featureCards: rfc500FeatureCards,
+    sectionGroups: [
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: productAsset('rfc-500/1-premium-flat-door.jpg'), copyKey: 'premiumFlatDoor' },
+        ],
+      },
+      {
+        kind: 'overlay',
+        sections: [
+          {
+            image: productAsset('rfc-500/2-big-capacity.jpg'),
+            copyKey: 'bigCapacity',
+            textPosition: 'right',
+          },
+          { image: productAsset('rfc-500/3-metal-cooling.jpg'), copyKey: 'metalCooling' },
+        ],
+      },
+      {
+        kind: 'content',
+        sections: [
+          {
+            image: productAsset('rfc-500/4-micro-vents-technology.jpg'),
+            copyKey: 'microVentsTechnology',
+          },
+          { image: productAsset('rfc-500/5-durable-inverter.jpg'), copyKey: 'durableInverter' },
+          {
+            image: productAsset('rfc-500/6-moisture-fresh-crisper.jpg'),
+            copyKey: 'moistureFreshCrisper',
+          },
+          {
+            image: productAsset('rfc-500/7-sleek-water-dispenser.jpg'),
+            copyKey: 'sleekWaterDispenser',
+          },
+        ],
+      },
+    ],
+    specs: {
+      fa: [
+        'انجماد سریع',
+        'مجهز به آبریز',
+        'سیستم بدون برفک',
+        'قابلیت جابجایی طبقات',
+        'سیستم یخ زدایی خودکار',
+        'سیستم عیب یابی خودکار',
+        'سیستم گردش هوا در طبقات',
+        'نور یکنواخت در فضای کابین یخچال',
+        'قابلیت دسترسی سریع و آسان به مواد غذایی در کشو',
+        'ارتفاع (cm): 173',
+        'پهنا (cm): 80',
+        'عمق (cm): 70',
+        'وزن خاص یخچال (kg): 86',
+        'ظرفیت خالص یخچال (L): 353',
+        'ظرفیت خالص فریزر (L): 147',
+        'گاز مبرد: R600a',
+      ],
+      en: [
+        'Super freeze',
+        'Water dispenser',
+        'No-frost system',
+        'Adjustable shelves',
+        'Automatic defrost system',
+        'Self-diagnostic system',
+        'Multi-air flow circulation',
+        'Uniform cabinet lighting',
+        'Easy-access drawers',
+        'Height (cm): 173',
+        'Width (cm): 80',
+        'Depth (cm): 70',
+        'Net weight (kg): 86',
+        'Net fridge capacity (L): 353',
+        'Net freezer capacity (L): 147',
+        'Refrigerant: R600a',
+      ],
+    },
+    copy: {
+      en: rfc500CopyEn,
+      fa: rfc500CopyFa,
+    },
+  },
   createPlaceholder('rfc300', 'RFC300', productAsset('rfc-300/bd_96_product_image_1_1.png')),
   createPlaceholder('twin270-370', 'Twin 270-370', productAsset('banner/refrigerator-no-2.webp')),
   createPlaceholder('fc-310', 'FC-310', productAsset('fc-310/product_image_1.png')),

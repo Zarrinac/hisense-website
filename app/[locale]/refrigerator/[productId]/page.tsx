@@ -67,6 +67,8 @@ const COPY_BLOCK_KEYS: CopyBlockKey[] = [
   'electronicTouchControl',
   'softLedLighting',
   'superFreeze',
+  'microVentsTechnology',
+  'moistureFreshCrisper',
 ];
 
 const COPY_BLOCK_KEYS_SET = new Set(COPY_BLOCK_KEYS);
@@ -378,7 +380,7 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
         </div>
       )}
 
-      <SectionGroupsRenderer sectionGroups={sectionGroups} lang={lang} />
+      <SectionGroupsRenderer sectionGroups={sectionGroups} lang={lang} overlayTone="dark" />
 
       <SpecsSection items={specDetails} lang={lang} />
     </div>

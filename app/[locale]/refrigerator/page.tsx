@@ -43,7 +43,15 @@ const REFRIGERATOR_PRODUCTS = [
       en: 'Top-Mount Refrigerator 560',
     },
   },
-  { id: 'rfc500', label: 'RFC500', image: productAsset('rfc-500/new-image-66c2e70071a8e.png') },
+  {
+    id: 'rfc500',
+    label: 'RFC500',
+    image: productAsset('rfc-500/rfc-500-card.png'),
+    title: {
+      fa: 'یخچال فریزر کمبی مدل 500',
+      en: 'Combi Refrigerator 500',
+    },
+  },
   { id: 'rfc300', label: 'RFC300', image: productAsset('rfc-300/bd_96_product_image_1_1.png') },
   { id: 'twin270-370', label: 'Twin 270-370', image: bannerAsset('refrigerator-no-2.webp') },
   { id: 'fc-310', label: 'FC-310', image: productAsset('fc-310/product_image_1.png') },

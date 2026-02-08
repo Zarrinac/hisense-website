@@ -78,7 +78,9 @@ export type CopyBlockKey =
   | 'removableTwistIceMaker'
   | 'electronicTouchControl'
   | 'softLedLighting'
-  | 'superFreeze';
+  | 'superFreeze'
+  | 'microVentsTechnology'
+  | 'moistureFreshCrisper';
 
 export type CopyBlock = {
   title?: string;
@@ -116,6 +118,7 @@ export type TvFeatureCard = {
   description: string;
   image: ImageSource;
   imageBlack?: ImageSource;
+  layout?: 'stacked' | 'inline';
 };
 
 export type TvBanner = {
