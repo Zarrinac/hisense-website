@@ -52,7 +52,15 @@ const REFRIGERATOR_PRODUCTS = [
       en: 'Combi Refrigerator 500',
     },
   },
-  { id: 'rfc300', label: 'RFC300', image: productAsset('rfc-300/bd_96_product_image_1_1.png') },
+  {
+    id: 'rfc300',
+    label: 'RFC300',
+    image: productAsset('rfc-300/rfc-300-card.jpg'),
+    title: {
+      fa: 'یخچال فریزر کمبی مدل 300',
+      en: 'Combi Refrigerator 300',
+    },
+  },
   { id: 'twin270-370', label: 'Twin 270-370', image: bannerAsset('refrigerator-no-2.webp') },
   { id: 'fc-310', label: 'FC-310', image: productAsset('fc-310/product_image_1.png') },
   { id: 'fc-210', label: 'FC-210', image: productAsset('fc-210/product_image_1.jpg') },
