@@ -69,6 +69,13 @@ const COPY_BLOCK_KEYS: CopyBlockKey[] = [
   'superFreeze',
   'microVentsTechnology',
   'moistureFreshCrisper',
+  'temperedGlassShelves',
+  'freshBox',
+  'preciseElectronicControl',
+  'reversibleDoor',
+  'lowNoise',
+  'easyToUseDrawer',
+  'easyOpenDrawer',
 ];
 
 const COPY_BLOCK_KEYS_SET = new Set(COPY_BLOCK_KEYS);

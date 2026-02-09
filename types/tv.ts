@@ -80,7 +80,14 @@ export type CopyBlockKey =
   | 'softLedLighting'
   | 'superFreeze'
   | 'microVentsTechnology'
-  | 'moistureFreshCrisper';
+  | 'moistureFreshCrisper'
+  | 'temperedGlassShelves'
+  | 'freshBox'
+  | 'preciseElectronicControl'
+  | 'reversibleDoor'
+  | 'lowNoise'
+  | 'easyToUseDrawer'
+  | 'easyOpenDrawer';
 
 export type CopyBlock = {
   title?: string;
