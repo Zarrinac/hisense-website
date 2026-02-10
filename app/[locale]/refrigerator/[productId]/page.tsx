@@ -76,6 +76,22 @@ const COPY_BLOCK_KEYS: CopyBlockKey[] = [
   'lowNoise',
   'easyToUseDrawer',
   'easyOpenDrawer',
+  'easyOpenDoorHandle',
+  'freshCrisper',
+  'fullWidthAirflow',
+  'ledLighting',
+  'pureAppearance',
+  'adjustableLegs',
+  'ledDisplay',
+  'premiumAppearance',
+  'keepFor135H',
+  'cooling360',
+  'ultrathinHinges',
+  'slidingBasket',
+  'lessIsMore',
+  'premiumBoundlessDoor',
+  'hoveringDoor',
+  'mechanicalTemperatureControl',
 ];
 
 const COPY_BLOCK_KEYS_SET = new Set(COPY_BLOCK_KEYS);

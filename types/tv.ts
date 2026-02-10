@@ -87,7 +87,23 @@ export type CopyBlockKey =
   | 'reversibleDoor'
   | 'lowNoise'
   | 'easyToUseDrawer'
-  | 'easyOpenDrawer';
+  | 'easyOpenDrawer'
+  | 'easyOpenDoorHandle'
+  | 'freshCrisper'
+  | 'fullWidthAirflow'
+  | 'ledLighting'
+  | 'pureAppearance'
+  | 'adjustableLegs'
+  | 'ledDisplay'
+  | 'premiumAppearance'
+  | 'keepFor135H'
+  | 'cooling360'
+  | 'ultrathinHinges'
+  | 'slidingBasket'
+  | 'lessIsMore'
+  | 'premiumBoundlessDoor'
+  | 'hoveringDoor'
+  | 'mechanicalTemperatureControl';
 
 export type CopyBlock = {
   title?: string;
