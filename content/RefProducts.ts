@@ -182,6 +182,167 @@ const rfc300FeatureCards: TvFeatureCard[] = [
   },
 ];
 
+// RS-370
+const rs370FeatureCards: TvFeatureCard[] = [
+  {
+    title: 'EASY-OPEN DOOR HANDLE',
+    description: 'Opens effortlessly',
+    image: logoAsset('rs-370/1-easy-open-door-handle-icon.png'),
+  },
+  {
+    title: 'FRESH CRISPER',
+    description: 'The fresh zone storage area',
+    image: logoAsset('rs-370/2-fresh-crisper-icon.png'),
+  },
+  {
+    title: 'FULL WIDTH AIRFLOW',
+    description: 'Constant temperature keeps things fresh',
+    image: logoAsset('rs-370/3-full-width-airflow-icon.png'),
+  },
+  {
+    title: 'LED LIGHTING',
+    description: 'Clear overview',
+    image: logoAsset('rs-370/4-LED-lighting-icon.png'),
+  },
+  {
+    title: 'PURE APPEARANCE',
+    description: 'Modern design with attention to details',
+    image: logoAsset('rs-370/5-pure-appearance-icon.png'),
+  },
+  {
+    title: 'SLEEK WATER DISPENSER',
+    description: 'Always refreshed',
+    image: logoAsset('rs-370/6-sleek-water-dispenser-icon.png'),
+  },
+  {
+    title: 'REVERSIBLE DOOR',
+    description: 'Open and closed, your way',
+    image: logoAsset('rs-370/7-reversible-door-icon.png'),
+  },
+  {
+    title: 'SUPER COOL',
+    description: 'Powerful cooling',
+    image: logoAsset('rs-370/8-super-cool-icon.png'),
+  },
+];
+
+// FS-270
+const fs270FeatureCards: TvFeatureCard[] = [
+  {
+    title: 'TOTAL NO FROST',
+    description: 'No frost, anywhere - ever!',
+    image: logoAsset('fs-270/1-total-no-frost-icon.png'),
+  },
+  {
+    title: 'SUPER FREEZE',
+    description: 'Quick freeze to lock original flavour',
+    image: logoAsset('fs-270/2-super-freeze-icon.png'),
+  },
+  {
+    title: 'ADJUSTABLE LEGS',
+    description: 'Stable placement on uneven ground',
+    image: logoAsset('fs-270/3-adjustable-legs-icon.jpg'),
+  },
+  {
+    title: 'LED DISPLAY',
+    description: 'Easy to read, easy to use',
+    image: logoAsset('fs-270/4-LED-display-icon.png'),
+  },
+  {
+    title: 'PREMIUM APPEARANCE',
+    description: 'Designed with attention to details',
+    image: logoAsset('fs-270/5-premium-appearance-icon.png'),
+  },
+  {
+    title: 'REVERSIBLE DOOR',
+    description: 'Open and closed, your way',
+    image: logoAsset('fs-270/6-reversible-door-icon.png'),
+  },
+  {
+    title: 'LOW NOISE',
+    description: 'Enjoy A Quieter Life',
+    image: logoAsset('fs-270/7-low-noise-icon.png'),
+  },
+];
+
+// FC-210
+const fc210FeatureCards: TvFeatureCard[] = [
+  {
+    title: 'SUPER FREEZE',
+    description: 'Quick freezing performance',
+    image: logoAsset('fc-210/1-super-freeze-icon.png'),
+  },
+  {
+    title: 'MY FRESH CHOICE',
+    description: 'Flexible temperature setting',
+    image: logoAsset('fc-210/2-my-fresh-choice-icon.png'),
+  },
+  {
+    title: 'KEEP FOR 135H',
+    description: 'Temperature retention after power-off',
+    image: logoAsset('fc-210/3-keep-for-135H-icon.png'),
+  },
+  {
+    title: '360° COOLING',
+    description: 'Efficient heat exchange',
+    image: logoAsset('fc-210/4-360-cooling-icon.png'),
+  },
+  {
+    title: 'ULTRATHIN HINGES',
+    description: 'Place closer to the wall',
+    image: logoAsset('fc-210/5-ultrathin-hinges-icon.png'),
+  },
+  {
+    title: 'BIG CAPACITY',
+    description: 'Large internal storage volume',
+    image: logoAsset('fc-210/6-big-capacity-icon.png'),
+  },
+  {
+    title: 'SLIDING BASKET',
+    description: 'Easy lifting and storage',
+    image: logoAsset('fc-210/7-sliding-basket-icon.png'),
+  },
+];
+
+// FC-310
+const fc310FeatureCards: TvFeatureCard[] = [
+  {
+    title: 'PREMIUM BOUNDLESS DOOR',
+    description: 'Minimalist modern design',
+    image: logoAsset('fc-310/2-premium-boundless-door-icon.png'),
+  },
+  {
+    title: 'SLIDING BASKET',
+    description: 'Easy lifting and storage',
+    image: logoAsset('fc-310/3-sliding-basket-icon.png'),
+  },
+  {
+    title: 'ULTRATHIN HINGES',
+    description: 'Place closer to the wall',
+    image: logoAsset('fc-310/4-ultrathin-hinges-icon.png'),
+  },
+  {
+    title: 'MY FRESH CHOICE',
+    description: 'Flexible temperature setting',
+    image: logoAsset('fc-310/5-my-fresh-choice-icon.svg'),
+  },
+  {
+    title: 'HOVERING DOOR',
+    description: 'Hands-free loading',
+    image: logoAsset('fc-310/6-hovering-door-icon.svg'),
+  },
+  {
+    title: 'MECHANICAL TEMPERATURE CONTROL',
+    description: 'Durable and easy operation',
+    image: logoAsset('fc-310/7-mechanical-temperature-control-icon.png'),
+  },
+  {
+    title: 'SUPER FREEZE',
+    description: 'Powerful rapid freezing',
+    image: logoAsset('fc-310/8-super-freeze-icon.svg'),
+  },
+];
+
 // SBS-650
 const sbs650Hero = productAsset('sbs-650/Sbs-650-1.jpg');
 const sbs650Poster = productAsset('sbs-650/Sbs-650-2.jpg');
@@ -223,6 +384,50 @@ const rfc300Gallery = [
   productAsset('rfc-300/rfc-300-3.png'),
   productAsset('rfc-300/rfc-300-4.png'),
   productAsset('rfc-300/rfc-300-5.png'),
+];
+
+// RS-370
+const rs370Hero = productAsset('rs-370/rs-370-1-lg.png');
+const rs370Poster = productAsset('rs-370/rs-370-2-lg.png');
+const rs370Gallery = [
+  productAsset('rs-370/rs-370-1-lg.png'),
+  productAsset('rs-370/rs-370-2-lg.jpg'),
+  productAsset('rs-370/rs-370-3-lg.jpg'),
+  productAsset('rs-370/rs-370-4-lg.jpg'),
+  productAsset('rs-370/rs-370-5-lg.jpg'),
+  productAsset('rs-370/rs-370-6-lg.jpg'),
+  productAsset('rs-370/rs-370-7-lg.jpg'),
+  productAsset('rs-370/rs-370-8-lg.jpg'),
+];
+
+// FS-270
+const fs270Hero = productAsset('fs-270/fs-270-1-lg.jpg');
+const fs270Poster = productAsset('fs-270/fs-270-2-lg.jpg');
+const fs270Gallery = [
+  productAsset('fs-270/fs-270-1-lg.jpg'),
+  productAsset('fs-270/fs-270-2-lg.jpg'),
+  productAsset('fs-270/fs-270-3-lg.jpg'),
+  productAsset('fs-270/fs-270-4-lg.jpg'),
+  productAsset('fs-270/fs-270-5-lg.jpg'),
+  productAsset('fs-270/fs-270-6-lg.jpg'),
+  productAsset('fs-270/fs-270-7-lg.jpg'),
+  productAsset('fs-270/fs-270-8-lg.jpg'),
+  productAsset('fs-270/fs-270-9-lg.jpg'),
+];
+
+// FC-210
+const fc210Hero = productAsset('fc-210/fc-210-1.jpg');
+const fc210Poster = productAsset('fc-210/fc-210-2.jpg');
+const fc210Gallery = [productAsset('fc-210/fc-210-1.jpg'), productAsset('fc-210/fc-210-2.jpg')];
+
+// FC-310
+const fc310Hero = productAsset('fc-310/fc-310-1.png');
+const fc310Poster = productAsset('fc-310/fc-310-2.png');
+const fc310Gallery = [
+  productAsset('fc-310/fc-310-1.png'),
+  productAsset('fc-310/fc-310-2.png'),
+  productAsset('fc-310/fc-310-3.png'),
+  productAsset('fc-310/fc-310-4.png'),
 ];
 
 // SBS-650
@@ -683,42 +888,377 @@ const rfc300CopyFa = {
   },
 };
 
-const placeholderCopyEn = (name: string) => ({
-  name,
-  tagline: 'Details coming soon.',
-  description: 'Product content will be added soon.',
-  highlights: [],
-  blocks: {},
-});
-
-const placeholderCopyFa = (name: string) => ({
-  name,
-  tagline: 'جزئیات به‌زودی اضافه می‌شود.',
-  description: 'اطلاعات این محصول به‌زودی تکمیل خواهد شد.',
-  highlights: [],
-  blocks: {},
-});
-
-const createPlaceholder = (id: string, label: string, image: string): TvProduct => ({
-  id,
-  sku: label,
-  series: label,
-  seriesLabel: label,
-  panel: '',
-  resolution: '',
-  refreshRate: '',
-  os: '',
-  sound: '',
-  connectivity: [],
-  tuner: '',
-  extras: [],
-  image,
-  gallery: [image],
-  copy: {
-    en: placeholderCopyEn(label),
-    fa: placeholderCopyFa(label),
+// RS-370
+const rs370CopyEn = {
+  name: 'Hisense RS-370 Refrigerator',
+  tagline: 'Smart storage and stable cooling for everyday freshness.',
+  description:
+    'RS-370 combines practical storage, efficient airflow, and modern design details to keep food fresh, visible, and easy to access.',
+  highlights: [
+    'Easy-open metal handle with stable grip and clean look.',
+    'Fresh Crisper drawer for fruit and vegetable freshness.',
+    'Full Width Airflow for even cooling in all shelves.',
+    'Efficient LED lighting for clearer fridge overview.',
+    'Super Cool function keeps compartment at +2C for rapid chilling.',
+  ],
+  blocks: {
+    easyOpenDoorHandle: {
+      title: 'EASY-OPEN DOOR HANDLE',
+      text: 'Opens effortlessly. The light and discreet metal handle blends into the clean, tasteful design. Its firm build and robust materials provide a safe and stable daily feel in your kitchen.',
+    },
+    freshCrisper: {
+      title: 'FRESH CRISPER',
+      text: 'The fresh zone storage area. The Fresh Crisper gives enough room for fruits and vegetables, and its ideal temperature helps preserve freshness and aroma. The transparent design also provides an easy content overview.',
+    },
+    fullWidthAirflow: {
+      title: 'FULL WIDTH AIRFLOW',
+      text: 'Constant temperature keeps things fresh. Smart Multi Air Flow evenly distributes cold air so a stable temperature is maintained across the refrigerator, keeping food properly chilled wherever it is placed.',
+    },
+    ledLighting: {
+      title: 'LED LIGHTING',
+      text: 'Clear overview. Highly efficient LED illumination provides a clearer and deeper view of refrigerator contents.',
+    },
+    pureAppearance: {
+      title: 'PURE APPEARANCE',
+      text: 'Modern design with attention to details. The flat-door appearance creates a neat kitchen look. Its balanced height and width integrate well into cabinetry to save space and support practical daily use.',
+    },
+    sleekWaterDispenser: {
+      title: 'SLEEK WATER DISPENSER',
+      text: 'Always refreshed. A sleek water dispenser that seamlessly integrated to the flat door of the refrigerator. Just pour fresh water in the water tank and enjoy it perfectly chilled, anytime. Constantly freshly chilled water. Cool - sleek design. Easy and quick function.',
+    },
+    reversibleDoor: {
+      title: 'REVERSIBLE DOOR',
+      text: 'Open and closed, your way. The reversible door design fits different kitchen layouts and can be installed to open from either side, whether left- or right-handed access works better for you.',
+    },
+    superCool: {
+      title: 'SUPER COOL',
+      text: 'Powerful cooling. Super Cool quickly reduces internal temperature and keeps the fridge compartment at a regular +2C for 6 hours, helping preserve flavor, color, and nutritional value of fresh food.',
+    },
   },
-});
+};
+
+const rs370CopyFa = {
+  name: 'یخچال هایسنس RS-370',
+  tagline: 'نگهداری هوشمند با سرمایش پایدار برای تازگی روزانه.',
+  description:
+    'یخچال هایسنس RS-370 با فضای ذخیره‌سازی کاربردی، گردش هوای یکنواخت و طراحی مدرن، تازگی مواد غذایی را برای مدت طولانی‌تری حفظ کرده و دسترسی سریع و آسان به محتویات را در استفاده روزمره فراهم می‌کند.',
+  highlights: [
+    'دستگیره فلزی آسان‌بازشو با طراحی یکپارچه و خوش‌دست.',
+    'کشوی Fresh Crisper برای حفظ تازگی میوه و سبزیجات.',
+    'سیستم Full Width Airflow برای توزیع یکنواخت هوای سرد.',
+    'نورپردازی LED کم‌مصرف با دید واضح‌تر از فضای داخلی.',
+    'قابلیت Super Cool برای خنک‌سازی سریع تا دمای +۲ درجه.',
+  ],
+  blocks: {
+    easyOpenDoorHandle: {
+      title: 'دستگیره آسان‌بازشو',
+      text: 'باز شدن روان و بدون زحمت. دستگیره فلزی مینیمال به‌صورت یکپارچه با طراحی تمیز دستگاه هماهنگ شده و با ساختار مستحکم خود، حس پایداری و اطمینان را در استفاده روزانه منتقل می‌کند.',
+    },
+    freshCrisper: {
+      title: 'کشوی Fresh Crisper',
+      text: 'محفظه اختصاصی برای تازگی بیشتر. کشوی Fresh Crisper فضای کافی برای نگهداری میوه و سبزیجات فراهم می‌کند و با دمای ایده‌آل، به حفظ طراوت، عطر و کیفیت آن‌ها کمک می‌کند. طراحی شفاف، دسترسی و مشاهده محتویات را آسان‌تر می‌سازد.',
+    },
+    fullWidthAirflow: {
+      title: 'سیستم Full Width Airflow',
+      text: 'دمای یکنواخت در تمام طبقات. سیستم هوشمند گردش هوا، هوای سرد را به‌طور یکنواخت در سراسر یخچال پخش می‌کند تا مواد غذایی در هر قفسه‌ای به‌خوبی خنک و تازه بمانند.',
+    },
+    ledLighting: {
+      title: 'نورپردازی LED',
+      text: 'دید شفاف و کامل. نورپردازی LED با بازده بالا، روشنایی یکنواخت و عمیق‌تری ایجاد می‌کند تا تمام فضای داخلی یخچال به‌وضوح قابل مشاهده باشد.',
+    },
+    pureAppearance: {
+      title: 'طراحی یکپارچه',
+      text: 'طراحی مدرن با توجه به جزئیات. ظاهر درِ تخت، جلوه‌ای مرتب و مینیمال به آشپزخانه می‌بخشد. ابعاد متعادل دستگاه باعث می‌شود به‌خوبی با کابینت‌ها هماهنگ شده و استفاده بهینه از فضا را ممکن کند.',
+    },
+    sleekWaterDispenser: {
+      title: 'آبریز شیک',
+      text: 'طراوت همیشگی در دسترس. آبریز باریک و شیک به‌صورت یکپارچه در درِ تخت یخچال طراحی شده است. تنها با پر کردن مخزن، در هر زمان به آب خنک و تازه دسترسی دارید؛ ترکیبی از کاربری آسان و طراحی مدرن.',
+    },
+    reversibleDoor: {
+      title: 'درب قابل‌تغییر جهت',
+      text: 'انعطاف‌پذیر در نصب و استفاده. درب قابل‌تغییر جهت این یخچال امکان باز شدن از سمت راست یا چپ را فراهم می‌کند تا با هر نوع چیدمان آشپزخانه سازگار باشد.',
+    },
+    superCool: {
+      title: 'Super Cool',
+      text: 'خنک‌سازی سریع و مؤثر. قابلیت Super Cool دمای داخلی را به‌سرعت کاهش داده و بخش یخچال را به‌مدت ۶ ساعت روی +۲ درجه نگه می‌دارد تا طعم، رنگ و ارزش غذایی مواد تازه بهتر حفظ شود.',
+    },
+  },
+};
+
+// FS-270
+const fs270CopyEn = {
+  name: 'Hisense FS-270 Freezer',
+  tagline: 'No-frost freezing with stable performance and practical control.',
+  description:
+    'FS-270 delivers no-frost convenience, fast freezing performance, and user-friendly controls in a modern space-saving design.',
+  highlights: [
+    'Total No Frost prevents ice build-up and manual defrosting.',
+    'Super Freeze quickly locks flavor and nutrients.',
+    'Adjustable legs keep the appliance stable on uneven floors.',
+    'LED display panel for clear freezer control.',
+    'Low-noise operation for a quieter living space.',
+  ],
+  blocks: {
+    totalNoFrost: {
+      title: 'TOTAL NO FROST',
+      text: "No frost, anywhere - ever! It creates conditions that keep food fresh and nutritious for longer while preventing ice and frost build-up inside the freezer, so there's no need to spend time defrosting.",
+    },
+    superFreeze: {
+      title: 'SUPER FREEZE',
+      text: 'Quick freeze to lock original flavour. Super Freeze rapidly lowers temperature and freezes food much faster than usual, helping preserve natural taste, original texture, and valuable vitamins and minerals.',
+    },
+    adjustableLegs: {
+      title: 'ADJUSTABLE LEGS',
+      text: 'Legs can be adjusted accordingly to ensure that your appliance sits steadily, even on uneven ground.',
+    },
+    ledDisplay: {
+      title: 'LED DISPLAY',
+      text: 'Easy to read, easy to use. The clear control panel gives complete control of freezer functions and allows quick temperature selection for the freezer compartment.',
+    },
+    premiumAppearance: {
+      title: 'PREMIUM APPEARANCE',
+      text: 'Designed with attention to details. This refined freezer requires minimum space while offering large storage capacity. Its modern flat-door design fits perfectly into any kitchen.',
+    },
+    reversibleDoor: {
+      title: 'REVERSIBLE DOOR',
+      text: 'Open and closed, your way. The reversible door fits any kitchen layout and can open from either right or left side based on your preferred use.',
+    },
+    lowNoise: {
+      title: 'LOW NOISE',
+      text: 'Enjoy A Quieter Life. With an excellent built-in fan and compressor system, this model provides stable performance with low noise levels for a quieter and more peaceful environment.',
+    },
+  },
+};
+
+const fs270CopyFa = {
+  name: 'فریزر هایسنس FS-270',
+  tagline: 'انجماد بدون برفک با عملکرد پایدار و کنترل کاربردی.',
+  description:
+    'فریزر هایسنس FS-270 با فناوری بدون برفک کامل، قابلیت انجماد سریع و پنل کنترلی ساده و دقیق، راهکاری مدرن و کم‌صدا برای نگهداری طولانی‌مدت مواد غذایی در فضای کم‌جا ارائه می‌دهد.',
+  highlights: [
+    'فناوری Total No Frost برای جلوگیری کامل از تشکیل یخ و برفک.',
+    'قابلیت Super Freeze برای انجماد سریع و حفظ طعم و ارزش غذایی.',
+    'پایه‌های قابل تنظیم برای استقرار پایدار روی سطوح ناهموار.',
+    'نمایشگر LED خوانا برای کنترل آسان دمای فریزر.',
+    'عملکرد کم‌صدا برای محیطی آرام‌تر در خانه.',
+  ],
+  blocks: {
+    totalNoFrost: {
+      title: 'بدون برفک کامل',
+      text: 'بدون برفک، همیشه. فناوری Total No Frost با گردش یکنواخت هوای سرد، از تشکیل یخ و برفک داخل فریزر جلوگیری می‌کند و شرایطی ایده‌آل برای حفظ تازگی و ارزش غذایی مواد فراهم می‌سازد؛ بدون نیاز به برفک‌زدایی دستی.',
+    },
+    superFreeze: {
+      title: 'انجماد سریع',
+      text: 'انجماد سریع برای حفظ طعم اصلی. قابلیت Super Freeze با کاهش سریع دما، مواد غذایی را بسیار سریع‌تر منجمد می‌کند تا طعم طبیعی، بافت اصلی و ویتامین‌ها و مواد معدنی آن‌ها بهتر حفظ شود.',
+    },
+    adjustableLegs: {
+      title: 'پایه‌های قابل تنظیم',
+      text: 'پایه‌های قابل تنظیم امکان تراز و استقرار پایدار دستگاه را حتی روی سطوح ناهموار فراهم می‌کنند تا عملکرد فریزر همیشه ایمن و مطمئن باشد.',
+    },
+    ledDisplay: {
+      title: 'نمایشگر LED',
+      text: 'خوانا و ساده در استفاده. پنل کنترل LED با طراحی واضح، امکان کنترل کامل عملکرد فریزر و انتخاب سریع دمای موردنظر را به‌راحتی فراهم می‌کند.',
+    },
+    premiumAppearance: {
+      title: 'طراحی پریمیوم',
+      text: 'طراحی‌شده با دقت به جزئیات. این فریزر با اشغال حداقل فضا، ظرفیت ذخیره‌سازی بالایی ارائه می‌دهد و به‌واسطه طراحی مدرن با درِ تخت، به‌خوبی با هر آشپزخانه‌ای هماهنگ می‌شود.',
+    },
+    reversibleDoor: {
+      title: 'درب قابل‌تغییر جهت',
+      text: 'انعطاف‌پذیر در نصب. درب قابل‌تغییر جهت این فریزر امکان باز شدن از سمت راست یا چپ را فراهم می‌کند تا با چیدمان‌های مختلف آشپزخانه سازگار باشد.',
+    },
+    lowNoise: {
+      title: 'صدای کم',
+      text: 'آرامش بیشتر در خانه. فن و کمپرسور باکیفیت داخلی، عملکردی پایدار با سطح صدای پایین ارائه می‌دهند تا محیطی آرام و دلپذیر داشته باشید.',
+    },
+  },
+};
+
+// FC-210
+const fc210CopyEn = {
+  name: 'Hisense FC-210 Chest Freezer',
+  tagline: 'Fast freezing, flexible temperature control, and practical storage.',
+  description:
+    'FC-210 combines rapid freezing, efficient cabinet cooling, and space-smart chest-freezer design to preserve food quality longer.',
+  highlights: [
+    'Super Freeze can lower freezer temperature to -30C.',
+    'My Fresh Choice allows flexible cabinet temperature control.',
+    'Keeps internal temperature at 0C for up to 135 hours after power-off.',
+    '360 degrees cooling improves heat exchange efficiency.',
+    'Sliding basket improves daily organization and access.',
+  ],
+  blocks: {
+    superFreeze: {
+      title: 'SUPER FREEZE',
+      text: 'Once freezing mode is activated, the freezer temperature can drop to -30C, helping keep food fresh, tasty, and nutritious as if it was just purchased.',
+    },
+    myFreshChoice: {
+      title: 'MY FRESH CHOICE',
+      text: 'By simply turning the temperature knob, you can set the cabinet temperature based on your needs and keep different foods in the right storage condition.',
+    },
+    keepFor135H: {
+      title: 'KEEP FOR 135H',
+      text: 'This chest freezer can keep the internal temperature at around 0C for up to 135 hours after a power outage.',
+    },
+    cooling360: {
+      title: '360° COOLING',
+      text: 'A D-type cooling pipe with greater contact surface to the cabinet enables more efficient heat exchange between the inner wall and the evaporator pipe.',
+    },
+    ultrathinHinges: {
+      title: 'ULTRATHIN HINGES',
+      text: 'The ultrathin hinge design allows the freezer to be placed closer to the wall, giving you more usable kitchen space.',
+    },
+    bigCapacity: {
+      title: 'BIG CAPACITY',
+      text: 'Built with advanced LBA foaming material for superior thermal insulation, this chest freezer offers larger storage capacity compared to conventional models.',
+    },
+    slidingBasket: {
+      title: 'SLIDING BASKET',
+      text: "A high-quality plastic basket with soft rounded corners and recessed handles is easy to lift, even when full. It's ideal for small items and offers a cleaner visual appearance.",
+    },
+  },
+};
+
+const fc210CopyFa = {
+  name: 'فریزر صندوقی هایسنس FC-210',
+  tagline: 'انجماد سریع، کنترل دمای منعطف و ذخیره‌سازی کاربردی.',
+  description:
+    'فریزر صندوقی هایسنس FC-210 با قابلیت انجماد سریع، سرمایش یکنواخت کابین و طراحی هوشمند کم‌جا، کیفیت، طعم و ارزش غذایی مواد را برای مدت طولانی‌تری حفظ می‌کند و انتخابی مطمئن برای نگهداری حجم بالای مواد غذایی است.',
+  highlights: [
+    'قابلیت Super Freeze با کاهش دما تا ۳۰- درجه سانتی‌گراد.',
+    'My Fresh Choice برای تنظیم منعطف و دقیق دمای کابین.',
+    'حفظ دمای داخلی در حدود ۰ درجه تا ۱۳۵ ساعت پس از قطع برق.',
+    'سرمایش ۳۶۰ درجه برای توزیع یکنواخت و تبادل حرارتی بهتر.',
+    'سبد کشویی برای دسترسی سریع‌تر و نظم روزمره.',
+  ],
+  blocks: {
+    superFreeze: {
+      title: 'انجماد سریع',
+      text: 'با فعال‌سازی حالت Super Freeze، دمای فریزر تا ۳۰- درجه سانتی‌گراد کاهش می‌یابد تا مواد غذایی با حفظ طعم، بافت و ارزش غذایی، مانند روز اول تازه باقی بمانند.',
+    },
+    myFreshChoice: {
+      title: 'My Fresh Choice',
+      text: 'تنها با چرخاندن ولوم تنظیم دما، می‌توانید دمای کابین را متناسب با نوع مواد غذایی انتخاب کنید تا هر محصول در شرایط ایده‌آل نگهداری شود.',
+    },
+    keepFor135H: {
+      title: 'حفظ دما تا ۱۳۵ ساعت',
+      text: 'این فریزر صندوقی در صورت قطع برق، قادر است دمای داخلی را تا ۱۳۵ ساعت در محدوده حدود ۰ درجه سانتی‌گراد حفظ کند و از مواد غذایی محافظت نماید.',
+    },
+    cooling360: {
+      title: 'سرمایش ۳۶۰ درجه',
+      text: 'استفاده از لوله سرمایشی D-Type با سطح تماس گسترده‌تر، تبادل حرارتی مؤثرتری بین دیواره داخلی کابین و اواپراتور ایجاد می‌کند و به سرمایش یکنواخت‌تر کمک می‌کند.',
+    },
+    ultrathinHinges: {
+      title: 'لولاهای فوق‌باریک',
+      text: 'طراحی لولاهای فوق‌باریک امکان قرارگیری فریزر در فاصله نزدیک‌تر به دیوار را فراهم می‌کند تا فضای مفید آشپزخانه بهتر مورد استفاده قرار گیرد.',
+    },
+    bigCapacity: {
+      title: 'ظرفیت بالا',
+      text: 'به‌کارگیری متریال پیشرفته LBA در عایق‌کاری حرارتی، این فریزر صندوقی را قادر می‌سازد در مقایسه با مدل‌های معمولی، ظرفیت ذخیره‌سازی بیشتری ارائه دهد.',
+    },
+    slidingBasket: {
+      title: 'سبد کشویی',
+      text: 'سبد پلاستیکی باکیفیت با گوشه‌های نرم و دستگیره‌های فرورفته، حتی در حالت پر به‌راحتی جابه‌جا می‌شود و برای نگهداری اقلام کوچک، نظم بهتر و ظاهری مرتب‌تر ایده‌آل است.',
+    },
+  },
+};
+
+// FC-310
+const fc310CopyEn = {
+  name: 'Hisense FC-310 Chest Freezer',
+  tagline: 'Boundless design with practical freezer innovations.',
+  description:
+    'FC-310 combines a minimalist boundless-door design with reliable freezing performance and practical daily usability features.',
+  highlights: [
+    'Less is More design philosophy for modern spaces.',
+    'Premium Boundless Door with easy-clean surfaces.',
+    'Hovering Door that stays open between 30 and 60 degrees.',
+    'Mechanical Temperature Control for durable easy operation.',
+    'Super Freeze mode for rapid low-temperature freezing.',
+  ],
+  blocks: {
+    lessIsMore: {
+      title: 'LESS IS MORE',
+      text: 'Traditional products deserve breakthrough innovation. This series removes unnecessary decoration and follows a less-is-more lifestyle, balancing function and aesthetics for modern homes while maximizing practical use of space.',
+    },
+    premiumBoundlessDoor: {
+      title: 'PREMIUM BOUNDLESS DOOR',
+      text: 'Designed around the unity of art and technology. The clean geometric shape removes unnecessary complexity and fits minimalist interiors. The user-friendly form also reduces hard-to-clean corners for easier maintenance.',
+    },
+    slidingBasket: {
+      title: 'SLIDING BASKET',
+      text: 'A high-quality plastic basket with soft rounded corners and recessed handles is easy to lift even when full. It also helps organize smaller items and improves overall appearance.',
+    },
+    ultrathinHinges: {
+      title: 'ULTRATHIN HINGES',
+      text: 'The ultrathin hinge design allows the freezer to be placed against the wall, helping you gain more usable space in the kitchen.',
+    },
+    myFreshChoice: {
+      title: 'MY FRESH CHOICE',
+      text: 'By turning the temperature knob, you can set cabinet temperature based on your needs to keep different foods in suitable conditions.',
+    },
+    hoveringDoor: {
+      title: 'HOVERING DOOR',
+      text: 'The door can stay open at any angle between 30 and 60 degrees, so you can load or remove food hands-free without holding the lid.',
+    },
+    mechanicalTemperatureControl: {
+      title: 'MECHANICAL TEMPERATURE CONTROL',
+      text: 'Compared to electronic control panels, mechanical temperature control is more durable, and its simple operation is especially convenient for elderly users.',
+    },
+    superFreeze: {
+      title: 'SUPER FREEZE',
+      text: 'Once freezing mode is activated, temperature can drop to -30C, helping preserve freshness, flavor, texture, and nutritional value as if food was just bought.',
+    },
+  },
+};
+
+const fc310CopyFa = {
+  name: 'فریزر صندوقی هایسنس FC-310',
+  tagline: 'طراحی مینیمال مدرن با نوآوری‌های کاربردی در نگهداری مواد غذایی.',
+  description:
+    'فریزر صندوقی هایسنس FC-310 با طراحی مینیمال بدون حاشیه، عملکرد قابل‌اعتماد انجماد و امکانات کاربردی روزمره، نگهداری طولانی‌مدت مواد غذایی را با دسترسی آسان و استفاده بهینه از فضا ممکن می‌سازد.',
+  highlights: [
+    'فلسفه طراحی Less is More مناسب فضاهای مدرن.',
+    'درب Premium Boundless با سطح یکپارچه و نظافت آسان.',
+    'درب Hovering با قابلیت توقف در زاویه ۳۰ تا ۶۰ درجه.',
+    'کنترل مکانیکی دما با دوام بالا و کاربری ساده.',
+    'قابلیت Super Freeze برای انجماد سریع در دمای بسیار پایین.',
+  ],
+  blocks: {
+    lessIsMore: {
+      title: 'Less is More',
+      text: 'نوآوری فراتر از ظاهر. این سری با حذف تزئینات غیرضروری و تمرکز بر اصل «کمتر، بیشتر است»، تعادلی هوشمندانه میان زیبایی، کارایی و استفاده بهینه از فضا برای خانه‌های مدرن ایجاد می‌کند.',
+    },
+    premiumBoundlessDoor: {
+      title: 'درب Premium Boundless',
+      text: 'طراحی‌شده با الهام از تلفیق هنر و فناوری. فرم هندسی ساده و بدون حاشیه، ظاهری مینیمال و هماهنگ با دکوراسیون مدرن ایجاد می‌کند و به‌دلیل کاهش گوشه‌های غیرقابل دسترس، نظافت درب بسیار آسان‌تر می‌شود.',
+    },
+    slidingBasket: {
+      title: 'سبد کشویی',
+      text: 'سبد پلاستیکی باکیفیت با گوشه‌های نرم و دستگیره‌های فرورفته، حتی در حالت پر نیز به‌راحتی جابه‌جا می‌شود و برای نظم‌دهی اقلام کوچک و دسترسی سریع‌تر بسیار کاربردی است.',
+    },
+    ultrathinHinges: {
+      title: 'لولاهای فوق‌باریک',
+      text: 'طراحی لولاهای فوق‌باریک امکان قرارگیری فریزر در فاصله نزدیک‌تر به دیوار را فراهم می‌کند تا فضای مفید آشپزخانه به‌صورت بهینه استفاده شود.',
+    },
+    myFreshChoice: {
+      title: 'My Fresh Choice',
+      text: 'با چرخاندن ولوم تنظیم دما، می‌توانید دمای کابین را متناسب با نوع مواد غذایی انتخاب کنید تا هر محصول در شرایط نگهداری مناسب خود قرار گیرد.',
+    },
+    hoveringDoor: {
+      title: 'درب Hovering',
+      text: 'درب این فریزر می‌تواند در زاویه‌های بین ۳۰ تا ۶۰ درجه ثابت بماند تا بدون نیاز به نگه داشتن درب، مواد غذایی را به‌راحتی داخل یا خارج کنید.',
+    },
+    mechanicalTemperatureControl: {
+      title: 'کنترل مکانیکی دما',
+      text: 'کنترل مکانیکی دما در مقایسه با پنل‌های الکترونیکی، دوام بالاتری دارد و به‌دلیل سادگی کاربری، گزینه‌ای ایده‌آل برای استفاده روزمره و کاربران سالمند محسوب می‌شود.',
+    },
+    superFreeze: {
+      title: 'انجماد سریع',
+      text: 'با فعال‌سازی حالت Super Freeze، دمای فریزر تا ۳۰- درجه سانتی‌گراد کاهش می‌یابد تا تازگی، طعم، بافت و ارزش غذایی مواد غذایی همانند روز اول حفظ شود.',
+    },
+  },
+};
 
 export const REF_PRODUCTS: TvProduct[] = [
   {
@@ -1162,7 +1702,340 @@ export const REF_PRODUCTS: TvProduct[] = [
       fa: rfc300CopyFa,
     },
   },
-  createPlaceholder('twin270-370', 'Twin 270-370', productAsset('banner/refrigerator-no-2.webp')),
-  createPlaceholder('fc-310', 'FC-310', productAsset('fc-310/product_image_1.png')),
-  createPlaceholder('fc-210', 'FC-210', productAsset('fc-210/product_image_1.jpg')),
+  {
+    id: 'rs-370',
+    sku: 'RS-370',
+    series: 'RS-370',
+    seriesLabel: 'RS-370 Refrigerator',
+    panel: '',
+    resolution: '',
+    refreshRate: '',
+    os: '',
+    sound: '',
+    connectivity: [],
+    tuner: '',
+    extras: [
+      'Easy-open Door Handle',
+      'Fresh Crisper',
+      'Full Width Airflow',
+      'LED Lighting',
+      'Super Cool',
+    ],
+    image: rs370Hero,
+    posterImage: rs370Poster,
+    gallery: rs370Gallery,
+    featureCards: rs370FeatureCards,
+    sectionGroups: [
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          {
+            image: productAsset('rs-370/1-easy-open-door-handle.jpg'),
+            copyKey: 'easyOpenDoorHandle',
+          },
+          { image: productAsset('rs-370/2-fresh-crisper.jpg'), copyKey: 'freshCrisper' },
+        ],
+      },
+      {
+        kind: 'content',
+        sections: [
+          { image: productAsset('rs-370/3-full-width-airflow.jpg'), copyKey: 'fullWidthAirflow' },
+          { image: productAsset('rs-370/4-LED-lighting.jpg'), copyKey: 'ledLighting' },
+          { image: productAsset('rs-370/5-pure-appearance.jpg'), copyKey: 'pureAppearance' },
+          {
+            image: productAsset('rs-370/6-sleek-water-dispenser.jpg'),
+            copyKey: 'sleekWaterDispenser',
+          },
+          { image: productAsset('rs-370/7-reversible-door.jpg'), copyKey: 'reversibleDoor' },
+          { image: productAsset('rs-370/8-super-cool.jpg'), copyKey: 'superCool' },
+        ],
+      },
+    ],
+    specs: {
+      fa: [
+        'یخچال',
+        'مجهز به آبریز',
+        'سیستم بدون برفک',
+        'سیستم گردش هوا در طبقات',
+        'انجماد سریع',
+        'صفحه نمایش دیجیتال',
+        'سـیستم یـخ زدایی خودکار',
+        'قـــــابلیت جــابــجایی طـــبقات',
+        'نوریکنواخت در فضای کابین یخچال',
+        'قابلیت دسترسی سریع و آسان به مواد غذایی  در کشو',
+        'ارتفاع (cm): 186',
+        'پهنا (cm): 60',
+        'عمق (cm): 67',
+        'وزن خالص یخچال (kg): 66',
+        'ظرفیت خالص یخچال (L): 350',
+      ],
+      en: [
+        'Refrigerator',
+        'Water dispenser',
+        'No-frost system',
+        'Multi-air flow circulation',
+        'Super freeze',
+        'Digital display',
+        'Automatic defrost system',
+        'Adjustable shelves',
+        'Uniform cabinet lighting',
+        'Easy-access drawers',
+        'Height (cm): 186',
+        'Width (cm): 60',
+        'Depth (cm): 67',
+        'Net refrigerator weight (kg): 66',
+        'Net refrigerator capacity (L): 350',
+      ],
+    },
+    copy: {
+      en: rs370CopyEn,
+      fa: rs370CopyFa,
+    },
+  },
+  {
+    id: 'fs-270',
+    sku: 'FS-270',
+    series: 'FS-270',
+    seriesLabel: 'FS-270 Freezer',
+    panel: '',
+    resolution: '',
+    refreshRate: '',
+    os: '',
+    sound: '',
+    connectivity: [],
+    tuner: '',
+    extras: ['Total No Frost', 'Super Freeze', 'LED Display', 'Reversible Door', 'Low Noise'],
+    image: fs270Hero,
+    posterImage: fs270Poster,
+    gallery: fs270Gallery,
+    featureCards: fs270FeatureCards,
+    sectionGroups: [
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: productAsset('fs-270/1-total-no-frost.jpg'), copyKey: 'totalNoFrost' },
+          { image: productAsset('fs-270/2-super-freeze.jpg'), copyKey: 'superFreeze' },
+        ],
+      },
+      {
+        kind: 'content',
+        sections: [
+          { image: productAsset('fs-270/3-adjustable-legs.jpg'), copyKey: 'adjustableLegs' },
+          { image: productAsset('fs-270/4-LED-display.jpg'), copyKey: 'ledDisplay' },
+          { image: productAsset('fs-270/5-premium-appearance.jpg'), copyKey: 'premiumAppearance' },
+          { image: productAsset('fs-270/6-reversible-door.jpg'), copyKey: 'reversibleDoor' },
+          { image: productAsset('fs-270/7-low-noise.jpg'), copyKey: 'lowNoise' },
+        ],
+      },
+    ],
+    specs: {
+      fa: [
+        'فریزر',
+        'سیستم بدون برفک',
+        'سیستم گردش هوا در طبقات',
+        'انجماد سریع',
+        'صفحه نمایش دیجیتال',
+        'سـیستم یـخ زدایی خودکار',
+        'قـــــابلیت جــابــجایی طـــبقات',
+        'نوریکنواخت در فضای کابین یخچال',
+        'قابلیت دسترسی سریع و آسان به مواد غذایی  در کشو',
+        'ارتفاع (cm): 186',
+        'پهنا (cm): 60',
+        'عمق (cm): 67',
+        'وزن خالص فریزر (kg): 72',
+        'ظرفیت خالص فریزر (L): 260',
+      ],
+      en: [
+        'Freezer',
+        'No-frost system',
+        'Multi-air flow circulation',
+        'Super freeze',
+        'Digital display',
+        'Automatic defrost system',
+        'Adjustable shelves',
+        'Uniform cabinet lighting',
+        'Easy-access drawers',
+        'Height (cm): 186',
+        'Width (cm): 60',
+        'Depth (cm): 67',
+        'Net freezer weight (kg): 72',
+        'Net freezer capacity (L): 260',
+      ],
+    },
+    copy: {
+      en: fs270CopyEn,
+      fa: fs270CopyFa,
+    },
+  },
+  {
+    id: 'fc-310',
+    sku: 'FC-310',
+    series: 'FC-310',
+    seriesLabel: 'FC-310 Chest Freezer',
+    panel: '',
+    resolution: '',
+    refreshRate: '',
+    os: '',
+    sound: '',
+    connectivity: [],
+    tuner: '',
+    extras: [
+      'Premium Boundless Door',
+      'Hovering Door',
+      'Mechanical Temperature Control',
+      'Super Freeze',
+    ],
+    image: fc310Hero,
+    posterImage: fc310Poster,
+    gallery: fc310Gallery,
+    featureCards: fc310FeatureCards,
+    sectionGroups: [
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [{ image: productAsset('fc-310/1-less-is-more.jpg'), copyKey: 'lessIsMore' }],
+      },
+      {
+        kind: 'overlay',
+        sections: [
+          {
+            image: productAsset('fc-310/2-premium-boundless-door.jpg'),
+            copyKey: 'premiumBoundlessDoor',
+            textPosition: 'left',
+          },
+        ],
+      },
+      {
+        kind: 'content',
+        sections: [
+          { image: productAsset('fc-310/3-sliding-basket.jpg'), copyKey: 'slidingBasket' },
+          { image: productAsset('fc-310/4-ultrathin-hinges.jpg'), copyKey: 'ultrathinHinges' },
+          { image: productAsset('fc-310/5-my-fresh-choice.jpg'), copyKey: 'myFreshChoice' },
+          { image: productAsset('fc-310/6-hovering-door.jpg'), copyKey: 'hoveringDoor' },
+          {
+            image: productAsset('fc-310/7-mechanical-temperature-control.jpg'),
+            copyKey: 'mechanicalTemperatureControl',
+          },
+          { image: productAsset('fc-310/8-super-freeze.jpg'), copyKey: 'superFreeze' },
+        ],
+      },
+    ],
+    specs: {
+      fa: [
+        'ارتفاع (cm): 85',
+        'پهنا (cm): 112',
+        'عمق (cm): 63',
+        'وزن خالص (kg): 40',
+        'ظرفیت خالص فریزر (L): 297',
+        'گاز مبرد: R600a',
+      ],
+      en: [
+        'Height (cm): 85',
+        'Width (cm): 112',
+        'Depth (cm): 63',
+        'Net weight (kg): 40',
+        'Net freezer capacity (L): 297',
+        'Refrigerant: R600a',
+      ],
+    },
+    copy: {
+      en: fc310CopyEn,
+      fa: fc310CopyFa,
+    },
+  },
+  {
+    id: 'fc-210',
+    sku: 'FC-210',
+    series: 'FC-210',
+    seriesLabel: 'FC-210 Chest Freezer',
+    panel: '',
+    resolution: '',
+    refreshRate: '',
+    os: '',
+    sound: '',
+    connectivity: [],
+    tuner: '',
+    extras: ['Super Freeze', 'My Fresh Choice', '360° Cooling', 'Big Capacity'],
+    image: fc210Hero,
+    posterImage: fc210Poster,
+    gallery: fc210Gallery,
+    featureCards: fc210FeatureCards,
+    sectionGroups: [
+      {
+        kind: 'overlay',
+        sections: [
+          {
+            image: productAsset('fc-210/1-super-freeze.jpg'),
+            copyKey: 'superFreeze',
+            textPosition: 'left',
+          },
+        ],
+      },
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: productAsset('fc-210/2-my-fresh-choice.jpg'), copyKey: 'myFreshChoice' },
+        ],
+      },
+      {
+        kind: 'overlay',
+        sections: [
+          {
+            image: productAsset('fc-210/3-keep-for-135H.png'),
+            copyKey: 'keepFor135H',
+            textPosition: 'left',
+          },
+          {
+            image: productAsset('fc-210/4-360-cooling.jpg'),
+            copyKey: 'cooling360',
+            textPosition: 'left',
+          },
+        ],
+      },
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: productAsset('fc-210/5-ultrathin-hinges.jpg'), copyKey: 'ultrathinHinges' },
+        ],
+      },
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [{ image: productAsset('fc-210/6-big-capacity.jpg'), copyKey: 'bigCapacity' }],
+      },
+      {
+        kind: 'stacked',
+        textFirst: true,
+        sections: [
+          { image: productAsset('fc-210/7-sliding-basket.jpg'), copyKey: 'slidingBasket' },
+        ],
+      },
+    ],
+    specs: {
+      fa: [
+        'ارتفاع (cm): 85',
+        'پهنا (cm): 80',
+        'عمق (cm): 56',
+        'وزن خالص فریزر (kg): 30',
+        'ظرفیت خالص فریزر (L): 198',
+        'گاز مبرد: R600a',
+      ],
+      en: [
+        'Height (cm): 85',
+        'Width (cm): 80',
+        'Depth (cm): 56',
+        'Net freezer weight (kg): 30',
+        'Net freezer capacity (L): 198',
+        'Refrigerant: R600a',
+      ],
+    },
+    copy: {
+      en: fc210CopyEn,
+      fa: fc210CopyFa,
+    },
+  },
 ];

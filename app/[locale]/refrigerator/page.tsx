@@ -61,9 +61,42 @@ const REFRIGERATOR_PRODUCTS = [
       en: 'Combi Refrigerator 300',
     },
   },
-  { id: 'twin270-370', label: 'Twin 270-370', image: bannerAsset('refrigerator-no-2.webp') },
-  { id: 'fc-310', label: 'FC-310', image: productAsset('fc-310/product_image_1.png') },
-  { id: 'fc-210', label: 'FC-210', image: productAsset('fc-210/product_image_1.jpg') },
+  {
+    id: 'rs-370',
+    label: 'RS-370',
+    image: productAsset('rs-370/rs-370-card.png'),
+    title: {
+      fa: 'یخچال هایسنس مدل RS-370',
+      en: 'Hisense Refrigerator RS-370',
+    },
+  },
+  {
+    id: 'fs-270',
+    label: 'FS-270',
+    image: productAsset('fs-270/fs-270-card.jpg'),
+    title: {
+      fa: 'فریزر هایسنس مدل FS-270',
+      en: 'Hisense Freezer FS-270',
+    },
+  },
+  {
+    id: 'fc-310',
+    label: 'FC-310',
+    image: productAsset('fc-310/fc-310-card.png'),
+    title: {
+      fa: 'فریزر صندوقی هایسنس مدل FC-310',
+      en: 'Hisense Chest Freezer FC-310',
+    },
+  },
+  {
+    id: 'fc-210',
+    label: 'FC-210',
+    image: productAsset('fc-210/fc-210-card.jpg'),
+    title: {
+      fa: 'فریزر صندوقی هایسنس مدل FC-210',
+      en: 'Hisense Chest Freezer FC-210',
+    },
+  },
 ] satisfies readonly RefrigeratorProduct[];
 
 export async function generateMetadata(): Promise<Metadata> {
