@@ -8,11 +8,13 @@ import type { ContentSectionData } from './ContentSections';
 type OverlayContentSectionsProps = {
   sections: ContentSectionData[];
   isRTL?: boolean;
+  tone?: 'light' | 'dark';
 };
 
 export default function OverlayContentSections({
   sections,
   isRTL = false,
+  tone = 'light',
 }: OverlayContentSectionsProps) {
   const refs = useRef<(HTMLDivElement | null)[]>([]);
   const [visible, setVisible] = useState<boolean[]>(() => sections.map(() => false));
@@ -54,6 +56,13 @@ export default function OverlayContentSections({
         const textAlign = isTextLeft ? 'items-start text-right' : 'items-end text-left';
         const textOffset = isTextLeft ? '-translate-x-6' : 'translate-x-6';
         const show = visible[idx];
+        const textToneClass = tone === 'dark' ? 'text-(--default-black-font)' : 'text-white';
+        const textMutedClass = tone === 'dark' ? 'text-black/70' : 'text-white/85';
+        const overlayClass =
+          tone === 'dark'
+            ? 'bg-linear-to-t from-white/80 via-white/35 to-transparent'
+            : 'bg-linear-to-t from-black/30 via-transparent to-black/5';
+        const shadowClass = tone === 'dark' ? '' : 'drop-shadow-[0_14px_32px_rgba(0,0,0,0.65)]';
 
         return (
           <div
@@ -76,7 +85,7 @@ export default function OverlayContentSections({
               </div>
 
               <div
-                className={`relative overflow-hidden aspect-video w-full rounded-3xl transition-all duration-900 ease-out lg:aspect-21/9 lg:min-h-[420px] ${
+                className={`relative overflow-hidden aspect-video w-full rounded-3xl transition-all duration-900 ease-out lg:aspect-21/9 lg:min-h-105 ${
                   show ? 'opacity-100 translate-y-0' : `opacity-0 ${textOffset}`
                 }`}
               >
@@ -89,14 +98,14 @@ export default function OverlayContentSections({
                   priority={idx === 0}
                 />
 
-                <div className="hidden lg:block absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-black/5" />
+                <div className={`hidden lg:block absolute inset-0 ${overlayClass}`} />
                 <div
                   className={`hidden lg:flex absolute inset-0 items-center px-5 py-10 sm:px-10 lg:px-16 ${
                     isTextLeft ? 'justify-end' : 'justify-start'
                   }`}
                 >
                   <div
-                    className={`max-w-[420px] space-y-4 text-white drop-shadow-[0_14px_32px_rgba(0,0,0,0.65)] transition-all duration-900 ease-out ${
+                    className={`max-w-105 space-y-4 ${textToneClass} ${shadowClass} transition-all duration-900 ease-out ${
                       show
                         ? 'opacity-100 translate-y-0 translate-x-0'
                         : `opacity-0 translate-y-4 ${textOffset}`
@@ -106,7 +115,9 @@ export default function OverlayContentSections({
                     <h3 className="text-xl font-black leading-tight sm:text-xl lg:text-2xl 4xl:text-3xl">
                       {section.title}
                     </h3>
-                    <p className="text-xs leading-relaxed text-white/85 sm:text-sm lg:text-base 4xl:text-lg">
+                    <p
+                      className={`text-xs leading-relaxed sm:text-sm lg:text-base 4xl:text-lg ${textMutedClass}`}
+                    >
                       {section.text}
                     </p>
                   </div>

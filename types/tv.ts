@@ -46,9 +46,64 @@ export type CopyBlockKey =
   | 'allergySteam'
   | 'stains'
   | 'selfDiagnostic'
-  | 'durableInverter'
   | 'quickWashDry'
-  | 'lintClean';
+  | 'lintClean'
+  | 'premiumFlatDoor'
+  | 'myFreshChoice'
+  | 'tripleZone'
+  | 'bigCapacity'
+  | 'metalGlideDrawers'
+  | 'metalCooling'
+  | 'adjustableShelves'
+  | 'waterDispenser'
+  | 'inverterTechnology'
+  | 'preciseTempControl'
+  | 'metalRecessedHandle'
+  | 'bigDoorBalcony'
+  | 'biggerDrawers'
+  | 'superCool'
+  | 'doorAlarm'
+  | 'iceWaterDispenser'
+  | 'independentZones'
+  | 'selfClosingSystem'
+  | 'multiAirFlow'
+  | 'digitalSensors'
+  | 'sleekWaterDispenser'
+  | 'durableInverter'
+  | 'totalNoFrost'
+  | 'largeCrisperPlus'
+  | 'premiumDesign'
+  | 'counterDepth'
+  | 'freshZone'
+  | 'removableTwistIceMaker'
+  | 'electronicTouchControl'
+  | 'softLedLighting'
+  | 'superFreeze'
+  | 'microVentsTechnology'
+  | 'moistureFreshCrisper'
+  | 'temperedGlassShelves'
+  | 'freshBox'
+  | 'preciseElectronicControl'
+  | 'reversibleDoor'
+  | 'lowNoise'
+  | 'easyToUseDrawer'
+  | 'easyOpenDrawer'
+  | 'easyOpenDoorHandle'
+  | 'freshCrisper'
+  | 'fullWidthAirflow'
+  | 'ledLighting'
+  | 'pureAppearance'
+  | 'adjustableLegs'
+  | 'ledDisplay'
+  | 'premiumAppearance'
+  | 'keepFor135H'
+  | 'cooling360'
+  | 'ultrathinHinges'
+  | 'slidingBasket'
+  | 'lessIsMore'
+  | 'premiumBoundlessDoor'
+  | 'hoveringDoor'
+  | 'mechanicalTemperatureControl';
 
 export type CopyBlock = {
   title?: string;
@@ -86,6 +141,7 @@ export type TvFeatureCard = {
   description: string;
   image: ImageSource;
   imageBlack?: ImageSource;
+  layout?: 'stacked' | 'inline';
 };
 
 export type TvBanner = {
@@ -113,6 +169,8 @@ export type TvProduct = {
   image: ImageSource;
   heroVideo?: string;
   posterImage?: ImageSource;
+  topBanner?: ImageSource;
+  availableColors?: Partial<Record<Locale, string[]>>;
   gallery?: ImageSource[];
   contentSections?: TvSectionConfig[];
   stackedSections?: TvSectionConfig[];
