@@ -2,8 +2,8 @@ import { mediaUrl } from '@/lib/mediaUrl';
 import { type TvFeatureCard, type TvProduct } from '@/types/tv';
 
 // Bundled refrigerator catalog used when a database is not available.
-const productAsset = (path: string) => mediaUrl(`/products/Refrigerator/${path}`);
-const logoAsset = (path: string) => mediaUrl(`/products/Refrigerator/logos/${path}`);
+const productAsset = (path: string) => mediaUrl(`/products/refrigerator/${path}`);
+const logoAsset = (path: string) => mediaUrl(`/products/refrigerator/logos/${path}`);
 
 // SBS-650
 const sbs650FeatureCards = [

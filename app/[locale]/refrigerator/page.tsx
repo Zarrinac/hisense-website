@@ -7,8 +7,8 @@ import { mediaUrl } from '@/lib/mediaUrl';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 
-const bannerAsset = (path: string) => mediaUrl(`/products/Refrigerator/banner/${path}`);
-const productAsset = (path: string) => mediaUrl(`/products/Refrigerator/${path}`);
+const bannerAsset = (path: string) => mediaUrl(`/products/refrigerator/banner/${path}`);
+const productAsset = (path: string) => mediaUrl(`/products/refrigerator/${path}`);
 
 const HERO_BANNERS = {
   desktop: bannerAsset('refrigerator-no-1.webp'),
