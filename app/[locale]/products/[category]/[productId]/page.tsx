@@ -82,6 +82,16 @@ const COPY_BLOCK_KEYS: CopyBlockKey[] = [
   'durableInverter',
   'quickWashDry',
   'lintClean',
+  'fourInOneFilter',
+  'accurateTemperatureControl',
+  'iFeel',
+  'autoSwing4d',
+  'antiCorrosionGoldenFin',
+  'easyCleaning',
+  'easyInstallations',
+  'easyMaintenance',
+  'anionSterilization',
+  'highEnergyEfficiency',
 ];
 
 const COPY_BLOCK_KEYS_SET = new Set(COPY_BLOCK_KEYS);
@@ -342,6 +352,20 @@ const getCategoryCopy = async (categorySlug: ProductCategorySlug) => {
       ],
     };
   }
+  if (categorySlug === 'rac') {
+    const routeTranslations = await getTranslations('Routes.rac');
+    return {
+      label: routeTranslations('title'),
+      keywords: (product: NormalizedProduct) => [
+        product.id,
+        product.series,
+        product.seriesLabel ?? '',
+        'Hisense',
+        'Air Conditioner',
+        'RAC',
+      ],
+    };
+  }
   return {
     label: '',
     keywords: () => [],
@@ -425,7 +449,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const compactFeatureTitles =
     categorySlug === 'wms'
       ? new Set(['Quick Wash', 'Allergy Steam'])
-      : new Set(['Dolby Vision-Atoms', 'Filmmaker', 'IMAX']);
+      : categorySlug === 'rac'
+        ? new Set<string>()
+        : new Set(['Dolby Vision-Atoms', 'Filmmaker', 'IMAX']);
   const availableSizes = getAvailableSizes(product);
   const seriesDisplay = getSeriesDisplay(product);
   const categoryCopy = await getCategoryCopy(categorySlug);

@@ -141,6 +141,29 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  if (category === 'RAC') {
+    const routeTranslations = await getTranslations('Routes.rac');
+    return {
+      title: routeTranslations('title'),
+      description: routeTranslations('description'),
+      openGraph: {
+        title: routeTranslations('title'),
+        description: routeTranslations('description'),
+        url: `/${locale}/products/${categorySlug}`,
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: routeTranslations('title'),
+        description: routeTranslations('description'),
+      },
+      alternates: {
+        canonical: `/${locale}/products/${categorySlug}`,
+      },
+      metadataBase: new URL(SITE_URL),
+    };
+  }
+
   return {};
 }
 
@@ -249,9 +272,10 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
     );
   }
 
-  if (category === 'WMS') {
+  if (category === 'WMS' || category === 'RAC') {
+    const routeKey = category === 'RAC' ? 'Routes.rac' : 'Routes.washingMachine';
     const [routeTranslations, pageTranslations] = await Promise.all([
-      getTranslations('Routes.washingMachine'),
+      getTranslations(routeKey),
       getTranslations('TvHisensePage'),
     ]);
     const products = await fetchProducts(categorySlug, category);
