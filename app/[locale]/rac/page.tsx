@@ -1,4 +1,15 @@
-import createRoutePage from '@/components/routes/createRoutePage';
+import { redirect } from 'next/navigation';
 
-// Residential air conditioner route uses the shared under-construction scaffold.
-export default createRoutePage('rac');
+type PageParams = {
+  locale?: string;
+};
+
+type PageProps = {
+  params: PageParams | Promise<PageParams>;
+};
+
+export default async function RacRoutePage({ params }: PageProps) {
+  const resolved = await params;
+  const locale = resolved?.locale ?? 'fa';
+  redirect(`/${locale}/products/rac`);
+}

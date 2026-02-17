@@ -103,7 +103,17 @@ export type CopyBlockKey =
   | 'lessIsMore'
   | 'premiumBoundlessDoor'
   | 'hoveringDoor'
-  | 'mechanicalTemperatureControl';
+  | 'mechanicalTemperatureControl'
+  | 'fourInOneFilter'
+  | 'accurateTemperatureControl'
+  | 'iFeel'
+  | 'autoSwing4d'
+  | 'antiCorrosionGoldenFin'
+  | 'easyCleaning'
+  | 'easyInstallations'
+  | 'easyMaintenance'
+  | 'anionSterilization'
+  | 'highEnergyEfficiency';
 
 export type CopyBlock = {
   title?: string;

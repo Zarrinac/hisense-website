@@ -1,6 +1,7 @@
 import type { Prisma, Product, ProductCopy, TvSpec } from '@prisma/client';
 import { TV_PRODUCTS } from '@/content/tvProducts';
 import { WM_PRODUCTS } from '@/content/WmProducts';
+import { RAC_PRODUCTS } from '@/content/RacProducts';
 import type {
   TvBanner,
   TvComparisonConfig,
@@ -441,6 +442,7 @@ export const normalizeContentProduct = (
 export const FALLBACK_PRODUCTS: ApiProduct[] = [
   ...TV_PRODUCTS.map((product) => normalizeContentProduct(product, 'TVS')),
   ...WM_PRODUCTS.map((product) => normalizeContentProduct(product, 'WMS')),
+  ...RAC_PRODUCTS.map((product) => normalizeContentProduct(product, 'RAC')),
 ];
 
 export const findFallbackProduct = (
