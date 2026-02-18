@@ -13,15 +13,15 @@ const FeatureCardsGrid = ({ featureCards, compactFeatureTitles }: FeatureCardsGr
 
   return (
     <div className="w-full mx-auto max-w-360">
-      <div className="grid w-full grid-cols-2 gap-4 mx-auto sm:grid-cols-3 md:grid-cols-5">
+      <div className="grid w-full grid-cols-2 gap-3 mx-auto sm:grid-cols-3 md:gap-4 md:grid-cols-5">
         {featureCards.map((block) => {
           const isInline = block.layout === 'inline';
           const cardLayoutClass = isInline
-            ? 'flex-row items-center gap-3 px-4 py-3'
-            : 'flex-col gap-2 items-center justify-between';
+            ? 'flex-row items-center gap-2.5 px-3 py-3 md:gap-3 md:px-4'
+            : 'flex-col gap-2 items-center justify-between px-2 py-2.5 md:px-3';
           const titleClass = isInline
-            ? 'text-xs text-left md:text-sm'
-            : 'mb-2 text-xs text-center md:text-sm md:mb-2';
+            ? 'text-[11px] text-left leading-snug md:text-sm'
+            : 'mb-1 text-[11px] text-center leading-snug md:text-sm md:mb-2';
 
           return (
             <div

@@ -207,7 +207,7 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
               {routeTranslations('description')}
             </p>
           </div>
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
             {products.map((product) => {
               const copy = product.copy[lang] ?? product.copy.en;
               const featureTags = (product.extras ?? []).slice(0, 3).filter(Boolean);
@@ -255,11 +255,11 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col flex-1 gap-2 p-6">
+                  <div className="flex flex-col flex-1 gap-1.5 p-4 sm:gap-2 sm:p-6">
                     <p className="text-xs font-semibold uppercase tracking-[0.35em] text-(--text-subtle-color)">
                       {product.series}
                     </p>
-                    <h3 className="text-lg font-bold text-(--default-black-font) sm:text-xl">
+                    <h3 className="text-base font-bold text-(--default-black-font) sm:text-xl">
                       {copy.name}
                     </h3>
                   </div>
@@ -291,7 +291,7 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
         />
 
         <div className="w-full px-4 mx-auto max-w-480 sm:px-6 lg:px-10">
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
             {products.map((product) => {
               const copy = product.copy[lang] ?? product.copy.en;
               const seriesLabel = product.seriesLabel ?? product.series;
@@ -342,14 +342,14 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col flex-1 gap-2 p-6">
+                  <div className="flex flex-col flex-1 gap-1.5 p-4 sm:gap-2 sm:p-6">
                     <p className="text-xs font-semibold uppercase tracking-[0.35em] text-(--text-subtle-color)">
                       <span dir={seriesLabelDir}>{seriesLabel}</span>
                     </p>
-                    <h3 className="text-lg font-bold text-(--default-black-font) sm:text-xl">
+                    <h3 className="text-base font-bold text-(--default-black-font) sm:text-xl">
                       {copy.name}
                     </h3>
-                    <p className="text-sm text-(--text-muted-color)">{copy.tagline}</p>
+                    <p className="text-xs text-(--text-muted-color) sm:text-sm">{copy.tagline}</p>
                   </div>
                 </Link>
               );

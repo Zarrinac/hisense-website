@@ -25,9 +25,9 @@ const ComparisonSections = ({ sections, comparisonLabels, lang }: ComparisonSect
   if (sections.length === 0) return null;
 
   return (
-    <div className="w-full mx-auto space-y-12 max-w-360">
+    <div className="w-full mx-auto space-y-8 sm:space-y-10 md:space-y-12 max-w-360">
       {sections.map((section, idx) => (
-        <div key={`${section.title}-${idx}`} className="grid items-center gap-8 lg:grid-cols-2">
+        <div key={`${section.title}-${idx}`} className="grid items-center gap-6 lg:grid-cols-2">
           {(() => {
             const isSliderLeftBase = idx % 2 === 0;
             const isSliderLeft = lang === 'fa' ? !isSliderLeftBase : isSliderLeftBase;
@@ -44,8 +44,8 @@ const ComparisonSections = ({ sections, comparisonLabels, lang }: ComparisonSect
                     isRTL={lang === 'fa'}
                   />
                 </div>
-                <div className={`space-y-3 lg:space-y-4 ${textOrder}`}>
-                  <h3 className="text-2xl font-bold md:text-3xl">{section.title}</h3>
+                <div className={`space-y-2.5 lg:space-y-4 ${textOrder}`}>
+                  <h3 className="text-xl font-bold sm:text-2xl md:text-3xl">{section.title}</h3>
                   <p className="text-sm leading-relaxed text-(--text-muted-color) md:text-base">
                     {section.text}
                   </p>

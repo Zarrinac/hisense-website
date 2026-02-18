@@ -55,7 +55,7 @@ export default function ContentSections({
   }, [sections.length]);
 
   return (
-    <div className="w-full mx-auto space-y-10 max-w-360 md:space-y-14">
+    <div className="w-full mx-auto space-y-8 max-w-360 md:space-y-14">
       {sections.map((section, idx) => {
         const isImageRightBase = idx % 2 === 0;
         const isImageRight = isRTL ? !isImageRightBase : isImageRightBase;
@@ -74,11 +74,11 @@ export default function ContentSections({
             }`}
           >
             <div
-              className={`flex-1 space-y-3 md:space-y-4 transition-all duration-1100 ease-out ${
+              className={`flex-1 space-y-2.5 md:space-y-4 transition-all duration-1100 ease-out ${
                 show ? 'opacity-100 translate-x-0' : `opacity-0 ${textOffset}`
               }`}
             >
-              <h3 className="text-xl font-bold md:text-2xl">{section.title}</h3>
+              <h3 className="text-lg font-bold sm:text-xl md:text-2xl">{section.title}</h3>
               <p className="text-sm leading-relaxed text-(--text-muted-color) md:text-base">
                 {section.text}
               </p>
