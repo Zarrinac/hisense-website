@@ -82,6 +82,16 @@ const COPY_BLOCK_KEYS: CopyBlockKey[] = [
   'durableInverter',
   'quickWashDry',
   'lintClean',
+  'fourInOneFilter',
+  'accurateTemperatureControl',
+  'iFeel',
+  'autoSwing4d',
+  'antiCorrosionGoldenFin',
+  'easyCleaning',
+  'easyInstallations',
+  'easyMaintenance',
+  'anionSterilization',
+  'highEnergyEfficiency',
 ];
 
 const COPY_BLOCK_KEYS_SET = new Set(COPY_BLOCK_KEYS);
@@ -342,6 +352,20 @@ const getCategoryCopy = async (categorySlug: ProductCategorySlug) => {
       ],
     };
   }
+  if (categorySlug === 'rac') {
+    const routeTranslations = await getTranslations('Routes.rac');
+    return {
+      label: routeTranslations('title'),
+      keywords: (product: NormalizedProduct) => [
+        product.id,
+        product.series,
+        product.seriesLabel ?? '',
+        'Hisense',
+        'Air Conditioner',
+        'RAC',
+      ],
+    };
+  }
   return {
     label: '',
     keywords: () => [],
@@ -425,7 +449,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const compactFeatureTitles =
     categorySlug === 'wms'
       ? new Set(['Quick Wash', 'Allergy Steam'])
-      : new Set(['Dolby Vision-Atoms', 'Filmmaker', 'IMAX']);
+      : categorySlug === 'rac'
+        ? new Set<string>()
+        : new Set(['Dolby Vision-Atoms', 'Filmmaker', 'IMAX']);
   const availableSizes = getAvailableSizes(product);
   const seriesDisplay = getSeriesDisplay(product);
   const categoryCopy = await getCategoryCopy(categorySlug);
@@ -439,7 +465,10 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const comparisonLabels = { before: 'Before', after: 'After' };
 
   return (
-    <div className="pb-16 space-y-16 lg:space-y-20 lg:pb-24" dir={lang === 'fa' ? 'rtl' : 'ltr'}>
+    <div
+      className="pb-12 space-y-10 sm:space-y-12 lg:space-y-20 lg:pb-24"
+      dir={lang === 'fa' ? 'rtl' : 'ltr'}
+    >
       <BannerSection
         banner={banners[0]}
         breadcrumbItems={breadcrumbItems}
@@ -470,7 +499,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
         <div className="w-full mx-auto max-w-360">
           <div className="text-center ">
             <p
-              className="text-2xl font-black text-transparent md:text-4xl bg-clip-text"
+              className="text-xl font-black text-transparent sm:text-2xl md:text-4xl bg-clip-text"
               style={{ backgroundImage: 'var(--brand-gradient)' }}
             >
               {masterMomentTitle}

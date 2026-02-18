@@ -120,12 +120,24 @@ async function seed() {
   if (refProducts.length !== REF_PRODUCTS.length) {
     throw new Error('REF_PRODUCTS contains invalid product entries');
   }
+  const racModuleUnknown = (await import(
+    path.resolve(process.cwd(), 'content/RacProducts.ts')
+  )) as unknown;
+  const { RAC_PRODUCTS } = racModuleUnknown as { RAC_PRODUCTS: unknown };
+  if (!Array.isArray(RAC_PRODUCTS)) {
+    throw new Error('RAC_PRODUCTS content module did not export a product array');
+  }
+  const racProducts = RAC_PRODUCTS.filter(isContentProduct);
+  if (racProducts.length !== RAC_PRODUCTS.length) {
+    throw new Error('RAC_PRODUCTS contains invalid product entries');
+  }
   const normalizedTv = tvProducts.map((product) => normalizeContentProduct(product, 'TVS'));
   const normalizedWm = wmProducts.map((product) => normalizeContentProduct(product, 'WMS'));
   const normalizedRef = refProducts.map((product) =>
     normalizeContentProduct(product, 'REFRIGERATOR'),
   );
-  const normalized = [...normalizedTv, ...normalizedWm, ...normalizedRef];
+  const normalizedRac = racProducts.map((product) => normalizeContentProduct(product, 'RAC'));
+  const normalized = [...normalizedTv, ...normalizedWm, ...normalizedRef, ...normalizedRac];
 
   console.log(`Seeding ${normalized.length} products...`);
 

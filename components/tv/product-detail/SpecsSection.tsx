@@ -5,12 +5,12 @@ type SpecsSectionProps = {
 };
 
 const SpecsSection = ({ items, lang }: SpecsSectionProps) => (
-  <div className="w-full mx-auto space-y-12 max-w-360">
-    <div className="space-y-4 rounded-3xl border border-(--border-color) bg-(--surface-color) p-6 shadow-sm md:p-8">
-      <h2 className="text-2xl font-bold text-center sm:text-3xl">
+  <div className="w-full mx-auto space-y-8 sm:space-y-10 md:space-y-12 max-w-360">
+    <div className="space-y-4 rounded-3xl border border-(--border-color) bg-(--surface-color) p-4 shadow-sm sm:p-6 md:p-8">
+      <h2 className="text-xl font-bold text-center sm:text-2xl md:text-3xl">
         {lang === 'fa' ? 'مشخصات فنی' : 'Specifications'}
       </h2>
-      <ul className="grid gap-3 text-sm text-(--default-black-font) sm:grid-cols-2 md:text-base">
+      <ul className="grid gap-2.5 text-sm text-(--default-black-font) sm:grid-cols-2 md:text-base">
         {items.map((item, idx) => (
           <li
             key={idx}

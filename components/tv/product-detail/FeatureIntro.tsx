@@ -11,12 +11,12 @@ const FeatureIntro = ({ title, text }: FeatureIntroProps) => {
     <div className="w-full mx-auto max-w-360">
       <div className="text-center ">
         <h2
-          className="text-2xl font-black text-transparent md:text-4xl bg-clip-text md:py-4 2xl:text-6xl"
+          className="text-xl font-black text-transparent sm:text-2xl md:text-4xl bg-clip-text md:py-4 2xl:text-6xl"
           style={{ backgroundImage: 'linear-gradient(90deg, #6DEBE6, #00AAA6, #067977)' }}
         >
           {title}
         </h2>
-        <p className="mt-4 text-sm font-semiold leading-10 text-(--text-muted-color) md:text-base 2xl:text-lg 4xl:text-2xl">
+        <p className="mt-3 text-sm leading-relaxed text-(--text-muted-color) md:mt-4 md:text-base md:leading-8 2xl:text-lg 4xl:text-2xl">
           {text}
         </p>
       </div>

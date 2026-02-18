@@ -60,8 +60,8 @@ export default function StackedContentSections({
   }, [sections.length]);
 
   const containerClassName = className
-    ? `w-full mx-auto space-y-12 max-w-360 ${className}`
-    : 'w-full mx-auto space-y-12 max-w-360';
+    ? `w-full mx-auto space-y-8 sm:space-y-10 md:space-y-12 max-w-360 ${className}`
+    : 'w-full mx-auto space-y-8 sm:space-y-10 md:space-y-12 max-w-360';
   const resolvedCardClassName = cardClassName
     ? `overflow-hidden rounded-3xl ${cardClassName}`
     : 'overflow-hidden rounded-3xl';
@@ -75,13 +75,13 @@ export default function StackedContentSections({
         const show = visible[idx];
         const textBlock = (
           <div
-            className={`px-6 pb-6 pt-4 text-center md:px-10 transition-all duration-700 ease-out ${
+            className={`px-4 pb-5 pt-4 text-center sm:px-6 md:px-10 transition-all duration-700 ease-out ${
               show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
             style={{ transitionDelay: show ? '140ms' : '0ms' }}
           >
-            <h3 className="text-2xl font-bold md:text-3xl">{section.title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-(--text-muted-color) md:text-base">
+            <h3 className="text-xl font-bold sm:text-2xl md:text-3xl">{section.title}</h3>
+            <p className="mt-2.5 text-sm leading-relaxed text-(--text-muted-color) md:text-base">
               {section.text}
             </p>
           </div>

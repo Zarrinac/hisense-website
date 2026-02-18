@@ -47,7 +47,7 @@ export default function OverlayContentSections({
 
   return (
     <div
-      className="w-full mx-auto space-y-12 max-w-360 md:space-y-16 lg:my-16"
+      className="w-full mx-auto space-y-8 sm:space-y-10 max-w-360 md:space-y-16 lg:my-16"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {sections.map((section, idx) => {
@@ -75,13 +75,11 @@ export default function OverlayContentSections({
           >
             <div className="flex flex-col">
               <div
-                className={`lg:hidden flex flex-col gap-3 px-6 pb-6 pt-5 sm:px-8 md:px-10 transition-all duration-700 ease-out text-center justify-center`}
+                className={`lg:hidden flex flex-col gap-2.5 px-4 pb-5 pt-4 sm:px-6 md:px-10 transition-all duration-700 ease-out text-center justify-center`}
                 style={{ transitionDelay: show ? '140ms' : '0ms' }}
               >
-                <h3 className="text-xl font-black leading-tight sm:text-2xl">{section.title}</h3>
-                <p className="text-sm leading-relaxed text-(--text-muted-color) sm:text-base">
-                  {section.text}
-                </p>
+                <h3 className="text-lg font-black leading-tight sm:text-xl">{section.title}</h3>
+                <p className="text-sm leading-relaxed text-(--text-muted-color)">{section.text}</p>
               </div>
 
               <div
