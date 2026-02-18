@@ -18,22 +18,22 @@ const MobileHeader = ({
   availableSizes,
 }: MobileHeaderProps) => (
   <div
-    className={`sm:hidden w-full mx-auto max-w-360 px-4 space-y-3 ${
+    className={`md:hidden w-full mx-auto max-w-360 px-4 space-y-2 ${
       lang === 'fa' ? 'text-right' : 'text-left'
     }`}
   >
     <Breadcrumbs
       items={breadcrumbItems}
       lang={lang}
-      className="text-xs font-semibold text-(--text-muted-color)"
+      className="text-[11px] font-semibold text-(--text-muted-color)"
       separatorClassName="text-(--border-color)"
     />
-    <div className="space-y-2">
-      <h1 className="text-2xl font-black text-(--default-black-font)">
+    <div className="space-y-1.5">
+      <h1 className="text-xl font-black leading-tight text-(--default-black-font) sm:text-2xl">
         {seriesDisplay || copyName}
       </h1>
       {availableSizes.length > 0 && (
-        <ul className="flex flex-wrap items-center gap-3 text-xs sm:text-base text-(--text-muted-color)">
+        <ul className="flex flex-wrap items-center gap-2.5 text-xs text-(--text-muted-color)">
           {availableSizes.map((size, idx) => (
             <li key={`${size}-${idx}`} className="flex items-center gap-2">
               <span className="inline-flex h-2 w-2 items-center justify-center rounded-full border border-(--brand-color)" />

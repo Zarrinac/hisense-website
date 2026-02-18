@@ -128,14 +128,14 @@ export default function TvHeroCarousel({ slides, locale }: TvHeroCarouselProps) 
         >
           {orderedSlides.map((slide) => (
             <div key={slide.id} className="relative min-w-0 flex-[0_0_100%]">
-              <div className="relative aspect-9/16 w-full overflow-hidden md:aspect-video lg:aspect-21/9">
+              <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10] md:aspect-video lg:aspect-21/9">
                 <Image
                   src={slide.image}
                   alt={slide.title}
                   fill
-                  className="object-cover"
+                  className="object-cover object-center"
                   priority
-                  sizes="(max-width: 768px) 100vw, 100vw"
+                  sizes="100vw"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/35 to-transparent" />
                 {/* <div className="absolute inset-0 flex items-end px-6 pb-10 pt-12 sm:px-10 lg:px-16 lg:pb-12 lg:pt-16">
@@ -179,7 +179,7 @@ export default function TvHeroCarousel({ slides, locale }: TvHeroCarouselProps) 
         <HiChevronRight className="h-4 w-4 2xl:h-6 2xl:w-6" />
       </button>
 
-      <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 flex-wrap items-center gap-3 rounded-full bg-black/40 px-4 py-2 backdrop-blur-sm">
+      <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 flex-wrap items-center gap-2 rounded-full bg-black/40 px-3 py-1.5 backdrop-blur-sm sm:bottom-4 sm:gap-3 sm:px-4 sm:py-2">
         {orderedSlides.map((slide, index) => (
           <button
             key={slide.id}
