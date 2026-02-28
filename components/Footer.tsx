@@ -43,7 +43,6 @@ const FOOTER_SECTIONS: Array<{
       { key: 'refrigerator', href: '/refrigerator' },
       { key: 'television', href: '/products/tvs' },
       { key: 'washingMachine', href: '/products/wms' },
-      { key: 'dcode', href: '/led-dcode' },
     ],
   },
   {

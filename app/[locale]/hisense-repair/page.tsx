@@ -86,7 +86,7 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
       eyebrow: 'خدمات رسمی تعمیر و نگهداری',
       title: 'تعمیرکار هایسنس',
       description:
-        "اگر به دنبال تعمیرکار هایسنس برای تلویزیون، کولرگازی، یخچال یا ماشین لباسشویی هستید، تیم فنی زرین نمای کاسپین آماده پاسخگویی است. خدمات تعمیر و پشتیبانی محصولات Hisense و D'CODE با قطعات اصلی و تکنسین‌های آموزش‌دیده انجام می‌شود.",
+        'اگر به دنبال تعمیرکار هایسنس برای تلویزیون، کولرگازی، یخچال یا ماشین لباسشویی هستید، تیم فنی زرین نمای کاسپین آماده پاسخگویی است. خدمات تعمیر و پشتیبانی محصولات Hisense با قطعات اصلی و تکنسین‌های آموزش‌دیده انجام می‌شود.',
       highlights: ['اعزام سریع تکنسین', 'پوشش سراسری', 'قطعات اصلی', 'گارانتی خدمات'],
       actions: [
         { label: 'تماس با مرکز خدمات', href: 'tel:02172133' },
@@ -135,7 +135,7 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
         },
         {
           title: 'قطعات اصلی و تایید شده',
-          description: "استفاده از قطعات اورجینال و سازگار با محصولات Hisense و D'CODE.",
+          description: 'استفاده از قطعات اورجینال و سازگار با محصولات Hisense.',
           icon: Inventory2OutlinedIcon,
         },
         {
@@ -152,13 +152,12 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
     },
     devices: {
       title: 'چه دستگاه‌هایی را تعمیر می‌کنیم؟',
-      description: "پوشش خدمات برای محصولات اصلی Hisense و D'CODE در سراسر کشور.",
+      description: 'پوشش خدمات برای محصولات اصلی Hisense در سراسر کشور.',
       items: [
         'تلویزیون و نمایشگر',
         'کولرگازی و سیستم‌های تهویه',
         'یخچال و فریزر',
         'ماشین لباسشویی',
-        "D'CODE TV",
       ],
     },
     steps: {
@@ -215,7 +214,7 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
       eyebrow: 'Official repair & maintenance service',
       title: 'Hisense Repair Service',
       description:
-        "If you need a trained Hisense repair technician for TVs, air conditioners, refrigerators, or washing machines, Zarrin Namaye Caspian is here to help. We provide official service for Hisense and D'CODE with genuine parts and certified technicians.",
+        'If you need a trained Hisense repair technician for TVs, air conditioners, refrigerators, or washing machines, Zarrin Namaye Caspian is here to help. We provide official service for Hisense with genuine parts and certified technicians.',
       highlights: [
         'Fast technician dispatch',
         'Nationwide coverage',
@@ -269,7 +268,7 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
         },
         {
           title: 'Genuine parts',
-          description: "Original components for Hisense and D'CODE products.",
+          description: 'Original components for Hisense products.',
           icon: Inventory2OutlinedIcon,
         },
         {
@@ -286,13 +285,12 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
     },
     devices: {
       title: 'Supported devices',
-      description: "Official service coverage for Hisense and D'CODE products nationwide.",
+      description: 'Official service coverage for Hisense products nationwide.',
       items: [
         'Television & display',
         'Residential & commercial HVAC',
         'Refrigerator & freezer',
         'Washing machine',
-        "D'CODE TV",
       ],
     },
     steps: {
