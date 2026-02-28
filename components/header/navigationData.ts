@@ -6,7 +6,6 @@ export const NAV_ITEMS = [
   { key: 'tvAudio', href: '/products/tvs' },
   { key: 'airConditioner', href: '/rac' },
   { key: 'homeAppliances', href: '/refrigerator' },
-  { key: 'dcode', href: '/led-dcode' },
 ] as const;
 
 export const NAV_SECONDARY_ITEMS = [
@@ -71,16 +70,6 @@ export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
         fa: 'ماشین‌های لباسشویی با بخار ضدآلرژی و موتور اینورتر سایلنت.',
       },
       href: '/products/wms',
-    },
-  ],
-  dcode: [
-    {
-      title: { en: "D'CODE TV (LED)", fa: "تلویزیون D'CODE (LED)" },
-      description: {
-        en: "D'CODE smart TVs with localized interface and Persian-first content.",
-        fa: "تلویزیون‌های هوشمند D'CODE با رابط کاربری بومی‌سازی شده و محتوای فارسی.",
-      },
-      href: '/led-dcode',
     },
   ],
   about: [

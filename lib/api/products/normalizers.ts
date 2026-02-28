@@ -22,7 +22,7 @@ import type {
   ApiSection,
   ApiSectionGroup,
 } from './types';
-import type { ProductCategory } from './categories';
+import { PRODUCT_CATEGORY, type ProductCategory } from './categories';
 
 // Normalizes Prisma records and static TV content into the API-facing product shape.
 
@@ -230,6 +230,13 @@ const pickLocaleCopy = (copies: ProductCopy[], locale: ApiLocale): ApiCopy => {
 
 type DbProduct = Product & { copies: ProductCopy[]; tvSpec?: TvSpec | null };
 
+const SUPPORTED_PRODUCT_CATEGORIES = new Set<ProductCategory>(Object.values(PRODUCT_CATEGORY));
+
+const resolveProductCategory = (category: Product['category']): ProductCategory =>
+  SUPPORTED_PRODUCT_CATEGORIES.has(category as ProductCategory)
+    ? (category as ProductCategory)
+    : 'TVS';
+
 export const normalizeDbProduct = (product: DbProduct): ApiProduct => {
   const copyByLocale: Record<ApiLocale, ApiCopy> = {
     en: pickLocaleCopy(product.copies, 'en'),
@@ -242,7 +249,7 @@ export const normalizeDbProduct = (product: DbProduct): ApiProduct => {
   return {
     id: product.id,
     slug,
-    category: product.category,
+    category: resolveProductCategory(product.category),
     sku: product.sku,
     size: product.size,
     sizes: Array.isArray(product.sizes) ? product.sizes : [],

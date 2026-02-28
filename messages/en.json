@@ -1,7 +1,7 @@
 {
   "Metadata": {
     "title": "Zarrin Namaye Caspian | Exclusive Hisense Distributor in Iran",
-    "description": "Zarrin Namaye Caspian, the official Hisense Iran representative, delivers home appliances, residential and commercial HVAC systems, LED TVs, and D'CODE products with nationwide after-sales service.",
+    "description": "Zarrin Namaye Caspian, the official Hisense Iran representative, delivers home appliances, residential and commercial HVAC systems, and LED TVs with nationwide after-sales service.",
     "keywords": [
       "Hisense Iran",
       "Hisense exclusive distributor Iran",
@@ -11,8 +11,7 @@
       "Hisense residential HVAC",
       "Hisense commercial HVAC",
       "Hisense air conditioner Iran",
-      "Hisense refrigerator Iran",
-      "D'CODE LED TV"
+      "Hisense refrigerator Iran"
     ]
   },
   "Header": {
@@ -33,7 +32,6 @@
         "tvAudio": "TV & Audio",
         "airConditioner": "Air-Conditioner",
         "homeAppliances": "Home Appliances",
-        "dcode": "D'CODE",
         "about": "About Hisense",
         "support": "Support"
       }
@@ -50,7 +48,7 @@
   "HomePage": {
     "hero": {
       "title": "Zarrin Namaye Caspian - Official Hisense Distributor in Iran",
-      "subtitle": "Shop Hisense LED TVs, refrigerators, air conditioners, residential and commercial HVAC solutions, and D'CODE products with certified after-sales support across Iran."
+      "subtitle": "Shop Hisense LED TVs, refrigerators, air conditioners, and residential and commercial HVAC solutions with certified after-sales support across Iran."
     },
     "categories": {
       "eyebrow": "",
@@ -129,7 +127,6 @@
       "refrigerator": "Refrigerator",
       "washingMachine": "Washing machine",
       "television": "Television",
-      "dcode": "D'CODE TV",
       "ventilation": "Residential HVAC",
       "industrialVentilation": "Industrial HVAC",
       "faq": "FAQ",
@@ -141,7 +138,6 @@
       "tvHisense": "Hisense TV (LED)",
       "rac": "Residential Air Conditioner",
       "cac": "Commercial Air Conditioner",
-      "ledDcode": "D'CODE TV",
       "portal": "Dealer & Partner Portal",
       "survey": "Customer Survey"
     },
@@ -255,11 +251,6 @@
       "eyebrow": "Refrigeration",
       "title": "Hisense Refrigerators & Freezers",
       "description": "Side-by-side, top mount, and chest freezers featuring Total No-Frost, smart sensors, and PureFlat finishing."
-    },
-    "ledDcode": {
-      "eyebrow": "D'CODE",
-      "title": "D'CODE LED & Smart TVs",
-      "description": "Locally engineered D'CODE televisions with Persian UI, curated content services, and Hisense-backed warranty."
     },
     "washingMachine": {
       "eyebrow": "Laundry",
