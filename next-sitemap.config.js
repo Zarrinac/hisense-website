@@ -33,7 +33,6 @@ const staticPaths = [
   '/rac',
   '/cac',
   '/refrigerator',
-  '/led-dcode',
   '/products/wms',
   '/about',
   '/contact-us',

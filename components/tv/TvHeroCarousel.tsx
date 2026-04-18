@@ -1,7 +1,7 @@
 'use client';
 
 // TV category hero carousel with Embla autoplay and RTL-aware slide order.
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
@@ -62,7 +62,7 @@ function useImagePreloader(images: ImageSource[]) {
 }
 
 export default function TvHeroCarousel({ slides, locale }: TvHeroCarouselProps) {
-  const autoplay = useRef(
+  const [autoplay] = useState(() =>
     Autoplay({
       delay: 6000,
       stopOnInteraction: false,
@@ -74,7 +74,7 @@ export default function TvHeroCarousel({ slides, locale }: TvHeroCarouselProps) 
   const preloadSources = useMemo(() => orderedSlides.map((slide) => slide.image), [orderedSlides]);
   const slidesLoaded = useImagePreloader(preloadSources);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, direction: isRTL ? 'rtl' : 'ltr' }, [
-    autoplay.current,
+    autoplay,
   ]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -102,17 +102,17 @@ export default function TvHeroCarousel({ slides, locale }: TvHeroCarouselProps) 
     if (!slidesLoaded) {
       return;
     }
-    autoplay.current?.reset();
+    autoplay.reset();
     emblaApi?.scrollPrev();
-  }, [emblaApi, slidesLoaded]);
+  }, [autoplay, emblaApi, slidesLoaded]);
 
   const scrollNext = useCallback(() => {
     if (!slidesLoaded) {
       return;
     }
-    autoplay.current?.reset();
+    autoplay.reset();
     emblaApi?.scrollNext();
-  }, [emblaApi, slidesLoaded]);
+  }, [autoplay, emblaApi, slidesLoaded]);
 
   return (
     <section
@@ -128,7 +128,7 @@ export default function TvHeroCarousel({ slides, locale }: TvHeroCarouselProps) 
         >
           {orderedSlides.map((slide) => (
             <div key={slide.id} className="relative min-w-0 flex-[0_0_100%]">
-              <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10] md:aspect-video lg:aspect-21/9">
+              <div className="relative aspect-4/3 w-full overflow-hidden sm:aspect-16/10 md:aspect-video lg:aspect-21/9">
                 <Image
                   src={slide.image}
                   alt={slide.title}
@@ -194,7 +194,7 @@ export default function TvHeroCarousel({ slides, locale }: TvHeroCarouselProps) 
               if (!slidesLoaded) {
                 return;
               }
-              autoplay.current?.reset();
+              autoplay.reset();
               emblaApi?.scrollTo(index);
             }}
           />

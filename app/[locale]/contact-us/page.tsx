@@ -75,7 +75,7 @@ const CONTACT_CONTENT: Record<Locale, ContactContent> = {
       eyebrow: 'نماینده رسمی هایسنس در ایران',
       title: 'ارتباط با صنایع زرین نمای کاسپین',
       description:
-        "برای دریافت مشاوره خرید، پیگیری سفارش، پشتیبانی محصولات Hisense یا D'CODE، و همچنین برقراری ارتباط با بخش‌های مختلف مجموعه صنایع زرین نمای کاسپین، از طریق اطلاعات تماس زیر با ما در ارتباط باشید. زرین نمای کاسپین، تنها نماینده رسمی هایسنس در ایران، آماده پاسخگویی به مشتریان و نمایندگان فروش و خدمات در سراسر کشور است.",
+        'برای دریافت مشاوره خرید، پیگیری سفارش، پشتیبانی محصولات Hisense و همچنین برقراری ارتباط با بخش‌های مختلف مجموعه صنایع زرین نمای کاسپین، از طریق اطلاعات تماس زیر با ما در ارتباط باشید. زرین نمای کاسپین، تنها نماینده رسمی هایسنس در ایران، آماده پاسخگویی به مشتریان و نمایندگان فروش و خدمات در سراسر کشور است.',
       actions: [
         { label: 'تماس فوری با پشتیبانی', href: 'tel:02172133' },
         {
@@ -89,7 +89,7 @@ const CONTACT_CONTENT: Record<Locale, ContactContent> = {
       title: 'پشتیبانی سریع و رسمی',
       description:
         'برای مشاوره خرید، پیگیری سفارش و خدمات پس از فروش، از مسیرهای رسمی زرین نمای کاسپین استفاده کنید.',
-      topics: ['مشاوره خرید', 'پیگیری سفارش', "پشتیبانی Hisense و D'CODE", 'شبکه نمایندگان'],
+      topics: ['مشاوره خرید', 'پیگیری سفارش', 'پشتیبانی Hisense', 'شبکه نمایندگان'],
       imageAlt: 'پشتیبانی رسمی هایسنس ایران',
     },
     groups: [
@@ -180,7 +180,7 @@ const CONTACT_CONTENT: Record<Locale, ContactContent> = {
       eyebrow: 'Official Hisense Representative in Iran',
       title: 'Contact Zarrin Namaye Caspian',
       description:
-        "For purchase advice, order follow-ups, Hisense or D'CODE support, or to reach different departments of Zarrin Namaye Caspian Industries, use the contact details below. We are ready to support customers, sales partners, and service teams nationwide.",
+        'For purchase advice, order follow-ups, Hisense support, or to reach different departments of Zarrin Namaye Caspian Industries, use the contact details below. We are ready to support customers, sales partners, and service teams nationwide.',
       actions: [
         { label: 'Call customer support', href: 'tel:02172133' },
         {
@@ -194,7 +194,7 @@ const CONTACT_CONTENT: Record<Locale, ContactContent> = {
       title: 'Official support, fast response',
       description:
         'Get purchase consulting, order tracking, and after-sales support through our official channels.',
-      topics: ['Purchase advice', 'Order tracking', "Hisense & D'CODE support", 'Dealer network'],
+      topics: ['Purchase advice', 'Order tracking', 'Hisense support', 'Dealer network'],
       imageAlt: 'Hisense Iran support team',
     },
     groups: [

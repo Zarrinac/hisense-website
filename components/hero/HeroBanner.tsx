@@ -2,7 +2,7 @@
 
 // Homepage hero carousel with image preloading and Embla autoplay controls.
 import Image, { type StaticImageData } from 'next/image';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
@@ -89,14 +89,14 @@ function useImagePreloader(images: ImageSource[]) {
 }
 
 export default function HeroBanner() {
-  const autoplay = useRef(
+  const [autoplay] = useState(() =>
     Autoplay({
       delay: 6000,
       stopOnInteraction: false,
       stopOnMouseEnter: true,
     }),
   );
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [autoplay.current]);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [autoplay]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const preloadSources = useMemo(() => {
@@ -143,17 +143,17 @@ export default function HeroBanner() {
     if (!bannersLoaded) {
       return;
     }
-    autoplay.current?.reset();
+    autoplay.reset();
     emblaApi?.scrollPrev();
-  }, [emblaApi, bannersLoaded]);
+  }, [autoplay, emblaApi, bannersLoaded]);
 
   const scrollNext = useCallback(() => {
     if (!bannersLoaded) {
       return;
     }
-    autoplay.current?.reset();
+    autoplay.reset();
     emblaApi?.scrollNext();
-  }, [emblaApi, bannersLoaded]);
+  }, [autoplay, emblaApi, bannersLoaded]);
 
   const slides = useMemo(() => {
     return BANNERS.map((banner) => ({
@@ -231,7 +231,7 @@ export default function HeroBanner() {
               if (!bannersLoaded) {
                 return;
               }
-              autoplay.current?.reset();
+              autoplay.reset();
               emblaApi?.scrollTo(index);
             }}
           />

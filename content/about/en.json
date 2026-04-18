@@ -5,31 +5,43 @@
     "summary": "Zarrin Namaye Caspian has represented Hisense in Iran since 2009, translating the brand’s global reliability, innovation, and service discipline into tailored experiences for Iranian households, projects, and channel partners.",
     "imageKey": "hisense",
     "ctas": [
-      { "label": "Plan a visit", "href": "tel:+982122614205" },
-      { "label": "Discover our network", "href": "/en/warranty-and-guarantee" }
+      {
+        "label": "Plan a visit",
+        "href": "tel:+982122614205"
+      },
+      {
+        "label": "Discover our network",
+        "href": "/en/warranty-and-guarantee"
+      }
     ]
   },
   "meta": {
     "title": "About Zarrin Namaye Caspian | Official Hisense Iran Overview",
-    "description": "Learn how Zarrin Namaye Caspian brings Hisense’s global innovation, industrial strength, and CSR vision to Iran with 1,300+ sales & service partners, D'CODE TVs, and a flagship showroom in Tehran.",
+    "description": "Learn how Zarrin Namaye Caspian brings Hisense’s global innovation, industrial strength, and CSR vision to Iran with 1,300+ sales & service partners and a flagship showroom in Tehran.",
     "keywords": [
       "Hisense Iran overview",
       "Zarrin Namaye Caspian",
       "Hisense distributor Iran",
       "Hisense Tehran showroom",
-      "D'CODE televisions",
       "Hisense CSR Iran",
       "Hisense industrial group",
       "Hisense history Iran"
     ]
   },
   "stats": [
-    { "value": "2009", "label": "Start of Hisense partnership" },
-    { "value": "1,300+", "label": "Sales & service partners", "sublabel": "Nationwide coverage" },
+    {
+      "value": "2009",
+      "label": "Start of Hisense partnership"
+    },
+    {
+      "value": "1,300+",
+      "label": "Sales & service partners",
+      "sublabel": "Nationwide coverage"
+    },
     {
       "value": "5+",
       "label": "Core product categories",
-      "sublabel": "TV, HVAC, refrigeration, laundry, D'CODE"
+      "sublabel": "TV, HVAC, refrigeration, laundry"
     },
     {
       "value": "24/7",
@@ -62,12 +74,12 @@
       "body": [
         "Every process—forecasting, inbound logistics, showroom planning, and training—is benchmarked against the same KPIs used by Hisense Global. This guarantees that Iranian customers receive original products, updated firmware, and certified accessories.",
         "Our centralized operation orchestrates over 1,300 certified sales and service points. Installations, spare-part traceability, and quality audits are coordinated through a unified CRM that mirrors Hisense’s international service playbook.",
-        "D'CODE, our in-house smart TV label, extends the Hisense experience with localized content partnerships and premium after-sales programs designed for family entertainment in Iran."
+        "Our smart TV portfolio extends the Hisense experience with localized content partnerships and premium after-sales programs designed for family entertainment in Iran."
       ],
       "highlights": [
         {
           "title": "Comprehensive portfolio",
-          "description": "ULED TVs, refrigerators, washing machines, RAC/CAC solutions, and D'CODE smart TVs."
+          "description": "ULED TVs, refrigerators, washing machines, and RAC/CAC solutions."
         },
         {
           "title": "Service-driven network",
@@ -105,14 +117,17 @@
           "description": "Official sponsor of FIFA World Cup and UEFA EURO, boosting worldwide brand equity."
         }
       ],
-      "image": { "key": "hisense", "alt": "Hisense global headquarters campus" }
+      "image": {
+        "key": "hisense",
+        "alt": "Hisense global headquarters campus"
+      }
     },
     {
       "title": "Flagship Hisense Iran Showroom",
       "subtitle": "Experience the portfolio in person",
       "body": [
         "Located on Shariati Street in Tehran, the flagship showroom recreates the immersive style of global.hisense.com experiences with large-format storytelling, interactive demo walls, and project consultation lounges.",
-        "Customers can compare premium ULED TVs, laser displays, smart refrigerators, washers, RAC/CAC systems, and D'CODE innovations under one roof.",
+        "Customers can compare premium ULED TVs, laser displays, smart refrigerators, washers, and RAC/CAC systems under one roof.",
         "Specialized consultants guide households, architects, hospitality groups, and government tenders with financing, maintenance plans, and on-site training."
       ],
       "highlights": [
@@ -129,7 +144,10 @@
           "description": "Warranty registration, spare-part ordering, and installation scheduling in one place."
         }
       ],
-      "image": { "key": "showroom", "alt": "Hisense Iran flagship showroom in Tehran" }
+      "image": {
+        "key": "showroom",
+        "alt": "Hisense Iran flagship showroom in Tehran"
+      }
     }
   ],
   "timeline": [
@@ -145,8 +163,8 @@
     },
     {
       "year": "2016",
-      "title": "Launch of D'CODE",
-      "description": "Debut of D'CODE smart TVs tailored to Persian content platforms and education initiatives."
+      "title": "Smart TV portfolio expansion",
+      "description": "Expanded the smart TV lineup with stronger Persian content partnerships and education initiatives."
     },
     {
       "year": "2020",
@@ -201,9 +219,19 @@
     "ctaLabel": "Book a visit or call",
     "ctaHref": "tel:+982122614205",
     "items": [
-      { "label": "Address", "value": "Tehran, Shariati St., above Dowlat, Firouzeh Alley corner" },
-      { "label": "Visiting hours", "value": "Saturday to Wednesday, 08:30 – 15:00" },
-      { "label": "Phone", "value": "+98 21 2261 4205", "href": "tel:+982122614205" }
+      {
+        "label": "Address",
+        "value": "Tehran, Shariati St., above Dowlat, Firouzeh Alley corner"
+      },
+      {
+        "label": "Visiting hours",
+        "value": "Saturday to Wednesday, 08:30 – 15:00"
+      },
+      {
+        "label": "Phone",
+        "value": "+98 21 2261 4205",
+        "href": "tel:+982122614205"
+      }
     ]
   }
 }
