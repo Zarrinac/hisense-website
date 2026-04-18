@@ -13,7 +13,7 @@
     "prepare": "husky",
     "sitemap": "next-sitemap",
     "db:migrate": "prisma migrate dev --name init",
-    "db:seed": "set TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\",\"moduleResolution\":\"node\",\"verbatimModuleSyntax\":false} && node -r ts-node/register/transpile-only scripts/seed-products.ts"
+    "db:seed": "tsx scripts/seed-products.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

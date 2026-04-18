@@ -2,6 +2,7 @@
 import Module from 'module';
 import fs from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { Prisma, PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
@@ -82,13 +83,14 @@ const isContentProduct = (value: unknown): value is ContentProduct => {
   if (!record.copy || typeof record.copy !== 'object') return false;
   return true;
 };
+const importFromAbsolutePath = async (filePath: string) => import(pathToFileURL(filePath).href);
 
 async function seed() {
   registerModuleStubs();
   registerAssetHooks();
   const { normalizeContentProduct } = await import('../lib/api/products/normalizers');
-  const tvModuleUnknown = (await import(
-    path.resolve(process.cwd(), 'content/tvProducts.ts')
+  const tvModuleUnknown = (await importFromAbsolutePath(
+    path.resolve(process.cwd(), 'content/tvProducts.ts'),
   )) as unknown;
   const { TV_PRODUCTS } = tvModuleUnknown as { TV_PRODUCTS: unknown };
   if (!Array.isArray(TV_PRODUCTS)) {
@@ -98,8 +100,8 @@ async function seed() {
   if (tvProducts.length !== TV_PRODUCTS.length) {
     throw new Error('TV_PRODUCTS contains invalid product entries');
   }
-  const wmModuleUnknown = (await import(
-    path.resolve(process.cwd(), 'content/WmProducts.ts')
+  const wmModuleUnknown = (await importFromAbsolutePath(
+    path.resolve(process.cwd(), 'content/WmProducts.ts'),
   )) as unknown;
   const { WM_PRODUCTS } = wmModuleUnknown as { WM_PRODUCTS: unknown };
   if (!Array.isArray(WM_PRODUCTS)) {
@@ -109,8 +111,8 @@ async function seed() {
   if (wmProducts.length !== WM_PRODUCTS.length) {
     throw new Error('WM_PRODUCTS contains invalid product entries');
   }
-  const refModuleUnknown = (await import(
-    path.resolve(process.cwd(), 'content/RefProducts.ts')
+  const refModuleUnknown = (await importFromAbsolutePath(
+    path.resolve(process.cwd(), 'content/RefProducts.ts'),
   )) as unknown;
   const { REF_PRODUCTS } = refModuleUnknown as { REF_PRODUCTS: unknown };
   if (!Array.isArray(REF_PRODUCTS)) {
@@ -120,8 +122,8 @@ async function seed() {
   if (refProducts.length !== REF_PRODUCTS.length) {
     throw new Error('REF_PRODUCTS contains invalid product entries');
   }
-  const racModuleUnknown = (await import(
-    path.resolve(process.cwd(), 'content/RacProducts.ts')
+  const racModuleUnknown = (await importFromAbsolutePath(
+    path.resolve(process.cwd(), 'content/RacProducts.ts'),
   )) as unknown;
   const { RAC_PRODUCTS } = racModuleUnknown as { RAC_PRODUCTS: unknown };
   if (!Array.isArray(RAC_PRODUCTS)) {
