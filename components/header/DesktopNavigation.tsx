@@ -10,8 +10,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ThemeToggle from '@/components/theme/ThemeToggle';
 import Logo from '@/public/icons/hisense-logo-full.svg';
-import { TV_PRODUCTS } from '@/content/tvProducts';
 import type { NavKey, SubMenuItem } from './navigationData';
+import { buildSubmenuProductLinks } from './submenuProductLinks';
 
 type LabeledNavItem = {
   key: NavKey;
@@ -109,11 +109,7 @@ export default function DesktopNavigation({
     }
   };
 
-  const tvModelLinks = TV_PRODUCTS.map((product) => ({
-    id: product.id.toLowerCase(),
-    name: product.copy?.[localeKey]?.name ?? product.id,
-    href: toLocalePath(`/products/tvs/${product.id.toLowerCase()}`),
-  }));
+  const submenuProductLinks = buildSubmenuProductLinks(locale);
 
   return (
     <div
@@ -130,7 +126,7 @@ export default function DesktopNavigation({
             alt="Hisense Logo"
             src={logoAsset}
             priority
-            className={`block h-5 w-[92px] lg:h-6 lg:w-[117px] ${locale === 'fa' ? 'ml-12' : 'mr-12'}`}
+            className={`block h-5 w-23 lg:h-6 lg:w-29.25 ${locale === 'fa' ? 'ml-12' : 'mr-12'}`}
           />
         </Link>
 
@@ -212,30 +208,37 @@ export default function DesktopNavigation({
               {/* <p className="mt-2 text-sm text-(--text-muted-color)">{promoCopy}</p> */}
             </div>
             <div className="grid flex-1 grid-cols-3 gap-6">
-              {activeSubMenuItems.map((subItem) => (
-                <div
-                  key={subItem.title.en}
-                  className="header-submenu-card focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-(--brand-color)"
-                >
-                  <Link
-                    href={`/${locale}${subItem.href}`}
-                    className="text-base font-semibold text-(--default-black-font) hover:text-white"
+              {activeSubMenuItems.map((subItem) => {
+                const productLinks = submenuProductLinks[subItem.href] ?? [];
+
+                return (
+                  <div
+                    key={subItem.title.en}
+                    className="header-submenu-card focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-(--brand-color)"
                   >
-                    {subItem.title[localeKey]}
-                  </Link>
-                  {subItem.href === '/products/tvs' && tvModelLinks.length > 0 && (
-                    <ul className="mt-3 space-y-2 text-sm text-(--text-muted-color)">
-                      {tvModelLinks.map((model) => (
-                        <li key={model.id}>
-                          <Link href={model.href} className="transition-colors hover:text-white">
-                            {model.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
+                    <Link
+                      href={`/${locale}${subItem.href}`}
+                      className="text-base font-semibold text-(--default-black-font) hover:text-white"
+                    >
+                      {subItem.title[localeKey]}
+                    </Link>
+                    {productLinks.length > 0 && (
+                      <ul className="mt-3 space-y-2 text-sm text-(--text-muted-color)">
+                        {productLinks.map((productLink) => (
+                          <li key={productLink.id}>
+                            <Link
+                              href={toLocalePath(productLink.href)}
+                              className="transition-colors hover:text-white"
+                            >
+                              {productLink.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
