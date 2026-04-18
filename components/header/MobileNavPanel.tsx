@@ -3,8 +3,8 @@ import Link from 'next/link';
 import CloseIcon from '@mui/icons-material/Close';
 import { HiChevronRight, HiChevronLeft } from 'react-icons/hi2';
 import Logo from '@/public/icons/hisense-logo-full.svg';
-import { TV_PRODUCTS } from '@/content/tvProducts';
 import type { NavKey, SubMenuItem } from './navigationData';
+import { buildSubmenuProductLinks } from './submenuProductLinks';
 
 // Mobile navigation drawer with nested submenus and deep links into TV models.
 
@@ -53,11 +53,7 @@ export default function MobileNavPanel({
     return `/${locale}${normalized}`;
   };
 
-  const tvModelLinks = TV_PRODUCTS.map((product) => ({
-    id: product.id.toLowerCase(),
-    name: product.copy?.[localeKey]?.name ?? product.id,
-    href: toLocalePath(`/products/tvs/${product.id.toLowerCase()}`),
-  }));
+  const submenuProductLinks = buildSubmenuProductLinks(locale);
 
   return (
     <div className="fixed inset-0 z-50 flex" dir={locale === 'fa' ? 'rtl' : 'ltr'}>
@@ -112,37 +108,41 @@ export default function MobileNavPanel({
             </button>
 
             <div className="flex flex-col gap-4 pb-10 mt-6">
-              {mobileActiveSubMenuItems?.map((subItem) => (
-                <div
-                  key={subItem.title.en}
-                  className="rounded-2xl border border-(--border-color) bg-(--surface-muted-color) p-4 transition hover:border-(--brand-color) hover:bg-(--surface-hover-color)"
-                >
-                  <Link
-                    href={toLocalePath(subItem.href)}
-                    className="text-base font-semibold text-(--default-black-font) hover:text-(--brand-color)"
+              {mobileActiveSubMenuItems?.map((subItem) => {
+                const productLinks = submenuProductLinks[subItem.href] ?? [];
+
+                return (
+                  <div
+                    key={subItem.title.en}
+                    className="rounded-2xl border border-(--border-color) bg-(--surface-muted-color) p-4 transition hover:border-(--brand-color) hover:bg-(--surface-hover-color)"
                   >
-                    {subItem.title[localeKey]}
-                  </Link>
-                  {subItem.href === '/products/tvs' && tvModelLinks.length > 0 ? (
-                    <ul className="mt-2 space-y-2 text-sm text-(--text-muted-color)">
-                      {tvModelLinks.map((model) => (
-                        <li key={model.id}>
-                          <Link
-                            href={model.href}
-                            className="transition-colors hover:text-(--brand-color)"
-                          >
-                            {model.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="mt-1 text-sm text-(--text-muted-color)">
-                      {subItem.description[localeKey]}
-                    </p>
-                  )}
-                </div>
-              ))}
+                    <Link
+                      href={toLocalePath(subItem.href)}
+                      className="text-base font-semibold text-(--default-black-font) hover:text-(--brand-color)"
+                    >
+                      {subItem.title[localeKey]}
+                    </Link>
+                    {productLinks.length > 0 ? (
+                      <ul className="mt-2 space-y-2 text-sm text-(--text-muted-color)">
+                        {productLinks.map((productLink) => (
+                          <li key={productLink.id}>
+                            <Link
+                              href={toLocalePath(productLink.href)}
+                              className="transition-colors hover:text-(--brand-color)"
+                            >
+                              {productLink.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="mt-1 text-sm text-(--text-muted-color)">
+                        {subItem.description[localeKey]}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
