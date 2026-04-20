@@ -58,9 +58,12 @@ export default function RefrigeratorHero({
                   sizes="(min-width: 1024px) 48vw, 90vw"
                   className="object-contain"
                   priority
-                  onLoadingComplete={(image) =>
-                    setActiveRatio(`${image.naturalWidth} / ${image.naturalHeight}`)
-                  }
+                  onLoad={(event) => {
+                    const image = event.currentTarget;
+                    if (image.naturalWidth > 0 && image.naturalHeight > 0) {
+                      setActiveRatio(`${image.naturalWidth} / ${image.naturalHeight}`);
+                    }
+                  }}
                 />
               )}
             </div>

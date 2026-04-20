@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { routing, type Locale } from '@/i18n/routing';
 import { getAboutContent } from '@/content/about';
 import type { AboutImageKey, AboutPageContent } from '@/content/about/types';
+import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
 import { mediaUrl } from '@/lib/mediaUrl';
 
 // About page hydrates structured content from locale-specific JSON files.
@@ -80,6 +82,62 @@ export default async function AboutPage({ params }: AboutPageProps) {
   const content = resolveAboutContent(locale);
   const isRTL = locale === 'fa';
   const heroImage = content.hero.imageKey ? getImageAsset(content.hero.imageKey) : null;
+  const officialLinks =
+    locale === 'fa'
+      ? {
+          eyebrow: 'مسیرهای رسمی برند',
+          title: 'صفحات کلیدی هایسنس ایران',
+          items: [
+            {
+              href: `/${locale}`,
+              label: 'صفحه اصلی هایسنس ایران',
+              description: 'مرجع رسمی برند، دسته‌بندی محصولات و سیگنال اصلی جستجوی برند.',
+            },
+            {
+              href: `/${locale}/contact-us`,
+              label: 'تماس با ما',
+              description: 'شماره‌های تماس، دفتر مرکزی و کانال‌های رسمی پشتیبانی.',
+            },
+            {
+              href: `/${locale}/warranty-and-guarantee`,
+              label: 'گارانتی و خدمات',
+              description: 'شرایط گارانتی، خدمات پس از فروش و مسیرهای پشتیبانی رسمی.',
+            },
+            {
+              href: `/${locale}/hisense-repair`,
+              label: 'خدمات تعمیر و پشتیبانی',
+              description: 'سرویس و تعمیرات رسمی برای محصولات هایسنس در سراسر ایران.',
+            },
+          ],
+        }
+      : {
+          eyebrow: 'Official brand paths',
+          title: 'Key Hisense Iran pages',
+          items: [
+            {
+              href: `/${locale}`,
+              label: 'Hisense Iran homepage',
+              description: 'Official brand hub for products, categories, and core entity signals.',
+            },
+            {
+              href: `/${locale}/contact-us`,
+              label: 'Contact us',
+              description:
+                'Verified phone numbers, head office details, and official support channels.',
+            },
+            {
+              href: `/${locale}/warranty-and-guarantee`,
+              label: 'Warranty and service',
+              description:
+                'Official warranty terms, after-sales information, and service guidance.',
+            },
+            {
+              href: `/${locale}/hisense-repair`,
+              label: 'Repair and support',
+              description: 'Official maintenance, repair, and product support page.',
+            },
+          ],
+        };
 
   return (
     <div className="space-y-16 bg-(--background-color) pb-20 pt-10">
@@ -109,6 +167,12 @@ export default async function AboutPage({ params }: AboutPageProps) {
                   {cta.label}
                 </a>
               ))}
+              <Link
+                href={`/${locale}`}
+                className="inline-flex items-center justify-center rounded-full border border-white/70 px-6 py-3 text-base font-semibold text-white transition hover:bg-white hover:text-(--brand-color) focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                {locale === 'fa' ? 'صفحه اصلی هایسنس ایران' : 'Hisense Iran homepage'}
+              </Link>
             </div>
           )}
         </div>
@@ -266,6 +330,13 @@ export default async function AboutPage({ params }: AboutPageProps) {
           </div>
         </section>
       )}
+
+      <OfficialLinksSection
+        locale={locale}
+        eyebrow={officialLinks.eyebrow}
+        title={officialLinks.title}
+        items={officialLinks.items}
+      />
 
       {content.csr && (
         <section className="px-6">

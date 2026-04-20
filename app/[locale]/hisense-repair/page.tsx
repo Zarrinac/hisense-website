@@ -84,7 +84,7 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
   fa: {
     hero: {
       eyebrow: 'خدمات رسمی تعمیر و نگهداری',
-      title: 'تعمیرکار هایسنس',
+      title: 'خدمات تعمیر و پشتیبانی محصولات هایسنس',
       description:
         'اگر به دنبال تعمیرکار هایسنس برای تلویزیون، کولرگازی، یخچال یا ماشین لباسشویی هستید، تیم فنی زرین نمای کاسپین آماده پاسخگویی است. خدمات تعمیر و پشتیبانی محصولات Hisense با قطعات اصلی و تکنسین‌های آموزش‌دیده انجام می‌شود.',
       highlights: ['اعزام سریع تکنسین', 'پوشش سراسری', 'قطعات اصلی', 'گارانتی خدمات'],
@@ -92,7 +92,7 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
         { label: 'تماس با مرکز خدمات', href: 'tel:02172133' },
         { label: 'واتساپ خدمات', href: 'https://wa.me/989217381016', external: true },
       ],
-      cardTitle: 'راه‌های ارتباط با تعمیرکار هایسنس',
+      cardTitle: 'راه‌های ارتباط برای خدمات و تعمیرات رسمی',
       cardItems: [
         {
           label: 'تماس تلفنی',
@@ -199,7 +199,7 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
       ],
     },
     cta: {
-      title: 'برای دریافت مشاوره یا اعزام تعمیرکار هایسنس آماده‌ایم',
+      title: 'برای دریافت مشاوره یا ثبت درخواست خدمات رسمی آماده‌ایم',
       description:
         'اگر نیاز به تعمیر فوری یا هماهنگی سرویس دارید، همین حالا از راه‌های ارتباطی زیر اقدام کنید.',
       primary: { label: 'تماس با مرکز خدمات', href: 'tel:02172133' },
@@ -212,7 +212,7 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
   en: {
     hero: {
       eyebrow: 'Official repair & maintenance service',
-      title: 'Hisense Repair Service',
+      title: 'Official Hisense Repair and Support',
       description:
         'If you need a trained Hisense repair technician for TVs, air conditioners, refrigerators, or washing machines, Zarrin Namaye Caspian is here to help. We provide official service for Hisense with genuine parts and certified technicians.',
       highlights: [
@@ -225,7 +225,7 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
         { label: 'Call service center', href: 'tel:02172133' },
         { label: 'WhatsApp service', href: 'https://wa.me/989217381016', external: true },
       ],
-      cardTitle: 'Contact the Hisense repair team',
+      cardTitle: 'Contact the official service and repair team',
       cardItems: [
         {
           label: 'Phone',
@@ -332,7 +332,7 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
       ],
     },
     cta: {
-      title: 'Need an official Hisense repair technician?',
+      title: 'Need official Hisense service or repair support?',
       description: 'Reach out now to schedule service or get expert guidance for your device.',
       primary: { label: 'Call service center', href: 'tel:02172133' },
       secondary: { label: 'Contact details', href: '/contact-us' },
@@ -377,9 +377,53 @@ export default async function HisenseRepairPage() {
   const content = REPAIR_CONTENT[resolvedLocale];
   const isRTL = resolvedLocale === 'fa';
   const resolveHref = (href: string) => (href.startsWith('/') ? `/${resolvedLocale}${href}` : href);
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: content.hero.title,
+    description: content.hero.description,
+    url: `${SITE_URL}/${resolvedLocale}/hisense-repair`,
+    serviceType:
+      resolvedLocale === 'fa'
+        ? 'خدمات تعمیر و پشتیبانی محصولات هایسنس'
+        : 'Hisense repair and support',
+    areaServed: {
+      '@type': 'Country',
+      name: 'Iran',
+    },
+    provider: {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}#organization`,
+      name:
+        resolvedLocale === 'fa'
+          ? 'شرکت صنایع زرین نمای کاسپین'
+          : 'Zarrin Namaye Caspian Industries',
+      url: SITE_URL,
+    },
+  };
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: content.faq.items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
 
   return (
     <div className="space-y-12 pb-16 pt-8 sm:space-y-16" dir={isRTL ? 'rtl' : 'ltr'}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <section className="relative overflow-hidden rounded-3xl border border-(--border-color) bg-(--surface-color) px-6 py-10 shadow-lg sm:px-10 sm:py-12">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,179,172,0.18),transparent_55%)]" />
         <div className="relative mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.2fr_0.8fr]">

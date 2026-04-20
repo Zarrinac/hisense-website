@@ -108,10 +108,10 @@ export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
       href: '/portal',
     },
     {
-      title: { en: 'Hisense Repair', fa: 'تعمیرکار هایسنس' },
+      title: { en: 'Repair & Support', fa: 'خدمات تعمیر و پشتیبانی' },
       description: {
-        en: 'Book official repair and service with certified technicians.',
-        fa: 'ثبت درخواست تعمیر و سرویس رسمی با تکنسین‌های آموزش‌دیده.',
+        en: 'Book official service, support, and repair with certified technicians.',
+        fa: 'ثبت درخواست خدمات، پشتیبانی و تعمیر رسمی با تکنسین‌های آموزش‌دیده.',
       },
       href: '/hisense-repair',
     },

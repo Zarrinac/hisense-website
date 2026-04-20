@@ -1,4 +1,15 @@
-import createRoutePage from '@/components/routes/createRoutePage';
+import { redirect } from 'next/navigation';
 
-// Commercial air conditioner route uses the shared under-construction scaffold.
-export default createRoutePage('cac');
+type PageParams = {
+  locale?: string;
+};
+
+type PageProps = {
+  params: PageParams | Promise<PageParams>;
+};
+
+export default async function CacRoutePage({ params }: PageProps) {
+  const resolved = await params;
+  const locale = resolved?.locale ?? 'fa';
+  redirect(`/${locale}/products/cac`);
+}

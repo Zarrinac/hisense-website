@@ -54,6 +54,9 @@ export default function MobileNavPanel({
   };
 
   const submenuProductLinks = buildSubmenuProductLinks(locale);
+  const handleNavigate = () => {
+    onClose();
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex" dir={locale === 'fa' ? 'rtl' : 'ltr'}>
@@ -118,6 +121,7 @@ export default function MobileNavPanel({
                   >
                     <Link
                       href={toLocalePath(subItem.href)}
+                      onClick={handleNavigate}
                       className="text-base font-semibold text-(--default-black-font) hover:text-(--brand-color)"
                     >
                       {subItem.title[localeKey]}
@@ -128,6 +132,7 @@ export default function MobileNavPanel({
                           <li key={productLink.id}>
                             <Link
                               href={toLocalePath(productLink.href)}
+                              onClick={handleNavigate}
                               className="transition-colors hover:text-(--brand-color)"
                             >
                               {productLink.name}
@@ -150,7 +155,10 @@ export default function MobileNavPanel({
           <button
             type="button"
             className="flex w-full items-center justify-center rounded-full border border-(--border-color) px-4 py-3 text-sm font-semibold text-(--text-muted-color) transition-colors hover:border-(--brand-color) hover:text-(--brand-color)"
-            onClick={onOpenSearch}
+            onClick={() => {
+              onClose();
+              onOpenSearch();
+            }}
           >
             {searchLabel}
           </button>
