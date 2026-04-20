@@ -77,6 +77,7 @@ export default function Footer() {
   const locale = useLocale();
   const { theme } = useTheme();
   const logoSource = theme === 'dark' ? ZarrinLogoWhite : ZarrinLogoBlack;
+  const homeHref = `/${locale}`;
   const toLocalePath = (path: string) => {
     const normalized = path.startsWith('/') ? path : `/${path}`;
     return `/${locale}${normalized}`;
@@ -94,13 +95,15 @@ export default function Footer() {
     <footer className="bg-(--surface-accent-color)">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-12 lg:flex-row">
         <div className="flex flex-col gap-4 lg:w-1/3">
-          <Image
-            src={logoSource}
-            alt={t('branding.title')}
-            className="h-auto w-[80%] max-w-[220px]"
-            sizes="(max-width: 1024px) 60vw, 240px"
-            priority
-          />
+          <Link href={homeHref} className="w-fit">
+            <Image
+              src={logoSource}
+              alt={t('branding.title')}
+              className="h-auto w-[80%] max-w-55"
+              sizes="(max-width: 1024px) 60vw, 240px"
+              priority
+            />
+          </Link>
           <p className="text-sm text-(--text-muted-color)">{t('branding.tagline')}</p>
           <div className="space-y-3">
             {CONTACT_ITEMS.map(({ icon: Icon, key }) => (
@@ -158,7 +161,7 @@ export default function Footer() {
             <Link href="/terms" className="transition hover:text-(--brand-color)">
               {t('legal.terms')}
             </Link>
-            <Link href="/sitemap" className="transition hover:text-(--brand-color)">
+            <Link href="/sitemap.xml" className="transition hover:text-(--brand-color)">
               {t('legal.sitemap')}
             </Link>
           </div>

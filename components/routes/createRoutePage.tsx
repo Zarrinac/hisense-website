@@ -1,5 +1,6 @@
 import { getLocale, getTranslations } from 'next-intl/server';
 import RouteHero from '@/components/routes/RouteHero';
+import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
 import UnderConstruction, { type UnderConstructionAction } from '@/components/UnderConstruction';
 
 // Factory that produces a locale-aware route page with optional under-construction content.
@@ -33,6 +34,62 @@ export default function createRoutePage(routeKey: string, options?: RoutePageOpt
     ];
     const actions = options?.actions ?? defaultActions;
     const showUnderConstruction = options?.underConstruction ?? true;
+    const officialLinks =
+      locale === 'fa'
+        ? {
+            eyebrow: 'مسیرهای رسمی',
+            title: 'صفحات رسمی هایسنس ایران',
+            items: [
+              {
+                href: `/${locale}`,
+                label: 'صفحه اصلی هایسنس ایران',
+                description: 'مرجع اصلی برند، دسته‌بندی محصولات و مسیرهای رسمی ارتباط.',
+              },
+              {
+                href: `/${locale}/about`,
+                label: 'درباره زرین نمای کاسپین',
+                description: 'اطلاعات نمایندگی رسمی، شبکه فروش و تاریخچه فعالیت برند در ایران.',
+              },
+              {
+                href: `/${locale}/contact-us`,
+                label: 'تماس با هایسنس ایران',
+                description: 'شماره‌های تماس، آدرس دفتر مرکزی و کانال‌های رسمی پشتیبانی.',
+              },
+              {
+                href: `/${locale}/hisense-repair`,
+                label: 'خدمات تعمیر و پشتیبانی',
+                description: 'درخواست سرویس، تعمیرات رسمی و پشتیبانی محصولات هایسنس.',
+              },
+            ],
+          }
+        : {
+            eyebrow: 'Official paths',
+            title: 'Official Hisense Iran pages',
+            items: [
+              {
+                href: `/${locale}`,
+                label: 'Hisense Iran homepage',
+                description: 'Primary brand page for products, categories, and official channels.',
+              },
+              {
+                href: `/${locale}/about`,
+                label: 'About Zarrin Namaye Caspian',
+                description:
+                  'Official representative profile, network scale, and brand background.',
+              },
+              {
+                href: `/${locale}/contact-us`,
+                label: 'Contact Hisense Iran',
+                description: 'Verified contact details, head office address, and support channels.',
+              },
+              {
+                href: `/${locale}/hisense-repair`,
+                label: 'Repair and support',
+                description: 'Official service, maintenance, and repair request page.',
+              },
+            ],
+          };
+
     return (
       <>
         <RouteHero
@@ -53,6 +110,14 @@ export default function createRoutePage(routeKey: string, options?: RoutePageOpt
             />
           </div>
         )}
+        <div className="pb-10 sm:pb-14 lg:pb-16">
+          <OfficialLinksSection
+            locale={locale}
+            eyebrow={officialLinks.eyebrow}
+            title={officialLinks.title}
+            items={officialLinks.items}
+          />
+        </div>
       </>
     );
   };
