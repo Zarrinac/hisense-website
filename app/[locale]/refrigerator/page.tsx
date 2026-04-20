@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Visibility } from '@mui/icons-material';
+import { routing } from '@/i18n/routing';
+import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
 import { mediaUrl } from '@/lib/mediaUrl';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
@@ -102,6 +104,11 @@ const REFRIGERATOR_PRODUCTS = [
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const routeTranslations = await getTranslations('Routes.refrigerator');
+  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
+    acc[lang] = `${SITE_URL}/${lang}/refrigerator`;
+    return acc;
+  }, {});
+  languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}/refrigerator`;
   const ogImage = HERO_BANNERS.desktop;
   const ogImageUrl =
     typeof ogImage === 'string' && ogImage.length > 0
@@ -128,6 +135,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     alternates: {
       canonical: `/${locale}/refrigerator`,
+      languages: languageAlternates,
     },
     metadataBase: new URL(SITE_URL),
   };
@@ -137,6 +145,62 @@ export default async function RefrigeratorPage() {
   const locale = await getLocale();
   const routeTranslations = await getTranslations('Routes.refrigerator');
   const detailsLabel = (await getTranslations('TvHisensePage'))('actions.details');
+  const officialLinks =
+    locale === 'fa'
+      ? {
+          eyebrow: 'مسیرهای رسمی',
+          title: 'لینک‌های رسمی هایسنس ایران',
+          items: [
+            {
+              href: `/${locale}`,
+              label: 'صفحه اصلی هایسنس ایران',
+              description: 'معرفی رسمی برند و دسته‌بندی اصلی محصولات هایسنس در ایران.',
+            },
+            {
+              href: `/${locale}/about`,
+              label: 'درباره نمایندگی رسمی',
+              description: 'اطلاعات زرین نمای کاسپین و شبکه فروش و خدمات رسمی برند.',
+            },
+            {
+              href: `/${locale}/contact-us`,
+              label: 'تماس و مشاوره خرید',
+              description: 'دریافت مشاوره، استعلام و ارتباط با دفتر مرکزی هایسنس ایران.',
+            },
+            {
+              href: `/${locale}/warranty-and-guarantee`,
+              label: 'گارانتی یخچال و خدمات',
+              description: 'شرایط خدمات پس از فروش و گارانتی رسمی محصولات هایسنس.',
+            },
+          ],
+        }
+      : {
+          eyebrow: 'Official paths',
+          title: 'Official Hisense Iran links',
+          items: [
+            {
+              href: `/${locale}`,
+              label: 'Hisense Iran homepage',
+              description:
+                'Primary brand page for categories, products, and official company signals.',
+            },
+            {
+              href: `/${locale}/about`,
+              label: 'About the official representative',
+              description:
+                'Learn about Zarrin Namaye Caspian and the official distribution network.',
+            },
+            {
+              href: `/${locale}/contact-us`,
+              label: 'Contact and purchase advice',
+              description: 'Reach the official team for inquiries, support, and purchase guidance.',
+            },
+            {
+              href: `/${locale}/warranty-and-guarantee`,
+              label: 'Warranty and service',
+              description: 'Review official after-sales service and warranty information.',
+            },
+          ],
+        };
 
   return (
     <div className="pb-16 space-y-12 lg:space-y-16 lg:pb-24">
@@ -212,6 +276,13 @@ export default async function RefrigeratorPage() {
           ))}
         </div>
       </div>
+
+      <OfficialLinksSection
+        locale={locale}
+        eyebrow={officialLinks.eyebrow}
+        title={officialLinks.title}
+        items={officialLinks.items}
+      />
     </div>
   );
 }

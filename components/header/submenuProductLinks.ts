@@ -1,4 +1,5 @@
 import { RAC_PRODUCTS } from '@/content/RacProducts';
+import { CAC_PRODUCTS } from '@/content/CacProducts';
 import { REF_PRODUCTS } from '@/content/RefProducts';
 import { TV_PRODUCTS } from '@/content/tvProducts';
 import { WM_PRODUCTS } from '@/content/WmProducts';
@@ -21,25 +22,6 @@ const getLocalizedProductName = (
 
 const toLowerSlug = (value: string) => value.toLowerCase();
 
-const CAC_SOLUTIONS = [
-  {
-    id: 'vrf',
-    name: {
-      en: 'VRF Systems',
-      fa: 'سیستم های VRF',
-    },
-    href: '/cac',
-  },
-  {
-    id: 'ducted-hvac',
-    name: {
-      en: 'Ducted HVAC Systems',
-      fa: 'سیستم های داکت اسپلیت',
-    },
-    href: '/cac',
-  },
-] as const;
-
 export const buildSubmenuProductLinks = (locale: string): Record<string, SubmenuProductLink[]> => {
   const localeKey = getLocaleKey(locale);
 
@@ -54,10 +36,10 @@ export const buildSubmenuProductLinks = (locale: string): Record<string, Submenu
       name: getLocalizedProductName(localeKey, product.copy, product.id),
       href: `/products/rac/${toLowerSlug(product.id)}`,
     })),
-    '/cac': CAC_SOLUTIONS.map((solution) => ({
-      id: solution.id,
-      name: solution.name[localeKey],
-      href: solution.href,
+    '/cac': CAC_PRODUCTS.map((product) => ({
+      id: toLowerSlug(product.id),
+      name: getLocalizedProductName(localeKey, product.copy, product.id),
+      href: `/products/cac/${toLowerSlug(product.id)}`,
     })),
     '/refrigerator': REF_PRODUCTS.map((product) => ({
       id: toLowerSlug(product.id),

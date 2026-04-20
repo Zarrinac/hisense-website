@@ -1,7 +1,4 @@
-'use client';
-
-// Injects organization and product JSON-LD for search engines per locale.
-import { OrganizationJsonLd, ProductJsonLd } from 'next-seo';
+// Injects organization and website JSON-LD for search engines per locale.
 import type { Locale } from '@/i18n/routing';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
@@ -20,16 +17,16 @@ const ORGANIZATION_CONTENT = {
   },
 };
 
-const PRODUCT_CONTENT = {
+const WEBSITE_CONTENT = {
   fa: {
-    name: 'کولر گازی و تهویه مطبوع هایسنس',
+    name: 'هایسنس ایران | زرین نمای کاسپین',
     description:
-      'عرضه رسمی کولر گازی، داکت اسپلیت و تهویه مطبوع خانگی و صنعتی هایسنس با گارانتی زرین نمای کاسپین و پوشش خدمات پس از فروش سراسری.',
+      'مرجع رسمی معرفی محصولات، گارانتی و مسیرهای ارتباطی هایسنس ایران تحت مدیریت زرین نمای کاسپین.',
   },
   en: {
-    name: 'Hisense Residential & Commercial HVAC Systems',
+    name: 'Hisense Iran | Zarrin Namaye Caspian',
     description:
-      'Official distribution of Hisense split AC, duct AC, and commercial HVAC solutions across Iran with certified after-sales coverage.',
+      'Official Hisense Iran website for products, warranty details, and verified support channels operated by Zarrin Namaye Caspian.',
   },
 };
 
@@ -39,65 +36,63 @@ type StructuredDataProps = {
 
 export default function StructuredData({ locale }: StructuredDataProps) {
   const orgContent = ORGANIZATION_CONTENT[locale];
-  const productContent = PRODUCT_CONTENT[locale];
+  const websiteContent = WEBSITE_CONTENT[locale];
+  const websiteLanguage = locale === 'fa' ? 'fa-IR' : 'en-US';
+
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${SITE_URL}#organization`,
+    name: orgContent.name,
+    legalName: orgContent.name,
+    url: SITE_URL,
+    logo: LOGO_URL,
+    description: orgContent.description,
+    sameAs: [
+      'https://www.instagram.com/hisenseiran',
+      'https://www.linkedin.com/company/zarrin-namaye-caspian',
+    ],
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        telephone: '+98-21-72133',
+        availableLanguage: ['fa', 'en'],
+        areaServed: 'IR',
+      },
+    ],
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Kameliya Dead end, Sasanipour St.',
+      addressLocality: 'Tehran',
+      addressRegion: 'Tehran',
+      postalCode: '1994736431',
+      addressCountry: 'IR',
+    },
+  };
+
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_URL}#website`,
+    url: SITE_URL,
+    name: websiteContent.name,
+    description: websiteContent.description,
+    inLanguage: websiteLanguage,
+    publisher: {
+      '@id': `${SITE_URL}#organization`,
+    },
+  };
 
   return (
     <>
-      <OrganizationJsonLd
-        type="Organization"
-        name={orgContent.name}
-        legalName={orgContent.name}
-        url={SITE_URL}
-        logo={LOGO_URL}
-        identifier={`${SITE_URL}#organization`}
-        sameAs={[
-          'https://www.instagram.com/hisenseiran',
-          'https://www.linkedin.com/company/zarrin-namaye-caspian',
-        ]}
-        description={orgContent.description}
-        contactPoint={[
-          {
-            contactType: 'customer service',
-            telephone: '+98-21-72133',
-          },
-        ]}
-        address={{
-          streetAddress: 'Kameliya Dead end, Sasanipour St.',
-          addressLocality: 'Tehran',
-          addressRegion: 'Tehran',
-          postalCode: '1994736431',
-          addressCountry: 'IR',
-        }}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
-
-      <ProductJsonLd
-        type="Product"
-        name={productContent.name}
-        description={productContent.description}
-        brand={{ name: 'Hisense' }}
-        manufacturer={{
-          name: 'Hisense',
-          logo: LOGO_URL,
-        }}
-        sku="hisense-hvac"
-        mpn="hisense-hvac"
-        image={`${SITE_URL}/banner/Fix-Banner-07.jpg`}
-        offers={[
-          {
-            price: '0.00',
-            priceCurrency: 'IRR',
-            availability: 'https://schema.org/PreOrder',
-            url: `${SITE_URL}/${locale}`,
-            itemCondition: 'https://schema.org/NewCondition',
-            seller: {
-              name: ORGANIZATION_CONTENT.en.name,
-            },
-          },
-        ]}
-        aggregateRating={{
-          ratingValue: 5,
-          reviewCount: 25,
-        }}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
     </>
   );

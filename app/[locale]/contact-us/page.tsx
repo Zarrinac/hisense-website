@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { getLocale, getTranslations } from 'next-intl/server';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -9,6 +10,7 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { routing, type Locale } from '@/i18n/routing';
 import { mediaUrl } from '@/lib/mediaUrl';
+import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const HERO_IMAGE = mediaUrl('/contact-us/contactUs-support-hero.jpg');
@@ -332,9 +334,113 @@ export default async function ContactUsPage() {
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(content.map.query)}&output=embed`;
   const mapLink = `https://www.google.com/maps?q=${encodeURIComponent(content.map.query)}`;
   const alignClass = isRTL ? 'text-right' : 'text-left';
+  const officialLinks =
+    resolvedLocale === 'fa'
+      ? {
+          eyebrow: 'صفحات رسمی',
+          title: 'صفحات اصلی هایسنس ایران',
+          items: [
+            {
+              href: `/${resolvedLocale}`,
+              label: 'صفحه اصلی هایسنس ایران',
+              description: 'معرفی رسمی برند، محصولات و مسیرهای اصلی ارتباط با زرین نمای کاسپین.',
+            },
+            {
+              href: `/${resolvedLocale}/about`,
+              label: 'درباره زرین نمای کاسپین',
+              description: 'آشنایی با نمایندگی رسمی، شبکه فروش و تاریخچه فعالیت مجموعه در ایران.',
+            },
+            {
+              href: `/${resolvedLocale}/warranty-and-guarantee`,
+              label: 'گارانتی و خدمات',
+              description: 'اطلاعات گارانتی رسمی، شرایط خدمات و مسیرهای پشتیبانی محصولات هایسنس.',
+            },
+            {
+              href: `/${resolvedLocale}/hisense-repair`,
+              label: 'خدمات تعمیر و پشتیبانی',
+              description: 'ثبت درخواست تعمیر، سرویس و پشتیبانی رسمی محصولات هایسنس.',
+            },
+          ],
+        }
+      : {
+          eyebrow: 'Official pages',
+          title: 'Primary Hisense Iran pages',
+          items: [
+            {
+              href: `/${resolvedLocale}`,
+              label: 'Hisense Iran homepage',
+              description:
+                'Primary brand page for products, company signals, and official channels.',
+            },
+            {
+              href: `/${resolvedLocale}/about`,
+              label: 'About Zarrin Namaye Caspian',
+              description:
+                'Learn about the official representative, distribution network, and brand story.',
+            },
+            {
+              href: `/${resolvedLocale}/warranty-and-guarantee`,
+              label: 'Warranty and service',
+              description:
+                'Official warranty information, service conditions, and support pathways.',
+            },
+            {
+              href: `/${resolvedLocale}/hisense-repair`,
+              label: 'Repair and support',
+              description: 'Request official repair, service, and product support.',
+            },
+          ],
+        };
+  const contactPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: content.hero.title,
+    description: content.hero.description,
+    url: `${SITE_URL}/${resolvedLocale}/contact-us`,
+    inLanguage: resolvedLocale === 'fa' ? 'fa-IR' : 'en-US',
+    mainEntity: {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}#organization`,
+      name:
+        resolvedLocale === 'fa'
+          ? 'شرکت صنایع زرین نمای کاسپین'
+          : 'Zarrin Namaye Caspian Industries',
+      url: SITE_URL,
+      telephone: '+98-21-72133',
+      email: 'info@hisense-ir.com',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Kameliya Dead end, Sasanipour St.',
+        addressLocality: 'Tehran',
+        addressRegion: 'Tehran',
+        postalCode: '1994736431',
+        addressCountry: 'IR',
+      },
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'customer support',
+          telephone: '+98-21-72133',
+          areaServed: 'IR',
+          availableLanguage: ['fa', 'en'],
+        },
+        {
+          '@type': 'ContactPoint',
+          contactType: 'sales',
+          telephone: '+98-21-72488',
+          areaServed: 'IR',
+          availableLanguage: ['fa', 'en'],
+        },
+      ],
+    },
+  };
 
   return (
     <div className="space-y-8 pb-12 pt-6 sm:space-y-12" dir={isRTL ? 'rtl' : 'ltr'}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
+      />
       <section className="relative -mx-4 overflow-hidden sm:-mx-6 lg:-mx-10">
         <div className="absolute inset-0">
           <Image src={HERO_IMAGE} alt="" fill sizes="100vw" className="object-cover" priority />
@@ -453,10 +559,31 @@ export default async function ContactUsPage() {
                   </span>
                 ))}
               </div>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <Link
+                  href={`/${resolvedLocale}`}
+                  className="text-sm font-semibold text-(--brand-color) transition hover:text-(--brand-color-dark)"
+                >
+                  {resolvedLocale === 'fa' ? 'صفحه اصلی هایسنس ایران' : 'Hisense Iran homepage'}
+                </Link>
+                <Link
+                  href={`/${resolvedLocale}/about`}
+                  className="text-sm font-semibold text-(--brand-color) transition hover:text-(--brand-color-dark)"
+                >
+                  {resolvedLocale === 'fa' ? 'درباره زرین نمای کاسپین' : 'About the company'}
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+      <OfficialLinksSection
+        locale={resolvedLocale}
+        eyebrow={officialLinks.eyebrow}
+        title={officialLinks.title}
+        items={officialLinks.items}
+      />
 
       <section className="px-4 sm:px-6">
         <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -519,7 +646,7 @@ export default async function ContactUsPage() {
               {content.map.cta}
             </a>
           </div>
-          <div className="relative min-h-[260px] lg:col-span-2">
+          <div className="relative min-h-65 lg:col-span-2">
             <iframe
               title={content.map.title}
               src={mapSrc}

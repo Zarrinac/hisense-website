@@ -83,6 +83,11 @@ const COPY_BLOCK_KEYS: CopyBlockKey[] = [
   'quickWashDry',
   'lintClean',
   'fourInOneFilter',
+  'slimDesign',
+  'innerHighLiftPump',
+  'floatSwitch',
+  'filter',
+  'onePaAdjustment',
   'accurateTemperatureControl',
   'iFeel',
   'autoSwing4d',
@@ -363,6 +368,21 @@ const getCategoryCopy = async (categorySlug: ProductCategorySlug) => {
         'Hisense',
         'Air Conditioner',
         'RAC',
+      ],
+    };
+  }
+  if (categorySlug === 'cac') {
+    const routeTranslations = await getTranslations('Routes.cac');
+    return {
+      label: routeTranslations('title'),
+      keywords: (product: NormalizedProduct) => [
+        product.id,
+        product.series,
+        product.seriesLabel ?? '',
+        'Hisense',
+        'Commercial Air Conditioner',
+        'Ducted HVAC',
+        'CAC',
       ],
     };
   }

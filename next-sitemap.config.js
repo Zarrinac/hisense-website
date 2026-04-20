@@ -49,6 +49,27 @@ const productPaths = [
   ...wmSlugs.map((slug) => `/products/wms/${slug}`),
 ];
 
+const normalizeLocalePath = (inputPath) => (inputPath === '/' ? '/fa' : inputPath);
+
+const buildAlternateRefs = (inputPath) => {
+  const normalizedPath = normalizeLocalePath(inputPath);
+  const pathSegments = normalizedPath.split('/').filter(Boolean);
+  const suffix = pathSegments.length > 1 ? `/${pathSegments.slice(1).join('/')}` : '';
+
+  return [
+    ...locales.map((locale) => ({
+      href: `${siteUrl}/${locale}${suffix}`,
+      hrefIsAbsolute: true,
+      hreflang: locale,
+    })),
+    {
+      href: `${siteUrl}/${locales[0]}${suffix}`,
+      hrefIsAbsolute: true,
+      hreflang: 'x-default',
+    },
+  ];
+};
+
 module.exports = {
   siteUrl,
   generateRobotsTxt: true,
@@ -56,13 +77,6 @@ module.exports = {
   priority: 0.7,
   sitemapSize: 5000,
   exclude: ['/api/*'],
-  alternateRefs: [
-    ...locales.map((locale) => ({
-      href: `${siteUrl}/${locale}`,
-      hreflang: locale,
-    })),
-    { href: `${siteUrl}/fa`, hreflang: 'x-default' },
-  ],
   additionalPaths: async (config) => {
     const localizedStaticPaths = [];
 
@@ -77,14 +91,14 @@ module.exports = {
     return Promise.all(localizedStaticPaths);
   },
   transform: async (config, path) => {
-    const normalizedPath = path === '/' ? '/fa' : path;
+    const normalizedPath = normalizeLocalePath(path);
 
     return {
       loc: `${siteUrl}${normalizedPath}`,
       changefreq: config.changefreq ?? 'weekly',
       priority: normalizedPath === '/fa' ? 1 : (config.priority ?? 0.7),
       lastmod: new Date().toISOString(),
-      alternateRefs: config.alternateRefs,
+      alternateRefs: buildAlternateRefs(normalizedPath),
     };
   },
 };

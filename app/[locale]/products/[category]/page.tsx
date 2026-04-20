@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { Visibility } from '@mui/icons-material';
 import TvHeroCarousel from '@/components/tv/TvHeroCarousel';
 import RouteHero from '@/components/routes/RouteHero';
+import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
 import { FALLBACK_PRODUCTS } from '@/lib/api/products/normalizers';
 import type { ApiProduct } from '@/lib/api/products/types';
 import {
@@ -78,6 +79,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const routeTranslations = await getTranslations('Routes.tvHisense');
     const pageTranslations = await getTranslations('TvHisensePage');
     const keywordsRaw: unknown = pageTranslations.raw('metadata.keywords');
+    const languageAlternates = {
+      fa: `${SITE_URL}/fa/products/${categorySlug}`,
+      en: `${SITE_URL}/en/products/${categorySlug}`,
+      'x-default': `${SITE_URL}/fa/products/${categorySlug}`,
+    };
     const ogImage = HERO_SLIDES[0]?.image;
     const ogImageUrl =
       typeof ogImage === 'string' && ogImage.length > 0
@@ -114,12 +120,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       },
       alternates: {
         canonical: `/${locale}/products/${categorySlug}`,
+        languages: languageAlternates,
       },
+      metadataBase: new URL(SITE_URL),
     };
   }
 
   if (category === 'WMS') {
     const routeTranslations = await getTranslations('Routes.washingMachine');
+    const languageAlternates = {
+      fa: `${SITE_URL}/fa/products/${categorySlug}`,
+      en: `${SITE_URL}/en/products/${categorySlug}`,
+      'x-default': `${SITE_URL}/fa/products/${categorySlug}`,
+    };
     return {
       title: routeTranslations('title'),
       description: routeTranslations('description'),
@@ -136,6 +149,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       },
       alternates: {
         canonical: `/${locale}/products/${categorySlug}`,
+        languages: languageAlternates,
       },
       metadataBase: new URL(SITE_URL),
     };
@@ -143,6 +157,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (category === 'RAC') {
     const routeTranslations = await getTranslations('Routes.rac');
+    const languageAlternates = {
+      fa: `${SITE_URL}/fa/products/${categorySlug}`,
+      en: `${SITE_URL}/en/products/${categorySlug}`,
+      'x-default': `${SITE_URL}/fa/products/${categorySlug}`,
+    };
     return {
       title: routeTranslations('title'),
       description: routeTranslations('description'),
@@ -159,6 +178,36 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       },
       alternates: {
         canonical: `/${locale}/products/${categorySlug}`,
+        languages: languageAlternates,
+      },
+      metadataBase: new URL(SITE_URL),
+    };
+  }
+
+  if (category === 'CAC') {
+    const routeTranslations = await getTranslations('Routes.cac');
+    const languageAlternates = {
+      fa: `${SITE_URL}/fa/products/${categorySlug}`,
+      en: `${SITE_URL}/en/products/${categorySlug}`,
+      'x-default': `${SITE_URL}/fa/products/${categorySlug}`,
+    };
+    return {
+      title: routeTranslations('title'),
+      description: routeTranslations('description'),
+      openGraph: {
+        title: routeTranslations('title'),
+        description: routeTranslations('description'),
+        url: `/${locale}/products/${categorySlug}`,
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: routeTranslations('title'),
+        description: routeTranslations('description'),
+      },
+      alternates: {
+        canonical: `/${locale}/products/${categorySlug}`,
+        languages: languageAlternates,
       },
       metadataBase: new URL(SITE_URL),
     };
@@ -185,6 +234,63 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
     const products = await fetchProducts(categorySlug, category);
     const detailsLabel = pageTranslations('actions.details');
     const lang: 'fa' | 'en' = locale === 'fa' ? 'fa' : 'en';
+    const officialLinks =
+      locale === 'fa'
+        ? {
+            eyebrow: 'مسیرهای رسمی',
+            title: 'صفحات اصلی هایسنس ایران',
+            items: [
+              {
+                href: `/${locale}`,
+                label: 'صفحه اصلی هایسنس ایران',
+                description: 'مرجع رسمی برند، دسته‌بندی محصولات و سیگنال اصلی جستجوی برند.',
+              },
+              {
+                href: `/${locale}/about`,
+                label: 'درباره زرین نمای کاسپین',
+                description: 'آشنایی با نمایندگی رسمی و شبکه فروش و خدمات برند در ایران.',
+              },
+              {
+                href: `/${locale}/contact-us`,
+                label: 'تماس و مشاوره خرید',
+                description: 'ارتباط با تیم رسمی برای خرید، استعلام و پشتیبانی محصولات.',
+              },
+              {
+                href: `/${locale}/warranty-and-guarantee`,
+                label: 'گارانتی و خدمات',
+                description: 'اطلاعات گارانتی، خدمات پس از فروش و شرایط پشتیبانی رسمی.',
+              },
+            ],
+          }
+        : {
+            eyebrow: 'Official paths',
+            title: 'Primary Hisense Iran pages',
+            items: [
+              {
+                href: `/${locale}`,
+                label: 'Hisense Iran homepage',
+                description:
+                  'Primary brand hub for official products, categories, and entity signals.',
+              },
+              {
+                href: `/${locale}/about`,
+                label: 'About Zarrin Namaye Caspian',
+                description:
+                  'Official representative profile, network scale, and company background.',
+              },
+              {
+                href: `/${locale}/contact-us`,
+                label: 'Contact and sales advice',
+                description:
+                  'Reach the official team for support, purchases, and product guidance.',
+              },
+              {
+                href: `/${locale}/warranty-and-guarantee`,
+                label: 'Warranty and service',
+                description: 'Official warranty terms and after-sales service information.',
+              },
+            ],
+          };
 
     const heroSlides = HERO_SLIDES.map((slide) => ({
       id: slide.id,
@@ -268,12 +374,24 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
             })}
           </div>
         </div>
+
+        <OfficialLinksSection
+          locale={locale}
+          eyebrow={officialLinks.eyebrow}
+          title={officialLinks.title}
+          items={officialLinks.items}
+        />
       </div>
     );
   }
 
-  if (category === 'WMS' || category === 'RAC') {
-    const routeKey = category === 'RAC' ? 'Routes.rac' : 'Routes.washingMachine';
+  if (category === 'WMS' || category === 'RAC' || category === 'CAC') {
+    const routeKey =
+      category === 'RAC'
+        ? 'Routes.rac'
+        : category === 'CAC'
+          ? 'Routes.cac'
+          : 'Routes.washingMachine';
     const [routeTranslations, pageTranslations] = await Promise.all([
       getTranslations(routeKey),
       getTranslations('TvHisensePage'),
@@ -281,6 +399,84 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
     const products = await fetchProducts(categorySlug, category);
     const lang: 'fa' | 'en' = locale === 'fa' ? 'fa' : 'en';
     const detailsLabel = pageTranslations('actions.details');
+    const officialLinks =
+      locale === 'fa'
+        ? {
+            eyebrow: 'مسیرهای رسمی',
+            title: 'صفحات اصلی هایسنس ایران',
+            items: [
+              {
+                href: `/${locale}`,
+                label: 'صفحه اصلی هایسنس ایران',
+                description: 'مرجع رسمی برند و دسته‌بندی محصولات هایسنس در ایران.',
+              },
+              {
+                href: `/${locale}/about`,
+                label: 'درباره نمایندگی رسمی',
+                description: 'معرفی زرین نمای کاسپین و شبکه فروش و خدمات رسمی برند.',
+              },
+              {
+                href: `/${locale}/contact-us`,
+                label: 'تماس و مشاوره',
+                description: 'مشاوره خرید، استعلام و ارتباط با تیم رسمی هایسنس ایران.',
+              },
+              ...(category === 'CAC'
+                ? [
+                    {
+                      href: `/${locale}/cac`,
+                      label: 'تهویه مطبوع تجاری هایسنس',
+                      description: 'مرجع راهکارهای CAC و سیستم‌های کانالی و تجاری هایسنس.',
+                    },
+                  ]
+                : [
+                    {
+                      href: `/${locale}/hisense-repair`,
+                      label: 'خدمات تعمیر و پشتیبانی',
+                      description: 'ثبت درخواست سرویس و پشتیبانی رسمی محصولات هایسنس.',
+                    },
+                  ]),
+            ],
+          }
+        : {
+            eyebrow: 'Official paths',
+            title: 'Primary Hisense Iran pages',
+            items: [
+              {
+                href: `/${locale}`,
+                label: 'Hisense Iran homepage',
+                description:
+                  'Official brand hub for categories, products, and core company signals.',
+              },
+              {
+                href: `/${locale}/about`,
+                label: 'About the official representative',
+                description:
+                  'Learn about Zarrin Namaye Caspian and the national distribution network.',
+              },
+              {
+                href: `/${locale}/contact-us`,
+                label: 'Contact and consultation',
+                description:
+                  'Reach the official team for support, purchases, and product questions.',
+              },
+              ...(category === 'CAC'
+                ? [
+                    {
+                      href: `/${locale}/cac`,
+                      label: 'Commercial air conditioning',
+                      description:
+                        'Official CAC hub for ducted and commercial Hisense climate solutions.',
+                    },
+                  ]
+                : [
+                    {
+                      href: `/${locale}/hisense-repair`,
+                      label: 'Repair and support',
+                      description: 'Official service, maintenance, and repair request page.',
+                    },
+                  ]),
+            ],
+          };
 
     return (
       <div className="pb-16 space-y-12 lg:space-y-16 lg:pb-24">
@@ -356,6 +552,13 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
             })}
           </div>
         </div>
+
+        <OfficialLinksSection
+          locale={locale}
+          eyebrow={officialLinks.eyebrow}
+          title={officialLinks.title}
+          items={officialLinks.items}
+        />
       </div>
     );
   }
