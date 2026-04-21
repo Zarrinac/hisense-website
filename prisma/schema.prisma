@@ -74,3 +74,52 @@ model ProductCopy {
 
   @@unique([productId, locale])
 }
+
+model IranProvince {
+  id        String     @id
+  nameFa    String
+  nameEn    String
+  sortOrder Int
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  cities IranCity[]
+
+  @@index([sortOrder])
+}
+
+model IranCity {
+  id         String       @id
+  provinceId String
+  nameFa     String
+  nameEn     String
+  sortOrder  Int
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  province IranProvince @relation(fields: [provinceId], references: [id], onDelete: Cascade)
+
+  @@index([provinceId, sortOrder])
+}
+
+model ComplaintSubmission {
+  id                     String   @id @default(cuid())
+  referenceCode          String   @unique
+  locale                 String
+  fullName               String
+  phone                  String
+  email                  String?
+  productCategory        String
+  productModel           String
+  invoiceNumber          String?
+  referenceNumber        String?
+  purchaseDate           DateTime?
+  complaintTopic         String
+  preferredContactMethod String
+  city                   String
+  address                String?
+  description            String
+  status                 String   @default("NEW")
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}

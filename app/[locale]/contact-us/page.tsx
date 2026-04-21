@@ -360,6 +360,11 @@ export default async function ContactUsPage() {
               label: 'خدمات تعمیر و پشتیبانی',
               description: 'ثبت درخواست تعمیر، سرویس و پشتیبانی رسمی محصولات هایسنس.',
             },
+            {
+              href: `/${resolvedLocale}/complaint`,
+              label: 'فرم شکایت',
+              description: 'ثبت شکایت و پیگیری مسائل مرتبط با خدمات، گارانتی یا کیفیت محصول.',
+            },
           ],
         }
       : {
@@ -388,6 +393,11 @@ export default async function ContactUsPage() {
               href: `/${resolvedLocale}/hisense-repair`,
               label: 'Repair and support',
               description: 'Request official repair, service, and product support.',
+            },
+            {
+              href: `/${resolvedLocale}/complaint`,
+              label: 'Complaint form',
+              description: 'Submit service, warranty, or product complaints for direct follow-up.',
             },
           ],
         };

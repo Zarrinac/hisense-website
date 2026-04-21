@@ -135,7 +135,7 @@ export default function TvProductShowcase({
                     {quoteLabel}
                   </Link>
                   <Link
-                    href={`/${locale}/support`}
+                    href={`/${locale}/hisense-repair`}
                     className="inline-flex items-center gap-2 rounded-full border border-(--border-color) px-4 py-2 text-sm font-semibold text-(--default-black-font) transition hover:border-(--brand-color) hover:text-(--brand-color) focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
                   >
                     {supportLabel}
