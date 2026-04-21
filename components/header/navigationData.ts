@@ -116,6 +116,14 @@ export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
       href: '/hisense-repair',
     },
     {
+      title: { en: 'Complaint form', fa: 'فرم شکایت' },
+      description: {
+        en: 'Submit a service, warranty, or product complaint for official follow-up.',
+        fa: 'برای خدمات، گارانتی یا کیفیت محصول، شکایت خود را برای پیگیری رسمی ثبت کنید.',
+      },
+      href: '/complaint',
+    },
+    {
       title: { en: 'Contact us', fa: 'تماس با ما' },
       description: {
         en: 'Reach our team for service, warranty, or sales questions.',
