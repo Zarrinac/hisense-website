@@ -108,6 +108,11 @@ export default async function AboutPage({ params }: AboutPageProps) {
               label: 'خدمات تعمیر و پشتیبانی',
               description: 'سرویس و تعمیرات رسمی برای محصولات هایسنس در سراسر ایران.',
             },
+            {
+              href: `/${locale}/complaint`,
+              label: 'فرم شکایت',
+              description: 'ثبت و پیگیری شکایت‌های مرتبط با خدمات، گارانتی یا کیفیت محصول.',
+            },
           ],
         }
       : {
@@ -135,6 +140,12 @@ export default async function AboutPage({ params }: AboutPageProps) {
               href: `/${locale}/hisense-repair`,
               label: 'Repair and support',
               description: 'Official maintenance, repair, and product support page.',
+            },
+            {
+              href: `/${locale}/complaint`,
+              label: 'Complaint form',
+              description:
+                'Submit service, warranty, or product complaints for official follow-up.',
             },
           ],
         };

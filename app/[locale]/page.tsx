@@ -44,6 +44,7 @@ const HOME_SEO_CONTENT: Record<
       { href: '/contact-us', label: 'تماس با هایسنس ایران' },
       { href: '/warranty-and-guarantee', label: 'شرایط گارانتی و خدمات' },
       { href: '/hisense-repair', label: 'خدمات پس از فروش و تعمیرات رسمی' },
+      { href: '/complaint', label: 'ثبت شکایت و پیگیری' },
     ],
   },
   en: {
@@ -66,6 +67,7 @@ const HOME_SEO_CONTENT: Record<
       { href: '/contact-us', label: 'Contact Hisense Iran' },
       { href: '/warranty-and-guarantee', label: 'Warranty and service terms' },
       { href: '/hisense-repair', label: 'Official service and repair' },
+      { href: '/complaint', label: 'Submit a complaint' },
     ],
   },
 };
