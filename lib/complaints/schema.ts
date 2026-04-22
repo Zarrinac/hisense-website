@@ -58,7 +58,7 @@ const DEFAULT_VALIDATION_COPY: ComplaintValidationCopy = {
 };
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
-const PHONE_PATTERN = /^[+]?[\d\s()-]{8,24}$/;
+const PHONE_PATTERN = /^09\d{9}$/;
 
 function normalizeDigits(value: string) {
   return value.replace(/[۰-۹]/g, (digit) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(digit)));
@@ -66,7 +66,7 @@ function normalizeDigits(value: string) {
 
 function normalizeOptionalString(maxLength: number) {
   return z
-    .union([z.string().trim().max(maxLength), z.literal(''), z.undefined()])
+    .union([z.string().trim().max(maxLength), z.literal(''), z.null(), z.undefined()])
     .transform((value) => {
       const trimmed = typeof value === 'string' ? value.trim() : '';
       return trimmed.length > 0 ? trimmed : null;
@@ -99,14 +99,15 @@ export function createComplaintSchema(copy: ComplaintValidationCopy = DEFAULT_VA
       .string()
       .trim()
       .min(1, { message: copy.phoneRequired })
-      .refine((value) => PHONE_PATTERN.test(normalizeDigits(value)), {
+      .transform((value) => normalizeDigits(value.trim()))
+      .refine((value) => PHONE_PATTERN.test(value), {
         message: copy.phoneInvalid,
-      })
-      .transform((value) => normalizeDigits(value.trim())),
+      }),
     email: z
       .union([
         z.string().trim().email({ message: copy.emailInvalid }),
         z.literal(''),
+        z.null(),
         z.undefined(),
       ])
       .transform((value) => {
@@ -126,6 +127,7 @@ export function createComplaintSchema(copy: ComplaintValidationCopy = DEFAULT_VA
       .union([
         z.string().regex(DATE_PATTERN, { message: copy.purchaseDateInvalid }),
         z.literal(''),
+        z.null(),
         z.undefined(),
       ])
       .transform((value) => {

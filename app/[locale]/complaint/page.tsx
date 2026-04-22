@@ -133,9 +133,8 @@ const COMPLAINT_CONTENT: Record<Locale, ComplaintPageContent> = {
       requiredHint: 'فیلدهای ستاره‌دار الزامی هستند.',
       submitLabel: 'ثبت شکایت',
       submittingLabel: 'در حال ثبت...',
-      successTitle: 'شکایت شما با موفقیت ثبت شد.',
-      successDescription: 'کد پیگیری زیر را برای مراجعات بعدی نگه دارید.',
-      referenceCodeLabel: 'کد پیگیری',
+      successMessage: 'شکایت شما با موفقیت ثبت شد.',
+      trackingCodeLabel: 'شماره پیگیری',
       errorMessage: 'در ثبت شکایت اختلالی رخ داد. لطفاً کمی بعد دوباره تلاش کنید.',
       serverUnavailable:
         'سامانه ثبت شکایت در حال حاضر در دسترس نیست. لطفاً از مسیرهای تماس رسمی استفاده کنید.',
@@ -146,7 +145,7 @@ const COMPLAINT_CONTENT: Record<Locale, ComplaintPageContent> = {
         },
         phone: {
           label: 'شماره تماس',
-          placeholder: '0912 000 0000',
+          placeholder: '09120000000',
         },
         email: {
           label: 'ایمیل',
@@ -328,9 +327,8 @@ const COMPLAINT_CONTENT: Record<Locale, ComplaintPageContent> = {
       requiredHint: 'Fields marked with * are required.',
       submitLabel: 'Submit complaint',
       submittingLabel: 'Submitting...',
-      successTitle: 'Your complaint was submitted successfully.',
-      successDescription: 'Keep the reference code below for future follow-up.',
-      referenceCodeLabel: 'Reference code',
+      successMessage: 'Your complaint was submitted successfully.',
+      trackingCodeLabel: 'Tracking code',
       errorMessage: 'Something went wrong while submitting your complaint. Please try again.',
       serverUnavailable:
         'Complaint intake is currently unavailable. Please use the official support channels below.',
@@ -341,7 +339,7 @@ const COMPLAINT_CONTENT: Record<Locale, ComplaintPageContent> = {
         },
         phone: {
           label: 'Phone number',
-          placeholder: '+98 912 000 0000',
+          placeholder: '09120000000',
         },
         email: {
           label: 'Email',

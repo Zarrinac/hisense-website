@@ -4,7 +4,6 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { Autocomplete, TextField } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
-import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
@@ -44,9 +43,8 @@ export type ComplaintFormCopy = {
   requiredHint: string;
   submitLabel: string;
   submittingLabel: string;
-  successTitle: string;
-  successDescription: string;
-  referenceCodeLabel: string;
+  successMessage: string;
+  trackingCodeLabel: string;
   errorMessage: string;
   serverUnavailable: string;
   fields: {
@@ -230,7 +228,7 @@ function toSolarDateObject(value: string, locale: Locale) {
 
 export default function ComplaintForm({ copy, locale, provinces }: ComplaintFormProps) {
   const [serverError, setServerError] = useState<string | null>(null);
-  const [referenceCode, setReferenceCode] = useState<string | null>(null);
+  const [trackingCode, setTrackingCode] = useState<string | null>(null);
 
   const {
     register,
@@ -266,6 +264,7 @@ export default function ComplaintForm({ copy, locale, provinces }: ComplaintForm
 
   const onSubmit = handleSubmit(async (values) => {
     setServerError(null);
+    setTrackingCode(null);
 
     try {
       const response = await fetch('/api/complaints', {
@@ -282,6 +281,7 @@ export default function ComplaintForm({ copy, locale, provinces }: ComplaintForm
       const payload = (await response.json().catch(() => null)) as {
         message?: string;
         referenceCode?: string;
+        trackingCode?: string;
       } | null;
 
       if (!response.ok) {
@@ -293,7 +293,8 @@ export default function ComplaintForm({ copy, locale, provinces }: ComplaintForm
         return;
       }
 
-      setReferenceCode(payload?.referenceCode ?? null);
+      const nextTrackingCode = payload?.trackingCode ?? payload?.referenceCode ?? null;
+      setTrackingCode(nextTrackingCode);
       reset();
     } catch {
       setServerError(copy.errorMessage);
@@ -321,18 +322,12 @@ export default function ComplaintForm({ copy, locale, provinces }: ComplaintForm
         <p className="font-semibold text-(--default-black-font)">{copy.requiredHint}</p>
       </div>
 
-      {referenceCode ? (
+      {trackingCode ? (
         <div className="mt-5 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-4 text-sm text-emerald-700 dark:text-emerald-200">
-          <div className="flex items-start gap-3">
-            <CheckCircleOutlinedIcon fontSize="small" />
-            <div className="space-y-1">
-              <p className="font-semibold">{copy.successTitle}</p>
-              <p>{copy.successDescription}</p>
-              <p className="font-semibold">
-                {copy.referenceCodeLabel}: <span dir="ltr">{referenceCode}</span>
-              </p>
-            </div>
-          </div>
+          <p className="font-semibold">{copy.successMessage}</p>
+          <p className="mt-1">
+            {copy.trackingCodeLabel}: <span dir="ltr">{trackingCode}</span>
+          </p>
         </div>
       ) : null}
 
