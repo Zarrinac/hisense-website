@@ -13,7 +13,7 @@ function parseDateOnly(value: string | null) {
 }
 
 function createReferenceCode() {
-  return `CMP-${new Date().getFullYear()}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+  return `CMP-${crypto.randomUUID().replace(/-/g, '').slice(0, 6).toUpperCase()}`;
 }
 
 export async function POST(request: Request) {
@@ -57,6 +57,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         referenceCode: complaint.referenceCode,
+        trackingCode: complaint.referenceCode,
       },
       { status: 201 },
     );
