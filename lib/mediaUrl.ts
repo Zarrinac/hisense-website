@@ -10,6 +10,12 @@ export const mediaUrl = (path: string) => {
     return normalized.startsWith('/media/') ? normalized.replace(/^\/media/, '') : normalized;
   }
 
-  const base = process.env.NEXT_PUBLIC_MEDIA_BASE_URL ?? '';
-  return base ? `${base}${normalized}` : normalized;
+  const base = (process.env.NEXT_PUBLIC_MEDIA_BASE_URL ?? '').replace(/\/$/, '');
+  if (!base) return normalized;
+
+  if (base.startsWith('/') && normalized.startsWith(`${base}/`)) {
+    return normalized;
+  }
+
+  return `${base}${normalized}`;
 };

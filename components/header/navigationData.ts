@@ -81,22 +81,6 @@ export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
       },
       href: '/about',
     },
-    {
-      title: { en: 'Sustainability', fa: 'پایداری' },
-      description: {
-        en: 'Responsible manufacturing and design.',
-        fa: 'تولید و طراحی مسئولانه.',
-      },
-      href: '/about',
-    },
-    {
-      title: { en: 'Careers', fa: 'فرصت‌های شغلی' },
-      description: {
-        en: 'Join a global team shaping the future.',
-        fa: 'به تیم جهانی ما بپیوندید و آینده را بسازید.',
-      },
-      href: '/about',
-    },
   ],
   support: [
     {
@@ -122,6 +106,14 @@ export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
         fa: 'برای خدمات، گارانتی یا کیفیت محصول، شکایت خود را برای پیگیری رسمی ثبت کنید.',
       },
       href: '/complaint',
+    },
+    {
+      title: { en: 'Customer survey', fa: 'فرم نظرسنجی' },
+      description: {
+        en: 'Rate your service experience and help us improve support quality.',
+        fa: 'تجربه خدمات خود را ارزیابی کنید و به ما برای بهبود کیفیت پشتیبانی کمک کنید.',
+      },
+      href: '/survey',
     },
     {
       title: { en: 'Contact us', fa: 'تماس با ما' },
