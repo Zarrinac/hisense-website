@@ -132,8 +132,8 @@
       "faq": "FAQ",
       "warranty": "Warranty conditions",
       "hisenseRepair": "Repair & Support",
-      "dealerPortal": "Dealer portal",
-      "dealerList": "Dealer list",
+      "dealerPortal": "Service dealer portal",
+      "dealerList": "Service center list",
       "becomeDealer": "Become a dealer",
       "tvHisense": "Hisense TV (LED)",
       "rac": "Residential Air Conditioner",
@@ -293,9 +293,19 @@
       "description": "Review Hisense Iran warranty coverage, guarantee terms, after-sales service, exclusions, and official warranty PDF downloads."
     },
     "portal": {
-      "eyebrow": "Dealer Portal",
-      "title": "Dealer & Partner Portal",
-      "description": "Authorized partners can access training, spare parts ordering, and marketing materials inside the portal."
+      "eyebrow": "Service Representatives",
+      "title": "After-Sales Service Representatives Portal",
+      "description": "Dedicated access for Zarrin Namaye Caspian after-sales service representatives to the official Hisense service portal."
+    },
+    "findServiceCenter": {
+      "eyebrow": "Service Representatives",
+      "title": "After-Sales Service Representative List",
+      "description": "Find official Hisense after-sales service representatives by city and service type."
+    },
+    "requestRepresentation": {
+      "eyebrow": "Partner with us",
+      "title": "Sales and Service Representation Request",
+      "description": "Apply for sales representation or after-sales installation and service representation with Zarrin Namaye Caspian, the official Hisense representative in Iran."
     }
   }
 }

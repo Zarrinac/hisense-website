@@ -84,10 +84,10 @@ export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
   ],
   support: [
     {
-      title: { en: 'Register Product', fa: 'ثبت محصول' },
+      title: { en: 'Service representative portal', fa: 'پرتال نمایندگان خدمات' },
       description: {
-        en: 'Unlock benefits, tips, and tailored updates.',
-        fa: 'مزایا، نکات و به‌روزرسانی‌های اختصاصی را فعال کنید.',
+        en: 'Access the after-sales service representative portal.',
+        fa: 'دسترسی نمایندگان خدمات پس از فروش به پرتال رسمی.',
       },
       href: '/portal',
     },
@@ -100,12 +100,28 @@ export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
       href: '/hisense-repair',
     },
     {
+      title: { en: 'Find service center', fa: 'لیست نمایندگان خدمات' },
+      description: {
+        en: 'Find authorized after-sales service representatives by city and service type.',
+        fa: 'جستجوی نمایندگان خدمات پس از فروش بر اساس شهر و نوع فعالیت.',
+      },
+      href: '/find-service-center',
+    },
+    {
       title: { en: 'Complaint form', fa: 'فرم شکایت' },
       description: {
         en: 'Submit a service, warranty, or product complaint for official follow-up.',
         fa: 'برای خدمات، گارانتی یا کیفیت محصول، شکایت خود را برای پیگیری رسمی ثبت کنید.',
       },
       href: '/complaint',
+    },
+    {
+      title: { en: 'Request representation', fa: 'درخواست نمایندگی' },
+      description: {
+        en: 'Apply for sales or after-sales service representation with Hisense Iran.',
+        fa: 'درخواست نمایندگی فروش یا نمایندگی خدمات پس از فروش هایسنس ایران.',
+      },
+      href: '/request-representation',
     },
     {
       title: { en: 'Customer survey', fa: 'فرم نظرسنجی' },
