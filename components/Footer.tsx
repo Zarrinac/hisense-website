@@ -49,11 +49,11 @@ const FOOTER_SECTIONS: Array<{
       { key: 'faq', href: '/faq' },
       { key: 'warranty', href: '/warranty-and-guarantee' },
       { key: 'hisenseRepair', href: '/hisense-repair' },
+      { key: 'dealerList', href: '/find-service-center' },
       { key: 'complaint', href: '/complaint' },
       { key: 'feedback', href: '/survey' },
       { key: 'dealerPortal', href: '/portal' },
-      { key: 'dealerList', href: '/portal' },
-      { key: 'becomeDealer', href: '/portal' },
+      { key: 'becomeDealer', href: '/request-representation' },
     ],
   },
 ];
