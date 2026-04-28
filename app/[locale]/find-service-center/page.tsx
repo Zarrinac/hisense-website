@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { getLocale, getTranslations } from 'next-intl/server';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
 import ServiceCenterFinder from '@/components/service-centers/ServiceCenterFinder';
-import { serviceCenters } from '@/content/service-centers/serviceCenters';
-import { getLocalizedLabel, iranProvinces } from '@/lib/iranLocations';
+import { loadServiceCenterData, normalizeServiceCenterFilters } from '@/lib/serviceCenterSource';
 import { routing, type Locale } from '@/i18n/routing';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
@@ -30,6 +29,9 @@ const PAGE_CONTENT = {
       noDataTitle: 'اطلاعات نمایندگان هنوز ثبت نشده است.',
       noDataDescription:
         'ساختار جدول و فیلترها آماده است. پس از دریافت اطلاعات رسمی نمایندگان خدمات، ردیف‌ها در همین بخش نمایش داده می‌شوند.',
+      initialTitle: 'برای مشاهده نمایندگان، فیلترها را انتخاب کنید.',
+      initialDescription:
+        'استان و نوع فعالیت موردنظر را انتخاب کنید و روی نمایش مشخصات بزنید. در صورت خالی گذاشتن فیلترها، همه نمایندگان نمایش داده می‌شوند.',
       headers: {
         province: 'استان',
         city: 'شهر',
@@ -89,6 +91,9 @@ const PAGE_CONTENT = {
       noDataTitle: 'Representative data has not been added yet.',
       noDataDescription:
         'The table and filters are ready. Official service representative rows will appear here after the data is provided.',
+      initialTitle: 'Choose filters to view representatives.',
+      initialDescription:
+        'Select a province and service type, then choose Show details. Leave filters empty to show all representatives.',
       headers: {
         province: 'Province',
         city: 'City',
@@ -129,6 +134,14 @@ const PAGE_CONTENT = {
   },
 } satisfies Record<Locale, unknown>;
 
+type FindServiceCenterPageProps = {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
+
+function firstSearchValue(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.findServiceCenter');
@@ -160,18 +173,18 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function FindServiceCenterPage() {
+export default async function FindServiceCenterPage({ searchParams }: FindServiceCenterPageProps) {
   const locale = (await getLocale()) as Locale;
   const content = PAGE_CONTENT[locale];
   const isRTL = locale === 'fa';
-  const locations = iranProvinces.map((province) => ({
-    id: province.id,
-    label: `${locale === 'fa' ? 'استان ' : ''}${getLocalizedLabel(province.labels, locale)}`,
-    cities: province.cities.map((city) => ({
-      id: city.id,
-      label: getLocalizedLabel(city.labels, locale),
-    })),
-  }));
+  const resolvedSearchParams = (await searchParams) ?? {};
+  const hasSearched = firstSearchValue(resolvedSearchParams.submitted) === '1';
+  const selectedFilters = normalizeServiceCenterFilters({
+    provinceId: firstSearchValue(resolvedSearchParams.province),
+    cityId: firstSearchValue(resolvedSearchParams.city),
+    serviceKind: firstSearchValue(resolvedSearchParams.service),
+  });
+  const serviceCenterData = await loadServiceCenterData(locale, selectedFilters, hasSearched);
   const pageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -200,9 +213,12 @@ export default async function FindServiceCenterPage() {
 
       <ServiceCenterFinder
         locale={locale}
-        centers={serviceCenters}
-        locations={locations}
+        centers={serviceCenterData.centers}
+        locations={serviceCenterData.locations}
         copy={content.table}
+        selectedFilters={selectedFilters}
+        hasSearched={hasSearched}
+        totalCount={serviceCenterData.totalCount}
       />
 
       <OfficialLinksSection
