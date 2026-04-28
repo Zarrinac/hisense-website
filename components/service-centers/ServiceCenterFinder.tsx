@@ -30,6 +30,8 @@ type ServiceCenterFinderCopy = {
   emptyDescription: string;
   noDataTitle: string;
   noDataDescription: string;
+  initialTitle: string;
+  initialDescription: string;
   headers: {
     province: string;
     city: string;
@@ -47,6 +49,13 @@ type ServiceCenterFinderProps = {
   centers: ServiceCenter[];
   locations: LocationOption[];
   copy: ServiceCenterFinderCopy;
+  selectedFilters: {
+    provinceId?: string;
+    cityId?: string;
+    serviceKind?: ServiceKind;
+  };
+  hasSearched: boolean;
+  totalCount: number;
 };
 
 const SERVICE_KIND_ORDER: ServiceKind[] = ['tv', 'ha', 'rac', 'cac', 'vrf'];
@@ -62,36 +71,20 @@ export default function ServiceCenterFinder({
   centers,
   locations,
   copy,
+  selectedFilters,
+  hasSearched,
+  totalCount,
 }: ServiceCenterFinderProps) {
-  const [draftProvinceId, setDraftProvinceId] = useState('');
-  const [draftCityId, setDraftCityId] = useState('');
-  const [draftServiceKind, setDraftServiceKind] = useState<ServiceKind | ''>('');
-  const [appliedProvinceId, setAppliedProvinceId] = useState('');
-  const [appliedCityId, setAppliedCityId] = useState('');
-  const [appliedServiceKind, setAppliedServiceKind] = useState<ServiceKind | ''>('');
+  const [draftProvinceId, setDraftProvinceId] = useState(selectedFilters.provinceId ?? '');
+  const [draftCityId, setDraftCityId] = useState(selectedFilters.cityId ?? '');
+  const [draftServiceKind, setDraftServiceKind] = useState<ServiceKind | ''>(
+    selectedFilters.serviceKind ?? '',
+  );
   const isRTL = locale === 'fa';
 
   const cityOptions = useMemo(() => {
     return locations.find((location) => location.id === draftProvinceId)?.cities ?? [];
   }, [draftProvinceId, locations]);
-
-  const filteredCenters = useMemo(() => {
-    return centers.filter((center) => {
-      if (appliedProvinceId && center.provinceId !== appliedProvinceId) {
-        return false;
-      }
-
-      if (appliedCityId && center.cityId !== appliedCityId) {
-        return false;
-      }
-
-      if (appliedServiceKind && center.serviceKind !== appliedServiceKind) {
-        return false;
-      }
-
-      return true;
-    });
-  }, [appliedCityId, appliedProvinceId, appliedServiceKind, centers]);
 
   const locationById = useMemo(() => {
     const map = new Map<string, LocationOption>();
@@ -111,15 +104,17 @@ export default function ServiceCenterFinder({
     return map;
   }, [locations]);
 
-  const hasAnyCenters = centers.length > 0;
+  const hasAnyCenters = totalCount > 0;
 
   return (
     <section className="mx-auto max-w-6xl px-4 sm:px-6" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="border border-(--border-color) bg-(--surface-color) p-5 shadow-lg sm:p-6">
-        <div className="grid gap-4">
+        <form method="get" className="grid gap-4">
+          <input type="hidden" name="submitted" value="1" />
           <label className="grid gap-2 text-sm font-medium text-(--default-black-font)">
             <span>{copy.provinceLabel}</span>
             <select
+              name="province"
               value={draftProvinceId}
               onChange={(event) => {
                 setDraftProvinceId(event.target.value);
@@ -139,6 +134,7 @@ export default function ServiceCenterFinder({
           <label className="grid gap-2 text-sm font-medium text-(--default-black-font)">
             <span>{copy.cityLabel}</span>
             <select
+              name="city"
               value={draftCityId}
               onChange={(event) => setDraftCityId(event.target.value)}
               disabled={!draftProvinceId}
@@ -156,6 +152,7 @@ export default function ServiceCenterFinder({
           <label className="grid gap-2 text-sm font-medium text-(--default-black-font)">
             <span>{copy.serviceKindLabel}</span>
             <select
+              name="service"
               value={draftServiceKind}
               onChange={(event) => setDraftServiceKind(event.target.value as ServiceKind | '')}
               className="min-h-12 w-full rounded-lg border border-(--border-color) bg-(--surface-color) px-3 py-2 text-(--default-black-font) outline-none transition focus:border-(--brand-color)"
@@ -172,36 +169,25 @@ export default function ServiceCenterFinder({
 
           <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
             <button
-              type="button"
-              onClick={() => {
-                setAppliedProvinceId(draftProvinceId);
-                setAppliedCityId(draftCityId);
-                setAppliedServiceKind(draftServiceKind);
-              }}
+              type="submit"
               className="rounded-lg bg-[#d7b44a] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#c29d31] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d7b44a]"
             >
               {copy.submitLabel}
             </button>
-            <button
-              type="button"
-              onClick={() => {
-                setDraftProvinceId('');
-                setDraftCityId('');
-                setDraftServiceKind('');
-                setAppliedProvinceId('');
-                setAppliedCityId('');
-                setAppliedServiceKind('');
-              }}
+            <a
+              href="?"
               className="rounded-lg border border-(--border-color) px-5 py-3 text-sm font-bold text-(--text-muted-color) transition hover:border-(--brand-color) hover:text-(--brand-color)"
             >
               {copy.resetLabel}
-            </button>
+            </a>
           </div>
-        </div>
+        </form>
 
-        <div className="mt-6 flex items-center justify-between gap-3 text-sm text-(--text-muted-color)">
-          <p>{formatCount(copy.resultCount, filteredCenters.length, locale)}</p>
-        </div>
+        {hasSearched ? (
+          <div className="mt-6 flex items-center justify-between gap-3 text-sm text-(--text-muted-color)">
+            <p>{formatCount(copy.resultCount, centers.length, locale)}</p>
+          </div>
+        ) : null}
 
         <div className="mt-4 overflow-x-auto">
           <table className="min-w-[62rem] w-full border-collapse text-center text-sm">
@@ -232,48 +218,64 @@ export default function ServiceCenterFinder({
               </tr>
             </thead>
             <tbody>
-              {filteredCenters.map((center) => {
-                const provinceLabel =
-                  locationById.get(center.provinceId)?.label ?? center.provinceId;
-                const cityLabel =
-                  cityLabelByKey.get(`${center.provinceId}:${center.cityId}`) ?? center.cityId;
+              {hasSearched
+                ? centers.map((center) => {
+                    const provinceLabel =
+                      center.provinceName[locale] ??
+                      locationById.get(center.provinceId)?.label ??
+                      center.provinceId;
+                    const cityLabel =
+                      center.cityName[locale] ??
+                      cityLabelByKey.get(`${center.provinceId}:${center.cityId}`) ??
+                      center.cityId;
 
-                return (
-                  <tr
-                    key={center.id}
-                    className="odd:bg-(--surface-color) even:bg-(--surface-muted-color)"
-                  >
-                    <td className="border border-(--border-color) px-3 py-4">{provinceLabel}</td>
-                    <td className="border border-(--border-color) px-3 py-4">{cityLabel}</td>
-                    <td className="border border-(--border-color) px-3 py-4">
-                      {serviceKindLabels[center.serviceKind][locale]}
-                    </td>
-                    <td className="border border-(--border-color) px-3 py-4">
-                      {center.representativeName[locale]}
-                    </td>
-                    <td className="border border-(--border-color) px-3 py-4" dir="ltr">
-                      {center.representativeCode}
-                    </td>
-                    <td className="border border-(--border-color) px-3 py-4" dir="ltr">
-                      {center.primaryPhone}
-                    </td>
-                    <td className="border border-(--border-color) px-3 py-4" dir="ltr">
-                      {center.mobilePhone}
-                    </td>
-                    <td className="border border-(--border-color) px-3 py-4 leading-7">
-                      {center.address[locale]}
-                    </td>
-                  </tr>
-                );
-              })}
-              {filteredCenters.length === 0 ? (
+                    return (
+                      <tr
+                        key={center.id}
+                        className="odd:bg-(--surface-color) even:bg-(--surface-muted-color)"
+                      >
+                        <td className="border border-(--border-color) px-3 py-4">
+                          {provinceLabel}
+                        </td>
+                        <td className="border border-(--border-color) px-3 py-4">{cityLabel}</td>
+                        <td className="border border-(--border-color) px-3 py-4">
+                          {serviceKindLabels[center.serviceKind][locale]}
+                        </td>
+                        <td className="border border-(--border-color) px-3 py-4">
+                          {center.representativeName[locale]}
+                        </td>
+                        <td className="border border-(--border-color) px-3 py-4" dir="ltr">
+                          {center.representativeCode}
+                        </td>
+                        <td className="border border-(--border-color) px-3 py-4" dir="ltr">
+                          {center.primaryPhone}
+                        </td>
+                        <td className="border border-(--border-color) px-3 py-4" dir="ltr">
+                          {center.mobilePhone}
+                        </td>
+                        <td className="border border-(--border-color) px-3 py-4 leading-7">
+                          {center.address[locale]}
+                        </td>
+                      </tr>
+                    );
+                  })
+                : null}
+              {!hasSearched || centers.length === 0 ? (
                 <tr>
                   <td colSpan={8} className="border border-(--border-color) px-4 py-10 text-center">
                     <p className="text-base font-bold text-(--default-black-font)">
-                      {hasAnyCenters ? copy.emptyTitle : copy.noDataTitle}
+                      {!hasSearched
+                        ? copy.initialTitle
+                        : hasAnyCenters
+                          ? copy.emptyTitle
+                          : copy.noDataTitle}
                     </p>
                     <p className="mx-auto mt-2 max-w-2xl text-sm leading-7 text-(--text-muted-color)">
-                      {hasAnyCenters ? copy.emptyDescription : copy.noDataDescription}
+                      {!hasSearched
+                        ? copy.initialDescription
+                        : hasAnyCenters
+                          ? copy.emptyDescription
+                          : copy.noDataDescription}
                     </p>
                   </td>
                 </tr>
