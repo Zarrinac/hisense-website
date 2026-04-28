@@ -50,6 +50,7 @@ next-env.d.ts
 /public/banner/
 /public/contact-us/
 /public/downloads/
+/public/representatives/
 
 /app/generated/prisma
 

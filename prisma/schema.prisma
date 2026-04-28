@@ -166,3 +166,27 @@ model DownloadAsset {
   @@unique([pageKey, locale, fileLocale])
   @@index([pageKey, locale, isActive, sortOrder])
 }
+
+model ServiceRepresentative {
+  id                   String   @id
+  provinceId           String
+  cityId               String
+  provinceNameFa       String
+  provinceNameEn       String
+  cityNameFa           String
+  cityNameEn           String
+  serviceKind          String
+  representativeNameFa String
+  representativeNameEn String
+  representativeCode   String
+  primaryPhone         String
+  mobilePhone          String
+  addressFa            String
+  addressEn            String
+  sortOrder            Int
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([provinceId, cityId, serviceKind, sortOrder])
+  @@index([serviceKind, sortOrder])
+}
