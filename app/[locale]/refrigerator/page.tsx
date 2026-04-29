@@ -3,11 +3,18 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Visibility } from '@mui/icons-material';
-import { routing } from '@/i18n/routing';
+import type { Locale } from '@/i18n/routing';
+import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
+import PageBreadcrumbs from '@/components/seo/PageBreadcrumbs';
 import { mediaUrl } from '@/lib/mediaUrl';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
+import {
+  createBreadcrumbItems,
+  getLanguageAlternates,
+  getLocaleLanguage,
+  SITE_URL,
+  toAbsoluteUrl,
+} from '@/lib/seo/site';
 
 const bannerAsset = (path: string) => mediaUrl(`/products/refrigerator/banner/${path}`);
 const productAsset = (path: string) => mediaUrl(`/products/refrigerator/${path}`);
@@ -104,11 +111,7 @@ const REFRIGERATOR_PRODUCTS = [
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const routeTranslations = await getTranslations('Routes.refrigerator');
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
-    acc[lang] = `${SITE_URL}/${lang}/refrigerator`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}/refrigerator`;
+  const languageAlternates = getLanguageAlternates('/refrigerator');
   const ogImage = HERO_BANNERS.desktop;
   const ogImageUrl =
     typeof ogImage === 'string' && ogImage.length > 0
@@ -143,8 +146,46 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RefrigeratorPage() {
   const locale = await getLocale();
+  const resolvedLocale: Locale = locale === 'fa' ? 'fa' : 'en';
   const routeTranslations = await getTranslations('Routes.refrigerator');
   const detailsLabel = (await getTranslations('TvHisensePage'))('actions.details');
+  const breadcrumbItems = createBreadcrumbItems(resolvedLocale, {
+    label: routeTranslations('title'),
+    href: `/${resolvedLocale}/refrigerator`,
+  });
+  const collectionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: routeTranslations('title'),
+    description: routeTranslations('description'),
+    url: `${SITE_URL}/${resolvedLocale}/refrigerator`,
+    inLanguage: getLocaleLanguage(resolvedLocale),
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: REFRIGERATOR_PRODUCTS.map((product, index) => {
+        const title =
+          typeof product.title === 'object'
+            ? (product.title?.[resolvedLocale] ?? product.label)
+            : (product.title ?? product.label);
+
+        return {
+          '@type': 'ListItem',
+          position: index + 1,
+          url: `${SITE_URL}/${resolvedLocale}/refrigerator/${product.id}`,
+          item: {
+            '@type': 'Product',
+            name: title,
+            sku: product.label,
+            image: toAbsoluteUrl(product.image),
+            brand: {
+              '@type': 'Brand',
+              name: 'Hisense',
+            },
+          },
+        };
+      }),
+    },
+  };
   const officialLinks =
     locale === 'fa'
       ? {
@@ -204,6 +245,8 @@ export default async function RefrigeratorPage() {
 
   return (
     <div className="pb-16 space-y-12 lg:space-y-16 lg:pb-24">
+      <JsonLd data={collectionSchema} />
+      <PageBreadcrumbs items={breadcrumbItems} locale={resolvedLocale} className="pt-5 sm:pt-6" />
       <div className="-mx-4 sm:-mx-6 lg:-mx-10 max-w-360 3xl:mx-auto">
         <div className="relative w-full overflow-hidden rounded-3xl shadow-(--panel-shadow)">
           <div className="relative w-full aspect-16/7">
@@ -228,6 +271,14 @@ export default async function RefrigeratorPage() {
       </div>
 
       <div className="w-full px-4 mx-auto max-w-480 sm:px-6 lg:px-10">
+        <div className="mb-8 text-center">
+          <h1 className="mt-3 text-2xl font-bold text-(--default-black-font) sm:text-3xl">
+            {routeTranslations('title')}
+          </h1>
+          <p className="mt-3 text-base text-(--text-muted-color) sm:text-lg">
+            {routeTranslations('description')}
+          </p>
+        </div>
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
           {REFRIGERATOR_PRODUCTS.map((product) => (
             <Link

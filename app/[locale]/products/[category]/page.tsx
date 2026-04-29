@@ -6,7 +6,9 @@ import { notFound } from 'next/navigation';
 import { Visibility } from '@mui/icons-material';
 import TvHeroCarousel from '@/components/tv/TvHeroCarousel';
 import RouteHero from '@/components/routes/RouteHero';
+import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
+import PageBreadcrumbs from '@/components/seo/PageBreadcrumbs';
 import { FALLBACK_PRODUCTS } from '@/lib/api/products/normalizers';
 import type { ApiProduct } from '@/lib/api/products/types';
 import {
@@ -15,8 +17,14 @@ import {
   type ProductCategorySlug,
 } from '@/lib/api/products/categories';
 import { mediaUrl } from '@/lib/mediaUrl';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
+import type { Locale } from '@/i18n/routing';
+import {
+  createBreadcrumbItems,
+  getLanguageAlternates,
+  getLocaleLanguage,
+  SITE_URL,
+  toAbsoluteUrl,
+} from '@/lib/seo/site';
 
 const bannerAsset = (path: string) => mediaUrl(`/tv-banner/${path}`);
 
@@ -65,6 +73,54 @@ const fetchProducts = async (
   }
 };
 
+const buildProductListJsonLd = ({
+  locale,
+  categorySlug,
+  title,
+  description,
+  products,
+  lang,
+}: {
+  locale: Locale;
+  categorySlug: ProductCategorySlug;
+  title: string;
+  description: string;
+  products: ApiProduct[];
+  lang: 'fa' | 'en';
+}) => ({
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description,
+  url: `${SITE_URL}/${locale}/products/${categorySlug}`,
+  inLanguage: getLocaleLanguage(locale),
+  mainEntity: {
+    '@type': 'ItemList',
+    name: title,
+    itemListElement: products.map((product, index) => {
+      const copy = product.copy[lang] ?? product.copy.en;
+      const slug = (product.slug ?? product.id).toLocaleLowerCase();
+
+      return {
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `${SITE_URL}/${locale}/products/${categorySlug}/${slug}`,
+        item: {
+          '@type': 'Product',
+          name: copy.name,
+          description: copy.tagline,
+          sku: product.sku ?? product.id,
+          image: toAbsoluteUrl(product.imageUrl),
+          brand: {
+            '@type': 'Brand',
+            name: 'Hisense',
+          },
+        },
+      };
+    }),
+  },
+});
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolved = await params;
   const locale = resolved?.locale ?? (await getLocale());
@@ -79,11 +135,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const routeTranslations = await getTranslations('Routes.tvHisense');
     const pageTranslations = await getTranslations('TvHisensePage');
     const keywordsRaw: unknown = pageTranslations.raw('metadata.keywords');
-    const languageAlternates = {
-      fa: `${SITE_URL}/fa/products/${categorySlug}`,
-      en: `${SITE_URL}/en/products/${categorySlug}`,
-      'x-default': `${SITE_URL}/fa/products/${categorySlug}`,
-    };
+    const languageAlternates = getLanguageAlternates(`/products/${categorySlug}`);
     const ogImage = HERO_SLIDES[0]?.image;
     const ogImageUrl =
       typeof ogImage === 'string' && ogImage.length > 0
@@ -128,11 +180,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (category === 'WMS') {
     const routeTranslations = await getTranslations('Routes.washingMachine');
-    const languageAlternates = {
-      fa: `${SITE_URL}/fa/products/${categorySlug}`,
-      en: `${SITE_URL}/en/products/${categorySlug}`,
-      'x-default': `${SITE_URL}/fa/products/${categorySlug}`,
-    };
+    const languageAlternates = getLanguageAlternates(`/products/${categorySlug}`);
     return {
       title: routeTranslations('title'),
       description: routeTranslations('description'),
@@ -157,11 +205,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (category === 'RAC') {
     const routeTranslations = await getTranslations('Routes.rac');
-    const languageAlternates = {
-      fa: `${SITE_URL}/fa/products/${categorySlug}`,
-      en: `${SITE_URL}/en/products/${categorySlug}`,
-      'x-default': `${SITE_URL}/fa/products/${categorySlug}`,
-    };
+    const languageAlternates = getLanguageAlternates(`/products/${categorySlug}`);
     return {
       title: routeTranslations('title'),
       description: routeTranslations('description'),
@@ -186,11 +230,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (category === 'CAC') {
     const routeTranslations = await getTranslations('Routes.cac');
-    const languageAlternates = {
-      fa: `${SITE_URL}/fa/products/${categorySlug}`,
-      en: `${SITE_URL}/en/products/${categorySlug}`,
-      'x-default': `${SITE_URL}/fa/products/${categorySlug}`,
-    };
+    const languageAlternates = getLanguageAlternates(`/products/${categorySlug}`);
     return {
       title: routeTranslations('title'),
       description: routeTranslations('description'),
@@ -234,6 +274,19 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
     const products = await fetchProducts(categorySlug, category);
     const detailsLabel = pageTranslations('actions.details');
     const lang: 'fa' | 'en' = locale === 'fa' ? 'fa' : 'en';
+    const resolvedLocale: Locale = locale === 'fa' ? 'fa' : 'en';
+    const breadcrumbItems = createBreadcrumbItems(resolvedLocale, {
+      label: routeTranslations('title'),
+      href: `/${resolvedLocale}/products/${categorySlug}`,
+    });
+    const listSchema = buildProductListJsonLd({
+      locale: resolvedLocale,
+      categorySlug,
+      title: routeTranslations('title'),
+      description: routeTranslations('description'),
+      products,
+      lang,
+    });
     const officialLinks =
       locale === 'fa'
         ? {
@@ -302,13 +355,15 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
 
     return (
       <div className="pb-16 space-y-14 lg:space-y-20 lg:pb-24">
+        <JsonLd data={listSchema} />
+        <PageBreadcrumbs items={breadcrumbItems} locale={resolvedLocale} className="pt-5 sm:pt-6" />
         <div className="-mx-4 sm:-mx-6 lg:-mx-10 max-w-360 3xl:mx-auto">
           <TvHeroCarousel slides={heroSlides} locale={locale} />
         </div>
 
         <div className="w-full px-4 mx-auto max-w-480 sm:px-6 lg:px-10">
           <div className="mb-8 text-center">
-            <h2 className="mt-3 text-2xl font-bold sm:text-3xl">{routeTranslations('title')}</h2>
+            <h1 className="mt-3 text-2xl font-bold sm:text-3xl">{routeTranslations('title')}</h1>
             <p className="mt-3 text-base text-(--text-muted-color) sm:text-lg">
               {routeTranslations('description')}
             </p>
@@ -398,7 +453,20 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
     ]);
     const products = await fetchProducts(categorySlug, category);
     const lang: 'fa' | 'en' = locale === 'fa' ? 'fa' : 'en';
+    const resolvedLocale: Locale = locale === 'fa' ? 'fa' : 'en';
     const detailsLabel = pageTranslations('actions.details');
+    const breadcrumbItems = createBreadcrumbItems(resolvedLocale, {
+      label: routeTranslations('title'),
+      href: `/${resolvedLocale}/products/${categorySlug}`,
+    });
+    const listSchema = buildProductListJsonLd({
+      locale: resolvedLocale,
+      categorySlug,
+      title: routeTranslations('title'),
+      description: routeTranslations('description'),
+      products,
+      lang,
+    });
     const officialLinks =
       locale === 'fa'
         ? {
@@ -480,10 +548,13 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
 
     return (
       <div className="pb-16 space-y-12 lg:space-y-16 lg:pb-24">
+        <JsonLd data={listSchema} />
         <RouteHero
           eyebrow={routeTranslations('eyebrow')}
           title={routeTranslations('title')}
           description={routeTranslations('description')}
+          locale={resolvedLocale}
+          breadcrumbItems={breadcrumbItems}
         />
 
         <div className="w-full px-4 mx-auto max-w-480 sm:px-6 lg:px-10">

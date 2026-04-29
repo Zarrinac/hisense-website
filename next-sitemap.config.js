@@ -1,37 +1,60 @@
 /** @type {import('next-sitemap').IConfig} */
 // Locale-aware sitemap generation; defaults root to the FA locale.
 const path = require('node:path');
+const fs = require('node:fs');
+
+const readContentFile = (filename) => {
+  try {
+    return fs.readFileSync(path.join(__dirname, 'content', filename), 'utf8');
+  } catch {
+    return '';
+  }
+};
+
+const normalizeValues = (values) =>
+  Array.from(
+    new Set(
+      values
+        .map((value) => value.toString().trim())
+        .filter(Boolean)
+        .map((value) => value.toLowerCase()),
+    ),
+  );
+
+const extractTopLevelIds = (filename) => {
+  const source = readContentFile(filename);
+  return normalizeValues(
+    [...source.matchAll(/^ {4}id:\s*['"`]([^'"`]+)['"`]/gm)].map((match) => match[1]),
+  );
+};
+
+const extractStringArray = (filename, variableName) => {
+  const source = readContentFile(filename);
+  const match = source.match(new RegExp(`const\\s+${variableName}\\s*=\\s*\\[([^\\]]+)\\]`));
+
+  if (!match) {
+    return [];
+  }
+
+  return normalizeValues([...match[1].matchAll(/['"`]([^'"`]+)['"`]/g)].map((item) => item[1]));
+};
 
 const loadProductSlugs = () => {
-  try {
-    require('ts-node/register/transpile-only');
-    require('tsconfig-paths/register');
-    const { TV_PRODUCTS } = require(path.join(__dirname, 'content', 'tvProducts.ts'));
-    const { WM_PRODUCTS } = require(path.join(__dirname, 'content', 'WmProducts.ts'));
-    const normalize = (products) =>
-      Array.from(
-        new Set(
-          (Array.isArray(products) ? products : [])
-            .map((product) => (product?.slug ?? product?.id ?? '').toString().trim())
-            .filter(Boolean)
-            .map((value) => value.toLowerCase()),
-        ),
-      );
-    return {
-      tvs: normalize(TV_PRODUCTS),
-      wms: normalize(WM_PRODUCTS),
-    };
-  } catch {
-    return { tvs: [], wms: [] };
-  }
+  return {
+    tvs: extractTopLevelIds('tvProducts.ts'),
+    wms: extractTopLevelIds('WmProducts.ts'),
+    rac: extractTopLevelIds('RacProducts.ts'),
+    cac: extractStringArray('CacProducts.ts', 'hidModels'),
+    refrigerator: extractTopLevelIds('RefProducts.ts'),
+  };
 };
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const locales = ['fa', 'en'];
 const staticPaths = [
   '/products/tvs',
-  '/rac',
-  '/cac',
+  '/products/rac',
+  '/products/cac',
   '/refrigerator',
   '/products/wms',
   '/about',
@@ -42,11 +65,22 @@ const staticPaths = [
   '/faq',
   '/warranty-and-guarantee',
   '/portal',
+  '/find-service-center',
+  '/request-representation',
 ];
-const { tvs: tvSlugs, wms: wmSlugs } = loadProductSlugs();
+const {
+  tvs: tvSlugs,
+  wms: wmSlugs,
+  rac: racSlugs,
+  cac: cacSlugs,
+  refrigerator: refrigeratorSlugs,
+} = loadProductSlugs();
 const productPaths = [
   ...tvSlugs.map((slug) => `/products/tvs/${slug}`),
   ...wmSlugs.map((slug) => `/products/wms/${slug}`),
+  ...racSlugs.map((slug) => `/products/rac/${slug}`),
+  ...cacSlugs.map((slug) => `/products/cac/${slug}`),
+  ...refrigeratorSlugs.map((slug) => `/refrigerator/${slug}`),
 ];
 
 const normalizeLocalePath = (inputPath) => (inputPath === '/' ? '/fa' : inputPath);

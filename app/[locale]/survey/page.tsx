@@ -8,11 +8,16 @@ import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { getLocale, getTranslations } from 'next-intl/server';
 import RouteHero from '@/components/routes/RouteHero';
+import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
 import SurveyForm, { type SurveyFormCopy } from '@/components/survey/SurveyForm';
-import { routing, type Locale } from '@/i18n/routing';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
+import type { Locale } from '@/i18n/routing';
+import {
+  createBreadcrumbItems,
+  getLanguageAlternates,
+  getLocaleLanguage,
+  SITE_URL,
+} from '@/lib/seo/site';
 
 type SurveyPageContent = {
   highlightsTitle: string;
@@ -491,11 +496,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.survey');
   const localizedPath = `/${locale}/survey`;
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
-    acc[lang] = `${SITE_URL}/${lang}/survey`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}/survey`;
+  const languageAlternates = getLanguageAlternates('/survey');
 
   return {
     title: routeTranslations('title'),
@@ -512,14 +513,33 @@ export default async function SurveyPage() {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.survey');
   const content = SURVEY_CONTENT[locale];
+  const breadcrumbItems = createBreadcrumbItems(locale, {
+    label: routeTranslations('title'),
+    href: `/${locale}/survey`,
+  });
   const isRTL = locale === 'fa';
+  const pageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: routeTranslations('title'),
+    description: routeTranslations('description'),
+    url: `${SITE_URL}/${locale}/survey`,
+    inLanguage: getLocaleLanguage(locale),
+    mainEntity: {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}#organization`,
+    },
+  };
 
   return (
     <div className="space-y-8 pb-16 pt-6 sm:space-y-10 sm:pt-8" dir={isRTL ? 'rtl' : 'ltr'}>
+      <JsonLd data={pageSchema} />
       <RouteHero
         eyebrow={routeTranslations('eyebrow')}
         title={routeTranslations('title')}
         description={routeTranslations('description')}
+        locale={locale}
+        breadcrumbItems={breadcrumbItems}
       />
 
       <section className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.45fr_0.85fr]">

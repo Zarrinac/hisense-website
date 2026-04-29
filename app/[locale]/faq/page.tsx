@@ -7,10 +7,10 @@ import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 import { getLocale, getTranslations } from 'next-intl/server';
 import RouteHero from '@/components/routes/RouteHero';
+import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
-import { routing, type Locale } from '@/i18n/routing';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
+import type { Locale } from '@/i18n/routing';
+import { createBreadcrumbItems, getLanguageAlternates, SITE_URL } from '@/lib/seo/site';
 
 type IconType = typeof LocalPhoneOutlinedIcon;
 
@@ -406,11 +406,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.faq');
   const localizedPath = `/${locale}/faq`;
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
-    acc[lang] = `${SITE_URL}/${lang}/faq`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}/faq`;
+  const languageAlternates = getLanguageAlternates('/faq');
 
   return {
     title: routeTranslations('title'),
@@ -442,6 +438,10 @@ export default async function FaqPage() {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.faq');
   const content = FAQ_CONTENT[locale];
+  const breadcrumbItems = createBreadcrumbItems(locale, {
+    label: routeTranslations('title'),
+    href: `/${locale}/faq`,
+  });
   const isRTL = locale === 'fa';
   const resolveHref = (href: string) => (href.startsWith('/') ? `/${locale}${href}` : href);
   const faqItems = content.sections.flatMap((section) => section.items);
@@ -460,15 +460,14 @@ export default async function FaqPage() {
 
   return (
     <div className="space-y-10 pb-16 pt-6 sm:space-y-12 sm:pt-8" dir={isRTL ? 'rtl' : 'ltr'}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <JsonLd data={faqSchema} />
 
       <RouteHero
         eyebrow={routeTranslations('eyebrow')}
         title={routeTranslations('title')}
         description={routeTranslations('description')}
+        locale={locale}
+        breadcrumbItems={breadcrumbItems}
       />
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6">

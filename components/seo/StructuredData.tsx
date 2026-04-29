@@ -1,7 +1,8 @@
 // Injects organization and website JSON-LD for search engines per locale.
 import type { Locale } from '@/i18n/routing';
+import JsonLd from './JsonLd';
+import { SITE_URL, getLocaleLanguage } from '@/lib/seo/site';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const LOGO_URL = `${SITE_URL}/favicon.svg`;
 
 const ORGANIZATION_CONTENT = {
@@ -37,7 +38,7 @@ type StructuredDataProps = {
 export default function StructuredData({ locale }: StructuredDataProps) {
   const orgContent = ORGANIZATION_CONTENT[locale];
   const websiteContent = WEBSITE_CONTENT[locale];
-  const websiteLanguage = locale === 'fa' ? 'fa-IR' : 'en-US';
+  const websiteLanguage = getLocaleLanguage(locale);
 
   const organizationSchema = {
     '@context': 'https://schema.org',
@@ -86,14 +87,8 @@ export default function StructuredData({ locale }: StructuredDataProps) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
+      <JsonLd data={organizationSchema} />
+      <JsonLd data={websiteSchema} />
     </>
   );
 }
