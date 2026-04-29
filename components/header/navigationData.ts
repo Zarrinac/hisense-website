@@ -140,7 +140,7 @@ export const SUB_MENU_CONTENT: Record<NavKey, SubMenuItem[]> = {
       href: '/contact-us',
     },
     {
-      title: { en: 'Manuals & FAQs', fa: 'دفترچه‌ها و سوالات متداول' },
+      title: { en: 'FAQs', fa: 'سوالات متداول' },
       description: {
         en: 'Find quick answers for every device.',
         fa: 'پاسخ سریع برای هر دستگاه را پیدا کنید.',

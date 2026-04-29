@@ -4,7 +4,9 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import HeroBanner from '@/components/hero/HeroBanner';
 import CategorySpotlights from '@/components/home/CategorySpotlights';
 import type { SpotlightCard } from '@/components/home/CategorySpotlights';
+import JsonLd from '@/components/seo/JsonLd';
 import { mediaUrl } from '@/lib/mediaUrl';
+import { getLanguageAlternates, getLocaleLanguage, SITE_URL, toAbsoluteUrl } from '@/lib/seo/site';
 
 // Locale-aware homepage renders the hero carousel and localized category spotlights.
 
@@ -85,10 +87,36 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const resolvedLocale: HomepageLocale = locale === 'en' ? 'en' : 'fa';
   const seoContent = HOME_SEO_CONTENT[resolvedLocale];
+  const canonical = `/${resolvedLocale}`;
+  const ogImage = toAbsoluteUrl(bannerAsset('Fix-Banner-07.jpg'));
 
   return {
     title: seoContent.title,
     description: seoContent.description,
+    alternates: {
+      canonical,
+      languages: getLanguageAlternates('/'),
+    },
+    openGraph: {
+      title: seoContent.title,
+      description: seoContent.description,
+      url: `${SITE_URL}${canonical}`,
+      type: 'website',
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: seoContent.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seoContent.title,
+      description: seoContent.description,
+      images: [ogImage],
+    },
   };
 }
 
@@ -98,6 +126,20 @@ export default async function HomePage() {
   const resolvedLocale: HomepageLocale = locale === 'en' ? 'en' : 'fa';
   const seoContent = HOME_SEO_CONTENT[resolvedLocale];
   const isRTL = resolvedLocale === 'fa';
+  const pageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: seoContent.title,
+    description: seoContent.description,
+    url: `${SITE_URL}/${resolvedLocale}`,
+    inLanguage: getLocaleLanguage(resolvedLocale),
+    isPartOf: {
+      '@id': `${SITE_URL}#website`,
+    },
+    about: {
+      '@id': `${SITE_URL}#organization`,
+    },
+  };
 
   const localizedSpotlights: SpotlightCard[] = SPOTLIGHT_SOURCES.map((spotlight) => ({
     ...spotlight,
@@ -110,6 +152,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd data={pageSchema} />
       <div className="-mx-4 sm:-mx-6 lg:-mx-10">
         <HeroBanner />
       </div>
@@ -119,9 +162,9 @@ export default async function HomePage() {
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-(--brand-color)">
               {seoContent.eyebrow}
             </p>
-            <h2 className="text-3xl font-bold tracking-tight text-(--default-black-font) sm:text-4xl">
+            <h1 className="text-3xl font-bold tracking-tight text-(--default-black-font) sm:text-4xl">
               {seoContent.heading}
-            </h2>
+            </h1>
             {seoContent.paragraphs.map((paragraph) => (
               <p
                 key={paragraph}

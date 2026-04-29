@@ -161,6 +161,30 @@ function filterLocalServiceCenters(filters: ServiceCenterFilters) {
   });
 }
 
+function sortServiceCenters(locale: Locale, centers: ServiceCenter[]) {
+  return [...centers].sort((firstCenter, secondCenter) => {
+    const provinceCompare = firstCenter.provinceName[locale].localeCompare(
+      secondCenter.provinceName[locale],
+      locale,
+    );
+    if (provinceCompare !== 0) return provinceCompare;
+
+    const cityCompare = firstCenter.cityName[locale].localeCompare(
+      secondCenter.cityName[locale],
+      locale,
+    );
+    if (cityCompare !== 0) return cityCompare;
+
+    const serviceKindCompare = firstCenter.serviceKind.localeCompare(secondCenter.serviceKind);
+    if (serviceKindCompare !== 0) return serviceKindCompare;
+
+    return firstCenter.representativeName[locale].localeCompare(
+      secondCenter.representativeName[locale],
+      locale,
+    );
+  });
+}
+
 export function getServiceCenterLocations(locale: Locale, centers: ServiceCenter[]) {
   const locationMap = new Map<
     string,
@@ -228,10 +252,10 @@ export async function loadServiceCenterData(
               select: serviceCenterSelect(),
             })
           : [];
-        const allCenters = allRows.map(toServiceCenter);
+        const allCenters = sortServiceCenters(locale, allRows.map(toServiceCenter));
 
         return {
-          centers: filteredRows.map(toServiceCenter),
+          centers: sortServiceCenters(locale, filteredRows.map(toServiceCenter)),
           locations: getServiceCenterLocations(locale, allCenters),
           totalCount,
           source: 'database',
@@ -243,7 +267,9 @@ export async function loadServiceCenterData(
   }
 
   return {
-    centers: includeCenters ? filterLocalServiceCenters(normalizedFilters) : [],
+    centers: includeCenters
+      ? sortServiceCenters(locale, filterLocalServiceCenters(normalizedFilters))
+      : [],
     locations: getServiceCenterLocations(locale, serviceCenters),
     totalCount: serviceCenters.length,
     source: 'fallback',
