@@ -8,11 +8,18 @@ import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import { routing, type Locale } from '@/i18n/routing';
+import type { Locale } from '@/i18n/routing';
 import { mediaUrl } from '@/lib/mediaUrl';
+import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
+import PageBreadcrumbs from '@/components/seo/PageBreadcrumbs';
+import {
+  createBreadcrumbItems,
+  getLanguageAlternates,
+  getLocaleLanguage,
+  SITE_URL,
+} from '@/lib/seo/site';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const HERO_IMAGE = mediaUrl('/contact-us/contactUs-support-hero.jpg');
 const SUPPORT_IMAGE = mediaUrl('/contact-us/contactUs-box1.jpg');
 
@@ -289,11 +296,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const routeTranslations = await getTranslations('Routes.contact');
   const localizedPath = `/${locale}/contact-us`;
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
-    acc[lang] = `${SITE_URL}/${lang}/contact-us`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}/contact-us`;
+  const languageAlternates = getLanguageAlternates('/contact-us');
   const ogImageUrl = HERO_IMAGE.startsWith('http') ? HERO_IMAGE : `${SITE_URL}${HERO_IMAGE}`;
 
   return {
@@ -329,7 +332,12 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ContactUsPage() {
   const locale = await getLocale();
   const resolvedLocale: Locale = locale === 'fa' ? 'fa' : 'en';
+  const routeTranslations = await getTranslations('Routes.contact');
   const content = CONTACT_CONTENT[resolvedLocale];
+  const breadcrumbItems = createBreadcrumbItems(resolvedLocale, {
+    label: routeTranslations('title'),
+    href: `/${resolvedLocale}/contact-us`,
+  });
   const isRTL = resolvedLocale === 'fa';
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(content.map.query)}&output=embed`;
   const mapLink = `https://www.google.com/maps?q=${encodeURIComponent(content.map.query)}`;
@@ -407,7 +415,7 @@ export default async function ContactUsPage() {
     name: content.hero.title,
     description: content.hero.description,
     url: `${SITE_URL}/${resolvedLocale}/contact-us`,
-    inLanguage: resolvedLocale === 'fa' ? 'fa-IR' : 'en-US',
+    inLanguage: getLocaleLanguage(resolvedLocale),
     mainEntity: {
       '@type': 'Organization',
       '@id': `${SITE_URL}#organization`,
@@ -447,10 +455,8 @@ export default async function ContactUsPage() {
 
   return (
     <div className="space-y-8 pb-12 pt-6 sm:space-y-12" dir={isRTL ? 'rtl' : 'ltr'}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
-      />
+      <JsonLd data={contactPageSchema} />
+      <PageBreadcrumbs items={breadcrumbItems} locale={resolvedLocale} className="pt-0 sm:pt-0" />
       <section className="relative -mx-4 overflow-hidden sm:-mx-6 lg:-mx-10">
         <div className="absolute inset-0">
           <Image src={HERO_IMAGE} alt="" fill sizes="100vw" className="object-cover" priority />

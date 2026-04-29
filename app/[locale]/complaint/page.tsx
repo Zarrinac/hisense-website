@@ -8,11 +8,16 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { getLocale, getTranslations } from 'next-intl/server';
 import ComplaintForm, { type ComplaintFormCopy } from '@/components/complaint/ComplaintForm';
 import RouteHero from '@/components/routes/RouteHero';
+import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
-import { routing, type Locale } from '@/i18n/routing';
+import type { Locale } from '@/i18n/routing';
 import { loadIranProvinces } from '@/lib/iranLocationSource';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
+import {
+  createBreadcrumbItems,
+  getLanguageAlternates,
+  getLocaleLanguage,
+  SITE_URL,
+} from '@/lib/seo/site';
 
 type ComplaintPageContent = {
   highlightsTitle: string;
@@ -440,11 +445,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.complaint');
   const localizedPath = `/${locale}/complaint`;
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
-    acc[lang] = `${SITE_URL}/${lang}/complaint`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}/complaint`;
+  const languageAlternates = getLanguageAlternates('/complaint');
 
   return {
     title: routeTranslations('title'),
@@ -461,15 +462,34 @@ export default async function ComplaintPage() {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.complaint');
   const content = COMPLAINT_CONTENT[locale];
+  const breadcrumbItems = createBreadcrumbItems(locale, {
+    label: routeTranslations('title'),
+    href: `/${locale}/complaint`,
+  });
   const isRTL = locale === 'fa';
   const { provinces } = await loadIranProvinces();
+  const pageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: routeTranslations('title'),
+    description: routeTranslations('description'),
+    url: `${SITE_URL}/${locale}/complaint`,
+    inLanguage: getLocaleLanguage(locale),
+    mainEntity: {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}#organization`,
+    },
+  };
 
   return (
     <div className="space-y-8 pb-16 pt-6 sm:space-y-10 sm:pt-8" dir={isRTL ? 'rtl' : 'ltr'}>
+      <JsonLd data={pageSchema} />
       <RouteHero
         eyebrow={routeTranslations('eyebrow')}
         title={routeTranslations('title')}
         description={routeTranslations('description')}
+        locale={locale}
+        breadcrumbItems={breadcrumbItems}
       />
 
       <section className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.45fr_0.85fr]">

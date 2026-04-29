@@ -10,10 +10,15 @@ import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { getLocale, getTranslations } from 'next-intl/server';
 import RouteHero from '@/components/routes/RouteHero';
+import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
-import { routing, type Locale } from '@/i18n/routing';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
+import type { Locale } from '@/i18n/routing';
+import {
+  createBreadcrumbItems,
+  getLanguageAlternates,
+  getLocaleLanguage,
+  SITE_URL,
+} from '@/lib/seo/site';
 
 type IconType = typeof StorefrontOutlinedIcon;
 
@@ -251,11 +256,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.requestRepresentation');
   const localizedPath = `/${locale}/request-representation`;
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
-    acc[lang] = `${SITE_URL}/${lang}/request-representation`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}/request-representation`;
+  const languageAlternates = getLanguageAlternates('/request-representation');
 
   return {
     title: routeTranslations('title'),
@@ -282,6 +283,10 @@ export default async function RequestRepresentationPage() {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.requestRepresentation');
   const content = REPRESENTATION_CONTENT[locale];
+  const breadcrumbItems = createBreadcrumbItems(locale, {
+    label: routeTranslations('title'),
+    href: `/${locale}/request-representation`,
+  });
   const isRTL = locale === 'fa';
   const resolveHref = (href: string) => (href.startsWith('/') ? `/${locale}${href}` : href);
   const pageSchema = {
@@ -290,7 +295,7 @@ export default async function RequestRepresentationPage() {
     name: routeTranslations('title'),
     description: routeTranslations('description'),
     url: `${SITE_URL}/${locale}/request-representation`,
-    inLanguage: locale === 'fa' ? 'fa-IR' : 'en-US',
+    inLanguage: getLocaleLanguage(locale),
     mainEntity: {
       '@type': 'Organization',
       '@id': `${SITE_URL}#organization`,
@@ -302,15 +307,14 @@ export default async function RequestRepresentationPage() {
 
   return (
     <div className="space-y-10 pb-16 pt-6 sm:space-y-12 sm:pt-8" dir={isRTL ? 'rtl' : 'ltr'}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
-      />
+      <JsonLd data={pageSchema} />
 
       <RouteHero
         eyebrow={routeTranslations('eyebrow')}
         title={routeTranslations('title')}
         description={routeTranslations('description')}
+        locale={locale}
+        breadcrumbItems={breadcrumbItems}
       />
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6">

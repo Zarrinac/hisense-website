@@ -1,11 +1,17 @@
 import type { Metadata } from 'next';
 import { getLocale, getTranslations } from 'next-intl/server';
+import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
+import PageBreadcrumbs from '@/components/seo/PageBreadcrumbs';
 import ServiceCenterFinder from '@/components/service-centers/ServiceCenterFinder';
 import { loadServiceCenterData, normalizeServiceCenterFilters } from '@/lib/serviceCenterSource';
-import { routing, type Locale } from '@/i18n/routing';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
+import type { Locale } from '@/i18n/routing';
+import {
+  createBreadcrumbItems,
+  getLanguageAlternates,
+  getLocaleLanguage,
+  SITE_URL,
+} from '@/lib/seo/site';
 
 const PAGE_CONTENT = {
   fa: {
@@ -146,11 +152,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.findServiceCenter');
   const localizedPath = `/${locale}/find-service-center`;
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
-    acc[lang] = `${SITE_URL}/${lang}/find-service-center`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}/find-service-center`;
+  const languageAlternates = getLanguageAlternates('/find-service-center');
 
   return {
     title: routeTranslations('title'),
@@ -176,30 +178,37 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function FindServiceCenterPage({ searchParams }: FindServiceCenterPageProps) {
   const locale = (await getLocale()) as Locale;
   const content = PAGE_CONTENT[locale];
+  const routeTranslations = await getTranslations('Routes.findServiceCenter');
+  const breadcrumbItems = createBreadcrumbItems(locale, {
+    label: routeTranslations('title'),
+    href: `/${locale}/find-service-center`,
+  });
   const isRTL = locale === 'fa';
   const resolvedSearchParams = (await searchParams) ?? {};
-  const hasSearched = firstSearchValue(resolvedSearchParams.submitted) === '1';
+  const hasSearched = true;
   const selectedFilters = normalizeServiceCenterFilters({
     provinceId: firstSearchValue(resolvedSearchParams.province),
     cityId: firstSearchValue(resolvedSearchParams.city),
     serviceKind: firstSearchValue(resolvedSearchParams.service),
   });
-  const serviceCenterData = await loadServiceCenterData(locale, selectedFilters, hasSearched);
+  const serviceCenterData = await loadServiceCenterData(locale, selectedFilters);
   const pageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: content.title,
     description: content.description,
     url: `${SITE_URL}/${locale}/find-service-center`,
-    inLanguage: locale === 'fa' ? 'fa-IR' : 'en-US',
+    inLanguage: getLocaleLanguage(locale),
   };
   const resolveHref = (href: string) => (href.startsWith('/') ? `/${locale}${href}` : href);
 
   return (
     <div className="space-y-10 pb-16 pt-10 sm:space-y-12 sm:pt-14" dir={isRTL ? 'rtl' : 'ltr'}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      <JsonLd data={pageSchema} />
+      <PageBreadcrumbs
+        items={breadcrumbItems}
+        locale={locale}
+        className="-mt-4 pt-0 sm:-mt-6 sm:pt-0"
       />
 
       <section className="mx-auto max-w-5xl px-4 text-center sm:px-6">

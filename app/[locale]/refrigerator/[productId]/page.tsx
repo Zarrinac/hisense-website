@@ -9,6 +9,7 @@ import SectionGroupsRenderer, {
   type NormalizedSectionGroup,
 } from '@/components/tv/product-detail/SectionGroupsRenderer';
 import SpecsSection from '@/components/tv/product-detail/SpecsSection';
+import JsonLd from '@/components/seo/JsonLd';
 import type { BreadcrumbItem } from '@/components/tv/product-detail/Breadcrumbs';
 import type {
   CopyBlock,
@@ -20,7 +21,14 @@ import type {
 } from '@/types/tv';
 import RefrigeratorHero from '@/components/refrigerator/RefrigeratorHero';
 import { REF_PRODUCTS } from '@/content/RefProducts';
-import { routing } from '@/i18n/routing';
+import type { Locale } from '@/i18n/routing';
+import {
+  createBreadcrumbItems,
+  getLanguageAlternates,
+  getLocaleLanguage,
+  SITE_URL,
+  toAbsoluteUrl,
+} from '@/lib/seo/site';
 
 // Builds the refrigerator detail page from bundled content.
 
@@ -254,8 +262,11 @@ const buildBreadcrumbItems = (
   productLabel: string,
   productId: string,
 ): BreadcrumbItem[] => [
-  { label: categoryLabel, href: `/${locale}/refrigerator` },
-  { label: productLabel, href: `/${locale}/refrigerator/${productId}` },
+  ...createBreadcrumbItems(
+    locale === 'fa' ? 'fa' : 'en',
+    { label: productLabel, href: `/${locale}/refrigerator/${productId}` },
+    [{ label: categoryLabel, href: `/${locale}/refrigerator` }],
+  ),
 ];
 
 const findProduct = (productId: string): RefProduct | null => {
@@ -284,11 +295,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? product.posterImage
       : (product.posterImage?.src ??
         (typeof product.image === 'string' ? product.image : product.image.src));
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
-    acc[lang] = `/${lang}/refrigerator/${productId}`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] = `/${routing.defaultLocale}/refrigerator/${productId}`;
+  const languageAlternates = getLanguageAlternates(`/refrigerator/${productId}`);
 
   return {
     title: copy.name,
@@ -317,6 +324,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function RefrigeratorProductPage({ params }: PageProps) {
   const resolved = await params;
   const locale = resolved?.locale ?? 'en';
+  const resolvedLocale: Locale = locale === 'fa' ? 'fa' : 'en';
   const productId = resolved?.productId ?? '';
   const lang = resolveLocale(locale);
 
@@ -352,12 +360,38 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
     copy.name || product.id,
     productId,
   );
+  const schemaImage =
+    typeof product.posterImage === 'string'
+      ? product.posterImage
+      : (product.posterImage?.src ??
+        (typeof product.image === 'string' ? product.image : product.image.src));
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: copy.name,
+    description: copy.tagline,
+    sku: product.sku ?? product.id,
+    image: toAbsoluteUrl(schemaImage),
+    url: `${SITE_URL}/${resolvedLocale}/refrigerator/${productId}`,
+    inLanguage: getLocaleLanguage(resolvedLocale),
+    category: routeTranslations('title'),
+    brand: {
+      '@type': 'Brand',
+      name: 'Hisense',
+    },
+    additionalProperty: specDetails.map((spec) => ({
+      '@type': 'PropertyValue',
+      name: spec,
+      value: spec,
+    })),
+  };
 
   return (
     <div
       className="pb-12 space-y-10 sm:space-y-12 lg:space-y-20 lg:pb-24"
       dir={lang === 'fa' ? 'rtl' : 'ltr'}
     >
+      <JsonLd data={productSchema} />
       <RefrigeratorHero
         locale={locale}
         lang={lang}

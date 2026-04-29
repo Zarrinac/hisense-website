@@ -1,14 +1,21 @@
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { routing, type Locale } from '@/i18n/routing';
+import type { Locale } from '@/i18n/routing';
 import { getAboutContent } from '@/content/about';
 import type { AboutImageKey, AboutPageContent } from '@/content/about/types';
+import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
+import PageBreadcrumbs from '@/components/seo/PageBreadcrumbs';
 import { mediaUrl } from '@/lib/mediaUrl';
+import {
+  createBreadcrumbItems,
+  getLanguageAlternates,
+  getLocaleLanguage,
+  SITE_URL,
+} from '@/lib/seo/site';
 
 // About page hydrates structured content from locale-specific JSON files.
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const OG_LOCALE_MAP: Record<Locale, string> = {
   fa: 'fa_IR',
   en: 'en_US',
@@ -41,11 +48,7 @@ export async function generateMetadata(props: AboutPageProps): Promise<Metadata>
   const localizedPath = `/${locale}/about`;
   const showroomSrc = getImageAsset('showroom');
   const ogImageUrl = showroomSrc.startsWith('http') ? showroomSrc : `${SITE_URL}${showroomSrc}`;
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
-    acc[lang] = `${SITE_URL}/${lang}/about`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}/about`;
+  const languageAlternates = getLanguageAlternates('/about');
 
   return {
     metadataBase,
@@ -82,6 +85,22 @@ export default async function AboutPage({ params }: AboutPageProps) {
   const content = resolveAboutContent(locale);
   const isRTL = locale === 'fa';
   const heroImage = content.hero.imageKey ? getImageAsset(content.hero.imageKey) : null;
+  const breadcrumbItems = createBreadcrumbItems(locale, {
+    label: content.meta.title,
+    href: `/${locale}/about`,
+  });
+  const aboutSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: content.meta.title,
+    description: content.meta.description,
+    url: `${SITE_URL}/${locale}/about`,
+    inLanguage: getLocaleLanguage(locale),
+    mainEntity: {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}#organization`,
+    },
+  };
   const officialLinks =
     locale === 'fa'
       ? {
@@ -152,6 +171,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
   return (
     <div className="space-y-16 bg-(--background-color) pb-20 pt-10">
+      <JsonLd data={aboutSchema} />
+      <PageBreadcrumbs items={breadcrumbItems} locale={locale} className="-mt-5 pt-0" />
       <section className="relative isolate overflow-hidden px-6 py-16 text-(--hero-title-color) sm:py-24">
         {heroImage && (
           <div aria-hidden="true" className="absolute inset-0 -z-10">

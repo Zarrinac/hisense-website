@@ -5,11 +5,17 @@ import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
 import { getLocale, getTranslations } from 'next-intl/server';
+import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
 import RouteHero from '@/components/routes/RouteHero';
-import { routing, type Locale } from '@/i18n/routing';
+import type { Locale } from '@/i18n/routing';
+import {
+  createBreadcrumbItems,
+  getLanguageAlternates,
+  getLocaleLanguage,
+  SITE_URL,
+} from '@/lib/seo/site';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
 const AFTER_SALES_PORTAL_URL = 'https://hisense-portal.sarvcrm.com/hisense';
 
 type IconType = typeof AdminPanelSettingsOutlinedIcon;
@@ -144,11 +150,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.portal');
   const localizedPath = `/${locale}/portal`;
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
-    acc[lang] = `${SITE_URL}/${lang}/portal`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}/portal`;
+  const languageAlternates = getLanguageAlternates('/portal');
 
   return {
     title: routeTranslations('title'),
@@ -175,6 +177,10 @@ export default async function PortalPage() {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.portal');
   const content = PORTAL_CONTENT[locale];
+  const breadcrumbItems = createBreadcrumbItems(locale, {
+    label: routeTranslations('title'),
+    href: `/${locale}/portal`,
+  });
   const isRTL = locale === 'fa';
   const resolveHref = (href: string) => (href.startsWith('/') ? `/${locale}${href}` : href);
   const pageSchema = {
@@ -183,7 +189,7 @@ export default async function PortalPage() {
     name: routeTranslations('title'),
     description: routeTranslations('description'),
     url: `${SITE_URL}/${locale}/portal`,
-    inLanguage: locale === 'fa' ? 'fa-IR' : 'en-US',
+    inLanguage: getLocaleLanguage(locale),
     audience: {
       '@type': 'Audience',
       audienceType:
@@ -193,15 +199,14 @@ export default async function PortalPage() {
 
   return (
     <div className="space-y-10 pb-16 pt-6 sm:space-y-12 sm:pt-8" dir={isRTL ? 'rtl' : 'ltr'}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
-      />
+      <JsonLd data={pageSchema} />
 
       <RouteHero
         eyebrow={routeTranslations('eyebrow')}
         title={routeTranslations('title')}
         description={routeTranslations('description')}
+        locale={locale}
+        breadcrumbItems={breadcrumbItems}
       />
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6">

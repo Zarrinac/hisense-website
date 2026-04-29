@@ -13,12 +13,17 @@ import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
 import { getLocale, getTranslations } from 'next-intl/server';
 import RouteHero from '@/components/routes/RouteHero';
+import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
-import { routing, type Locale } from '@/i18n/routing';
+import type { Locale } from '@/i18n/routing';
 import { prisma } from '@/lib/db';
 import { mediaUrl } from '@/lib/mediaUrl';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
+import {
+  createBreadcrumbItems,
+  getLanguageAlternates,
+  getLocaleLanguage,
+  SITE_URL,
+} from '@/lib/seo/site';
 
 type IconType = typeof ShieldOutlinedIcon;
 
@@ -411,11 +416,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.warranty');
   const localizedPath = `/${locale}/warranty-and-guarantee`;
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
-    acc[lang] = `${SITE_URL}/${lang}/warranty-and-guarantee`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}/warranty-and-guarantee`;
+  const languageAlternates = getLanguageAlternates('/warranty-and-guarantee');
 
   return {
     title: routeTranslations('title'),
@@ -480,6 +481,10 @@ export default async function WarrantyAndGuaranteePage() {
   const locale = (await getLocale()) as Locale;
   const routeTranslations = await getTranslations('Routes.warranty');
   const content = WARRANTY_CONTENT[locale];
+  const breadcrumbItems = createBreadcrumbItems(locale, {
+    label: routeTranslations('title'),
+    href: `/${locale}/warranty-and-guarantee`,
+  });
   const downloadItems = await getDownloadItems(locale, content.downloads.items);
   const isRTL = locale === 'fa';
   const resolveHref = (href: string) => (href.startsWith('/') ? `/${locale}${href}` : href);
@@ -490,7 +495,7 @@ export default async function WarrantyAndGuaranteePage() {
     headline: content.intro.title,
     description: routeTranslations('description'),
     articleBody: getSchemaText(content),
-    inLanguage: locale === 'fa' ? 'fa-IR' : 'en',
+    inLanguage: getLocaleLanguage(locale),
     url: pageUrl,
     author: {
       '@type': 'Organization',
@@ -506,15 +511,14 @@ export default async function WarrantyAndGuaranteePage() {
 
   return (
     <div className="space-y-10 pb-16 pt-6 sm:space-y-12 sm:pt-8" dir={isRTL ? 'rtl' : 'ltr'}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-      />
+      <JsonLd data={articleSchema} />
 
       <RouteHero
         eyebrow={routeTranslations('eyebrow')}
         title={routeTranslations('title')}
         description={routeTranslations('description')}
+        locale={locale}
+        breadcrumbItems={breadcrumbItems}
       />
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6">

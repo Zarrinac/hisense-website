@@ -141,11 +141,6 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   setRequestLocale(typedLocale);
 
   const messages = await getMessages();
-  const metadataTranslations = await getServerTranslations({
-    locale: typedLocale,
-    namespace: 'Metadata',
-  });
-  const pageTitle = metadataTranslations('title');
   const pageContainerClass = 'mx-auto w-full max-w-[120rem] px-4 sm:px-6 lg:px-10';
 
   return (
@@ -154,7 +149,6 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       <NextIntlClientProvider locale={typedLocale} messages={messages}>
         <Header />
         <div className={pageContainerClass}>
-          <h1 className="sr-only">{pageTitle}</h1>
           <main>{children}</main>
           <Footer />
         </div>

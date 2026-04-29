@@ -12,6 +12,7 @@ type BreadcrumbsProps = {
   lang: 'fa' | 'en';
   className?: string;
   separatorClassName?: string;
+  includeStructuredData?: boolean;
 };
 
 const Breadcrumbs: FC<BreadcrumbsProps> = ({
@@ -19,30 +20,39 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
   lang,
   className = '',
   separatorClassName = '',
+  includeStructuredData = true,
 }) => (
   <nav
     aria-label={lang === 'fa' ? 'مسیر راهنما' : 'Breadcrumb'}
     className={className}
-    itemScope
-    itemType="https://schema.org/BreadcrumbList"
+    {...(includeStructuredData
+      ? {
+          itemScope: true,
+          itemType: 'https://schema.org/BreadcrumbList',
+        }
+      : {})}
   >
     <ol className="flex flex-wrap items-center gap-2">
       {items.map((item, idx) => (
         <li
           key={item.href}
-          itemProp="itemListElement"
-          itemScope
-          itemType="https://schema.org/ListItem"
+          {...(includeStructuredData
+            ? {
+                itemProp: 'itemListElement',
+                itemScope: true,
+                itemType: 'https://schema.org/ListItem',
+              }
+            : {})}
           className="flex items-center gap-2"
         >
           <a
             href={item.href}
-            itemProp="item"
+            {...(includeStructuredData ? { itemProp: 'item' } : {})}
             className="hover:text-(--brand-color) transition-colors"
           >
-            <span itemProp="name">{item.label}</span>
+            <span {...(includeStructuredData ? { itemProp: 'name' } : {})}>{item.label}</span>
           </a>
-          <meta itemProp="position" content={`${idx + 1}`} />
+          {includeStructuredData ? <meta itemProp="position" content={`${idx + 1}`} /> : null}
           {idx < items.length - 1 && (
             <span aria-hidden className={separatorClassName || undefined}>
               /

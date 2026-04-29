@@ -13,6 +13,7 @@ import ComparisonSections, {
   type ComparisonSection,
 } from '@/components/tv/product-detail/ComparisonSections';
 import SpecsSection from '@/components/tv/product-detail/SpecsSection';
+import JsonLd from '@/components/seo/JsonLd';
 import type { BreadcrumbItem } from '@/components/tv/product-detail/Breadcrumbs';
 import type {
   CopyBlock,
@@ -23,8 +24,15 @@ import type {
 } from '@/types/tv';
 import type { ApiProduct } from '@/lib/api/products/types';
 import { categoryFromSlug, type ProductCategorySlug } from '@/lib/api/products/categories';
-import { routing } from '@/i18n/routing';
+import type { Locale } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
+import {
+  createBreadcrumbItems,
+  getLanguageAlternates,
+  getLocaleLanguage,
+  SITE_URL,
+  toAbsoluteUrl,
+} from '@/lib/seo/site';
 
 // Builds product detail pages from the API (DB-first) with bundled content as fallback via the API layer.
 
@@ -301,9 +309,11 @@ const buildBreadcrumbItems = (
   productId: string,
   categorySlug: ProductCategorySlug,
 ): BreadcrumbItem[] => [
-  { label: 'Home', href: `/${locale}` },
-  { label: categoryLabel, href: `/${locale}/products/${categorySlug}` },
-  { label: productLabel, href: `/${locale}/products/${categorySlug}/${productId}` },
+  ...createBreadcrumbItems(
+    locale === 'fa' ? 'fa' : 'en',
+    { label: productLabel, href: `/${locale}/products/${categorySlug}/${productId}` },
+    [{ label: categoryLabel, href: `/${locale}/products/${categorySlug}` }],
+  ),
 ];
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ?? 'http://localhost:3000';
@@ -406,12 +416,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const lang = resolveLocale(localeParam);
   const copy = product.copy[lang];
   const imageUrl = toSrc(product.posterImageUrl ?? product.imageUrl);
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, locale) => {
-    acc[locale] = `/${locale}/products/${categorySlug}/${productId}`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] =
-    `/${routing.defaultLocale}/products/${categorySlug}/${productId}`;
+  const languageAlternates = getLanguageAlternates(`/products/${categorySlug}/${productId}`);
   const categoryCopy = await getCategoryCopy(categorySlug);
 
   return {
@@ -441,6 +446,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ProductDetailPage({ params }: PageProps) {
   const resolved = await params;
   const locale = resolved?.locale ?? 'en';
+  const resolvedLocale: Locale = locale === 'fa' ? 'fa' : 'en';
   const categorySlug = (resolved?.category ?? '').toLowerCase() as ProductCategorySlug;
   const productId = resolved?.productId ?? '';
   const lang = resolveLocale(locale);
@@ -483,12 +489,33 @@ export default async function ProductDetailPage({ params }: PageProps) {
     categorySlug,
   );
   const comparisonLabels = { before: 'Before', after: 'After' };
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: copy.name,
+    description: copy.tagline,
+    sku: product.sku ?? product.id,
+    image: toAbsoluteUrl(toSrc(product.posterImageUrl ?? product.imageUrl)),
+    url: `${SITE_URL}/${resolvedLocale}/products/${categorySlug}/${productId}`,
+    inLanguage: getLocaleLanguage(resolvedLocale),
+    category: categoryCopy.label,
+    brand: {
+      '@type': 'Brand',
+      name: 'Hisense',
+    },
+    additionalProperty: specDetails.map((spec) => ({
+      '@type': 'PropertyValue',
+      name: spec,
+      value: spec,
+    })),
+  };
 
   return (
     <div
       className="pb-12 space-y-10 sm:space-y-12 lg:space-y-20 lg:pb-24"
       dir={lang === 'fa' ? 'rtl' : 'ltr'}
     >
+      <JsonLd data={productSchema} />
       <BannerSection
         banner={banners[0]}
         breadcrumbItems={breadcrumbItems}

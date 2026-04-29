@@ -9,9 +9,10 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
 import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import { routing, type Locale } from '@/i18n/routing';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.hisense-ir.com';
+import type { Locale } from '@/i18n/routing';
+import JsonLd from '@/components/seo/JsonLd';
+import PageBreadcrumbs from '@/components/seo/PageBreadcrumbs';
+import { createBreadcrumbItems, getLanguageAlternates, SITE_URL } from '@/lib/seo/site';
 
 type IconType = typeof LocalPhoneOutlinedIcon;
 
@@ -344,11 +345,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const routeTranslations = await getTranslations('Routes.hisenseRepair');
   const localizedPath = `/${locale}/hisense-repair`;
-  const languageAlternates = routing.locales.reduce<Record<string, string>>((acc, lang) => {
-    acc[lang] = `${SITE_URL}/${lang}/hisense-repair`;
-    return acc;
-  }, {});
-  languageAlternates['x-default'] = `${SITE_URL}/${routing.defaultLocale}/hisense-repair`;
+  const languageAlternates = getLanguageAlternates('/hisense-repair');
 
   return {
     title: routeTranslations('title'),
@@ -374,7 +371,12 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HisenseRepairPage() {
   const locale = await getLocale();
   const resolvedLocale: Locale = locale === 'fa' ? 'fa' : 'en';
+  const routeTranslations = await getTranslations('Routes.hisenseRepair');
   const content = REPAIR_CONTENT[resolvedLocale];
+  const breadcrumbItems = createBreadcrumbItems(resolvedLocale, {
+    label: routeTranslations('title'),
+    href: `/${resolvedLocale}/hisense-repair`,
+  });
   const isRTL = resolvedLocale === 'fa';
   const resolveHref = (href: string) => (href.startsWith('/') ? `/${resolvedLocale}${href}` : href);
   const serviceSchema = {
@@ -416,14 +418,9 @@ export default async function HisenseRepairPage() {
 
   return (
     <div className="space-y-12 pb-16 pt-8 sm:space-y-16" dir={isRTL ? 'rtl' : 'ltr'}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <JsonLd data={serviceSchema} />
+      <JsonLd data={faqSchema} />
+      <PageBreadcrumbs items={breadcrumbItems} locale={resolvedLocale} className="pt-0 sm:pt-0" />
       <section className="relative overflow-hidden rounded-3xl border border-(--border-color) bg-(--surface-color) px-6 py-10 shadow-lg sm:px-10 sm:py-12">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,179,172,0.18),transparent_55%)]" />
         <div className="relative mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.2fr_0.8fr]">

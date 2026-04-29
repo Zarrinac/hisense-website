@@ -27,11 +27,12 @@ const MobileHeader = ({
       lang={lang}
       className="text-[11px] font-semibold text-(--text-muted-color)"
       separatorClassName="text-(--border-color)"
+      includeStructuredData={false}
     />
     <div className="space-y-1.5">
-      <h1 className="text-xl font-black leading-tight text-(--default-black-font) sm:text-2xl">
+      <div className="text-xl font-black leading-tight text-(--default-black-font) sm:text-2xl">
         {seriesDisplay || copyName}
-      </h1>
+      </div>
       {availableSizes.length > 0 && (
         <ul className="flex flex-wrap items-center gap-2.5 text-xs text-(--text-muted-color)">
           {availableSizes.map((size, idx) => (
