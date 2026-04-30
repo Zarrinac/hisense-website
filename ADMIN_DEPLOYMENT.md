@@ -63,6 +63,14 @@ After start:
 4. Check `/admin/complaints` and `/admin/surveys`.
 5. Confirm public pages like `/fa` still load.
 
+If login returns `403 Forbidden`, check that `NEXT_PUBLIC_SITE_URL` exactly matches the browser origin, for example `https://www.hisense-ir.com`. If the app is behind Nginx, also pass these headers to Next:
+
+```nginx
+proxy_set_header Host $host;
+proxy_set_header X-Forwarded-Host $host;
+proxy_set_header X-Forwarded-Proto $scheme;
+```
+
 ## Notes
 
 - `/admin`, `/admin/*`, and `/api/admin/*` are protected by signed HttpOnly session cookies.
