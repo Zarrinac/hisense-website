@@ -286,7 +286,7 @@ export default function SearchOverlay({
                   <Link
                     href={result.href}
                     onClick={closeOverlay}
-                    className="block rounded-2xl border border-(--border-color) bg-(--surface-muted-color) px-4 py-3 transition hover:border-(--brand-color) hover:bg-(--surface-hover-color) focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
+                    className="block rounded-2xl border border-(--border-color) bg-(--surface-muted-color) px-4 py-3 transition hover:border-(--brand-color) hover:bg-(--surface-hover-color) focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
                   >
                     <span className="block text-[11px] font-semibold uppercase tracking-[0.25em] text-(--brand-color)">
                       {result.eyebrow}
