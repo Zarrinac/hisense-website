@@ -65,7 +65,24 @@ function isMutatingRequest(method: string) {
 function isSameOriginRequest(request: NextRequest) {
   const origin = request.headers.get('origin');
 
-  return !origin || origin === request.nextUrl.origin;
+  if (!origin) {
+    return true;
+  }
+
+  const allowedOrigins = new Set([request.nextUrl.origin]);
+  const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  const forwardedProto = request.headers.get('x-forwarded-proto');
+  const forwardedHost = request.headers.get('x-forwarded-host') ?? request.headers.get('host');
+
+  if (publicSiteUrl) {
+    allowedOrigins.add(new URL(publicSiteUrl).origin);
+  }
+
+  if (forwardedProto && forwardedHost) {
+    allowedOrigins.add(`${forwardedProto}://${forwardedHost}`);
+  }
+
+  return allowedOrigins.has(origin);
 }
 
 export default async function proxy(request: NextRequest) {
