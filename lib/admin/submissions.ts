@@ -121,6 +121,10 @@ const surveySelect = {
 
 export async function getAdminComplaintsData(): Promise<AdminComplaintsData> {
   if (!prisma) {
+    console.error(
+      '[admin/complaints] Prisma client is unavailable. Check DATABASE_URL at runtime.',
+    );
+
     return {
       databaseReady: false,
       limit: SUBMISSION_LIST_LIMIT,
@@ -145,7 +149,9 @@ export async function getAdminComplaintsData(): Promise<AdminComplaintsData> {
       complaintCount,
       complaints,
     };
-  } catch {
+  } catch (error) {
+    console.error('[admin/complaints] Unable to load complaint submissions.', error);
+
     return {
       databaseReady: false,
       limit: SUBMISSION_LIST_LIMIT,
@@ -157,6 +163,8 @@ export async function getAdminComplaintsData(): Promise<AdminComplaintsData> {
 
 export async function getAdminSurveysData(): Promise<AdminSurveysData> {
   if (!prisma) {
+    console.error('[admin/surveys] Prisma client is unavailable. Check DATABASE_URL at runtime.');
+
     return {
       databaseReady: false,
       limit: SUBMISSION_LIST_LIMIT,
@@ -181,7 +189,9 @@ export async function getAdminSurveysData(): Promise<AdminSurveysData> {
       surveyCount,
       surveys,
     };
-  } catch {
+  } catch (error) {
+    console.error('[admin/surveys] Unable to load survey submissions.', error);
+
     return {
       databaseReady: false,
       limit: SUBMISSION_LIST_LIMIT,
@@ -193,6 +203,10 @@ export async function getAdminSurveysData(): Promise<AdminSurveysData> {
 
 export async function getAdminSubmissionsData(): Promise<AdminSubmissionsData> {
   if (!prisma) {
+    console.error(
+      '[admin/submissions] Prisma client is unavailable. Check DATABASE_URL at runtime.',
+    );
+
     return {
       databaseReady: false,
       limit: SUBMISSION_LIST_LIMIT,
@@ -227,7 +241,9 @@ export async function getAdminSubmissionsData(): Promise<AdminSubmissionsData> {
       complaints,
       surveys,
     };
-  } catch {
+  } catch (error) {
+    console.error('[admin/submissions] Unable to load submissions.', error);
+
     return {
       databaseReady: false,
       limit: SUBMISSION_LIST_LIMIT,
