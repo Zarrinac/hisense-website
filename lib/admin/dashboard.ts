@@ -30,6 +30,8 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
   const lastCheckedAt = new Date().toISOString();
 
   if (!prisma) {
+    console.error('[admin/dashboard] Prisma client is unavailable. Check DATABASE_URL at runtime.');
+
     return {
       databaseReady: false,
       metrics: emptyMetrics,
@@ -79,7 +81,9 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
       })),
       lastCheckedAt,
     };
-  } catch {
+  } catch (error) {
+    console.error('[admin/dashboard] Unable to load dashboard data.', error);
+
     return {
       databaseReady: false,
       metrics: emptyMetrics,

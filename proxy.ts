@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { routing } from './i18n/routing';
 import { getAdminAuthConfig, hasAdminSession } from './lib/admin/auth';
+import { createAdminRedirectUrl } from './lib/admin/url';
 
 // Middleware keeps all non-asset routes locale-scoped for next-intl.
 const intlMiddleware = createMiddleware(routing);
@@ -44,8 +45,7 @@ function forbiddenResponse() {
 }
 
 function adminLoginRedirect(request: NextRequest) {
-  const loginUrl = request.nextUrl.clone();
-  loginUrl.pathname = '/admin/login';
+  const loginUrl = createAdminRedirectUrl('/admin/login', request);
   loginUrl.searchParams.set('next', `${request.nextUrl.pathname}${request.nextUrl.search}`);
   return NextResponse.redirect(loginUrl);
 }
