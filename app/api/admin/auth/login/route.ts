@@ -5,6 +5,7 @@ import {
   setAdminSessionCookie,
   verifyAdminCredentials,
 } from '@/lib/admin/auth';
+import { createAdminRedirectUrl } from '@/lib/admin/url';
 
 function normalizeNextPath(value: FormDataEntryValue | null) {
   const nextPath = typeof value === 'string' ? value : '';
@@ -17,7 +18,7 @@ function normalizeNextPath(value: FormDataEntryValue | null) {
 }
 
 function loginRedirect(request: Request, error: 'invalid' | 'config', nextPath: string) {
-  const url = new URL('/admin/login', request.url);
+  const url = createAdminRedirectUrl('/admin/login', request);
   url.searchParams.set('error', error);
   url.searchParams.set('next', nextPath);
 
@@ -50,7 +51,9 @@ export async function POST(request: Request) {
     return loginRedirect(request, 'config', nextPath);
   }
 
-  const response = NextResponse.redirect(new URL(nextPath, request.url), { status: 303 });
+  const response = NextResponse.redirect(createAdminRedirectUrl(nextPath, request), {
+    status: 303,
+  });
   setAdminSessionCookie(response, token);
 
   return response;

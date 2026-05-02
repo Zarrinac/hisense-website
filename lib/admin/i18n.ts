@@ -5,7 +5,7 @@ export type AdminLocale = (typeof adminLocales)[number];
 export type AdminMetricKey = 'products' | 'complaints' | 'surveys' | 'serviceCenters';
 
 export function resolveAdminLocale(value: string | undefined | null): AdminLocale {
-  return value === 'fa' ? 'fa' : 'en';
+  return value === 'en' ? 'en' : 'fa';
 }
 
 export function getAdminDirection(locale: AdminLocale) {
