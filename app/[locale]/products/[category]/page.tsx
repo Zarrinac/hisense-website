@@ -25,6 +25,7 @@ import {
   SITE_URL,
   toAbsoluteUrl,
 } from '@/lib/seo/site';
+import { createInternalApiUrl } from '@/lib/api/internalUrl';
 
 const bannerAsset = (path: string) => mediaUrl(`/tv-banner/${path}`);
 
@@ -49,13 +50,7 @@ const fetchProducts = async (
   category: ProductCategory,
 ): Promise<ApiProduct[]> => {
   const fallback = FALLBACK_PRODUCTS.filter((product) => product.category === category);
-  const apiUrl =
-    process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL.length > 0
-      ? new URL(
-          `/api/products?category=${categorySlug}`,
-          process.env.NEXT_PUBLIC_SITE_URL,
-        ).toString()
-      : `/api/products?category=${categorySlug}`;
+  const apiUrl = createInternalApiUrl(`/api/products?category=${categorySlug}`);
   try {
     const response = await fetch(apiUrl, { cache: 'no-store', next: { revalidate: 0 } });
     if (!response.ok) {

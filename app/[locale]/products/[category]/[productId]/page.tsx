@@ -33,6 +33,7 @@ import {
   SITE_URL,
   toAbsoluteUrl,
 } from '@/lib/seo/site';
+import { createInternalApiUrl } from '@/lib/api/internalUrl';
 
 // Builds product detail pages from the API (DB-first) with bundled content as fallback via the API layer.
 
@@ -316,10 +317,8 @@ const buildBreadcrumbItems = (
   ),
 ];
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ?? 'http://localhost:3000';
-
 const productApiUrl = (categorySlug: ProductCategorySlug, id: string) =>
-  new URL(`/api/products/${id}?category=${categorySlug}`, apiBaseUrl).toString();
+  createInternalApiUrl(`/api/products/${id}?category=${categorySlug}`);
 
 const fetchProduct = async (
   categorySlug: ProductCategorySlug,

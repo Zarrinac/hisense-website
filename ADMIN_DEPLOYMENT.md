@@ -11,6 +11,7 @@ DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DB?schema=public"
 NEXT_PUBLIC_SITE_URL="https://www.hisense-ir.com"
 NEXT_PUBLIC_CONTENT_SOURCE="remote"
 NEXT_PUBLIC_MEDIA_BASE_URL="/media"
+INTERNAL_API_BASE_URL="http://localhost:3000"
 ADMIN_USERNAME="your-admin-username"
 ADMIN_PASSWORD="use-a-strong-password"
 ADMIN_SESSION_SECRET="use-a-long-random-secret-at-least-32-chars"
@@ -77,3 +78,4 @@ proxy_set_header X-Forwarded-Proto $scheme;
 - Admin pages send `noindex`, `no-store`, and frame-protection headers.
 - `ADMIN_SESSION_SECRET` should be different from `ADMIN_PASSWORD`.
 - Rotating `ADMIN_SESSION_SECRET` logs out current admin sessions.
+- `INTERNAL_API_BASE_URL` is used by server-rendered pages to call app APIs without looping through public HTTPS/Nginx.
