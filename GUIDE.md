@@ -52,7 +52,7 @@ This is a simplified, reader-friendly overview of how to run and understand the 
 
 ## Styling & theming
 
-- Global tokens and Tailwind base: `assets/sytles/globals.css`.
+- Global tokens and Tailwind base: `assets/styles/globals.css`.
 - Theme toggle (light/dark) via `components/theme/ThemeProvider` + `ThemeToggle`; stored in `localStorage`.
 
 ## SEO
