@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { getLocale } from 'next-intl/server';
-import '@/assets/sytles/globals.css';
+import '@/assets/styles/globals.css';
 import Analytics from '@/components/seo/Analytics';
 import GtmNoScript from '@/components/seo/GtmNoScript';
 

@@ -22,7 +22,7 @@ This document captures how the app is wired today so we can keep it maintainable
 - Next.js 16 App Router with TypeScript and React 19.
 - `next-intl` for routing and translations (locales: `fa`, `en`).
 - Prisma as the optional product data source with Postgres.
-- Tailwind CSS v4 + custom CSS variables in `assets/sytles/globals.css` for theming.
+- Tailwind CSS v4 + custom CSS variables in `assets/styles/globals.css` for theming.
 - SEO helpers: `next-seo`, `next-sitemap`.
 
 ## Directory Map
@@ -35,7 +35,7 @@ This document captures how the app is wired today so we can keep it maintainable
 - `messages/`: Translation dictionaries per locale.
 - `prisma/`: Prisma schema/models.
 - `public/`: Images, fonts, and manifest assets.
-- `assets/sytles/`: Global CSS, third-party styles (Swiper, Select2).
+- `assets/styles/`: Global CSS, third-party styles (Swiper, Select2).
 - `seo/`: Keyword list helper.
 - `types/`: Shared type definitions (TV product model, SVG module typing).
 
