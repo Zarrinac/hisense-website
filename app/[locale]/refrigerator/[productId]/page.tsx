@@ -365,25 +365,28 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
       ? product.posterImage
       : (product.posterImage?.src ??
         (typeof product.image === 'string' ? product.image : product.image.src));
-  const productSchema = {
+  const productPageSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Product',
+    '@type': 'WebPage',
     name: copy.name,
     description: copy.tagline,
-    sku: product.sku ?? product.id,
-    image: toAbsoluteUrl(schemaImage),
     url: `${SITE_URL}/${resolvedLocale}/refrigerator/${productId}`,
     inLanguage: getLocaleLanguage(resolvedLocale),
-    category: routeTranslations('title'),
-    brand: {
-      '@type': 'Brand',
-      name: 'Hisense',
+    isPartOf: {
+      '@id': `${SITE_URL}#website`,
     },
-    additionalProperty: specDetails.map((spec) => ({
-      '@type': 'PropertyValue',
-      name: spec,
-      value: spec,
-    })),
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: toAbsoluteUrl(schemaImage),
+    },
+    about: {
+      '@type': 'Thing',
+      name: copy.name,
+      description: copy.tagline,
+      identifier: product.sku ?? product.id,
+      url: `${SITE_URL}/${resolvedLocale}/refrigerator/${productId}`,
+      additionalType: routeTranslations('title'),
+    },
   };
 
   return (
@@ -391,7 +394,7 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
       className="pb-12 space-y-10 sm:space-y-12 lg:space-y-20 lg:pb-24"
       dir={lang === 'fa' ? 'rtl' : 'ltr'}
     >
-      <JsonLd data={productSchema} />
+      <JsonLd data={productPageSchema} />
       <RefrigeratorHero
         locale={locale}
         lang={lang}

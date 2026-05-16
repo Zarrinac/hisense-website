@@ -173,14 +173,11 @@ export default async function RefrigeratorPage() {
           position: index + 1,
           url: `${SITE_URL}/${resolvedLocale}/refrigerator/${product.id}`,
           item: {
-            '@type': 'Product',
+            '@type': 'Thing',
             name: title,
-            sku: product.label,
+            identifier: product.label,
             image: toAbsoluteUrl(product.image),
-            brand: {
-              '@type': 'Brand',
-              name: 'Hisense',
-            },
+            url: `${SITE_URL}/${resolvedLocale}/refrigerator/${product.id}`,
           },
         };
       }),

@@ -101,15 +101,12 @@ const buildProductListJsonLd = ({
         position: index + 1,
         url: `${SITE_URL}/${locale}/products/${categorySlug}/${slug}`,
         item: {
-          '@type': 'Product',
+          '@type': 'Thing',
           name: copy.name,
           description: copy.tagline,
-          sku: product.sku ?? product.id,
+          identifier: product.sku ?? product.id,
           image: toAbsoluteUrl(product.imageUrl),
-          brand: {
-            '@type': 'Brand',
-            name: 'Hisense',
-          },
+          url: `${SITE_URL}/${locale}/products/${categorySlug}/${slug}`,
         },
       };
     }),
