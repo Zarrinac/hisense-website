@@ -488,25 +488,28 @@ export default async function ProductDetailPage({ params }: PageProps) {
     categorySlug,
   );
   const comparisonLabels = { before: 'Before', after: 'After' };
-  const productSchema = {
+  const productPageSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Product',
+    '@type': 'WebPage',
     name: copy.name,
     description: copy.tagline,
-    sku: product.sku ?? product.id,
-    image: toAbsoluteUrl(toSrc(product.posterImageUrl ?? product.imageUrl)),
     url: `${SITE_URL}/${resolvedLocale}/products/${categorySlug}/${productId}`,
     inLanguage: getLocaleLanguage(resolvedLocale),
-    category: categoryCopy.label,
-    brand: {
-      '@type': 'Brand',
-      name: 'Hisense',
+    isPartOf: {
+      '@id': `${SITE_URL}#website`,
     },
-    additionalProperty: specDetails.map((spec) => ({
-      '@type': 'PropertyValue',
-      name: spec,
-      value: spec,
-    })),
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: toAbsoluteUrl(toSrc(product.posterImageUrl ?? product.imageUrl)),
+    },
+    about: {
+      '@type': 'Thing',
+      name: copy.name,
+      description: copy.tagline,
+      identifier: product.sku ?? product.id,
+      url: `${SITE_URL}/${resolvedLocale}/products/${categorySlug}/${productId}`,
+      additionalType: categoryCopy.label,
+    },
   };
 
   return (
@@ -514,7 +517,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       className="pb-12 space-y-10 sm:space-y-12 lg:space-y-20 lg:pb-24"
       dir={lang === 'fa' ? 'rtl' : 'ltr'}
     >
-      <JsonLd data={productSchema} />
+      <JsonLd data={productPageSchema} />
       <BannerSection
         banner={banners[0]}
         breadcrumbItems={breadcrumbItems}

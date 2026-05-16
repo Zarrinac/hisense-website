@@ -43,13 +43,7 @@ export default function TvProductShowcase({
           <article
             key={product.id}
             className="overflow-hidden rounded-3xl border border-(--border-color) bg-(--surface-color) shadow-sm ring-1 ring-(--border-color)"
-            itemScope
-            itemType="https://schema.org/Product"
           >
-            <meta itemProp="brand" content="Hisense" />
-            <meta itemProp="sku" content={product.sku} />
-            <meta itemProp="model" content={product.series} />
-
             <div className="grid items-center gap-6 lg:grid-cols-[1.1fr_0.9fr]">
               <div className="relative aspect-video w-full overflow-hidden bg-(--surface-color) lg:aspect-video">
                 <Image
@@ -59,7 +53,6 @@ export default function TvProductShowcase({
                   sizes="(max-width: 1024px) 100vw, 55vw"
                   className="object-cover transition duration-700 hover:scale-[1.02]"
                   priority
-                  itemProp="image"
                 />
               </div>
 
@@ -78,15 +71,11 @@ export default function TvProductShowcase({
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-bold sm:text-3xl" itemProp="name">
-                    {copy.name}
-                  </h3>
+                  <h3 className="text-2xl font-bold sm:text-3xl">{copy.name}</h3>
                   <p className="text-base font-semibold text-(--text-muted-color)">
                     {copy.tagline}
                   </p>
-                  <p className="text-sm text-(--text-muted-color)" itemProp="description">
-                    {copy.description}
-                  </p>
+                  <p className="text-sm text-(--text-muted-color)">{copy.description}</p>
                 </div>
 
                 <ul className="grid gap-2 text-sm text-(--default-black-font) sm:grid-cols-2">
