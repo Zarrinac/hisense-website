@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import type { Locale } from '@/i18n/routing';
 
 type LegacyFindServiceCenterPageProps = {
@@ -12,5 +12,5 @@ export default async function LegacyFindServiceCenterPage({
 }: LegacyFindServiceCenterPageProps) {
   const { locale } = await params;
 
-  redirect(`/${locale}/find-service-center`);
+  permanentRedirect(`/${locale}/find-service-center`);
 }

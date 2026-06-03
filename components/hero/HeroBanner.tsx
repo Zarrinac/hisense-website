@@ -169,11 +169,10 @@ export default function HeroBanner() {
       dir="ltr"
     >
       <div className="relative" ref={emblaRef} aria-busy={!bannersLoaded}>
-        <div
-          className={`flex touch-pan-y select-none transition-opacity duration-500 ${
-            bannersLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
+        {/* No opacity gate: the first slide must paint on first render so the
+            priority hero image is the LCP. The section is overflow-hidden, so
+            slides 2+ stay clipped before Embla hydrates. */}
+        <div className="flex touch-pan-y select-none">
           {slides.map((banner) => (
             <div key={banner.id} className="relative min-w-0 flex-[0_0_100%]">
               <div className="relative aspect-9/16 w-full md:aspect-video lg:aspect-21/9">
@@ -190,11 +189,6 @@ export default function HeroBanner() {
             </div>
           ))}
         </div>
-        {!bannersLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-(--surface-color)">
-            <span className="sr-only">Loading banners</span>
-          </div>
-        )}
       </div>
 
       <button

@@ -61,5 +61,10 @@ next-env.d.ts
 # database backups — never commit dumps (may contain PII)
 /backups/
 
-# generated sitemaps (created by postbuild → next-sitemap on every build)
+# Stale sitemaps/robots from the old next-sitemap postbuild. The sitemap and
+# robots are now served by app/sitemap.ts and app/robots.ts. These patterns
+# stay ignored so a leftover build artifact is never committed; delete any
+# existing public/sitemap*.xml and public/robots.txt on the server once so the
+# native routes are not shadowed by static files.
 /public/sitemap*.xml
+/public/robots.txt
