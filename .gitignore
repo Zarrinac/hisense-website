@@ -57,3 +57,6 @@ next-env.d.ts
 
 # temp files
 /temp-files
+
+# database backups — never commit dumps (may contain PII)
+/backups/
