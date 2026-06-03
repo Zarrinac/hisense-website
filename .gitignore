@@ -39,3 +39,27 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# pm2 ecosystem.config.cjs
+/ecosystem.config.cjs
+
+# media moved to server, keep out of repo
+/public/products/
+/public/images/
+/public/tv-banner/
+/public/banner/
+/public/contact-us/
+/public/downloads/
+/public/representatives/
+
+/app/generated/prisma
+
+
+# temp files
+/temp-files
+
+# database backups — never commit dumps (may contain PII)
+/backups/
+
+# generated sitemaps (created by postbuild → next-sitemap on every build)
+/public/sitemap*.xml
