@@ -57,7 +57,7 @@ const DEFAULT_VALIDATION_COPY: ComplaintValidationCopy = {
   descriptionRequired: 'Complaint details are required.',
 };
 
-const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+const DATE_PATTERN = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 const PHONE_PATTERN = /^09\d{9}$/;
 
 function normalizeDigits(value: string) {

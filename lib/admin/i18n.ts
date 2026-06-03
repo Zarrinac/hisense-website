@@ -289,6 +289,7 @@ export const adminDictionaries = {
       title: 'Admin login',
       invalidCredentials: 'Username or password is incorrect.',
       configError: 'Admin authentication is not configured.',
+      rateLimited: 'Too many failed attempts. Please wait 15 minutes and try again.',
     },
   },
   fa: {
@@ -419,6 +420,7 @@ export const adminDictionaries = {
       title: 'ورود به پنل مدیریت',
       invalidCredentials: 'نام کاربری یا رمز عبور اشتباه است.',
       configError: 'احراز هویت مدیریت تنظیم نشده است.',
+      rateLimited: 'تعداد دفعات ناموفق زیاد است. لطفاً ۱۵ دقیقه صبر کنید و دوباره تلاش کنید.',
     },
   },
 } as const;

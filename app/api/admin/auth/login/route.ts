@@ -5,6 +5,12 @@ import {
   setAdminSessionCookie,
   verifyAdminCredentials,
 } from '@/lib/admin/auth';
+import {
+  clearLoginFailures,
+  getClientIp,
+  isLoginRateLimited,
+  recordLoginFailure,
+} from '@/lib/admin/rateLimit';
 import { createAdminRedirectUrl } from '@/lib/admin/url';
 
 function normalizeNextPath(value: FormDataEntryValue | null) {
@@ -17,7 +23,11 @@ function normalizeNextPath(value: FormDataEntryValue | null) {
   return nextPath;
 }
 
-function loginRedirect(request: Request, error: 'invalid' | 'config', nextPath: string) {
+function loginRedirect(
+  request: Request,
+  error: 'invalid' | 'config' | 'rate-limited',
+  nextPath: string,
+) {
   const url = createAdminRedirectUrl('/admin/login', request);
   url.searchParams.set('error', error);
   url.searchParams.set('next', nextPath);
@@ -26,24 +36,33 @@ function loginRedirect(request: Request, error: 'invalid' | 'config', nextPath: 
 }
 
 export async function POST(request: Request) {
+  const ip = getClientIp(request);
   const formData = await request.formData();
   const username = formData.get('username');
   const password = formData.get('password');
   const nextPath = normalizeNextPath(formData.get('next'));
+
+  if (isLoginRateLimited(ip)) {
+    return loginRedirect(request, 'rate-limited', nextPath);
+  }
 
   if (!getAdminAuthConfig()) {
     return loginRedirect(request, 'config', nextPath);
   }
 
   if (typeof username !== 'string' || typeof password !== 'string') {
+    recordLoginFailure(ip);
     return loginRedirect(request, 'invalid', nextPath);
   }
 
   const isValid = await verifyAdminCredentials(username, password);
 
   if (!isValid) {
+    recordLoginFailure(ip);
     return loginRedirect(request, 'invalid', nextPath);
   }
+
+  clearLoginFailures(ip);
 
   const token = await createAdminSession(username);
 
