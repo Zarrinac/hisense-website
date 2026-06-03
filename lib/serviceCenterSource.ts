@@ -154,7 +154,7 @@ function applyFilters(
 }
 
 function filterLocalServiceCenters(filters: NormalizedServiceCenterFilters) {
-  return applyFilters(serviceCenters as ServiceCenter[], filters);
+  return applyFilters(serviceCenters, filters);
 }
 
 function sortServiceCenters(locale: Locale, centers: ServiceCenter[]) {

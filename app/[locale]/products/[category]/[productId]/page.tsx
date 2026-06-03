@@ -25,7 +25,7 @@ import type {
 import type { ApiProduct } from '@/lib/api/products/types';
 import { categoryFromSlug, type ProductCategorySlug } from '@/lib/api/products/categories';
 import type { Locale } from '@/i18n/routing';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import {
   createBreadcrumbItems,
   getLanguageAlternates,
@@ -34,6 +34,7 @@ import {
   toAbsoluteUrl,
 } from '@/lib/seo/site';
 import { createInternalApiUrl } from '@/lib/api/internalUrl';
+import { buildProductJsonLd } from '@/lib/seo/productSchema';
 
 // Builds product detail pages from the API (DB-first) with bundled content as fallback via the API layer.
 
@@ -110,7 +111,9 @@ const COPY_BLOCK_KEYS: CopyBlockKey[] = [
 
 const COPY_BLOCK_KEYS_SET = new Set(COPY_BLOCK_KEYS);
 
-export const dynamic = 'force-dynamic';
+// ISR: cache the rendered page (and its DB-backed product fetch) and refresh
+// hourly instead of re-querying the database on every request/crawl.
+export const revalidate = 3600;
 
 const resolveLocale = (locale?: string): 'fa' | 'en' => (locale === 'fa' ? 'fa' : 'en');
 
@@ -325,7 +328,9 @@ const fetchProduct = async (
   productId: string,
 ): Promise<NormalizedProduct | null> => {
   try {
-    const response = await fetch(productApiUrl(categorySlug, productId), { cache: 'no-store' });
+    const response = await fetch(productApiUrl(categorySlug, productId), {
+      next: { revalidate: 3600 },
+    });
     if (!response.ok) {
       return null;
     }
@@ -404,6 +409,7 @@ const getCategoryCopy = async (categorySlug: ProductCategorySlug) => {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolved = await params;
   const localeParam = resolved?.locale ?? 'en';
+  setRequestLocale(resolveLocale(localeParam));
   const categorySlug = (resolved?.category ?? '').toLowerCase() as ProductCategorySlug;
   const productId = resolved?.productId ?? '';
   if (!productId) return {};
@@ -446,6 +452,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const resolved = await params;
   const locale = resolved?.locale ?? 'en';
   const resolvedLocale: Locale = locale === 'fa' ? 'fa' : 'en';
+  setRequestLocale(resolvedLocale);
   const categorySlug = (resolved?.category ?? '').toLowerCase() as ProductCategorySlug;
   const productId = resolved?.productId ?? '';
   const lang = resolveLocale(locale);
@@ -511,6 +518,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
       additionalType: categoryCopy.label,
     },
   };
+  const productJsonLd = buildProductJsonLd({
+    locale: resolvedLocale,
+    name: copy.name,
+    description: copy.tagline,
+    url: `${SITE_URL}/${resolvedLocale}/products/${categorySlug}/${productId}`,
+    image: toSrc(product.posterImageUrl ?? product.imageUrl),
+    sku: product.sku ?? product.id,
+    mpn: product.id,
+    category: categoryCopy.label,
+    additionalImages: Array.isArray(product.gallery) ? product.gallery.map(toSrc) : [],
+  });
 
   return (
     <div
@@ -518,6 +536,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       dir={lang === 'fa' ? 'rtl' : 'ltr'}
     >
       <JsonLd data={productPageSchema} />
+      <JsonLd data={productJsonLd} />
       <BannerSection
         banner={banners[0]}
         breadcrumbItems={breadcrumbItems}

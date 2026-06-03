@@ -35,7 +35,7 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({
     <ol className="flex flex-wrap items-center gap-2">
       {items.map((item, idx) => (
         <li
-          key={item.href}
+          key={`crumb-${idx}`}
           {...(includeStructuredData
             ? {
                 itemProp: 'itemListElement',

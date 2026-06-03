@@ -31,8 +31,11 @@ export default function PageBreadcrumbs({
           {items.map((item, index) => {
             const isLast = index === items.length - 1;
 
+            // Key must not be URL-like: React serializes element keys into the
+            // RSC flight payload, and a `${href}-${index}` key (e.g. "/en-0",
+            // "/fa/about-1") gets picked up by crawlers as a phantom URL → 404.
             return (
-              <li key={`${item.href}-${index}`} className="flex items-center gap-2">
+              <li key={`crumb-${index}`} className="flex items-center gap-2">
                 {isLast ? (
                   <span className="text-(--default-black-font)" aria-current="page">
                     {item.label}

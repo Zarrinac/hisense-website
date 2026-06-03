@@ -1,4 +1,4 @@
-import { getLocale, getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,6 +8,7 @@ import TvHeroCarousel from '@/components/tv/TvHeroCarousel';
 import RouteHero from '@/components/routes/RouteHero';
 import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
+import CategorySeoSection from '@/components/seo/CategorySeoSection';
 import PageBreadcrumbs from '@/components/seo/PageBreadcrumbs';
 import { FALLBACK_PRODUCTS } from '@/lib/api/products/normalizers';
 import type { ApiProduct } from '@/lib/api/products/types';
@@ -26,6 +27,11 @@ import {
   toAbsoluteUrl,
 } from '@/lib/seo/site';
 import { createInternalApiUrl } from '@/lib/api/internalUrl';
+import { CATEGORY_SEO_CONTENT, type CategorySeoKey } from '@/lib/seo/categorySeoContent';
+
+// ISR: cache category listings (and their DB-backed product fetch) and refresh
+// hourly instead of re-querying the database on every request/crawl.
+export const revalidate = 3600;
 
 const bannerAsset = (path: string) => mediaUrl(`/tv-banner/${path}`);
 
@@ -52,7 +58,7 @@ const fetchProducts = async (
   const fallback = FALLBACK_PRODUCTS.filter((product) => product.category === category);
   const apiUrl = createInternalApiUrl(`/api/products?category=${categorySlug}`);
   try {
-    const response = await fetch(apiUrl, { cache: 'no-store', next: { revalidate: 0 } });
+    const response = await fetch(apiUrl, { next: { revalidate: 3600 } });
     if (!response.ok) {
       return fallback;
     }
@@ -116,6 +122,7 @@ const buildProductListJsonLd = ({
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolved = await params;
   const locale = resolved?.locale ?? (await getLocale());
+  setRequestLocale(locale);
   const categorySlug = (resolved?.category ?? '').toLowerCase() as ProductCategorySlug;
   const category = categoryFromSlug(categorySlug);
 
@@ -251,6 +258,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ProductsCategoryPage({ params }: PageProps) {
   const resolved = await params;
   const locale = resolved?.locale ?? (await getLocale());
+  setRequestLocale(locale);
   const categorySlug = (resolved?.category ?? '').toLowerCase() as ProductCategorySlug;
   const category = categoryFromSlug(categorySlug);
 
@@ -421,6 +429,13 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
             })}
           </div>
         </div>
+
+        {CATEGORY_SEO_CONTENT[categorySlug as CategorySeoKey]?.[resolvedLocale] && (
+          <CategorySeoSection
+            content={CATEGORY_SEO_CONTENT[categorySlug as CategorySeoKey][resolvedLocale]}
+            locale={resolvedLocale}
+          />
+        )}
 
         <OfficialLinksSection
           locale={locale}
@@ -615,6 +630,13 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
             })}
           </div>
         </div>
+
+        {CATEGORY_SEO_CONTENT[categorySlug as CategorySeoKey]?.[resolvedLocale] && (
+          <CategorySeoSection
+            content={CATEGORY_SEO_CONTENT[categorySlug as CategorySeoKey][resolvedLocale]}
+            locale={resolvedLocale}
+          />
+        )}
 
         <OfficialLinksSection
           locale={locale}

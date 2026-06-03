@@ -151,16 +151,10 @@ export default function Footer() {
       <div className="border-t border-(--border-color) bg-(--surface-color)">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-6 text-sm text-(--text-muted-color) lg:flex-row lg:items-center lg:justify-between">
           <p>{t('legal.notice')}</p>
+          {/* Legal links (privacy/cookies/terms) removed: those pages do not
+              exist yet and were returning 404. Re-add as locale-prefixed links
+              (e.g. `${homeHref}/privacy`) once the pages are created. */}
           <div className="flex flex-wrap gap-4">
-            <Link href="/privacy" className="transition hover:text-(--brand-color)">
-              {t('legal.privacy')}
-            </Link>
-            <Link href="/cookies" className="transition hover:text-(--brand-color)">
-              {t('legal.cookies')}
-            </Link>
-            <Link href="/terms" className="transition hover:text-(--brand-color)">
-              {t('legal.terms')}
-            </Link>
             <Link href="/sitemap.xml" className="transition hover:text-(--brand-color)">
               {t('legal.sitemap')}
             </Link>

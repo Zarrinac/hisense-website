@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import type { ContentSectionData } from '@/components/tv/ContentSections';
 import FeatureIntro from '@/components/tv/product-detail/FeatureIntro';
@@ -21,7 +21,7 @@ import type {
 } from '@/types/tv';
 import RefrigeratorHero from '@/components/refrigerator/RefrigeratorHero';
 import { REF_PRODUCTS } from '@/content/RefProducts';
-import type { Locale } from '@/i18n/routing';
+import { routing, type Locale } from '@/i18n/routing';
 import {
   createBreadcrumbItems,
   getLanguageAlternates,
@@ -29,6 +29,7 @@ import {
   SITE_URL,
   toAbsoluteUrl,
 } from '@/lib/seo/site';
+import { buildProductJsonLd } from '@/lib/seo/productSchema';
 
 // Builds the refrigerator detail page from bundled content.
 
@@ -104,7 +105,13 @@ const COPY_BLOCK_KEYS: CopyBlockKey[] = [
 
 const COPY_BLOCK_KEYS_SET = new Set(COPY_BLOCK_KEYS);
 
-export const dynamic = 'force-dynamic';
+// Refrigerator detail pages are built entirely from bundled content, so
+// statically generate them for every locale instead of rendering dynamically.
+export function generateStaticParams() {
+  return routing.locales.flatMap((locale) =>
+    REF_PRODUCTS.map((product) => ({ locale, productId: product.id.toLowerCase() })),
+  );
+}
 
 const resolveLocale = (locale?: string): 'fa' | 'en' => (locale === 'fa' ? 'fa' : 'en');
 
@@ -325,6 +332,7 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
   const resolved = await params;
   const locale = resolved?.locale ?? 'en';
   const resolvedLocale: Locale = locale === 'fa' ? 'fa' : 'en';
+  setRequestLocale(resolvedLocale);
   const productId = resolved?.productId ?? '';
   const lang = resolveLocale(locale);
 
@@ -388,6 +396,16 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
       additionalType: routeTranslations('title'),
     },
   };
+  const productJsonLd = buildProductJsonLd({
+    locale: resolvedLocale,
+    name: copy.name,
+    description: copy.tagline,
+    url: `${SITE_URL}/${resolvedLocale}/refrigerator/${productId}`,
+    image: typeof schemaImage === 'string' ? schemaImage : '',
+    sku: product.sku ?? product.id,
+    mpn: product.id,
+    category: routeTranslations('title'),
+  });
 
   return (
     <div
@@ -395,6 +413,7 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
       dir={lang === 'fa' ? 'rtl' : 'ltr'}
     >
       <JsonLd data={productPageSchema} />
+      <JsonLd data={productJsonLd} />
       <RefrigeratorHero
         locale={locale}
         lang={lang}
