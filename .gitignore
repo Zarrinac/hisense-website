@@ -60,3 +60,6 @@ next-env.d.ts
 
 # database backups — never commit dumps (may contain PII)
 /backups/
+
+# generated sitemaps (created by postbuild → next-sitemap on every build)
+/public/sitemap*.xml
