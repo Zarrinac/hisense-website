@@ -141,24 +141,20 @@ function serviceCenterSelect(): Record<keyof ServiceRepresentativeRow, true> {
   };
 }
 
-function filterLocalServiceCenters(filters: ServiceCenterFilters) {
-  const normalizedFilters = normalizeServiceCenterFilters(filters);
-
-  return serviceCenters.filter((center) => {
-    if (normalizedFilters.provinceId && center.provinceId !== normalizedFilters.provinceId) {
-      return false;
-    }
-
-    if (normalizedFilters.cityId && center.cityId !== normalizedFilters.cityId) {
-      return false;
-    }
-
-    if (normalizedFilters.serviceKind && center.serviceKind !== normalizedFilters.serviceKind) {
-      return false;
-    }
-
+function applyFilters(
+  centers: ServiceCenter[],
+  filters: NormalizedServiceCenterFilters,
+): ServiceCenter[] {
+  return centers.filter((center) => {
+    if (filters.provinceId && center.provinceId !== filters.provinceId) return false;
+    if (filters.cityId && center.cityId !== filters.cityId) return false;
+    if (filters.serviceKind && center.serviceKind !== filters.serviceKind) return false;
     return true;
   });
+}
+
+function filterLocalServiceCenters(filters: NormalizedServiceCenterFilters) {
+  return applyFilters(serviceCenters as ServiceCenter[], filters);
 }
 
 function sortServiceCenters(locale: Locale, centers: ServiceCenter[]) {
@@ -238,26 +234,19 @@ export async function loadServiceCenterData(
 
   if (!useLocalContent && serviceRepresentativeClient) {
     try {
-      const totalCount = await serviceRepresentativeClient.serviceRepresentative.count();
+      const allRows = await serviceRepresentativeClient.serviceRepresentative.findMany({
+        orderBy: [{ sortOrder: 'asc' }],
+        select: serviceCenterSelect(),
+      });
 
-      if (totalCount > 0) {
-        const allRows = await serviceRepresentativeClient.serviceRepresentative.findMany({
-          orderBy: [{ sortOrder: 'asc' }],
-          select: serviceCenterSelect(),
-        });
-        const filteredRows = includeCenters
-          ? await serviceRepresentativeClient.serviceRepresentative.findMany({
-              where: normalizedFilters,
-              orderBy: [{ sortOrder: 'asc' }],
-              select: serviceCenterSelect(),
-            })
-          : [];
+      if (allRows.length > 0) {
         const allCenters = sortServiceCenters(locale, allRows.map(toServiceCenter));
+        const filteredCenters = includeCenters ? applyFilters(allCenters, normalizedFilters) : [];
 
         return {
-          centers: sortServiceCenters(locale, filteredRows.map(toServiceCenter)),
+          centers: filteredCenters,
           locations: getServiceCenterLocations(locale, allCenters),
-          totalCount,
+          totalCount: allRows.length,
           source: 'database',
         };
       }
