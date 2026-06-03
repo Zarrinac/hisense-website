@@ -46,6 +46,7 @@ export default async function AdminLoginPage({ searchParams }: AdminLoginPagePro
 
   const hasInvalidCredentials = resolvedSearchParams?.error === 'invalid';
   const hasConfigError = resolvedSearchParams?.error === 'config';
+  const isRateLimited = resolvedSearchParams?.error === 'rate-limited';
 
   return (
     <main
@@ -90,6 +91,12 @@ export default async function AdminLoginPage({ searchParams }: AdminLoginPagePro
         {hasConfigError ? (
           <div className="mb-4 rounded-md border border-[#f0d7a1] bg-[#fff8e7] px-3 py-2 text-sm text-[#76520b]">
             {dictionary.login.configError}
+          </div>
+        ) : null}
+
+        {isRateLimited ? (
+          <div className="mb-4 rounded-md border border-[#f0d7a1] bg-[#fff8e7] px-3 py-2 text-sm text-[#76520b]">
+            {dictionary.login.rateLimited}
           </div>
         ) : null}
 
