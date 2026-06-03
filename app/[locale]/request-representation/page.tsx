@@ -365,7 +365,7 @@ export default async function RequestRepresentationPage() {
                 open={section.openByDefault}
                 className="group border-b border-(--border-color) last:border-b-0 open:bg-(--surface-muted-color)"
               >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-4 text-sm font-bold text-(--default-black-font) transition hover:bg-(--surface-muted-color) focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-(--brand-color) sm:px-5 [&::-webkit-details-marker]:hidden">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-4 text-sm font-bold text-(--default-black-font) transition hover:bg-(--surface-muted-color) focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-(--brand-color) sm:px-5 [&::-webkit-details-marker]:hidden">
                   <span className="flex min-w-0 items-center gap-3">
                     <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-(--surface-muted-color) text-(--brand-color) group-open:bg-(--brand-color) group-open:text-white">
                       <Icon fontSize="small" />

@@ -6,6 +6,7 @@ import { Visibility } from '@mui/icons-material';
 import type { Locale } from '@/i18n/routing';
 import JsonLd from '@/components/seo/JsonLd';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
+import CategorySeoSection from '@/components/seo/CategorySeoSection';
 import PageBreadcrumbs from '@/components/seo/PageBreadcrumbs';
 import { mediaUrl } from '@/lib/mediaUrl';
 import {
@@ -15,6 +16,7 @@ import {
   SITE_URL,
   toAbsoluteUrl,
 } from '@/lib/seo/site';
+import { CATEGORY_SEO_CONTENT } from '@/lib/seo/categorySeoContent';
 
 const bannerAsset = (path: string) => mediaUrl(`/products/refrigerator/banner/${path}`);
 const productAsset = (path: string) => mediaUrl(`/products/refrigerator/${path}`);
@@ -324,6 +326,11 @@ export default async function RefrigeratorPage() {
           ))}
         </div>
       </div>
+
+      <CategorySeoSection
+        content={CATEGORY_SEO_CONTENT.refrigerator[resolvedLocale]}
+        locale={resolvedLocale}
+      />
 
       <OfficialLinksSection
         locale={locale}

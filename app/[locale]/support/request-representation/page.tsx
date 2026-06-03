@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import type { Locale } from '@/i18n/routing';
 
 type LegacyRequestRepresentationPageProps = {
@@ -12,5 +12,5 @@ export default async function LegacyRequestRepresentationPage({
 }: LegacyRequestRepresentationPageProps) {
   const { locale } = await params;
 
-  redirect(`/${locale}/request-representation`);
+  permanentRedirect(`/${locale}/request-representation`);
 }
