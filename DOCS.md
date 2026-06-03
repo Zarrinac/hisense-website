@@ -64,7 +64,7 @@ This document captures how the app is wired today so we can keep it maintainable
 
 ## Internationalization
 
-- Locales defined in `i18n/routing.ts` with detection disabled; middleware (`proxy.ts`) keeps unknown paths on locale-aware routes.
+- Locales defined in `i18n/routing.ts` with detection disabled; middleware (`middleware.ts`) keeps unknown paths on locale-aware routes.
 - Server-side message loading in `i18n/request.ts`; navigation helpers from `i18n/navigation.ts`.
 - Translations stored in `messages/en.json` and `messages/fa.json`. Components fetch copy via `useTranslations`/`getTranslations`.
 - Locale-specific metadata is built with `next-intl` server helpers for the locale layout and TV pages.
