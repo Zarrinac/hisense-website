@@ -1,5 +1,4 @@
-const DEFAULT_INTERNAL_API_BASE_URL =
-  process.env.NODE_ENV === 'production' ? 'http://localhost:3000' : 'http://localhost:3000';
+const DEFAULT_INTERNAL_API_BASE_URL = 'http://localhost:3000';
 
 export function getInternalApiBaseUrl() {
   return (
