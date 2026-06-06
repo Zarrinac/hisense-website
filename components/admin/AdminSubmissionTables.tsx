@@ -41,7 +41,7 @@ function DetailGrid({ fields }: { fields: DetailField[] }) {
           <dt className="text-xs font-semibold uppercase tracking-[0.08em] text-[#6b7b86]">
             {field.label}
           </dt>
-          <dd className="mt-1 break-words text-sm text-[#172026]">{field.value}</dd>
+          <dd className="mt-1 wrap-break-word text-sm text-[#172026]">{field.value}</dd>
         </div>
       ))}
     </dl>
@@ -104,7 +104,7 @@ export function ComplaintTable({
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[58rem] border-collapse text-sm">
+      <table className="w-full min-w-232 border-collapse text-sm">
         <thead>
           <tr className="border-b border-[#e4ebef] bg-[#f8fafb] text-[#52636f]">
             <th className="px-5 py-3 text-start font-semibold">{fields.referenceCode}</th>
@@ -224,7 +224,7 @@ export function SurveyTable({
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[58rem] border-collapse text-sm">
+      <table className="w-full min-w-232 border-collapse text-sm">
         <thead>
           <tr className="border-b border-[#e4ebef] bg-[#f8fafb] text-[#52636f]">
             <th className="px-5 py-3 text-start font-semibold">{fields.referenceCode}</th>
