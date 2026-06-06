@@ -3,6 +3,18 @@
 Marketing + admin site for Hisense Iran (hisense-ir.com).
 Stack: Next.js 16 App Router · React 19 · TypeScript 6 · PostgreSQL + Prisma 7 · next-intl · Tailwind CSS v4 · MUI 9 · Zod · React Hook Form · Playwright.
 
+## Primary Objective: SEO
+
+**SEO efficiency is the top priority for this project.** Every change should be evaluated for SEO impact. When touching pages, components, or content:
+
+- Preserve/extend per-page `generateMetadata` (title, description, `alternates.canonical`, `alternates.languages` hreflang).
+- Keep one — and only one — `<h1>` per page; use semantic heading order (h1 → h2 → h3).
+- Maintain JSON-LD: `Organization` + `WebSite` (global), `Product` (detail pages), `BreadcrumbList`, `FAQPage` (FAQ).
+- Every `<Image>` needs descriptive, localized `alt`. Hero/LCP images use `priority`.
+- Both `fa` and `en` must stay in sync — hreflang depends on it.
+- Don't break ISR (`revalidate = 3600`) or the sitemap/robots routes.
+- SEO infrastructure lives in `lib/seo/` (`site.ts`, `productSchema.ts`, `keywords.ts`), `components/seo/`, `app/sitemap.ts`, `app/robots.ts`.
+
 ## Commands
 
 | Command                           | Purpose                                   |
@@ -161,6 +173,29 @@ Copy `.env.example` → `.env.local` to get started.
 ## Git
 
 - Batch all changes from a task into one commit at the end — no per-fix micro-commits.
+
+## Deployment & Ops
+
+Workflow: **develop locally (Windows) → push branch → PR → merge to `main` → server pulls `main` → deploy.** The server only ever sits on `main` and only pulls — never edit code directly on the server.
+
+**Server:** Ubuntu, `nexzarrin`, app at `/var/www/hisense-ir/app`, served by PM2 (`hisense-ir`, `ecosystem.config.cjs`) behind Apache.
+
+| Script (server)                     | Purpose                                                                                                                               |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `/var/www/hisense-ir/deploy.sh`     | `git pull origin main` → `npm ci --omit=dev` → `npm run db:deploy` → `npm run build` → `pm2 reload ecosystem.config.cjs --update-env` |
+| `/usr/local/bin/hisense-monitor.sh` | Cron: pipes `df`/`free`/`pm2 jlist` to `claude -p` for anomaly flagging → `/var/log/hisense-monitor.log`                              |
+| `/usr/local/bin/weekly-backup.sh`   | Cron: tars rootfs/apache/ssh + `pg_dumpall` to `/backup`, keeps last 4 weeks                                                          |
+| `.husky/pre-commit`                 | `lint-staged` (lint + format)                                                                                                         |
+| `.husky/pre-push`                   | `git diff origin/main...HEAD \| claude -p` review; non-zero exit blocks push                                                          |
+
+Deploy gotcha: server runs `git restore public/sitemap-0.xml` before pull (legacy generated file causes conflicts) — the native `app/sitemap.ts` route is the source of truth now.
+
+## DB & Media Workflow
+
+- **Schema/data changes:** make them locally against the local Postgres (`npm run db:migrate`, `npm run db:seed`), verify, then promote. Migrations ship in `prisma/` and apply on the server via `npm run db:deploy` inside `deploy.sh`.
+- **DB data promotion (current manual flow):** `pg_dump -Fc` local `zarrin` DB → `pscp` to server → on server: `pm2 stop` → `dropdb`/`createdb -O reza_sf zarrin` → `pg_restore --no-owner --no-privileges` → restart.
+- **Media promotion:** `pscp -r` local media to server `~/`, then `rsync -av /home/reza/media/ /var/www/hisense-ir/media/` and `chown -R www-data:www-data`.
+- Local DB name and server DB name are both `zarrin`, owner `reza_sf`.
 
 ## graphify
 
