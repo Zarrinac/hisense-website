@@ -155,6 +155,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: routeTranslations('title'),
     description: routeTranslations('description'),
+    // Representative-only access portal (outbound login): keep out of the index but
+    // allow crawling links so equity still flows to linked public pages.
+    robots: { index: false, follow: true },
     alternates: {
       canonical: localizedPath,
       languages: languageAlternates,

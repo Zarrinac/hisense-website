@@ -12,6 +12,7 @@ import ThemeToggle from '@/components/theme/ThemeToggle';
 import Logo from '@/public/icons/hisense-logo-full.svg';
 import type { NavKey, SubMenuItem } from './navigationData';
 import { buildSubmenuProductLinks } from './submenuProductLinks';
+import { canonicalizeHref } from './navigationData';
 
 type LabeledNavItem = {
   key: NavKey;
@@ -61,7 +62,7 @@ export default function DesktopNavigation({
   const localeKey = locale === 'fa' ? 'fa' : 'en';
   const logoAsset = Logo as StaticImageData;
   const toLocalePath = (path: string) => {
-    const normalized = path.startsWith('/') ? path : `/${path}`;
+    const normalized = canonicalizeHref(path.startsWith('/') ? path : `/${path}`);
     return `/${locale}${normalized}`;
   };
   const orderedPrimaryNav = direction === 'rtl' ? [...navItems].reverse() : navItems;
@@ -217,7 +218,7 @@ export default function DesktopNavigation({
                     className="header-submenu-card focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-(--brand-color)"
                   >
                     <Link
-                      href={`/${locale}${subItem.href}`}
+                      href={`/${locale}${canonicalizeHref(subItem.href)}`}
                       className="text-base font-semibold text-(--default-black-font) hover:text-white"
                     >
                       {subItem.title[localeKey]}

@@ -37,6 +37,8 @@ if (mediaBase) {
 const nextConfig: NextConfig = {
   images: {
     remotePatterns,
+    // Serve modern formats (AVIF first, WebP fallback) for smaller payloads / better LCP.
+    formats: ['image/avif', 'image/webp'],
   },
 };
 

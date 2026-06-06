@@ -46,12 +46,12 @@ Stack: Next.js 16 App Router · React 19 · TypeScript 6 · PostgreSQL + Prisma 
 
 The app runs without a database. If `DATABASE_URL` is absent, API routes fall back to bundled static data.
 
-| Data            | Primary                                   | Fallback                                              |
-| --------------- | ----------------------------------------- | ----------------------------------------------------- |
-| Products        | DB (`Product` + `ProductCopy` + `TvSpec`) | `FALLBACK_PRODUCTS` in `lib/api/products/` (TVs only) |
-| Locations       | DB (`IranProvince` + `IranCity`)          | `lib/iranLocations.json`                              |
-| Service Centers | DB (`ServiceRepresentative`)              | `lib/iranLocations.json` static data                  |
-| Downloads       | DB (`DownloadAsset`)                      | none                                                  |
+| Data            | Primary                                   | Fallback                                                                                            |
+| --------------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Products        | DB (`Product` + `ProductCopy` + `TvSpec`) | `FALLBACK_PRODUCTS` in `lib/api/products/` (TV/WM/RAC/CAC); refrigerators via `content/RefProducts` |
+| Locations       | DB (`IranProvince` + `IranCity`)          | `lib/iranLocations.json`                                                                            |
+| Service Centers | DB (`ServiceRepresentative`)              | `lib/iranLocations.json` static data                                                                |
+| Downloads       | DB (`DownloadAsset`)                      | none                                                                                                |
 
 Content source is toggled by `NEXT_PUBLIC_CONTENT_SOURCE` (`"local"` or `"remote"`).
 
@@ -140,7 +140,7 @@ Always use the `mediaUrl(path)` helper from `lib/mediaUrl.ts`. It switches betwe
 
 5. **Locale validation throws** — `app/[locale]/layout.tsx` validates the locale param against the allowlist in `i18n/routing.ts`. Adding a new locale requires updating `routing.ts` first, or the layout will throw a 404.
 
-6. **Fallback covers TVs only** — `FALLBACK_PRODUCTS` in `lib/api/products/` contains TV data only. Washing machines, refrigerators, ACs, and other categories require a live database connection.
+6. **Fallback product coverage** — `FALLBACK_PRODUCTS` in `lib/api/products/normalizers.ts` covers TVs, washing machines (WMS), residential AC (RAC), and commercial AC (CAC). Refrigerators come from a separate source (`content/RefProducts`). The sitemap is built from both, so all product detail URLs resolve without a DB.
 
 7. **RTL flips layout** — Persian (fa) is RTL. Flex direction, carousel scroll direction, padding/margin semantics, and text alignment all reverse. Always test both locales after touching any layout or carousel component.
 

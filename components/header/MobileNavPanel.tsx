@@ -5,6 +5,7 @@ import { HiChevronRight, HiChevronLeft } from 'react-icons/hi2';
 import Logo from '@/public/icons/hisense-logo-full.svg';
 import type { NavKey, SubMenuItem } from './navigationData';
 import { buildSubmenuProductLinks } from './submenuProductLinks';
+import { canonicalizeHref } from './navigationData';
 
 // Mobile navigation drawer with nested submenus and deep links into TV models.
 
@@ -49,7 +50,7 @@ export default function MobileNavPanel({
   const localeKey = locale === 'fa' ? 'fa' : 'en';
   const logoAsset = Logo as StaticImageData;
   const toLocalePath = (path: string) => {
-    const normalized = path.startsWith('/') ? path : `/${path}`;
+    const normalized = canonicalizeHref(path.startsWith('/') ? path : `/${path}`);
     return `/${locale}${normalized}`;
   };
 
