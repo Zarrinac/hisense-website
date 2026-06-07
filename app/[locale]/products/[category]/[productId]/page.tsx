@@ -35,6 +35,8 @@ import {
 } from '@/lib/seo/site';
 import { createInternalApiUrl } from '@/lib/api/internalUrl';
 import { buildProductJsonLd } from '@/lib/seo/productSchema';
+import { buildProductFaqs, getProductFaqHeading } from '@/lib/seo/productFaq';
+import ProductFaqSection from '@/components/seo/ProductFaqSection';
 
 // Builds product detail pages from the API (DB-first) with bundled content as fallback via the API layer.
 
@@ -591,6 +593,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
       )}
 
       <SpecsSection items={specDetails} lang={lang} />
+
+      <ProductFaqSection
+        faqs={buildProductFaqs({
+          locale: resolvedLocale,
+          category: categorySlug,
+          productName: copy.name,
+          tvSizes: categorySlug === 'tvs' ? availableSizes : [],
+        })}
+        heading={getProductFaqHeading(resolvedLocale, copy.name)}
+        locale={resolvedLocale}
+      />
     </div>
   );
 }

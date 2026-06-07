@@ -30,6 +30,8 @@ import {
   toAbsoluteUrl,
 } from '@/lib/seo/site';
 import { buildProductJsonLd } from '@/lib/seo/productSchema';
+import { buildProductFaqs, getProductFaqHeading } from '@/lib/seo/productFaq';
+import ProductFaqSection from '@/components/seo/ProductFaqSection';
 
 // Builds the refrigerator detail page from bundled content.
 
@@ -465,6 +467,16 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
       <SectionGroupsRenderer sectionGroups={sectionGroups} lang={lang} overlayTone="dark" />
 
       <SpecsSection items={specDetails} lang={lang} />
+
+      <ProductFaqSection
+        faqs={buildProductFaqs({
+          locale: resolvedLocale,
+          category: 'refrigerator',
+          productName: copy.name || product.id,
+        })}
+        heading={getProductFaqHeading(resolvedLocale, copy.name || product.id)}
+        locale={resolvedLocale}
+      />
     </div>
   );
 }
