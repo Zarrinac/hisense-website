@@ -78,7 +78,7 @@ const HOME_SEO_CONTENT: Record<
 
 const SPOTLIGHT_SOURCES = [
   { id: 'tv', href: '/products/tvs', image: bannerAsset('Fix-Banner-02-Back.jpg') },
-  { id: 'refrigerator', href: '/refrigerator', image: bannerAsset('Fix-Banner-03-Back.jpg') },
+  { id: 'refrigerator', href: '/refrigerator', image: bannerAsset('Fix-Banner-03-Back.webp') },
   { id: 'washingMachine', href: '/products/wms', image: bannerAsset('Fix-Banner-04-Back.jpg') },
   { id: 'rac', href: '/products/rac', image: bannerAsset('Fix-Banner-05-Back.jpg') },
 ] as const satisfies ReadonlyArray<Pick<SpotlightCard, 'id' | 'href' | 'image'>>;
