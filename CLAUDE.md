@@ -196,7 +196,7 @@ Deploy gotcha: server runs `git restore public/sitemap-0.xml` before pull (legac
 
 - **Schema/data changes:** make them locally against the local Postgres (`npm run db:migrate`, `npm run db:seed`), verify, then promote. Migrations ship in `prisma/` and apply on the server via `npm run db:deploy` inside `deploy.sh`.
 - **DB data promotion (current manual flow):** `pg_dump -Fc` local `zarrin` DB → `pscp` to server → on server: `pm2 stop` → `dropdb`/`createdb -O reza_sf zarrin` → `pg_restore --no-owner --no-privileges` → restart.
-- **Media promotion:** `pscp -r` local media to server `~/`, then `rsync -av /home/reza/media/ /var/www/hisense-ir/media/` and `chown -R www-data:www-data`.
+- **Media promotion:** use `ops/upload-media.ps1` (local) → `ops/sync-media.sh` (server). Manual: `pscp -r` local media to server `~/`, then `rsync -av --delete /home/reza/media/ /var/www/hisense-ir/media/`, `chown -R www-data:www-data`, **and `chmod -R a+rX`**. The `chmod` is mandatory — the Next app runs as `reza` and reads media off disk; a `www-data`-only/`700` dir causes `EACCES` and a 503 crash-loop.
 - Local DB name and server DB name are both `zarrin`, owner `reza_sf`.
 
 ## graphify
