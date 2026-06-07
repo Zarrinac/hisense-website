@@ -5,6 +5,7 @@ import { HiChevronRight, HiChevronLeft } from 'react-icons/hi2';
 import Logo from '@/public/icons/hisense-logo-full.svg';
 import type { NavKey, SubMenuItem } from './navigationData';
 import { buildSubmenuProductLinks } from './submenuProductLinks';
+import { canonicalizeHref } from './navigationData';
 
 // Mobile navigation drawer with nested submenus and deep links into TV models.
 
@@ -49,7 +50,7 @@ export default function MobileNavPanel({
   const localeKey = locale === 'fa' ? 'fa' : 'en';
   const logoAsset = Logo as StaticImageData;
   const toLocalePath = (path: string) => {
-    const normalized = path.startsWith('/') ? path : `/${path}`;
+    const normalized = canonicalizeHref(path.startsWith('/') ? path : `/${path}`);
     return `/${locale}${normalized}`;
   };
 
@@ -63,7 +64,7 @@ export default function MobileNavPanel({
       <div className="absolute inset-0 bg-(--overlay-color)" onClick={onClose} aria-hidden="true" />
       <aside className="relative ml-auto flex h-full w-full max-w-md flex-col bg-(--surface-color) p-6 shadow-(--panel-shadow)">
         <div className="flex items-start justify-between">
-          <Image alt="Hisense Logo" src={logoAsset} className="h-5 w-[92px]" priority />
+          <Image alt="Hisense Logo" src={logoAsset} className="h-5 w-23" priority />
           <button
             type="button"
             className={iconButtonClass}

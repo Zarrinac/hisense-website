@@ -23,7 +23,7 @@ const BannerSection = ({
 }: BannerSectionProps) => (
   <div className="-mx-4 sm:-mx-6 lg:-mx-10 max-w-480">
     <div key={banner.id} className="relative min-w-0 flex-[0_0_100%]">
-      <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] md:aspect-video lg:aspect-21/9">
+      <div className="relative w-full aspect-4/3 sm:aspect-16/10 md:aspect-video lg:aspect-21/9">
         <Image
           src={banner.desktop}
           alt={banner.alt}

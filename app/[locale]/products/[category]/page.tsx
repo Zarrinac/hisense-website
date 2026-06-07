@@ -369,7 +369,7 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
             </p>
           </div>
           <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
-            {products.map((product) => {
+            {products.map((product, index) => {
               const copy = product.copy[lang] ?? product.copy.en;
               const featureTags = (product.extras ?? []).slice(0, 3).filter(Boolean);
               const overlayFeatures =
@@ -388,6 +388,7 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
                         src={product.imageUrl}
                         alt={copy.name}
                         fill
+                        priority={index === 0}
                         className="object-contain transition duration-700 group-hover:scale-105"
                         sizes="(max-width: 1024px) 100vw, 33vw"
                       />
@@ -498,7 +499,7 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
               ...(category === 'CAC'
                 ? [
                     {
-                      href: `/${locale}/cac`,
+                      href: `/${locale}/products/cac`,
                       label: 'تهویه مطبوع تجاری هایسنس',
                       description: 'مرجع راهکارهای CAC و سیستم‌های کانالی و تجاری هایسنس.',
                     },
@@ -537,7 +538,7 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
               ...(category === 'CAC'
                 ? [
                     {
-                      href: `/${locale}/cac`,
+                      href: `/${locale}/products/cac`,
                       label: 'Commercial air conditioning',
                       description:
                         'Official CAC hub for ducted and commercial Hisense climate solutions.',
@@ -566,7 +567,7 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
 
         <div className="w-full px-4 mx-auto max-w-480 sm:px-6 lg:px-10">
           <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
-            {products.map((product) => {
+            {products.map((product, index) => {
               const copy = product.copy[lang] ?? product.copy.en;
               const seriesLabel = product.seriesLabel ?? product.series;
               const seriesLabelDir =
@@ -588,6 +589,7 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
                         src={product.imageUrl}
                         alt={copy.name}
                         fill
+                        priority={index === 0}
                         className="object-contain transition duration-700 group-hover:scale-105"
                         sizes="(max-width: 1024px) 100vw, 33vw"
                       />

@@ -155,6 +155,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: routeTranslations('title'),
     description: routeTranslations('description'),
+    // Representative-only access portal (outbound login): keep out of the index but
+    // allow crawling links so equity still flows to linked public pages.
+    robots: { index: false, follow: true },
     alternates: {
       canonical: localizedPath,
       languages: languageAlternates,
@@ -259,7 +262,7 @@ export default async function PortalPage() {
             href={AFTER_SALES_PORTAL_URL}
             target="_blank"
             rel="noreferrer"
-            className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-(--brand-color) px-6 py-3 text-sm font-bold text-white transition hover:bg-(--brand-color-dark) focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
+            className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-(--brand-color) px-6 py-3 text-sm font-bold text-white transition hover:bg-(--brand-color-dark) focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--brand-color)"
           >
             {content.portalButton}
             <LaunchOutlinedIcon fontSize="small" />

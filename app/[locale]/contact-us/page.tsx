@@ -19,6 +19,7 @@ import {
   getLocaleLanguage,
   SITE_URL,
 } from '@/lib/seo/site';
+import { buildLocalBusinessJsonLd } from '@/lib/seo/localBusiness';
 
 const HERO_IMAGE = mediaUrl('/contact-us/contactUs-support-hero.jpg');
 const SUPPORT_IMAGE = mediaUrl('/contact-us/contactUs-box1.jpg');
@@ -456,6 +457,7 @@ export default async function ContactUsPage() {
   return (
     <div className="space-y-8 pb-12 pt-6 sm:space-y-12" dir={isRTL ? 'rtl' : 'ltr'}>
       <JsonLd data={contactPageSchema} />
+      <JsonLd data={buildLocalBusinessJsonLd(resolvedLocale)} />
       <PageBreadcrumbs items={breadcrumbItems} locale={resolvedLocale} className="pt-0 sm:pt-0" />
       <section className="relative -mx-4 overflow-hidden sm:-mx-6 lg:-mx-10">
         <div className="absolute inset-0">

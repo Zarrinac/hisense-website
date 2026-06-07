@@ -12,6 +12,7 @@ import {
   getLocaleLanguage,
   SITE_URL,
 } from '@/lib/seo/site';
+import { buildLocalBusinessJsonLd } from '@/lib/seo/localBusiness';
 
 const PAGE_CONTENT = {
   fa: {
@@ -205,6 +206,7 @@ export default async function FindServiceCenterPage({ searchParams }: FindServic
   return (
     <div className="space-y-10 pb-16 pt-10 sm:space-y-12 sm:pt-14" dir={isRTL ? 'rtl' : 'ltr'}>
       <JsonLd data={pageSchema} />
+      <JsonLd data={buildLocalBusinessJsonLd(locale)} />
       <PageBreadcrumbs
         items={breadcrumbItems}
         locale={locale}

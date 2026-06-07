@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
-import { SUB_MENU_CONTENT } from './navigationData';
+import { SUB_MENU_CONTENT, canonicalizeHref } from './navigationData';
 import type { ApiProduct } from '@/lib/api/products/types';
 import type { Locale } from '@/i18n/routing';
 
@@ -31,12 +31,6 @@ const CATEGORY_SLUGS: Partial<Record<ApiProduct['category'], string>> = {
   WMS: 'wms',
   RAC: 'rac',
   CAC: 'cac',
-};
-
-const canonicalizeHref = (href: string) => {
-  if (href === '/rac') return '/products/rac';
-  if (href === '/cac') return '/products/cac';
-  return href;
 };
 
 const normalizeQuery = (value: string) => value.trim().toLocaleLowerCase();

@@ -2,6 +2,15 @@ import type { Locale } from '@/i18n/routing';
 
 // Navigation structure and localized submenu copy used by Header.
 
+// `/rac` and `/cac` are internal keys used to look up submenu product links; the
+// real routes live under `/products/*`. Always canonicalize before rendering a link
+// so the nav points directly at the canonical URL (no redirect hop / phantom 404).
+export const canonicalizeHref = (href: string) => {
+  if (href === '/rac') return '/products/rac';
+  if (href === '/cac') return '/products/cac';
+  return href;
+};
+
 export const NAV_ITEMS = [
   { key: 'tvAudio', href: '/products/tvs' },
   { key: 'airConditioner', href: '/rac' },
