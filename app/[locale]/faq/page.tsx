@@ -510,7 +510,7 @@ export default async function FaqPage() {
                       open={index === 0}
                       className="group border-b border-(--border-color) last:border-b-0 open:bg-(--surface-muted-color)"
                     >
-                      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold leading-6 text-(--default-black-font) transition hover:bg-(--surface-muted-color) focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-(--brand-color) sm:px-5 [&::-webkit-details-marker]:hidden">
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold leading-6 text-(--default-black-font) transition hover:bg-(--surface-muted-color) focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-(--brand-color) sm:px-5 [&::-webkit-details-marker]:hidden">
                         <span>{item.question}</span>
                         <span
                           aria-hidden
