@@ -62,7 +62,7 @@ function getIranLocationClient(): PrismaIranLocationClient | null {
     return null;
   }
 
-  return prisma as unknown as PrismaIranLocationClient;
+  return prisma;
 }
 
 function toProvinceRecord(province: IranProvinceQueryRow): IranProvince {

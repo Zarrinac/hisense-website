@@ -26,7 +26,7 @@ const prisma = new PrismaClient({ adapter });
 const toSlug = (id: string, slug?: string | null) =>
   slug && slug.trim().length > 0 ? slug : id.toLowerCase();
 const toJsonField = (value: unknown): Prisma.NullableJsonNullValueInput | Prisma.InputJsonValue =>
-  value === null || value === undefined ? Prisma.DbNull : (value as Prisma.InputJsonValue);
+  value === null || value === undefined ? Prisma.DbNull : value;
 const toStringArray = (value: unknown): string[] =>
   Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [];
 type ResolveFilename = (

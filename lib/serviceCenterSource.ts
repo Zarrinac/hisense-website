@@ -68,7 +68,7 @@ function getServiceRepresentativeClient(): PrismaServiceRepresentativeClient | n
     return null;
   }
 
-  return prisma as unknown as PrismaServiceRepresentativeClient;
+  return prisma;
 }
 
 function isServiceKind(value: string | undefined): value is ServiceKind {

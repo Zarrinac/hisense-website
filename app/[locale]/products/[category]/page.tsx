@@ -27,7 +27,7 @@ import {
   toAbsoluteUrl,
 } from '@/lib/seo/site';
 import { createInternalApiUrl } from '@/lib/api/internalUrl';
-import { CATEGORY_SEO_CONTENT, type CategorySeoKey } from '@/lib/seo/categorySeoContent';
+import { CATEGORY_SEO_CONTENT } from '@/lib/seo/categorySeoContent';
 
 // ISR: cache category listings (and their DB-backed product fetch) and refresh
 // hourly instead of re-querying the database on every request/crawl.
@@ -431,9 +431,9 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
           </div>
         </div>
 
-        {CATEGORY_SEO_CONTENT[categorySlug as CategorySeoKey]?.[resolvedLocale] && (
+        {CATEGORY_SEO_CONTENT[categorySlug]?.[resolvedLocale] && (
           <CategorySeoSection
-            content={CATEGORY_SEO_CONTENT[categorySlug as CategorySeoKey][resolvedLocale]}
+            content={CATEGORY_SEO_CONTENT[categorySlug][resolvedLocale]}
             locale={resolvedLocale}
           />
         )}
@@ -633,9 +633,9 @@ export default async function ProductsCategoryPage({ params }: PageProps) {
           </div>
         </div>
 
-        {CATEGORY_SEO_CONTENT[categorySlug as CategorySeoKey]?.[resolvedLocale] && (
+        {CATEGORY_SEO_CONTENT[categorySlug]?.[resolvedLocale] && (
           <CategorySeoSection
-            content={CATEGORY_SEO_CONTENT[categorySlug as CategorySeoKey][resolvedLocale]}
+            content={CATEGORY_SEO_CONTENT[categorySlug][resolvedLocale]}
             locale={resolvedLocale}
           />
         )}

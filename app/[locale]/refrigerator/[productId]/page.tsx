@@ -235,7 +235,7 @@ const buildSectionGroups = (product: RefProduct, blocks: Blocks): NormalizedSect
             copyKey: section.copyKey,
           })),
         }))
-        .map((group) => group as unknown as TvSectionGroup)
+        .map((group) => group)
     : defaultSectionGroups;
 
   return sectionGroupConfigs.flatMap((group) => {
