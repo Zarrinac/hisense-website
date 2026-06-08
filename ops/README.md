@@ -16,7 +16,7 @@ served by PM2 (`hisense-ir`, `ecosystem.config.cjs`) behind Apache. DB: local Po
 | `ops/cron/hisense-monitor.sh` | `/usr/local/bin/hisense-monitor.sh` | Hourly health check piped to `claude -p`                   |
 | `ops/cron/weekly-backup.sh`   | `/usr/local/bin/weekly-backup.sh`   | Weekly rootfs/apache/ssh tar + `pg_dumpall`, keeps 4 weeks |
 | `ops/sync-media.sh`           | `/usr/local/bin/sync-media.sh`      | Mirror staged media → live dir + fix owner/perms (`a+rX`)  |
-| `ops/upload-media.ps1`        | (runs on the Windows dev PC)        | pscp upload + trigger `sync-media.sh` over plink           |
+| `ops/upload-media.ps1`        | (runs on the Windows dev PC)        | scp upload + trigger `sync-media.sh` over ssh (key auth)   |
 
 > Not included: `ecosystem.config.cjs`, `.env` — they hold secrets and are gitignored.
 > Keep them only on the server. The husky hooks (`.husky/pre-commit`, `pre-push`) live in
@@ -72,12 +72,18 @@ echo 'reza ALL=(root) NOPASSWD: /usr/local/bin/sync-media.sh' | sudo tee /etc/su
 sudo chmod 440 /etc/sudoers.d/hisense-media
 ```
 
-**Usage from the Windows PC:** edit the CONFIG block in `ops/upload-media.ps1` (Host/Port must
-match your working PuTTY session — `172.17.0.10` is internal and may not be reachable from your
-PC), then run `pwsh ops/upload-media.ps1`. It clears staging → `pscp` uploads the whole media
-folder → `plink` runs `sudo sync-media.sh` (rsync `--delete` mirror + owner/perms).
+**Usage from the Windows PC:** run `pwsh ops/upload-media.ps1`. It uses Windows OpenSSH
+(`ssh`/`scp`) with key auth (`~/.ssh/nexzarrin_ed25519`, `BatchMode`) — no password — so it can
+run unattended. It clears staging → `scp` uploads the whole media folder → `ssh` runs
+`sudo sync-media.sh` (rsync `--delete` mirror + owner/perms). The key's public half must be in
+the server's `~/.ssh/authorized_keys` for `reza`; verify with
+`ssh -i $HOME\.ssh\nexzarrin_ed25519 -o BatchMode=yes reza@172.17.0.10 hostname`.
 
-Manual equivalent (no PS script): `pscp` the folder to `/home/reza/`, then on the server
+Tip: optimize images first — `node ops/optimize-media.mjs --apply` — since the upload mirrors
+with `--delete` on the server.
+
+Manual equivalent (no PS script):
+`scp -i ~/.ssh/nexzarrin_ed25519 -r media/ reza@172.17.0.10:/home/reza/`, then on the server
 `sudo /usr/local/bin/sync-media.sh`.
 
 ## Notes
