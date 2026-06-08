@@ -186,13 +186,17 @@ export default async function FindServiceCenterPage({ searchParams }: FindServic
   });
   const isRTL = locale === 'fa';
   const resolvedSearchParams = (await searchParams) ?? {};
-  const hasSearched = true;
+  // The finder form submits a hidden `submitted=1`; only then do we load and
+  // serialize representative rows. The bare canonical page stays light (~50 KB
+  // instead of 2.3 MB) — Googlebot's 2 MB indexing cap and CWV both benefit,
+  // while the dropdown data still loads so users can filter. Reset links to `?`.
+  const hasSearched = firstSearchValue(resolvedSearchParams.submitted) === '1';
   const selectedFilters = normalizeServiceCenterFilters({
     provinceId: firstSearchValue(resolvedSearchParams.province),
     cityId: firstSearchValue(resolvedSearchParams.city),
     serviceKind: firstSearchValue(resolvedSearchParams.service),
   });
-  const serviceCenterData = await loadServiceCenterData(locale, selectedFilters);
+  const serviceCenterData = await loadServiceCenterData(locale, selectedFilters, hasSearched);
   const pageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',

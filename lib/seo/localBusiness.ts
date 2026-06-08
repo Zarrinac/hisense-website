@@ -30,7 +30,7 @@ export const buildLocalBusinessJsonLd = (locale: Locale) => {
     description: content.description,
     url: SITE_URL,
     image: `${SITE_URL}/banner/Fix-Banner-07.jpg`,
-    logo: `${SITE_URL}/favicon.svg`,
+    logo: `${SITE_URL}/icons/hisense-logo-full.svg`,
     telephone: '+98-21-72133',
     email: 'info@hisense-ir.com',
     priceRange: '$$',

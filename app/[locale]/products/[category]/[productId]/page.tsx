@@ -35,6 +35,7 @@ import {
 } from '@/lib/seo/site';
 import { createInternalApiUrl } from '@/lib/api/internalUrl';
 import { buildProductJsonLd } from '@/lib/seo/productSchema';
+import { buildProductMetaDescription, buildProductMetaTitle } from '@/lib/seo/productMeta';
 import { buildProductFaqs, getProductFaqHeading } from '@/lib/seo/productFaq';
 import ProductFaqSection from '@/components/seo/ProductFaqSection';
 
@@ -426,13 +427,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const languageAlternates = getLanguageAlternates(`/products/${categorySlug}/${productId}`);
   const categoryCopy = await getCategoryCopy(categorySlug);
 
+  const metaDescription = buildProductMetaDescription(lang, copy.name);
   return {
-    title: copy.name,
-    description: copy.tagline,
+    title: buildProductMetaTitle(lang, copy.name),
+    description: metaDescription,
     keywords: categoryCopy.keywords(product).filter(Boolean),
     openGraph: {
       title: copy.name,
-      description: copy.tagline,
+      description: metaDescription,
       images: [{ url: imageUrl }],
       url: `/${localeParam}/products/${categorySlug}/${productId}`,
       type: 'website',
@@ -444,7 +446,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       title: copy.name,
-      description: copy.tagline,
+      description: metaDescription,
       images: [imageUrl],
     },
   };
