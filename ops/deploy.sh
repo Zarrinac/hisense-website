@@ -49,3 +49,11 @@ log "Restarting PM2..."
 pm2 reload ecosystem.config.cjs --update-env
 
 log "=== Deploy complete ==="
+
+# Post-deploy SEO regression audit against the now-live site (non-blocking,
+# backgrounded so it never delays or fails the deploy). Logs to
+# /var/log/hisense-seo-audit.log and escalates ERROR-level findings to claude -p.
+if [ -x /usr/local/bin/seo-audit.sh ]; then
+  log "Kicking off post-deploy SEO audit (background)..."
+  (/usr/local/bin/seo-audit.sh >/dev/null 2>&1 &)
+fi
