@@ -10,13 +10,13 @@ served by PM2 (`hisense-ir`, `ecosystem.config.cjs`) behind Apache. DB: local Po
 
 ## Files
 
-| Repo file                     | Live location on server             | Purpose                                                    |
-| ----------------------------- | ----------------------------------- | ---------------------------------------------------------- |
-| `ops/deploy.sh`               | `/var/www/hisense-ir/deploy.sh`     | Pull → `npm ci` → `db:deploy` → `build` → `pm2 reload`     |
-| `ops/cron/hisense-monitor.sh` | `/usr/local/bin/hisense-monitor.sh` | Hourly health check piped to `claude -p`                   |
-| `ops/cron/weekly-backup.sh`   | `/usr/local/bin/weekly-backup.sh`   | Weekly rootfs/apache/ssh tar + `pg_dumpall`, keeps 4 weeks |
-| `ops/sync-media.sh`           | `/usr/local/bin/sync-media.sh`      | Mirror staged media → live dir + fix owner/perms (`a+rX`)  |
-| `ops/upload-media.ps1`        | (runs on the Windows dev PC)        | scp upload + trigger `sync-media.sh` over ssh (key auth)   |
+| Repo file                     | Live location on server             | Purpose                                                                |
+| ----------------------------- | ----------------------------------- | ---------------------------------------------------------------------- |
+| `ops/deploy.sh`               | `/var/www/hisense-ir/deploy.sh`     | Pull → `npm ci` → `db:deploy` → `build` → `pm2 reload`                 |
+| `ops/cron/hisense-monitor.sh` | `/usr/local/bin/hisense-monitor.sh` | Hourly health check piped to `claude -p`                               |
+| `ops/cron/weekly-backup.sh`   | `/usr/local/bin/weekly-backup.sh`   | Weekly lean backup: `pg_dumpall` + `/etc` + app secrets, keeps 4 weeks |
+| `ops/sync-media.sh`           | `/usr/local/bin/sync-media.sh`      | Mirror staged media → live dir + fix owner/perms (`a+rX`)              |
+| `ops/upload-media.ps1`        | (runs on the Windows dev PC)        | scp upload + trigger `sync-media.sh` over ssh (key auth)               |
 
 > Not included: `ecosystem.config.cjs`, `.env` — they hold secrets and are gitignored.
 > Keep them only on the server. The husky hooks (`.husky/pre-commit`, `pre-push`) live in
