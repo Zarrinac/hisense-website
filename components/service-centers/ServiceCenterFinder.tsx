@@ -170,7 +170,7 @@ export default function ServiceCenterFinder({
           <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
             <button
               type="submit"
-              className="rounded-lg bg-[#d7b44a] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#c29d31] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d7b44a]"
+              className="rounded-lg bg-[#d7b44a] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#c29d31] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-[#d7b44a]"
             >
               {copy.submitLabel}
             </button>
@@ -190,7 +190,7 @@ export default function ServiceCenterFinder({
         ) : null}
 
         <div className="mt-4 overflow-x-auto">
-          <table className="min-w-[62rem] w-full border-collapse text-center text-sm">
+          <table className="min-w-248 w-full border-collapse text-center text-sm">
             <thead>
               <tr className="bg-[#d7b44a] text-white">
                 <th className="border border-[#e6d28c] px-3 py-4 font-bold">
