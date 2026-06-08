@@ -3,7 +3,10 @@ import type { Locale } from '@/i18n/routing';
 import JsonLd from './JsonLd';
 import { SITE_URL, getLocaleLanguage } from '@/lib/seo/site';
 
-const LOGO_URL = `${SITE_URL}/favicon.svg`;
+// Google renders the Organization `logo` in search results / the knowledge
+// panel. Use the full Hisense wordmark (transparent background) rather than the
+// favicon so the official Hisense Iran site is recognizable in results.
+const LOGO_URL = `${SITE_URL}/icons/hisense-logo-full.svg`;
 
 const ORGANIZATION_CONTENT = {
   fa: {

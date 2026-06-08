@@ -28,6 +28,7 @@ import {
 } from '@/lib/seo/site';
 import { createInternalApiUrl } from '@/lib/api/internalUrl';
 import { CATEGORY_SEO_CONTENT } from '@/lib/seo/categorySeoContent';
+import { buildCategoryMetaTitle } from '@/lib/seo/productMeta';
 
 // ISR: cache category listings (and their DB-backed product fetch) and refresh
 // hourly instead of re-querying the database on every request/crawl.
@@ -144,7 +145,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         : undefined;
 
     return {
-      title: routeTranslations('title'),
+      title: buildCategoryMetaTitle(locale, routeTranslations('title')),
       description: routeTranslations('description'),
       keywords: Array.isArray(keywordsRaw) ? keywordsRaw : undefined,
       openGraph: {
@@ -181,7 +182,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const routeTranslations = await getTranslations('Routes.washingMachine');
     const languageAlternates = getLanguageAlternates(`/products/${categorySlug}`);
     return {
-      title: routeTranslations('title'),
+      title: buildCategoryMetaTitle(locale, routeTranslations('title')),
       description: routeTranslations('description'),
       openGraph: {
         title: routeTranslations('title'),
@@ -206,7 +207,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const routeTranslations = await getTranslations('Routes.rac');
     const languageAlternates = getLanguageAlternates(`/products/${categorySlug}`);
     return {
-      title: routeTranslations('title'),
+      title: buildCategoryMetaTitle(locale, routeTranslations('title')),
       description: routeTranslations('description'),
       openGraph: {
         title: routeTranslations('title'),
@@ -231,7 +232,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const routeTranslations = await getTranslations('Routes.cac');
     const languageAlternates = getLanguageAlternates(`/products/${categorySlug}`);
     return {
-      title: routeTranslations('title'),
+      title: buildCategoryMetaTitle(locale, routeTranslations('title')),
       description: routeTranslations('description'),
       openGraph: {
         title: routeTranslations('title'),

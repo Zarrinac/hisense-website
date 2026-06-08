@@ -17,6 +17,7 @@ import {
   toAbsoluteUrl,
 } from '@/lib/seo/site';
 import { CATEGORY_SEO_CONTENT } from '@/lib/seo/categorySeoContent';
+import { buildCategoryMetaTitle } from '@/lib/seo/productMeta';
 
 const bannerAsset = (path: string) => mediaUrl(`/products/refrigerator/banner/${path}`);
 const productAsset = (path: string) => mediaUrl(`/products/refrigerator/${path}`);
@@ -123,7 +124,7 @@ export async function generateMetadata(): Promise<Metadata> {
       : undefined;
 
   return {
-    title: routeTranslations('title'),
+    title: buildCategoryMetaTitle(locale, routeTranslations('title')),
     description: routeTranslations('description'),
     openGraph: {
       title: routeTranslations('title'),

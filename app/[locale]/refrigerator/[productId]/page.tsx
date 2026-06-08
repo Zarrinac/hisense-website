@@ -30,6 +30,7 @@ import {
   toAbsoluteUrl,
 } from '@/lib/seo/site';
 import { buildProductJsonLd } from '@/lib/seo/productSchema';
+import { buildProductMetaDescription, buildProductMetaTitle } from '@/lib/seo/productMeta';
 import { buildProductFaqs, getProductFaqHeading } from '@/lib/seo/productFaq';
 import ProductFaqSection from '@/components/seo/ProductFaqSection';
 
@@ -306,13 +307,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         (typeof product.image === 'string' ? product.image : product.image.src));
   const languageAlternates = getLanguageAlternates(`/refrigerator/${productId}`);
 
+  const metaDescription = buildProductMetaDescription(lang, copy.name);
   return {
-    title: copy.name,
-    description: copy.tagline,
+    title: buildProductMetaTitle(lang, copy.name),
+    description: metaDescription,
     keywords: [product.id, product.series, 'Hisense', 'Refrigerator'],
     openGraph: {
       title: copy.name,
-      description: copy.tagline,
+      description: metaDescription,
       images: imageUrl ? [{ url: imageUrl }] : undefined,
       url: `/${localeParam}/refrigerator/${productId}`,
       type: 'website',
@@ -324,7 +326,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       title: copy.name,
-      description: copy.tagline,
+      description: metaDescription,
       images: imageUrl ? [imageUrl] : undefined,
     },
   };
