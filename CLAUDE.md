@@ -186,7 +186,7 @@ Workflow: **develop locally (Windows) → push branch → PR → merge to `main`
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `/var/www/hisense-ir/deploy.sh`     | `git pull origin main` → `npm ci --omit=dev` → `npm run db:deploy` → `npm run build` → `pm2 reload ecosystem.config.cjs --update-env` |
 | `/usr/local/bin/hisense-monitor.sh` | Cron: pipes `df`/`free`/`pm2 jlist` to `claude -p` for anomaly flagging → `/var/log/hisense-monitor.log`                              |
-| `/usr/local/bin/weekly-backup.sh`   | Cron: tars rootfs/apache/ssh + `pg_dumpall` to `/backup`, keeps last 4 weeks                                                          |
+| `/usr/local/bin/weekly-backup.sh`   | Cron: lean backup — `pg_dumpall` + `/etc` + app secrets (`.env`, `ecosystem.config.cjs`) to `/backup`, keeps last 4 weeks             |
 | `.husky/pre-commit`                 | `lint-staged` (lint + format)                                                                                                         |
 | `.husky/pre-push`                   | `git diff origin/main...HEAD \| claude -p` review; non-zero exit blocks push                                                          |
 
