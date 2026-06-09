@@ -14,19 +14,15 @@ import type { Locale } from '@/i18n/routing';
 // product name/<h1> on the page is unchanged; only the head metadata is enriched.
 
 export const buildProductMetaTitle = (locale: Locale, name: string): string =>
-  locale === 'fa'
-    ? `${name} | خرید، قیمت و مشخصات | هایسنس ایران`
-    : `${name} | Price, Specs & Buying Guide | Hisense Iran`;
+  locale === 'fa' ? `${name} | خرید، قیمت و مشخصات | هایسنس ایران` : `${name} | Hisense Iran`;
 
 export const buildProductMetaDescription = (locale: Locale, name: string): string =>
   locale === 'fa'
     ? `خرید ${name} با گارانتی رسمی و خدمات پس از فروش سراسری از نمایندگی رسمی هایسنس ایران، زرین نمای کاسپین. مشخصات کامل و استعلام قیمت روز.`
-    : `Buy the ${name} from Hisense Iran's official distributor, Zarrin Namaye Caspian — genuine product, official warranty, nationwide after-sales service, and current pricing on request.`;
+    : `Buy the ${name} from Hisense Iran's official distributor — genuine product, warranty, and nationwide after-sales service.`;
 
 // Category listing pages: the route title (e.g. "ماشین لباسشویی هایسنس") is also reused as a
 // visible label/H1 elsewhere, so we wrap only the <title> field in `generateMetadata` — not
 // the translation value — to lengthen short category titles without any side effects.
 export const buildCategoryMetaTitle = (locale: string, routeTitle: string): string =>
-  locale === 'fa'
-    ? `${routeTitle} | خرید و قیمت | هایسنس ایران`
-    : `${routeTitle} | Prices & Models | Hisense Iran`;
+  locale === 'fa' ? `${routeTitle} | خرید و قیمت | هایسنس ایران` : `${routeTitle} | Hisense Iran`;

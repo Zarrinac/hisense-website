@@ -59,7 +59,7 @@ sudo touch /var/log/hisense-seo-audit.log && sudo chown reza:reza /var/log/hisen
 # Cron entries (crontab -e)  — adjust times to taste
 0 * * * *  /usr/local/bin/hisense-monitor.sh                 # hourly monitor
 0 3 * * 0  /usr/local/bin/weekly-backup.sh >> /var/log/hisense-backup.log 2>&1   # Sun 03:00 backup
-0 4 * * *  /usr/local/bin/seo-audit.sh                       # daily SEO audit (also runs post-deploy via deploy.sh)
+0 7 * * *  /usr/local/bin/seo-audit.sh                       # daily SEO audit (also runs post-deploy via deploy.sh)
 ```
 
 ## Media sync (local PC → server)
