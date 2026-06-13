@@ -33,6 +33,20 @@ git restore public/sitemap-0.xml 2>/dev/null || true
 log "Pulling latest from GitHub..."
 git pull origin main
 
+# --- Integrity guard ---------------------------------------------------------
+# Branch protection can't be enforced on a free private repo, so this is the
+# backstop against a re-infection of origin/main (as happened 2026-06-11): if a
+# known malware signature appears in a build-time config file, abort BEFORE
+# `npm run build` can execute it. The app keeps running on its last good build.
+# postcss.config.mjs is the proven injection point and is essentially static,
+# so this won't false-positive in normal use.
+log "Scanning build config for malware signatures..."
+if grep -IlE 'createRequire\(|_\$_|\beval\(|Buffer\.from\([^)]*base64|global\.[A-Za-z_]+\s*=' \
+     postcss.config.mjs next.config.ts 2>/dev/null; then
+  log "!!! ABORT: suspicious code detected in build config — possible re-infection. Deploy halted."
+  exit 1
+fi
+
 # Full install (NOT --omit=dev): building Next.js on the server needs
 # devDependencies — typescript, @tailwindcss/postcss, and dotenv (loaded by
 # prisma.config.ts during the prisma generate postinstall).
