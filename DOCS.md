@@ -460,17 +460,20 @@ Hreflang is emitted as HTML `<link rel="alternate">` tags only. The next-intl HT
 
 All JSON-LD is rendered server-side via `components/seo/JsonLd.tsx`.
 
-| Schema type                   | Where emitted                                                            |
-| ----------------------------- | ------------------------------------------------------------------------ |
-| `Organization`                | Root layout (`app/[locale]/layout.tsx`)                                  |
-| `WebSite`                     | Root layout                                                              |
-| `LocalBusiness`               | Contact page, service-center pages (`lib/seo/localBusiness.ts`)          |
-| `Product`                     | Product detail pages (`lib/seo/productSchema.ts`)                        |
-| `CollectionPage` + `ItemList` | Category listing pages                                                   |
-| `BreadcrumbList`              | All product detail pages (`components/seo/PageBreadcrumbs.tsx`)          |
-| `FAQPage`                     | FAQ page + product detail pages (`components/seo/ProductFaqSection.tsx`) |
+| Schema type                   | Where emitted                                                                                       |
+| ----------------------------- | --------------------------------------------------------------------------------------------------- |
+| `Organization`                | Root layout (`app/[locale]/layout.tsx`)                                                             |
+| `WebSite`                     | Root layout                                                                                         |
+| `LocalBusiness`               | Contact page, service-center pages (`lib/seo/localBusiness.ts`)                                     |
+| `Product`                     | Product detail pages (`lib/seo/productSchema.ts`)                                                   |
+| `CollectionPage` + `ItemList` | Category listing pages                                                                              |
+| `BreadcrumbList`              | All product detail pages (`components/seo/PageBreadcrumbs.tsx`)                                     |
+| `FAQPage`                     | FAQ page + product detail pages (`components/seo/ProductFaqSection.tsx`)                            |
+| `VideoObject`                 | Product detail pages with a `heroVideoUrl` (`buildVideoObjectJsonLd` in `lib/seo/productSchema.ts`) |
 
 **Product `offers` rule:** No prices are published (rial volatility). `buildProductJsonLd` in `lib/seo/productSchema.ts` emits no `offers` by default. It auto-emits a valid `Offer` only when a positive `price` is passed. Never emit a price-less `Offer` — it's invalid for Google rich results.
+
+**Hero videos are self-hosted.** Product `heroVideoUrl`s point at first-party files under the product media folders (e.g. `products/tvs/U7K-Files/u7k-hero.mp4`), resolved via `mediaUrl()` — not third-party hotlinks. Self-hosting is what makes the `VideoObject`'s `contentUrl` a valid first-party claim for video rich results. Compress masters to web-optimized 1080p H.264 (`-crf 21 -movflags +faststart -an`, downscale 4K → 1080p) before placing them under `public/products/` (local) and the `media/` staging folder (promoted to the server via `ops/upload-media.ps1`). Keep the originals as backups outside the synced `media/` folder.
 
 ### SEO copy for category pages
 
