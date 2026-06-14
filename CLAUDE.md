@@ -146,7 +146,9 @@ Always use the `mediaUrl(path)` helper from `lib/mediaUrl.ts`. It switches betwe
 
 7. **RTL flips layout** — Persian (fa) is RTL. Flex direction, carousel scroll direction, padding/margin semantics, and text alignment all reverse. Always test both locales after touching any layout or carousel component.
 
-8. **DB is primary, JSON is fallback** — `lib/serviceCenterSource.ts` and `lib/iranLocationSource.ts` query the database first. The JSON files in `lib/` are emergency fallbacks, not the authoritative data source.
+8. **DB is primary, JSON/content is fallback** — products (`app/api/products/route.ts`), `lib/serviceCenterSource.ts`, and `lib/iranLocationSource.ts` all query the database first. The bundled `FALLBACK_PRODUCTS`/`content/` and the JSON files in `lib/` are emergency fallbacks, not the authoritative data source.
+
+9. **Product ordering is by `position`, not insert order** — DB row order is nondeterministic and drifted between local and server. `Product.position` (indexed `@@index([category, position])`) is seeded from the `content/tvProducts.ts` array index, and the products API does `orderBy: { position: 'asc' }`. To reorder/add/remove products, edit the content array then re-seed (`npm run db:seed:products`) — the seed sets `position` from the new index **and prunes DB rows absent from content**, keeping the DB exactly in sync. Don't rely on insertion order.
 
 ## Environment Variables
 
