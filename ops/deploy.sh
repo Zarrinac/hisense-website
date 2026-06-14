@@ -56,6 +56,16 @@ npm ci
 log "Running DB migrations..."
 npm run db:deploy
 
+# Bust the persisted Next cache BEFORE building. `npm run build` preserves
+# .next/cache across deploys, so a stale Data Cache (internal /api/products
+# fetch, revalidate 3600) and ISR full-route cache keep serving PRE-deploy
+# content after the code changes — e.g. the old product order, or a media URL
+# that the new normalizer would now rewrite. Clearing it forces a fresh render
+# against the live DB/API on first request. (Costs webpack/image cache warmth;
+# correctness of freshly-deployed content wins.)
+log "Clearing Next cache (.next/cache) to avoid serving stale content..."
+rm -rf .next/cache
+
 log "Building Next.js..."
 npm run build
 
