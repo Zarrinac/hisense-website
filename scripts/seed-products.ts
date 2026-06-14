@@ -136,7 +136,7 @@ async function seed() {
 
   console.log(`Seeding ${normalized.length} products...`);
 
-  for (const product of normalized) {
+  for (const [index, product] of normalized.entries()) {
     const sizes = toStringArray(product.sizes);
     const connectivity = toStringArray(product.connectivity);
     const extras = toStringArray(product.extras);
@@ -157,6 +157,7 @@ async function seed() {
       id: product.id,
       slug: toSlug(product.id, product.slug),
       category: product.category,
+      position: index,
       sku: product.sku ?? null,
       series: product.series,
       seriesLabel: product.seriesLabel ?? null,
@@ -183,6 +184,7 @@ async function seed() {
     const updateData: Prisma.ProductUpdateInput = {
       slug: createData.slug,
       category: createData.category,
+      position: index,
       sku: createData.sku ?? null,
       series: createData.series,
       seriesLabel: createData.seriesLabel ?? null,
@@ -237,6 +239,16 @@ async function seed() {
       })),
       skipDuplicates: true,
     });
+  }
+
+  // Prune: the content files are the source of truth, so remove any product row
+  // whose id is no longer present in content (e.g. the stale `hfh-96`). Copies and
+  // tvSpec cascade-delete with the product. This keeps the DB exactly in sync with
+  // content on every seed instead of accumulating orphans (upsert never deletes).
+  const seededIds = normalized.map((product) => product.id);
+  const pruned = await prisma.product.deleteMany({ where: { id: { notIn: seededIds } } });
+  if (pruned.count > 0) {
+    console.log(`Pruned ${pruned.count} stale product(s) not present in content.`);
   }
 
   console.log('Seed complete.');
