@@ -9,6 +9,7 @@ import {
 } from 'next-intl/server';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ScrollToTopButton from '@/components/ScrollToTopButton';
 import StructuredData from '@/components/seo/StructuredData';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { routing, type Locale } from '@/i18n/routing';
@@ -152,6 +153,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
           <main>{children}</main>
           <Footer />
         </div>
+        <ScrollToTopButton />
       </NextIntlClientProvider>
     </ThemeProvider>
   );
