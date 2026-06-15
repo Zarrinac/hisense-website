@@ -13,6 +13,7 @@ import ComparisonSections, {
   type ComparisonSection,
 } from '@/components/tv/product-detail/ComparisonSections';
 import SpecsSection from '@/components/tv/product-detail/SpecsSection';
+import SpecsJumpButton from '@/components/tv/product-detail/SpecsJumpButton';
 import JsonLd from '@/components/seo/JsonLd';
 import type { BreadcrumbItem } from '@/components/tv/product-detail/Breadcrumbs';
 import type {
@@ -571,6 +572,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
         availableSizes={availableSizes}
       />
 
+      {specDetails.length > 0 && <SpecsJumpButton targetId="product-specs" lang={lang} />}
+
       <FeatureIntro title={featureIntroTitle} text={featureIntroText} />
 
       <HeroMedia
@@ -607,7 +610,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
         <ContentSections sections={[experienceSection]} isRTL={lang === 'fa'} isImageLeft={true} />
       )}
 
-      <SpecsSection items={specDetails} lang={lang} />
+      <SpecsSection items={specDetails} lang={lang} id="product-specs" />
 
       <ProductFaqSection
         faqs={buildProductFaqs({
