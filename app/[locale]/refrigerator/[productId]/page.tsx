@@ -9,6 +9,7 @@ import SectionGroupsRenderer, {
   type NormalizedSectionGroup,
 } from '@/components/tv/product-detail/SectionGroupsRenderer';
 import SpecsSection from '@/components/tv/product-detail/SpecsSection';
+import SpecsJumpButton from '@/components/tv/product-detail/SpecsJumpButton';
 import JsonLd from '@/components/seo/JsonLd';
 import type { BreadcrumbItem } from '@/components/tv/product-detail/Breadcrumbs';
 import type {
@@ -433,6 +434,8 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
         }
       />
 
+      {specDetails.length > 0 && <SpecsJumpButton targetId="product-specs" lang={lang} />}
+
       <FeatureIntro title={featureIntroTitle} text={featureIntroText} />
 
       {topBanner && (
@@ -468,7 +471,7 @@ export default async function RefrigeratorProductPage({ params }: PageProps) {
 
       <SectionGroupsRenderer sectionGroups={sectionGroups} lang={lang} overlayTone="dark" />
 
-      <SpecsSection items={specDetails} lang={lang} />
+      <SpecsSection items={specDetails} lang={lang} id="product-specs" />
 
       <ProductFaqSection
         faqs={buildProductFaqs({

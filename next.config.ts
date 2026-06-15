@@ -51,6 +51,9 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Allow LAN devices (e.g. phones) to load dev resources for on-device testing.
+  // Dev-only; ignored in production builds.
+  allowedDevOrigins: ['192.168.40.45'],
   images: {
     remotePatterns,
     // Serve modern formats (AVIF first, WebP fallback) for smaller payloads / better LCP.
