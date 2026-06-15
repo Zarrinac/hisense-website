@@ -16,7 +16,8 @@
     "db:seed:products": "tsx scripts/seed-products.ts",
     "db:seed:locations": "tsx scripts/seed-iran-locations.ts",
     "db:seed:downloads": "tsx scripts/seed-download-assets.ts",
-    "db:seed:representatives": "tsx scripts/seed-service-representatives.ts"
+    "db:seed:representatives": "tsx scripts/seed-service-representatives.ts",
+    "logos:scan": "tsx scripts/detect-mono-logos.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
