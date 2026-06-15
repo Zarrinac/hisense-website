@@ -77,18 +77,38 @@ const HOME_SEO_CONTENT: Record<
 // Locale-aware homepage renders the hero carousel and localized category spotlights.
 
 const SPOTLIGHT_SOURCES = [
-  { id: 'tv', href: '/products/tvs', image: bannerAsset('Fix-Banner-02-Back.webp') },
-  { id: 'refrigerator', href: '/refrigerator', image: bannerAsset('Fix-Banner-03-Back.webp') },
-  { id: 'washingMachine', href: '/products/wms', image: bannerAsset('Fix-Banner-04-Back.webp') },
-  { id: 'rac', href: '/products/rac', image: bannerAsset('Fix-Banner-05-Back.webp') },
-] as const satisfies ReadonlyArray<Pick<SpotlightCard, 'id' | 'href' | 'image'>>;
+  {
+    id: 'tv',
+    href: '/products/tvs',
+    image: bannerAsset('Fix-Banner-02-Back.webp'),
+    mobileImage: bannerAsset('Fix-Banner-02-Back-mobile.webp'),
+  },
+  {
+    id: 'refrigerator',
+    href: '/refrigerator',
+    image: bannerAsset('Fix-Banner-03-Back.webp'),
+    mobileImage: bannerAsset('Fix-Banner-03-Back-mobile.webp'),
+  },
+  {
+    id: 'washingMachine',
+    href: '/products/wms',
+    image: bannerAsset('Fix-Banner-04-Back.webp'),
+    mobileImage: bannerAsset('Fix-Banner-04-Back-mobile.webp'),
+  },
+  {
+    id: 'rac',
+    href: '/products/rac',
+    image: bannerAsset('Fix-Banner-05-Back.webp'),
+    mobileImage: bannerAsset('Fix-Banner-05-Back-mobile.webp'),
+  },
+] as const satisfies ReadonlyArray<Pick<SpotlightCard, 'id' | 'href' | 'image' | 'mobileImage'>>;
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const resolvedLocale: HomepageLocale = locale === 'en' ? 'en' : 'fa';
   const seoContent = HOME_SEO_CONTENT[resolvedLocale];
   const canonical = `/${resolvedLocale}`;
-  const ogImage = toAbsoluteUrl(bannerAsset('Fix-Banner-07.webp'));
+  const ogImage = toAbsoluteUrl(bannerAsset('Fix-Banner-07.jpg'));
 
   return {
     title: seoContent.title,
@@ -105,8 +125,8 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [
         {
           url: ogImage,
-          width: 1920,
-          height: 650,
+          width: 1200,
+          height: 630,
           alt: seoContent.title,
         },
       ],

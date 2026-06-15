@@ -166,8 +166,8 @@ const CONTACT_CONTENT: Record<Locale, ContactContent> = {
       },
       {
         title: 'ایمیل رسمی',
-        value: 'info@hisense-ir.com',
-        href: 'mailto:info@hisense-ir.com',
+        value: 'info@zarrinac.com',
+        href: 'mailto:info@zarrinac.com',
         icon: EmailOutlinedIcon,
       },
       {
@@ -271,8 +271,8 @@ const CONTACT_CONTENT: Record<Locale, ContactContent> = {
       },
       {
         title: 'Official email',
-        value: 'info@hisense-ir.com',
-        href: 'mailto:info@hisense-ir.com',
+        value: 'info@zarrinac.com',
+        href: 'mailto:info@zarrinac.com',
         icon: EmailOutlinedIcon,
       },
       {
@@ -426,7 +426,7 @@ export default async function ContactUsPage() {
           : 'Zarrin Namaye Caspian Industries',
       url: SITE_URL,
       telephone: '+98-21-72133',
-      email: 'info@hisense-ir.com',
+      email: 'info@zarrinac.com',
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Kameliya Dead end, Sasanipour St.',

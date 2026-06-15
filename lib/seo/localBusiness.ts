@@ -32,7 +32,7 @@ export const buildLocalBusinessJsonLd = (locale: Locale) => {
     image: `${SITE_URL}/banner/Fix-Banner-07.webp`,
     logo: `${SITE_URL}/icons/hisense-logo-full.svg`,
     telephone: '+98-21-72133',
-    email: 'info@hisense-ir.com',
+    email: 'info@zarrinac.com',
     priceRange: '$$',
     inLanguage: getLocaleLanguage(locale),
     address: {
