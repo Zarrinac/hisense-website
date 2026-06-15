@@ -110,8 +110,8 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
         },
         {
           label: 'ایمیل رسمی',
-          value: 'info@hisense-ir.com',
-          href: 'mailto:info@hisense-ir.com',
+          value: 'info@zarrinac.com',
+          href: 'mailto:info@zarrinac.com',
           icon: EmailOutlinedIcon,
         },
         {
@@ -243,8 +243,8 @@ const REPAIR_CONTENT: Record<Locale, RepairContent> = {
         },
         {
           label: 'Official email',
-          value: 'info@hisense-ir.com',
-          href: 'mailto:info@hisense-ir.com',
+          value: 'info@zarrinac.com',
+          href: 'mailto:info@zarrinac.com',
           icon: EmailOutlinedIcon,
         },
         {
