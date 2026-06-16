@@ -78,19 +78,20 @@ npm run dev                  # http://localhost:3000
 
 ## Environment Variables
 
-| Variable                               | Required | Purpose                                                             |
-| -------------------------------------- | -------- | ------------------------------------------------------------------- |
-| `DATABASE_URL`                         | Optional | PostgreSQL connection string; app runs on static fallback if absent |
-| `NEXT_PUBLIC_SITE_URL`                 | Yes      | Canonical/OG base URL (e.g., `https://hisense-ir.com`)              |
-| `ADMIN_USERNAME`                       | Yes      | Admin portal login username                                         |
-| `ADMIN_PASSWORD`                       | Yes      | Admin portal login password                                         |
-| `ADMIN_SESSION_SECRET`                 | Yes      | HMAC-SHA256 key for signing session tokens                          |
-| `INTERNAL_API_BASE_URL`                | Dev      | Internal fetch base (`http://localhost:3000` in dev)                |
-| `NEXT_PUBLIC_MEDIA_BASE_URL`           | Optional | CDN base for product images (defaults to `/` for local serving)     |
-| `NEXT_PUBLIC_CONTENT_SOURCE`           | Optional | `"local"` or `"remote"` content mode                                |
-| `NEXT_PUBLIC_GA_ID`                    | Optional | Google Analytics 4 measurement ID                                   |
-| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Optional | Google Search Console verification token                            |
-| `NEXT_PUBLIC_BING_SITE_VERIFICATION`   | Optional | Bing Webmaster Tools verification token                             |
+| Variable                               | Required | Purpose                                                                                              |
+| -------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------- |
+| `DATABASE_URL`                         | Optional | PostgreSQL connection string; app runs on static fallback if absent                                  |
+| `NEXT_PUBLIC_SITE_URL`                 | Yes      | Canonical/OG base URL (e.g., `https://hisense-ir.com`)                                               |
+| `NEXT_PUBLIC_SITE_ID`                  | Optional | `"hisense"` (default) or `"zarrinac"` — brand tag for the shared DB (see `ops/shared-db-runbook.md`) |
+| `ADMIN_USERNAME`                       | Yes      | Admin portal login username                                                                          |
+| `ADMIN_PASSWORD`                       | Yes      | Admin portal login password                                                                          |
+| `ADMIN_SESSION_SECRET`                 | Yes      | HMAC-SHA256 key for signing session tokens                                                           |
+| `INTERNAL_API_BASE_URL`                | Dev      | Internal fetch base (`http://localhost:3000` in dev)                                                 |
+| `NEXT_PUBLIC_MEDIA_BASE_URL`           | Optional | CDN base for product images (defaults to `/` for local serving)                                      |
+| `NEXT_PUBLIC_CONTENT_SOURCE`           | Optional | `"local"` or `"remote"` content mode                                                                 |
+| `NEXT_PUBLIC_GA_ID`                    | Optional | Google Analytics 4 measurement ID                                                                    |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Optional | Google Search Console verification token                                                             |
+| `NEXT_PUBLIC_BING_SITE_VERIFICATION`   | Optional | Bing Webmaster Tools verification token                                                              |
 
 ---
 
@@ -199,10 +200,13 @@ ProductCategory enum: TVS | WMS | RAC | CAC | REFRIGERATOR | TV_DCODE
 
 - Unique `referenceCode` generated at submission time.
 - Key fields: `fullName`, `phone`, `email?`, `productCategory`, `productModel`, `complaintTopic`, `preferredContactMethod`, `city`, `description`, `status` (default `NEW`).
+- `site` (default `hisense`) — brand tag so a shared DB can back both hisense-ir and zarrinac; set from `NEXT_PUBLIC_SITE_ID` on insert, and admin lists/counts filter by it.
 
 **`SurveySubmission`** — After-service satisfaction survey responses.
 
-- Unique `referenceCode`. Rating fields: `communicationClarity`, `staffBehavior`, `timeliness`, `overallSatisfaction`, `followUpConsent`, `overallFeedback`.
+- Unique `referenceCode`. Rating fields: `communicationClarity`, `staffBehavior`, `timeliness`, `overallSatisfaction`, `followUpConsent`, `overallFeedback`. Also carries the same `site` tag as `ComplaintSubmission`.
+
+> **D'code catalog (`DcodeProduct` / `DcodeVariant` / `DcodeProductCopy`)** exists in the schema for parity with the zarrinac sibling repo (shared DB). hisense-ir has the tables but exposes no `/dcode` routes and never seeds them — they sit unused here. See `ops/shared-db-runbook.md`.
 
 ### Downloads
 
@@ -506,6 +510,8 @@ Security headers (CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy,
 ### Server
 
 Ubuntu host `nexzarrin`, app at `/var/www/hisense-ir/app`, served by **PM2** (process `hisense-ir`, config `ecosystem.config.cjs`) behind **Apache**. DB: local Postgres `zarrin` (owner `reza_sf`).
+
+> **Shared DB with zarrinac.com:** the `zarrin` instance on nexzarrin is the single primary for **both** sites; zarrinac.com (host `zarrin-ng-site`, `172.17.0.19`) connects to it over the private subnet, with a manual-promote streaming-replication standby on that box. Both repos must keep `prisma/schema.prisma` + `prisma/migrations/` byte-identical. Full procedure: **`ops/shared-db-runbook.md`**.
 
 ### Deploy workflow
 
