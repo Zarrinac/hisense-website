@@ -513,6 +513,24 @@ Ubuntu host `nexzarrin`, app at `/var/www/hisense-ir/app`, served by **PM2** (pr
 
 > **Shared DB with zarrinac.com:** the `zarrin` instance on nexzarrin is the single primary for **both** sites; zarrinac.com (host `zarrin-ng-site`, `172.17.0.19`) connects to it over the private subnet, with a manual-promote streaming-replication standby on that box. Both repos must keep `prisma/schema.prisma` + `prisma/migrations/` byte-identical. Full procedure: **`ops/shared-db-runbook.md`**.
 
+### DNS & domain (apex → www)
+
+DNS is hosted at **IONOS / 1&1** (nameservers `ns*.ui-dns.{biz,org,com,de}`). The canonical host is **`https://www.hisense-ir.com`** (see `lib/seo/site.ts`), so the bare apex must resolve **and** 301-redirect to `www`.
+
+**DNS records (IONOS panel):** both the apex and `www` need an **A record → `94.182.225.54`** (the nexzarrin public IP). Use an A record at the apex, **not** a CNAME — a CNAME at the zone apex is invalid (the apex already carries SOA/NS/MX). Symptom when the apex A record is missing: browsers show "Server Not Found" for `hisense-ir.com` while `www.hisense-ir.com` works (the request never reaches the server).
+
+**Apache apex redirect:** the apex has its own vhost so it does **not** serve a duplicate copy of the site (which would split SEO signals).
+
+- `sites-available/hisense-ir.conf` (`*:80`) and `hisense-ir-ssl.conf` (`*:443`) serve the app for `ServerName www.hisense-ir.com` only — the `ServerAlias hisense-ir.com` was **removed** so the apex no longer matches them.
+- `sites-available/hisense-ir-apex.conf` is a dedicated vhost (`*:80` + `*:443`, `ServerName hisense-ir.com`) that 301-redirects everything to `https://www.hisense-ir.com%{REQUEST_URI}`, reusing the existing cert (`/etc/apache2/ssl/hisense-ir.fullchain.crt` + `.key`, which already covers both hosts).
+
+Apply changes with `sudo apache2ctl configtest && sudo systemctl reload apache2`. Verify from anywhere:
+
+```bash
+curl -sIL http://hisense-ir.com/        # expect: 301 -> https://www.hisense-ir.com/ -> 307 /fa -> 200
+curl -sI  https://www.hisense-ir.com/   # expect: 307 -> /fa (still serves the app)
+```
+
 ### Deploy workflow
 
 **Local → Git → Server — never edit directly on the server.**
