@@ -935,13 +935,13 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1781612365.5584018,
-    "ast_hash": "f0ceb5a341cb1c6e67f70a9b0818d5d0",
+    "mtime": 1781699622.731056,
+    "ast_hash": "89b04af73b9be05d9c70712fdc9e62cc",
     "semantic_hash": ""
   },
   "DOCS.md": {
-    "mtime": 1781612346.0911381,
-    "ast_hash": "da893d2acee67bf1861a7eb4308363cc",
+    "mtime": 1781699591.6559865,
+    "ast_hash": "b64556f16ff8012cc897589c3002f3ee",
     "semantic_hash": ""
   },
   "GUIDE.md": {
@@ -1075,8 +1075,8 @@
     "semantic_hash": ""
   },
   "ops/deploy.sh": {
-    "mtime": 1781426189.7574697,
-    "ast_hash": "64fe8e90ac4e89e6d55eb47f8f04a8f1",
+    "mtime": 1781682055.4121284,
+    "ast_hash": "f2a078e33f76b55fffc33acdd4a5c79e",
     "semantic_hash": ""
   },
   "ops/optimize-media.mjs": {

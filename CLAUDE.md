@@ -194,6 +194,8 @@ Workflow: **develop locally (Windows) → push branch → PR → merge to `main`
 
 Deploy gotcha: server runs `git restore public/sitemap-0.xml` before pull (legacy generated file causes conflicts) — the native `app/sitemap.ts` route is the source of truth now.
 
+**DNS & apex redirect:** DNS is at IONOS; canonical host is `https://www.hisense-ir.com`. Both apex (`hisense-ir.com`) and `www` need an **A record → `94.182.225.54`** (apex must be an A record, never a CNAME). Apache serves the app only for `ServerName www` (`hisense-ir.conf`/`hisense-ir-ssl.conf`); a dedicated `hisense-ir-apex.conf` vhost 301-redirects the apex → www so it doesn't serve duplicate content. Full detail in DOCS.md → "DNS & domain (apex → www)".
+
 ## DB & Media Workflow
 
 - **Schema/data changes:** make them locally against the local Postgres (`npm run db:migrate`, `npm run db:seed`), verify, then promote. Migrations ship in `prisma/` and apply on the server via `npm run db:deploy` inside `deploy.sh`.
