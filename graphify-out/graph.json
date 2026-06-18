@@ -6,7 +6,11 @@
       {
         "id": "husky_hook_runtime",
         "label": "Husky hook stubs sourcing shared husky.sh runtime",
-        "nodes": ["_pre_commit", "_commit_msg", "_pre_push"],
+        "nodes": [
+          "_pre_commit",
+          "_commit_msg",
+          "_pre_push"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.85,
@@ -15,7 +19,11 @@
       {
         "id": "official_links_section_consumers",
         "label": "Pages embedding OfficialLinksSection for internal SEO linking",
-        "nodes": ["about_page", "complaint_page", "contact_us_page"],
+        "nodes": [
+          "about_page",
+          "complaint_page",
+          "contact_us_page"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.75,
@@ -24,7 +32,11 @@
       {
         "id": "product_listing_pages",
         "label": "Category listing pages with ISR and DB->fallback fetch",
-        "nodes": ["_category_page", "refrigerator_page", "concept_db_fallback_chain"],
+        "nodes": [
+          "_category_page",
+          "refrigerator_page",
+          "concept_db_fallback_chain"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.75,
@@ -33,7 +45,11 @@
       {
         "id": "legacy_redirect_shims",
         "label": "Locale-aware permanentRedirect legacy route shims",
-        "nodes": ["cac_page", "rac_page", "tv_hisense_page"],
+        "nodes": [
+          "cac_page",
+          "rac_page",
+          "tv_hisense_page"
+        ],
         "relation": "implement",
         "confidence": "INFERRED",
         "confidence_score": 0.85,
@@ -42,7 +58,11 @@
       {
         "id": "form_intake_pages",
         "label": "Form intake pages pairing a client form with RouteHero and support aside",
-        "nodes": ["complaint_page", "survey_page", "routehero"],
+        "nodes": [
+          "complaint_page",
+          "survey_page",
+          "routehero"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.75,
@@ -51,7 +71,11 @@
       {
         "id": "admin_auth_flow",
         "label": "Admin authentication and session flow",
-        "nodes": ["login_page", "login_route", "logout_route"],
+        "nodes": [
+          "login_page",
+          "login_route",
+          "logout_route"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.85,
@@ -60,7 +84,11 @@
       {
         "id": "product_db_fallback_chain",
         "label": "Product API DB to fallback chain",
-        "nodes": ["products_route", "products_id_route", "concept_db_fallback_chain"],
+        "nodes": [
+          "products_route",
+          "products_id_route",
+          "concept_db_fallback_chain"
+        ],
         "relation": "implement",
         "confidence": "INFERRED",
         "confidence_score": 0.85,
@@ -69,7 +97,12 @@
       {
         "id": "submission_intake_flow",
         "label": "Complaint and survey submission intake and admin display",
-        "nodes": ["complaints_route", "surveys_route", "complaints_page", "surveys_page"],
+        "nodes": [
+          "complaints_route",
+          "surveys_route",
+          "complaints_page",
+          "surveys_page"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.75,
@@ -78,7 +111,11 @@
       {
         "id": "seo_route_generation",
         "label": "SEO route generation (sitemap, robots, root redirect)",
-        "nodes": ["sitemap", "robots", "page"],
+        "nodes": [
+          "sitemap",
+          "robots",
+          "page"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.75,
@@ -172,7 +209,11 @@
       {
         "id": "product_normalization_flow",
         "label": "Catalog -> normalizers -> ApiProduct fallback flow",
-        "nodes": ["content_tvproducts", "api_products_normalizers", "api_products_types"],
+        "nodes": [
+          "content_tvproducts",
+          "api_products_normalizers",
+          "api_products_types"
+        ],
         "relation": "participate_in",
         "confidence": "EXTRACTED",
         "confidence_score": 0.85,
@@ -181,7 +222,11 @@
       {
         "id": "i18n_routing_subsystem",
         "label": "next-intl locale routing subsystem",
-        "nodes": ["i18n_routing", "i18n_navigation", "i18n_request"],
+        "nodes": [
+          "i18n_routing",
+          "i18n_navigation",
+          "i18n_request"
+        ],
         "relation": "implement",
         "confidence": "EXTRACTED",
         "confidence_score": 0.85,
@@ -190,7 +235,11 @@
       {
         "id": "admin_auth_subsystem",
         "label": "Admin auth + session + rate limiting subsystem",
-        "nodes": ["admin_auth", "admin_ratelimit", "admin_url"],
+        "nodes": [
+          "admin_auth",
+          "admin_ratelimit",
+          "admin_url"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.75,
@@ -199,7 +248,11 @@
       {
         "id": "admin_data_loaders",
         "label": "Admin Prisma data loaders with DB-ready fallback",
-        "nodes": ["admin_dashboard", "admin_submissions", "admin_i18n"],
+        "nodes": [
+          "admin_dashboard",
+          "admin_submissions",
+          "admin_i18n"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.75,
@@ -222,7 +275,10 @@
       {
         "id": "zod_form_validation_family",
         "label": "Zod form schema family (Persian digit + phone normalization)",
-        "nodes": ["complaints_schema", "surveys_schema"],
+        "nodes": [
+          "complaints_schema",
+          "surveys_schema"
+        ],
         "relation": "form",
         "confidence": "INFERRED",
         "confidence_score": 0.85,
@@ -231,7 +287,12 @@
       {
         "id": "seo_structured_data_helpers",
         "label": "SEO structured-data / metadata helper set",
-        "nodes": ["seo_site", "seo_productschema", "seo_keywords", "seo_categoryseocontent"],
+        "nodes": [
+          "seo_site",
+          "seo_productschema",
+          "seo_keywords",
+          "seo_categoryseocontent"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.75,
@@ -266,7 +327,11 @@
       {
         "id": "tailwind_v4_build_pipeline",
         "label": "Tailwind v4 styling build pipeline (postcss + config + next-intl wrapped next.config)",
-        "nodes": ["postcss_config", "tailwind_config", "next_config"],
+        "nodes": [
+          "postcss_config",
+          "tailwind_config",
+          "next_config"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.65,
@@ -275,7 +340,12 @@
       {
         "id": "project_documentation_set",
         "label": "Project documentation set (setup/architecture)",
-        "nodes": ["readme_readme", "docs_docs", "guide_guide", "claude_md"],
+        "nodes": [
+          "readme_readme",
+          "docs_docs",
+          "guide_guide",
+          "claude_md"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.85,
@@ -284,7 +354,11 @@
       {
         "id": "fallback_architecture_docs",
         "label": "DB-to-fallback architecture documented across guides",
-        "nodes": ["docs_docs", "guide_guide", "concept_data_fallback_chain"],
+        "nodes": [
+          "docs_docs",
+          "guide_guide",
+          "concept_data_fallback_chain"
+        ],
         "relation": "participate_in",
         "confidence": "INFERRED",
         "confidence_score": 0.85,
@@ -308,7 +382,10 @@
       {
         "id": "hisense_logo_variants",
         "label": "Hisense wordmark logo variants (teal 'Hisense' SVG lettering)",
-        "nodes": ["icons_hisense_logo", "icons_hisense_logo_full"],
+        "nodes": [
+          "icons_hisense_logo",
+          "icons_hisense_logo_full"
+        ],
         "relation": "form",
         "confidence": "INFERRED",
         "confidence_score": 0.85,
@@ -317,7 +394,10 @@
       {
         "id": "zarrin_logo_variants",
         "label": "Zarrin (manufacturer/partner) logo variants \u2014 black and white",
-        "nodes": ["icons_zarrin_logo_black", "icons_zarrin_logo_white"],
+        "nodes": [
+          "icons_zarrin_logo_black",
+          "icons_zarrin_logo_white"
+        ],
         "relation": "form",
         "confidence": "INFERRED",
         "confidence_score": 0.85,
@@ -3695,7 +3775,7 @@
       "label": "Header()",
       "file_type": "code",
       "source_file": "components/Header.tsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "id": "components_header_header",
       "community": 3,
       "norm_label": "header()"
@@ -4253,7 +4333,7 @@
       "label": "MobileNavPanelProps",
       "file_type": "code",
       "source_file": "components/header/MobileNavPanel.tsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "id": "header_mobilenavpanel_mobilenavpanelprops",
       "community": 3,
       "norm_label": "mobilenavpanelprops"
@@ -4262,7 +4342,7 @@
       "label": "MobileNavPanel()",
       "file_type": "code",
       "source_file": "components/header/MobileNavPanel.tsx",
-      "source_location": "L33",
+      "source_location": "L34",
       "id": "header_mobilenavpanel_mobilenavpanel",
       "community": 151,
       "norm_label": "mobilenavpanel()"
@@ -53698,9 +53778,9 @@
       "source_file": "DOCS.md",
       "source_location": "L516",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "docs_ops_deployment",
-      "target": "docs_dns_domain_apex_www",
-      "confidence_score": 1.0
+      "target": "docs_dns_domain_apex_www"
     },
     {
       "relation": "contains",
@@ -55127,7 +55207,11 @@
     {
       "id": "husky_hook_runtime",
       "label": "Husky hook stubs sourcing shared husky.sh runtime",
-      "nodes": ["_pre_commit", "_commit_msg", "_pre_push"],
+      "nodes": [
+        "_pre_commit",
+        "_commit_msg",
+        "_pre_push"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.85,
@@ -55136,7 +55220,11 @@
     {
       "id": "official_links_section_consumers",
       "label": "Pages embedding OfficialLinksSection for internal SEO linking",
-      "nodes": ["about_page", "complaint_page", "contact_us_page"],
+      "nodes": [
+        "about_page",
+        "complaint_page",
+        "contact_us_page"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.75,
@@ -55145,7 +55233,11 @@
     {
       "id": "product_listing_pages",
       "label": "Category listing pages with ISR and DB->fallback fetch",
-      "nodes": ["_category_page", "refrigerator_page", "concept_db_fallback_chain"],
+      "nodes": [
+        "_category_page",
+        "refrigerator_page",
+        "concept_db_fallback_chain"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.75,
@@ -55154,7 +55246,11 @@
     {
       "id": "legacy_redirect_shims",
       "label": "Locale-aware permanentRedirect legacy route shims",
-      "nodes": ["cac_page", "rac_page", "tv_hisense_page"],
+      "nodes": [
+        "cac_page",
+        "rac_page",
+        "tv_hisense_page"
+      ],
       "relation": "implement",
       "confidence": "INFERRED",
       "confidence_score": 0.85,
@@ -55163,7 +55259,11 @@
     {
       "id": "form_intake_pages",
       "label": "Form intake pages pairing a client form with RouteHero and support aside",
-      "nodes": ["complaint_page", "survey_page", "routehero"],
+      "nodes": [
+        "complaint_page",
+        "survey_page",
+        "routehero"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.75,
@@ -55172,7 +55272,11 @@
     {
       "id": "admin_auth_flow",
       "label": "Admin authentication and session flow",
-      "nodes": ["login_page", "login_route", "logout_route"],
+      "nodes": [
+        "login_page",
+        "login_route",
+        "logout_route"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.85,
@@ -55181,7 +55285,11 @@
     {
       "id": "product_db_fallback_chain",
       "label": "Product API DB to fallback chain",
-      "nodes": ["products_route", "products_id_route", "concept_db_fallback_chain"],
+      "nodes": [
+        "products_route",
+        "products_id_route",
+        "concept_db_fallback_chain"
+      ],
       "relation": "implement",
       "confidence": "INFERRED",
       "confidence_score": 0.85,
@@ -55190,7 +55298,12 @@
     {
       "id": "submission_intake_flow",
       "label": "Complaint and survey submission intake and admin display",
-      "nodes": ["complaints_route", "surveys_route", "complaints_page", "surveys_page"],
+      "nodes": [
+        "complaints_route",
+        "surveys_route",
+        "complaints_page",
+        "surveys_page"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.75,
@@ -55199,7 +55312,11 @@
     {
       "id": "seo_route_generation",
       "label": "SEO route generation (sitemap, robots, root redirect)",
-      "nodes": ["sitemap", "robots", "page"],
+      "nodes": [
+        "sitemap",
+        "robots",
+        "page"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.75,
@@ -55293,7 +55410,11 @@
     {
       "id": "product_normalization_flow",
       "label": "Catalog -> normalizers -> ApiProduct fallback flow",
-      "nodes": ["content_tvproducts", "api_products_normalizers", "api_products_types"],
+      "nodes": [
+        "content_tvproducts",
+        "api_products_normalizers",
+        "api_products_types"
+      ],
       "relation": "participate_in",
       "confidence": "EXTRACTED",
       "confidence_score": 0.85,
@@ -55302,7 +55423,11 @@
     {
       "id": "i18n_routing_subsystem",
       "label": "next-intl locale routing subsystem",
-      "nodes": ["i18n_routing", "i18n_navigation", "i18n_request"],
+      "nodes": [
+        "i18n_routing",
+        "i18n_navigation",
+        "i18n_request"
+      ],
       "relation": "implement",
       "confidence": "EXTRACTED",
       "confidence_score": 0.85,
@@ -55311,7 +55436,11 @@
     {
       "id": "admin_auth_subsystem",
       "label": "Admin auth + session + rate limiting subsystem",
-      "nodes": ["admin_auth", "admin_ratelimit", "admin_url"],
+      "nodes": [
+        "admin_auth",
+        "admin_ratelimit",
+        "admin_url"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.75,
@@ -55320,7 +55449,11 @@
     {
       "id": "admin_data_loaders",
       "label": "Admin Prisma data loaders with DB-ready fallback",
-      "nodes": ["admin_dashboard", "admin_submissions", "admin_i18n"],
+      "nodes": [
+        "admin_dashboard",
+        "admin_submissions",
+        "admin_i18n"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.75,
@@ -55343,7 +55476,10 @@
     {
       "id": "zod_form_validation_family",
       "label": "Zod form schema family (Persian digit + phone normalization)",
-      "nodes": ["complaints_schema", "surveys_schema"],
+      "nodes": [
+        "complaints_schema",
+        "surveys_schema"
+      ],
       "relation": "form",
       "confidence": "INFERRED",
       "confidence_score": 0.85,
@@ -55352,7 +55488,12 @@
     {
       "id": "seo_structured_data_helpers",
       "label": "SEO structured-data / metadata helper set",
-      "nodes": ["seo_site", "seo_productschema", "seo_keywords", "seo_categoryseocontent"],
+      "nodes": [
+        "seo_site",
+        "seo_productschema",
+        "seo_keywords",
+        "seo_categoryseocontent"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.75,
@@ -55387,7 +55528,11 @@
     {
       "id": "tailwind_v4_build_pipeline",
       "label": "Tailwind v4 styling build pipeline (postcss + config + next-intl wrapped next.config)",
-      "nodes": ["postcss_config", "tailwind_config", "next_config"],
+      "nodes": [
+        "postcss_config",
+        "tailwind_config",
+        "next_config"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.65,
@@ -55396,7 +55541,12 @@
     {
       "id": "project_documentation_set",
       "label": "Project documentation set (setup/architecture)",
-      "nodes": ["readme_readme", "docs_docs", "guide_guide", "claude_md"],
+      "nodes": [
+        "readme_readme",
+        "docs_docs",
+        "guide_guide",
+        "claude_md"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.85,
@@ -55405,7 +55555,11 @@
     {
       "id": "fallback_architecture_docs",
       "label": "DB-to-fallback architecture documented across guides",
-      "nodes": ["docs_docs", "guide_guide", "concept_data_fallback_chain"],
+      "nodes": [
+        "docs_docs",
+        "guide_guide",
+        "concept_data_fallback_chain"
+      ],
       "relation": "participate_in",
       "confidence": "INFERRED",
       "confidence_score": 0.85,
@@ -55429,7 +55583,10 @@
     {
       "id": "hisense_logo_variants",
       "label": "Hisense wordmark logo variants (teal 'Hisense' SVG lettering)",
-      "nodes": ["icons_hisense_logo", "icons_hisense_logo_full"],
+      "nodes": [
+        "icons_hisense_logo",
+        "icons_hisense_logo_full"
+      ],
       "relation": "form",
       "confidence": "INFERRED",
       "confidence_score": 0.85,
@@ -55438,12 +55595,15 @@
     {
       "id": "zarrin_logo_variants",
       "label": "Zarrin (manufacturer/partner) logo variants \u2014 black and white",
-      "nodes": ["icons_zarrin_logo_black", "icons_zarrin_logo_white"],
+      "nodes": [
+        "icons_zarrin_logo_black",
+        "icons_zarrin_logo_white"
+      ],
       "relation": "form",
       "confidence": "INFERRED",
       "confidence_score": 0.85,
       "source_file": "public/icons/Zarrin-Logo-Black.png"
     }
   ],
-  "built_at_commit": "b177666bed4a00e8f3e7f8cdf832dc3a07f1d3cf"
+  "built_at_commit": "bdf3f11bbc100658e481af02fc61c9a7b1ee48a8"
 }
