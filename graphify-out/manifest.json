@@ -340,9 +340,9 @@
     "semantic_hash": ""
   },
   "components/Header.tsx": {
-    "mtime": 1780819395.2537465,
-    "ast_hash": "13ae7a75ceb30decde8bf849aba9cc24",
-    "semantic_hash": "13ae7a75ceb30decde8bf849aba9cc24"
+    "mtime": 1781762242.976802,
+    "ast_hash": "7a6c6cfdf74f7a8ff00ea1e3ba4faee5",
+    "semantic_hash": ""
   },
   "components/LanguageSwitcher.tsx": {
     "mtime": 1780819395.2537465,
@@ -385,8 +385,8 @@
     "semantic_hash": ""
   },
   "components/header/MobileNavPanel.tsx": {
-    "mtime": 1780822391.5900147,
-    "ast_hash": "64859adaafbf0e00b624d5014f818fa1",
+    "mtime": 1781762242.976802,
+    "ast_hash": "b64cc82e5bfd983e1f2ca3a05297bcfb",
     "semantic_hash": ""
   },
   "components/header/SearchOverlay.tsx": {
@@ -935,12 +935,12 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1781699622.731056,
+    "mtime": 1781699950.2048812,
     "ast_hash": "89b04af73b9be05d9c70712fdc9e62cc",
     "semantic_hash": ""
   },
   "DOCS.md": {
-    "mtime": 1781699591.6559865,
+    "mtime": 1781699950.2048812,
     "ast_hash": "b64556f16ff8012cc897589c3002f3ee",
     "semantic_hash": ""
   },
