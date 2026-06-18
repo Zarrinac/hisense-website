@@ -17,6 +17,7 @@ type LabeledNavItem = {
   key: NavKey;
   href: string;
   label: string;
+  hasSubmenu: boolean;
 };
 
 export default function Header() {
@@ -49,6 +50,7 @@ export default function Header() {
     return NAV_ITEMS.map((item) => ({
       ...item,
       label: t(`navigation.items.${item.key}`),
+      hasSubmenu: (SUB_MENU_CONTENT[item.key]?.length ?? 0) > 0,
     }));
   }, [t]);
 
@@ -56,6 +58,7 @@ export default function Header() {
     return NAV_SECONDARY_ITEMS.map((item) => ({
       ...item,
       label: t(`navigation.items.${item.key}`),
+      hasSubmenu: (SUB_MENU_CONTENT[item.key]?.length ?? 0) > 0,
     }));
   }, [t]);
 
