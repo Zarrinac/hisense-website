@@ -12,11 +12,13 @@
     "prepare": "husky",
     "db:migrate": "prisma migrate dev --name init",
     "db:deploy": "prisma migrate deploy",
-    "db:seed": "npm run db:seed:products && npm run db:seed:locations && npm run db:seed:downloads && npm run db:seed:representatives",
+    "db:seed": "npm run db:seed:products && npm run db:seed:locations && npm run db:seed:downloads && npm run db:seed:representatives && npm run db:seed:admins",
     "db:seed:products": "tsx scripts/seed-products.ts",
     "db:seed:locations": "tsx scripts/seed-iran-locations.ts",
     "db:seed:downloads": "tsx scripts/seed-download-assets.ts",
     "db:seed:representatives": "tsx scripts/seed-service-representatives.ts",
+    "db:seed:admins": "tsx scripts/seed-admin-users.ts",
+    "admin:create": "tsx scripts/create-admin.ts",
     "logos:scan": "tsx scripts/detect-mono-logos.ts"
   },
   "dependencies": {

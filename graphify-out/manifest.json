@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/products/[category]/[productId]/page.tsx": {
-    "mtime": 1781522457.0421798,
-    "ast_hash": "66977a8b801bb75ef083cf522c92b3db",
+    "mtime": 1781939742.0329661,
+    "ast_hash": "8d22facb6e7e7fbb06a79ee633df1c83",
     "semantic_hash": ""
   },
   "app/[locale]/products/[category]/page.tsx": {
@@ -170,8 +170,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/refrigerator/[productId]/page.tsx": {
-    "mtime": 1781522457.0421798,
-    "ast_hash": "d14721095acd50031bcb23accf2fb9a9",
+    "mtime": 1781939742.0340142,
+    "ast_hash": "4fb466785fd8c17eecbb806c07f5e4cd",
     "semantic_hash": ""
   },
   "app/[locale]/refrigerator/page.tsx": {
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "app/admin/layout.tsx": {
-    "mtime": 1781607098.4395974,
-    "ast_hash": "b20417f206aa2b99b1b5d019d99c048c",
+    "mtime": 1782029998.3662632,
+    "ast_hash": "a91ebd38eb948e552975ab1d5975bf47",
     "semantic_hash": ""
   },
   "app/admin/login/page.tsx": {
@@ -245,8 +245,8 @@
     "semantic_hash": ""
   },
   "app/admin/page.tsx": {
-    "mtime": 1780819395.2380965,
-    "ast_hash": "48a21d20fac521af5ae8d308b0caaadb",
+    "mtime": 1782030460.4620757,
+    "ast_hash": "11261469eac1d66f057dce791b489d99",
     "semantic_hash": ""
   },
   "app/admin/products/page.tsx": {
@@ -275,8 +275,8 @@
     "semantic_hash": ""
   },
   "app/api/admin/auth/login/route.ts": {
-    "mtime": 1780819395.2380965,
-    "ast_hash": "9ac89e5771331c546a5c6c128ddb17a4",
+    "mtime": 1782024280.59604,
+    "ast_hash": "ce4b62119fc111597c42d8ce65b49121",
     "semantic_hash": ""
   },
   "app/api/admin/auth/logout/route.ts": {
@@ -360,8 +360,8 @@
     "semantic_hash": ""
   },
   "components/admin/AdminShell.tsx": {
-    "mtime": 1781607098.4445946,
-    "ast_hash": "fe9f003aeead82828174ff9cc7ebc1ba",
+    "mtime": 1782030070.4477313,
+    "ast_hash": "975312a6d9763e8a8ad2ff953b30460f",
     "semantic_hash": ""
   },
   "components/admin/AdminStatusCard.tsx": {
@@ -635,8 +635,8 @@
     "semantic_hash": ""
   },
   "lib/admin/auth.ts": {
-    "mtime": 1780819395.3198824,
-    "ast_hash": "f2cc826bf536936aff4780eab53fc29c",
+    "mtime": 1782024392.5335782,
+    "ast_hash": "8e1d9980e9bd5002a8f2f77e0b4aa407",
     "semantic_hash": ""
   },
   "lib/admin/dashboard.ts": {
@@ -650,8 +650,8 @@
     "semantic_hash": ""
   },
   "lib/admin/i18n.ts": {
-    "mtime": 1781609729.9694822,
-    "ast_hash": "86d75e4dc95b9ae506185aab913ea651",
+    "mtime": 1782030489.6072185,
+    "ast_hash": "17e02b3508ea74cae28a8e3754c94587",
     "semantic_hash": ""
   },
   "lib/admin/rateLimit.ts": {
@@ -740,8 +740,8 @@
     "semantic_hash": "5684f5fd232883efaa637563b0b0aefe"
   },
   "lib/seo/productSchema.ts": {
-    "mtime": 1781424157.3490176,
-    "ast_hash": "096e6c6b363f565c43721c398e40effe",
+    "mtime": 1781939742.035031,
+    "ast_hash": "5bdec0226a2b3a088eedecaca9f1ae50",
     "semantic_hash": ""
   },
   "lib/seo/site.ts": {
@@ -775,8 +775,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1781522457.076686,
-    "ast_hash": "123c5e6c2ca54c15b69758a576516bf3",
+    "mtime": 1782024334.8716629,
+    "ast_hash": "21b735f697b989dc9150912a59268f7a",
     "semantic_hash": ""
   },
   "postcss.config.mjs": {
@@ -830,8 +830,8 @@
     "semantic_hash": ""
   },
   "proxy.ts": {
-    "mtime": 1780819395.3593163,
-    "ast_hash": "f4c38662a97ef461369d58b9b867e680",
+    "mtime": 1782025941.036083,
+    "ast_hash": "f41a12a51ad57c27bddca85230cfe5e8",
     "semantic_hash": ""
   },
   "scripts/seed-download-assets.ts": {
@@ -935,13 +935,13 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1781699950.2048812,
-    "ast_hash": "89b04af73b9be05d9c70712fdc9e62cc",
+    "mtime": 1782030607.4596322,
+    "ast_hash": "9cb59af34d28f3900708dfda0801b0b7",
     "semantic_hash": ""
   },
   "DOCS.md": {
-    "mtime": 1781699950.2048812,
-    "ast_hash": "b64556f16ff8012cc897589c3002f3ee",
+    "mtime": 1782030595.262548,
+    "ast_hash": "dd109ed33d0545cf9fc765895c7cb77a",
     "semantic_hash": ""
   },
   "GUIDE.md": {
@@ -1227,6 +1227,81 @@
   "ops/shared-db-runbook.md": {
     "mtime": 1781605729.8368874,
     "ast_hash": "c908bbfc6c48dd58d544209712640218",
+    "semantic_hash": ""
+  },
+  "ops/google-ads-assets/make-logos.mjs": {
+    "mtime": 1781958352.8798254,
+    "ast_hash": "e6619e4e5c8376bed815dc9d2321c77a",
+    "semantic_hash": ""
+  },
+  "ops/google-ads-assets/hisense-logo-landscape-1200x300-white.png": {
+    "mtime": 1781958352.8798254,
+    "ast_hash": "e25221d32b5b1376eae2e4878ceef7d6",
+    "semantic_hash": ""
+  },
+  "ops/google-ads-assets/hisense-logo-square-1200-transparent.png": {
+    "mtime": 1781958352.8798254,
+    "ast_hash": "bc2d085047df8de402b44e23656b5ae7",
+    "semantic_hash": ""
+  },
+  "ops/google-ads-assets/hisense-logo-square-1200-white.png": {
+    "mtime": 1781958352.8798254,
+    "ast_hash": "92f237068bb611014ac64194d7674684",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20260621000000_add_admin_users/migration.sql": {
+    "mtime": 1782024205.960962,
+    "ast_hash": "46b99ea5ec3b39fe16b57be1dd9d986d",
+    "semantic_hash": ""
+  },
+  "scripts/create-admin.ts": {
+    "mtime": 1782024322.547493,
+    "ast_hash": "97a70b4ac6463594e334e92815531730",
+    "semantic_hash": ""
+  },
+  "scripts/seed-admin-users.ts": {
+    "mtime": 1782024309.8738048,
+    "ast_hash": "40f64df9e524e0b687f03d4f29fd5d4b",
+    "semantic_hash": ""
+  },
+  "app/admin/users/actions.ts": {
+    "mtime": 1782026030.0784304,
+    "ast_hash": "ecc669a0a55e872180ab17fa8f8be77d",
+    "semantic_hash": ""
+  },
+  "app/admin/users/page.tsx": {
+    "mtime": 1782025776.91449,
+    "ast_hash": "dbffd65c8291f50adb11b894b5554e7f",
+    "semantic_hash": ""
+  },
+  "components/admin/AdminUsersManager.tsx": {
+    "mtime": 1782026092.7810254,
+    "ast_hash": "c8a9f67f4779a6a41a694b7a1d7300cf",
+    "semantic_hash": ""
+  },
+  "lib/admin/access.ts": {
+    "mtime": 1782030439.188445,
+    "ast_hash": "5d9e52bf87d5e93c5899552684593f19",
+    "semantic_hash": ""
+  },
+  "lib/admin/session.ts": {
+    "mtime": 1782025685.9287689,
+    "ast_hash": "a445977b8ad0b179d8f57c3b1d17ea60",
+    "semantic_hash": ""
+  },
+  "lib/admin/users.ts": {
+    "mtime": 1782025717.5135899,
+    "ast_hash": "89435681bb7f24388023061a18204ee0",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20260621120000_add_service_manager_role/migration.sql": {
+    "mtime": 1782028135.2812023,
+    "ast_hash": "d74f770fb6e52deacabb7a78dbca733e",
+    "semantic_hash": ""
+  },
+  "prisma/migrations/20260621140000_add_cic_manager_role/migration.sql": {
+    "mtime": 1782030416.1834292,
+    "ast_hash": "4e1a8b475798f7acb4a1b7a0008f9ce8",
     "semantic_hash": ""
   }
 }
