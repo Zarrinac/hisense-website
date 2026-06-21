@@ -83,9 +83,9 @@ npm run dev                  # http://localhost:3000
 | `DATABASE_URL`                         | Optional | PostgreSQL connection string; app runs on static fallback if absent                                  |
 | `NEXT_PUBLIC_SITE_URL`                 | Yes      | Canonical/OG base URL (e.g., `https://hisense-ir.com`)                                               |
 | `NEXT_PUBLIC_SITE_ID`                  | Optional | `"hisense"` (default) or `"zarrinac"` — brand tag for the shared DB (see `ops/shared-db-runbook.md`) |
-| `ADMIN_USERNAME`                       | Yes      | Admin portal login username                                                                          |
-| `ADMIN_PASSWORD`                       | Yes      | Admin portal login password                                                                          |
-| `ADMIN_SESSION_SECRET`                 | Yes      | HMAC-SHA256 key for signing session tokens                                                           |
+| `ADMIN_USERNAME`                       | Fallback | Bootstrap/outage admin username (DB `AdminUser` is primary — see Admin → Authentication)             |
+| `ADMIN_PASSWORD`                       | Fallback | Bootstrap/outage admin password (only used when no `AdminUser` rows exist or DB is down)             |
+| `ADMIN_SESSION_SECRET`                 | Yes      | HMAC-SHA256 key for signing session tokens (required for any admin login)                            |
 | `INTERNAL_API_BASE_URL`                | Dev      | Internal fetch base (`http://localhost:3000` in dev)                                                 |
 | `NEXT_PUBLIC_MEDIA_BASE_URL`           | Optional | CDN base for product images (defaults to `/` for local serving)                                      |
 | `NEXT_PUBLIC_CONTENT_SOURCE`           | Optional | `"local"` or `"remote"` content mode                                                                 |
@@ -318,9 +318,49 @@ The admin portal at `/admin` provides an interface for managing submissions and 
 
 - **No NextAuth** — custom JWT-based session.
 - Session cookie: `hisense_admin_session` (httpOnly, Secure, 8-hour expiry).
-- Credentials (`ADMIN_USERNAME` / `ADMIN_PASSWORD`) are env-var configured.
-- Token signed with `ADMIN_SESSION_SECRET` via HMAC-SHA256.
-- `lib/admin/auth.ts` exports `verifyAdminSession()` — used in `app/admin/layout.tsx` and all admin server actions.
+- Token signed with `ADMIN_SESSION_SECRET` via HMAC-SHA256. The session payload carries `sub` (username), `uid` (AdminUser id, or `env` for the fallback), and `role`.
+- `lib/admin/auth.ts` exports `verifyAdminSession()` — used in `app/admin/layout.tsx`, `proxy.ts`, and all admin server actions. It is **edge-safe** (Web Crypto only, no DB) so it can run in middleware.
+
+#### DB-backed credentials (DB-first, env fallback)
+
+- Credentials live in the **`AdminUser`** table (`username`, `passwordHash`, `role`, `isActive`). Passwords are hashed with Node `scrypt` via `lib/admin/password.ts` (`hashPassword` / `verifyPassword`) — no external dependency.
+- `lib/admin/credentials.ts` → `authenticateAdmin()` resolves a login: **DB is the source of truth.** If the username exists, the DB row decides (wrong password / inactive → fail, no fallback). The env `ADMIN_USERNAME` / `ADMIN_PASSWORD` pair is honoured **only** as a bootstrap (zero `AdminUser` rows) or DB-outage fallback.
+- `authenticateAdmin` (Prisma + scrypt) is **Node-only** — never import it from `proxy.ts`/edge. The login route (`app/api/admin/auth/login`) runs in the Node runtime, so it's safe there.
+- Manage users from the CLI:
+  - `npm run db:seed:admins` — idempotently bootstraps the env admin into the DB as `SUPER_ADMIN` (also part of `npm run db:seed`).
+  - `npm run admin:create <username> <password> [role]` — create/update a user (`role` defaults to `ADMIN`).
+- Migration: `prisma/migrations/20260621000000_add_admin_users`. **Shared-DB note:** mirror the `AdminUser` model + migration into the zarrinac repo (the `prisma/` dirs must stay byte-identical) before deploying.
+
+#### Access control (role matrix)
+
+Roles (`lib/admin/access.ts`) gate admin **sections**. Keep this table in sync with `ROLE_SECTIONS`:
+
+| Section         | SUPER_ADMIN | ADMIN | SERVICE_MANAGER | CIC_MANAGER | EDITOR |
+| --------------- | :---------: | :---: | :-------------: | :---------: | :----: |
+| Dashboard       |      ✓      |   ✓   |        ✓        |      ✓      |   ✓    |
+| Products        |      ✓      |   ✓   |        —        |      —      |   —    |
+| Complaints      |      ✓      |   ✓   |        ✓        |      ✓      |   ✓    |
+| Surveys         |      ✓      |   ✓   |        ✓        |      ✓      |   ✓    |
+| Service centers |      ✓      |   ✓   |        ✓        |      ✓      |   —    |
+| Settings        |      ✓      |   ✓   |        —        |      —      |   —    |
+| Users           |      ✓      |   —   |        —        |      —      |   —    |
+
+`SERVICE_MANAGER` (مدیر خدمات) and `CIC_MANAGER` (مدیر CIC) share identical access — only the title differs. Both get a **trimmed dashboard** (`app/admin/page.tsx` → `hasTrimmedDashboard`): the intro description and the internal "admin foundation" diagnostics card are hidden.
+
+Enforced in **three layers**:
+
+1. **Middleware** (`proxy.ts`) — `sectionForPath(pathname)` + `canAccessSection(role, section)`; unauthorised page routes bounce to `/admin`, API routes get 403.
+2. **Navigation** (`AdminShell`) — nav items are filtered by `canAccessSection`, so users only see what they can open.
+3. **Server actions** (`app/admin/users/actions.ts`) — every action re-checks `canManageUsers(session.role)` (defence in depth).
+
+Unknown/legacy roles fall back to the least-privileged role (`EDITOR`) via `normalizeRole`.
+
+#### User-management UI (`/admin/users`, SUPER_ADMIN only)
+
+- `app/admin/users/page.tsx` (server, role-guarded) + `components/admin/AdminUsersManager.tsx` (client, MUI).
+- Actions (`app/admin/users/actions.ts`, `'use server'`): create user, change role, activate/deactivate, reset password, delete. Validation via Zod; helpers in `lib/admin/users.ts` (Node-only Prisma CRUD).
+- Safety guards: cannot delete your own account; cannot demote/deactivate/delete the **last active SUPER_ADMIN** (`countActiveSuperAdmins`).
+- `lib/admin/session.ts` → `getAdminSession()` reads + verifies the session in server components/actions.
 
 ### Rate limiting
 
