@@ -90,10 +90,9 @@ pm2 reload ecosystem.config.cjs --update-env
 
 log "=== Deploy complete ==="
 
-# Post-deploy SEO regression audit against the now-live site (non-blocking,
-# backgrounded so it never delays or fails the deploy). Logs to
-# /var/log/hisense-seo-audit.log and escalates ERROR-level findings to claude -p.
-if [ -x /usr/local/bin/seo-audit.sh ]; then
-  log "Kicking off post-deploy SEO audit (background)..."
-  (/usr/local/bin/seo-audit.sh >/dev/null 2>&1 &)
-fi
+# Ping IndexNow so Bing/Yandex/Seznam re-crawl the freshly-deployed URLs within
+# minutes. Runs AFTER the reload (so the /<key>.txt ownership file is live) and is
+# fully non-blocking/non-fatal — a failed ping must never affect the deploy. Google
+# does not use IndexNow, so this has zero effect on Google Search Console.
+log "Submitting sitemap URLs to IndexNow (background)..."
+(node "$APP_DIR/ops/indexnow-ping.mjs" >>"$LOG_FILE" 2>&1 &)

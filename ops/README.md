@@ -10,15 +10,14 @@ served by PM2 (`hisense-ir`, `ecosystem.config.cjs`) behind Apache. DB: local Po
 
 ## Files
 
-| Repo file                     | Live location on server             | Purpose                                                                                        |
-| ----------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `ops/deploy.sh`               | `/var/www/hisense-ir/deploy.sh`     | Pull → `npm ci` → `db:deploy` → `build` → `pm2 reload`                                         |
-| `ops/cron/hisense-monitor.sh` | `/usr/local/bin/hisense-monitor.sh` | Hourly health check piped to `claude -p`                                                       |
-| `ops/cron/weekly-backup.sh`   | `/usr/local/bin/weekly-backup.sh`   | Weekly lean backup: `pg_dumpall` + `/etc` + app secrets, keeps 4 weeks                         |
-| `ops/sync-media.sh`           | `/usr/local/bin/sync-media.sh`      | Mirror staged media → live dir + fix owner/perms (`a+rX`)                                      |
-| `ops/upload-media.ps1`        | (runs on the Windows dev PC)        | scp upload + trigger `sync-media.sh` over ssh (key auth)                                       |
-| `ops/seo-audit.mjs`           | (runs from the repo on the server)  | Deterministic SEO checker: title/desc/canonical/hreflang/h1/size/JSON-LD over the live sitemap |
-| `ops/cron/seo-audit.sh`       | `/usr/local/bin/seo-audit.sh`       | Daily + post-deploy SEO audit; logs findings, escalates ERRORs to `claude -p`                  |
+| Repo file                     | Live location on server             | Purpose                                                                                    |
+| ----------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------ |
+| `ops/deploy.sh`               | `/var/www/hisense-ir/deploy.sh`     | Pull → `npm ci` → `db:deploy` → `build` → `pm2 reload`                                     |
+| `ops/cron/hisense-monitor.sh` | `/usr/local/bin/hisense-monitor.sh` | Hourly health check piped to `claude -p`                                                   |
+| `ops/cron/weekly-backup.sh`   | `/usr/local/bin/weekly-backup.sh`   | Weekly lean backup: `pg_dumpall` + `/etc` + app secrets, keeps 4 weeks                     |
+| `ops/sync-media.sh`           | `/usr/local/bin/sync-media.sh`      | Mirror staged media → live dir + fix owner/perms (`a+rX`)                                  |
+| `ops/upload-media.ps1`        | (runs on the Windows dev PC)        | scp upload + trigger `sync-media.sh` over ssh (key auth)                                   |
+| `ops/indexnow-ping.mjs`       | (runs from the repo on the server)  | Submits live sitemap URLs to IndexNow (Bing/Yandex/Seznam) after each deploy; non-blocking |
 
 > Not included: `ecosystem.config.cjs`, `.env` — they hold secrets and are gitignored.
 > Keep them only on the server. The husky hooks (`.husky/pre-commit`, `pre-push`) live in
@@ -38,12 +37,11 @@ chmod +x /var/www/hisense-ir/deploy.sh
 # Cron scripts (need root to write /usr/local/bin)
 sudo cp ops/cron/hisense-monitor.sh /usr/local/bin/hisense-monitor.sh
 sudo cp ops/cron/weekly-backup.sh   /usr/local/bin/weekly-backup.sh
-sudo cp ops/cron/seo-audit.sh       /usr/local/bin/seo-audit.sh
-sudo chmod +x /usr/local/bin/hisense-monitor.sh /usr/local/bin/weekly-backup.sh /usr/local/bin/seo-audit.sh
+sudo chmod +x /usr/local/bin/hisense-monitor.sh /usr/local/bin/weekly-backup.sh
 ```
 
-(`seo-audit.sh` calls `ops/seo-audit.mjs` straight from the repo — only the wrapper
-is copied to `/usr/local/bin`, so a `git pull` keeps the checker logic current.)
+(`indexnow-ping.mjs` runs straight from the repo via `deploy.sh` — nothing to copy to
+`/usr/local/bin`, so a `git pull` keeps it current.)
 
 (`deploy.sh` is intentionally a manual copy, not a symlink into the repo: bash reads a
 script as it runs, so letting `git pull` overwrite the executing file is unsafe.)
@@ -53,13 +51,10 @@ script as it runs, so letting `git pull` overwrite the executing file is unsafe.
 ```bash
 # Deploy log must be writable by the app user (a failing tee aborts the deploy)
 sudo touch /var/log/hisense-deploy.log && sudo chown reza:reza /var/log/hisense-deploy.log
-# SEO audit log (seo-audit.sh runs as reza, post-deploy + daily cron)
-sudo touch /var/log/hisense-seo-audit.log && sudo chown reza:reza /var/log/hisense-seo-audit.log
 
 # Cron entries (crontab -e)  — adjust times to taste
 0 * * * *  /usr/local/bin/hisense-monitor.sh                 # hourly monitor
 0 3 * * 0  /usr/local/bin/weekly-backup.sh >> /var/log/hisense-backup.log 2>&1   # Sun 03:00 backup
-0 7 * * *  /usr/local/bin/seo-audit.sh                       # daily SEO audit (also runs post-deploy via deploy.sh)
 ```
 
 ## Media sync (local PC → server)

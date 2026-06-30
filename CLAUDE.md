@@ -15,7 +15,8 @@ Stack: Next.js 16 App Router · React 19 · TypeScript 6 · PostgreSQL + Prisma 
 - Every `<Image>` needs descriptive, localized `alt`. Hero/LCP images use `priority`.
 - Both `fa` and `en` must stay in sync — hreflang depends on it.
 - Don't break ISR (`revalidate = 3600`) or the sitemap/robots routes.
-- SEO infrastructure lives in `lib/seo/` (`site.ts`, `productSchema.ts`, `keywords.ts`), `components/seo/`, `app/sitemap.ts`, `app/robots.ts`.
+- Keep `<meta description>` ~150–162 chars (search engines flag under ~150 as "too short"). Set it via the builders in `lib/seo/productMeta.ts` (`buildProductMetaDescription`, `buildCategoryMetaDescription`, `buildSupportMetaDescription`) — never bloat the route translation that some pages also render as a visible subtitle.
+- SEO infrastructure lives in `lib/seo/` (`site.ts`, `productSchema.ts`, `productMeta.ts`, `keywords.ts`), `components/seo/`, `app/sitemap.ts`, `app/robots.ts`. **IndexNow** (`ops/indexnow-ping.mjs`, fired post-deploy) submits sitemap URLs to Bing/Yandex/Seznam — Google does not use it, so it has zero effect on Google Search Console.
 
 ## Commands
 
@@ -189,13 +190,13 @@ Workflow: **develop locally (Windows) → push branch → PR → merge to `main`
 
 **Server:** Ubuntu, `nexzarrin`, app at `/var/www/hisense-ir/app`, served by PM2 (`hisense-ir`, `ecosystem.config.cjs`) behind Apache.
 
-| Script (server)                     | Purpose                                                                                                                               |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `/var/www/hisense-ir/deploy.sh`     | `git pull origin main` → `npm ci --omit=dev` → `npm run db:deploy` → `npm run build` → `pm2 reload ecosystem.config.cjs --update-env` |
-| `/usr/local/bin/hisense-monitor.sh` | Cron: pipes `df`/`free`/`pm2 jlist` to `claude -p` for anomaly flagging → `/var/log/hisense-monitor.log`                              |
-| `/usr/local/bin/weekly-backup.sh`   | Cron: lean backup — `pg_dumpall` + `/etc` + app secrets (`.env`, `ecosystem.config.cjs`) to `/backup`, keeps last 4 weeks             |
-| `.husky/pre-commit`                 | `lint-staged` (lint + format)                                                                                                         |
-| `.husky/pre-push`                   | `git diff origin/main...HEAD \| claude -p` review; non-zero exit blocks push                                                          |
+| Script (server)                     | Purpose                                                                                                                              |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `/var/www/hisense-ir/deploy.sh`     | `git pull origin main` → `npm ci` → `npm run db:deploy` → `npm run build` → `pm2 reload …` → IndexNow ping (`ops/indexnow-ping.mjs`) |
+| `/usr/local/bin/hisense-monitor.sh` | Cron: pipes `df`/`free`/`pm2 jlist` to `claude -p` for anomaly flagging → `/var/log/hisense-monitor.log`                             |
+| `/usr/local/bin/weekly-backup.sh`   | Cron: lean backup — `pg_dumpall` + `/etc` + app secrets (`.env`, `ecosystem.config.cjs`) to `/backup`, keeps last 4 weeks            |
+| `.husky/pre-commit`                 | `lint-staged` (lint + format)                                                                                                        |
+| `.husky/pre-push`                   | `git diff origin/main...HEAD \| claude -p` review; non-zero exit blocks push                                                         |
 
 Deploy gotcha: server runs `git restore public/sitemap-0.xml` before pull (legacy generated file causes conflicts) — the native `app/sitemap.ts` route is the source of truth now.
 

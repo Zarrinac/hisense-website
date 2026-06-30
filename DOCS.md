@@ -151,8 +151,8 @@ ops/                    Server operational scripts (version-controlled source of
   sync-media.sh         Rsync media to live dir + fix owner/perms
   upload-media.ps1      Windows-side: scp media + trigger sync over SSH
   optimize-media.mjs    Pre-upload image optimization
-  seo-audit.mjs         Deterministic SEO checker (title/desc/canonical/h1/JSON-LD)
-  cron/                 hisense-monitor.sh, weekly-backup.sh, seo-audit.sh
+  indexnow-ping.mjs     Submit sitemap URLs to IndexNow (Bing/Yandex) post-deploy
+  cron/                 hisense-monitor.sh, weekly-backup.sh
 prisma/                 Prisma schema + migration history
 scripts/                DB seed scripts
 seo/                    keywords.txt + keywords helper
@@ -502,6 +502,14 @@ Each public page implements `generateMetadata` with:
 
 Hreflang is emitted as HTML `<link rel="alternate">` tags only. The next-intl HTTP Link-header hreflang was removed (it produced malformed headers that Google ignored).
 
+**Meta-description length.** Search engines flag descriptions under ~150 chars as "too short" (Bing Webmaster recommends 150–160). Builders in `lib/seo/productMeta.ts` set the `<meta description>` (and OG/Twitter) without touching the shorter route translation that some pages also render as a visible subtitle:
+
+- `buildProductMetaDescription(locale, name)` — product + refrigerator detail pages; wraps the SKU name with purchase-intent + warranty copy. Real SKU names are long (e.g. `کولر گازی اینورتر هایسنس HIH-24TG`), so this already lands ~155–161 for the air-conditioner/refrigerator detail pages that Bing flagged.
+- `buildCategoryMetaDescription(locale, category)` — category + refrigerator listings. Returns a **bespoke** per-category string (`tvs|wms|rac|cac|refrigerator`), each hand-tuned to 150–162 in both locales. A generic "append a suffix to the route description" approach was rejected: the route descriptions span 77–127 chars and no single suffix maps them all into the 150–165 window.
+- `buildSupportMetaDescription(locale, page)` — `contact` + `findServiceCenter`, same bespoke per-page approach.
+
+Keep every `fa`/`en` pair in sync (hreflang depends on it) and within ~150–162 chars.
+
 ### JSON-LD structured data
 
 All JSON-LD is rendered server-side via `components/seo/JsonLd.tsx`.
@@ -539,9 +547,12 @@ Product listing pages export `revalidate = 3600`. Do not add `cache: 'no-store'`
 
 Security headers (CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy) are set in `next.config.ts` via `headers()`. Added in the security batch (PR #81).
 
-### SEO audit
+### IndexNow
 
-`ops/seo-audit.mjs` is a deterministic SEO checker that crawls the live sitemap and verifies: title length, meta-description length, canonical URL, hreflang tags, single `<h1>`, JSON-LD presence, and page size. Runs daily at 07:00 + after every deploy via `ops/cron/seo-audit.sh`. Failures are escalated to `claude -p`.
+`ops/indexnow-ping.mjs` reads the live sitemap and bulk-submits every URL to **IndexNow** (`api.indexnow.org`) so **Bing / Yandex / Seznam** re-crawl changed pages within minutes. `deploy.sh` fires it in the background after the PM2 reload (non-blocking, non-fatal — a failed ping never affects the deploy).
+
+- **Google does not use IndexNow** and ignores it entirely — this has zero effect on Google Search Console.
+- Ownership is proved by the key file `public/73badcff89d65693b8c2ff1bdf9c919a.txt` (served at `https://www.hisense-ir.com/73badcff89d65693b8c2ff1bdf9c919a.txt`), whose body is the key. The `KEY` constant in `ops/indexnow-ping.mjs` **must** match that file's name and contents. The key is public by design (not a secret) — committing it is required.
 
 ---
 
@@ -591,7 +602,7 @@ develop locally (Windows)
 4. `npm run db:deploy` (applies Prisma migrations)
 5. `npm run build`
 6. `pm2 reload ecosystem.config.cjs --update-env`
-7. Runs `seo-audit.sh` post-deploy
+7. Pings IndexNow (`ops/indexnow-ping.mjs`, background) to re-crawl on Bing/Yandex
 
 ### Husky git hooks
 
