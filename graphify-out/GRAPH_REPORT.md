@@ -1,7 +1,7 @@
-# Graph Report - hisense  (2026-06-30)
+# Graph Report - hisense  (2026-07-08)
 
 ## Corpus Check
-- 246 files · ~262,655 words
+- 246 files · ~262,810 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `07d6c2e8`
+- Built from commit: `1203781c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -397,7 +397,7 @@ Nodes (15): eyebrow, items, title, categories, rac, tv, cta, description (+7 mor
 
 ### Community 30 - "Fa"
 Cohesion: 0.15
-Nodes (15): eyebrow, items, title, categories, rac, tv, cta, description (+7 more)
+Nodes (15): eyebrow, items, title, categories, tv, washingMachine, washingMachine, cta (+7 more)
 
 ### Community 31 - "Package"
 Cohesion: 0.11
@@ -853,7 +853,7 @@ Nodes (7): Adding a product (no DB), Adding a product (with DB), Adding SEO copy
 
 ### Community 161 - "Community 161"
 Cohesion: 0.47
-Nodes (6): washingMachine, washingMachine, cta, description, eyebrow, title
+Nodes (6): rac, cta, description, eyebrow, title, rac
 
 ### Community 162 - "Community 162"
 Cohesion: 0.33

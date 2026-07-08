@@ -17,6 +17,7 @@ Stack: Next.js 16 App Router · React 19 · TypeScript 6 · PostgreSQL + Prisma 
 - Don't break ISR (`revalidate = 3600`) or the sitemap/robots routes.
 - Keep `<meta description>` ~150–162 chars (search engines flag under ~150 as "too short"). Set it via the builders in `lib/seo/productMeta.ts` (`buildProductMetaDescription`, `buildCategoryMetaDescription`, `buildSupportMetaDescription`) — never bloat the route translation that some pages also render as a visible subtitle.
 - SEO infrastructure lives in `lib/seo/` (`site.ts`, `productSchema.ts`, `productMeta.ts`, `keywords.ts`), `components/seo/`, `app/sitemap.ts`, `app/robots.ts`. **IndexNow** (`ops/indexnow-ping.mjs`, fired post-deploy) submits sitemap URLs to Bing/Yandex/Seznam — Google does not use it, so it has zero effect on Google Search Console.
+- **Cross-domain canonical vs zarrinac.com:** the sibling `zarrinac.com` (byte-identical replica) 308-redirects all its Hisense-replica sections here, so those consolidate into hisense automatically. Its **homepage** (`/fa`,`/en`) stays HTTP 200 as zarrinac's own front door — so keep hisense's homepage content (`app/[locale]/page.tsx` `HOME_SEO_CONTENT`) distinct from zarrinac's, or Google folds the two homepages and may pick zarrinac (seen as "Duplicate, Google chose different canonical" in GSC, 2026-07). hisense's own SEO tags (self-referential canonical + fa/en/x-default hreflang) are correct — this is a content-duplication issue on zarrinac's side, fixed by differentiating zarrinac's home.
 
 ## Commands
 
