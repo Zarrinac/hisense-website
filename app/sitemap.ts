@@ -3,7 +3,7 @@ import { FALLBACK_PRODUCTS } from '@/lib/api/products/normalizers';
 import { categoryToSlug } from '@/lib/api/products/categories';
 import { REF_PRODUCTS } from '@/content/RefProducts';
 import { routing } from '@/i18n/routing';
-import { SITE_URL, SITE_CONTENT_LAST_MODIFIED } from '@/lib/seo/site';
+import { SITE_URL, SITE_CONTENT_LAST_MODIFIED, HOME_CONTENT_LAST_MODIFIED } from '@/lib/seo/site';
 
 // Native sitemap built from the same product source the pages serve. Using the
 // content-backed product list (the API's fallback source) guarantees every URL
@@ -60,11 +60,13 @@ const priorityForPath = (path: string): number => {
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = SITE_CONTENT_LAST_MODIFIED;
   const logicalPaths = Array.from(new Set(['', ...STATIC_PATHS, ...productPaths()]));
 
   return logicalPaths.flatMap((path) => {
     const languages = buildLanguageAlternates(path);
+    // The homepage carries a fresher <lastmod> than the rest of the site so a sitemap
+    // resubmit gives Google a real change signal for the one URL that was differentiated.
+    const lastModified = path === '' ? HOME_CONTENT_LAST_MODIFIED : SITE_CONTENT_LAST_MODIFIED;
     return routing.locales.map((locale) => ({
       url: `${SITE_URL}/${locale}${path}`,
       lastModified,
