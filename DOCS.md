@@ -633,7 +633,9 @@ Stores to `/backup`, keeps the last 4 weeks, deletes older runs.
 
 ### Monitor
 
-`ops/cron/hisense-monitor.sh` runs hourly. Pipes `df`, `free`, and `pm2 jlist` output to `claude -p` for anomaly detection. Logs to `/var/log/hisense-monitor.log`.
+`ops/cron/hisense-monitor.sh` runs daily (cron `0 7 * * *`, as user `reza`). Pipes `df`, `free`, and `pm2 jlist` output to `claude -p` for anomaly detection. Logs to `/var/log/hisense-monitor.log`.
+
+**Auth:** `claude -p` needs a valid credential. Cron has a stripped environment, so the script sources `/home/reza/.hisense-monitor.env` (chmod 600, **not** committed) which exports `CLAUDE_CODE_OAUTH_TOKEN`. Mint the token on the server with `claude setup-token` (subscription OAuth token, valid ~1 year — next renewal due ~2027-07). A 401 in the log (`Invalid authentication credentials`) means the token expired or is missing.
 
 ### Ops scripts location
 

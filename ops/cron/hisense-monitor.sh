@@ -1,8 +1,9 @@
 #!/bin/bash
-# Hourly (cron) health monitor — pipes server stats to `claude -p` to flag anomalies.
+# Daily (cron) health monitor — pipes server stats to `claude -p` to flag anomalies.
 # Live copy: /usr/local/bin/hisense-monitor.sh  ·  log: /var/log/hisense-monitor.log
 # Node/claude/pm2 paths are nvm-specific to this host — update if the node version changes.
 export HOME=/home/reza
+[ -f /home/reza/.hisense-monitor.env ] && . /home/reza/.hisense-monitor.env
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 CLAUDE_BIN="/home/reza/.nvm/versions/node/v22.19.0/bin/claude"
