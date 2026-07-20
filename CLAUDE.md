@@ -35,6 +35,7 @@ Stack: Next.js 16 App Router · React 19 · TypeScript 6 · PostgreSQL + Prisma 
 | `npm run db:seed:locations`       | Seed Iran provinces/cities                |
 | `npm run db:seed:downloads`       | Seed download assets                      |
 | `npm run db:seed:representatives` | Seed service representatives              |
+| `npm run representatives:convert` | Rebuild representatives JSON from .xlsx   |
 | `npx playwright test`             | Run E2E tests                             |
 
 ## Architecture
@@ -156,6 +157,8 @@ Always use the `mediaUrl(path)` helper from `lib/mediaUrl.ts`. It switches betwe
 8. **DB is primary, JSON/content is fallback** — products (`app/api/products/route.ts`), `lib/serviceCenterSource.ts`, and `lib/iranLocationSource.ts` all query the database first. The bundled `FALLBACK_PRODUCTS`/`content/` and the JSON files in `lib/` are emergency fallbacks, not the authoritative data source.
 
 9. **Product ordering is by `position`, not insert order** — DB row order is nondeterministic and drifted between local and server. `Product.position` (indexed `@@index([category, position])`) is seeded from the `content/tvProducts.ts` array index, and the products API does `orderBy: { position: 'asc' }`. To reorder/add/remove products, edit the content array then re-seed (`npm run db:seed:products`) — the seed sets `position` from the new index **and prunes DB rows absent from content**, keeping the DB exactly in sync. Don't rely on insertion order.
+
+10. **`content/service-centers/serviceCenters.json` is generated, not hand-edited** — the source of truth is the dated spreadsheet in `public/representatives/`. Refresh with `npm run representatives:convert -- public/representatives/<file>.xlsx`, then `npm run db:seed:representatives`. Hand edits are lost on the next refresh. Details in DOCS.md → "Refreshing the representative list".
 
 ## Environment Variables
 

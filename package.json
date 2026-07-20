@@ -20,7 +20,8 @@
     "db:seed:representatives": "tsx scripts/seed-service-representatives.ts",
     "db:seed:admins": "tsx scripts/seed-admin-users.ts",
     "admin:create": "tsx scripts/create-admin.ts",
-    "logos:scan": "tsx scripts/detect-mono-logos.ts"
+    "logos:scan": "tsx scripts/detect-mono-logos.ts",
+    "representatives:convert": "node scripts/convert-representatives-xlsx.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
