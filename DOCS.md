@@ -413,9 +413,28 @@ Always use `mediaUrl(path)` from `lib/mediaUrl.ts`. It switches between `/` (loc
 The service-center finder at `/[locale]/support/find-service-center` lets users find Hisense service representatives by province and city.
 
 - **Component:** `components/service-centers/ServiceCenterFinder.tsx` — MUI Autocomplete for province, then city, then fetches and displays matching reps.
-- **Data source:** `lib/serviceCenterSource.ts` queries `ServiceRepresentative` from Postgres. Falls back to `lib/iranLocations.json` if DB is unavailable.
-- **Location data:** `lib/iranLocationSource.ts` queries `IranProvince` and `IranCity`. Same JSON fallback.
+- **Data source:** `lib/serviceCenterSource.ts` queries `ServiceRepresentative` from Postgres. Falls back to `content/service-centers/serviceCenters.json` if the DB is unavailable or the table is empty.
+- **Location data:** `lib/iranLocationSource.ts` queries `IranProvince` and `IranCity`. Falls back to `lib/iranLocations.json`.
 - **Performance:** Reduced to a single DB query (was 3 separate queries previously).
+
+### Refreshing the representative list
+
+The authoritative list arrives as a dated spreadsheet from the service department. Drop it in `public/representatives/` (gitignored — the originals live in the media folder, not the repo) and regenerate the JSON from it. Never hand-edit `serviceCenters.json`; the committed JSON is the build artifact that ships, and it is what the server seeds from, so the spreadsheet itself is not needed on the server.
+
+```bash
+npm run representatives:convert -- public/representatives/<new-file>.xlsx   # xlsx → serviceCenters.json
+npm run db:seed:representatives                                            # JSON → ServiceRepresentative table
+```
+
+`scripts/convert-representatives-xlsx.mjs` reads the workbook with a dependency-free zip/SpreadsheetML parser, so refreshing never adds a build dependency. It expects the standard 8 columns (استان، شهر، نوع فعالیت نماینده، نام و نام خانوادگی، کد نمایندگی، شماره اصلی، شماره همراه، آدرس) and throws if the header drifts. It also:
+
+- restores the leading `0` Excel strips from phone numbers, and blanks fragments shorter than 7 digits;
+- slugifies `provinceId`/`cityId` (spaces → `-`) while keeping the spaced label in `provinceName`/`cityName`;
+- **carries forward** address and phone values from the current JSON when the new sheet leaves that cell blank, so a gap in the spreadsheet can't wipe live data.
+
+Pass `--check` to verify the JSON matches a spreadsheet without writing. The seed wipes and recreates the whole table in one transaction, and `sortOrder` follows the spreadsheet row order.
+
+Because hisense and zarrinac **share one Postgres**, seeding on the server updates both sites at once.
 
 ---
 
