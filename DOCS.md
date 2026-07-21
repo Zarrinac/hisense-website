@@ -601,6 +601,31 @@ curl -sIL http://hisense-ir.com/        # expect: 301 -> https://www.hisense-ir.
 curl -sI  https://www.hisense-ir.com/   # expect: 307 -> /fa (still serves the app)
 ```
 
+### Server env vars: `.env` is the only source of truth
+
+`ecosystem.config.cjs` (server-only, gitignored) **must not** carry an `env:` block beyond `NODE_ENV`. PM2-injected vars take precedence over `.env`, so any value duplicated there silently overrides the real one.
+
+> **Incident 2026-07-21.** `ecosystem.config.cjs` held its own hardcoded copies of `DATABASE_URL`, `ADMIN_PASSWORD`, and `ADMIN_SESSION_SECRET`. When the Postgres role password and the admin password were rotated in `.env`, that block kept injecting the **old** 13-char password. Effects: Postgres auth failed (`FATAL: password authentication failed for user "reza_sf"`), so the app served **static fallback data** for ~13h (`x-data-source: fallback`), and because `authenticateAdmin()` swallows DB errors and falls through to the env fallback, **all `AdminUser` accounts became unusable** — the symptom was "correct admin passwords rejected in production but fine locally". Fixed by stripping the `env:` block down to `NODE_ENV` and restarting.
+
+Diagnostics worth reaching for when admin login misbehaves on the server:
+
+```bash
+# Is the app actually on the DB? "fallback" means Prisma can't connect.
+curl -sI http://localhost:3000/api/products | grep -i x-data-source   # expect: database
+
+# What env does the RUNNING process see (vs. what .env says)?
+pm2 jlist | node -e '…'   # compare hashes, never print secrets
+
+# Does the credential itself verify, independent of HTTP?
+npx tsx -e 'import("./lib/admin/credentials").then(m => m.authenticateAdmin("admin", process.env.ADMIN_PASSWORD))'
+```
+
+Because PM2 caches injected env, changes to the config need a full recycle — `pm2 reload` will **not** drop stale vars:
+
+```bash
+pm2 delete hisense-ir && pm2 start ecosystem.config.cjs && pm2 save
+```
+
 ### Deploy workflow
 
 **Local → Git → Server — never edit directly on the server.**
