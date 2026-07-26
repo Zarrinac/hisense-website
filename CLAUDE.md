@@ -87,6 +87,8 @@ Content source is toggled by `NEXT_PUBLIC_CONTENT_SOURCE` (`"local"` or `"remote
 
 Always use the `mediaUrl(path)` helper from `lib/mediaUrl.ts`. It switches between `/` (local) and `NEXT_PUBLIC_MEDIA_BASE_URL` (CDN) based on env. Never hardcode `/media/` paths.
 
+Printed-catalog assets (`<media>/catalog/`) are mapped to products in `lib/catalog/catalogAssets.ts`: one spread often covers a whole series or two models, so shared files are intentional. Products with no spread render no catalog section. New/re-exported spreads must go through `node ops/optimize-media.mjs --apply` (2048px width cap) and keep `CATALOG_PAGE_WIDTH`/`CATALOG_PAGE_HEIGHT` in step. Details in DOCS.md → "Printed catalog pages".
+
 ## Code Conventions
 
 ### TypeScript
