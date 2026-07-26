@@ -402,6 +402,17 @@ A product detail page (`app/[locale]/tv-hisense/[productId]/page.tsx` etc.) rend
 9. **ProductFaqSection** — FAQ accordion per product, emits `FAQPage` JSON-LD.
 10. **Breadcrumbs** — `BreadcrumbList` JSON-LD.
 
+### Printed catalog pages
+
+The scanned spreads from the printed Hisense Iran catalog plus the full PDF live in the media folder under `catalog/` (`/public/catalog/` is gitignored like every other media dir, so the files ship via `ops/upload-media.ps1`, not the repo).
+
+- **Mapping:** `lib/catalog/catalogAssets.ts` → `getProductCatalogUrl({ categorySlug, series, productId })`. Lookup is per category, keyed by `series` first and product `id` second, with separators stripped (so `RFC500` and `RFC-300` both resolve from one map).
+- **One spread can serve many products** — this is expected, not a bug: every `HRH-*TQ` split points at `catalog-hrh.jpg`, both washing machines at `catalog-wm.jpg` (it prints them side by side), and the refrigerator spreads pair models up (`catalog-270-370.jpg` = RS-370 + FS-270, `catalog-210-310.jpg` = FC-310 + FC-210).
+- **Rendering:** `components/catalog/ProductCatalogSection.tsx` sits between `SpecsSection` and `ProductFaqSection` on both detail-page implementations (`app/[locale]/products/[category]/[productId]` and `app/[locale]/refrigerator/[productId]`). It lazy-loads the spread (it is below the fold, so it never competes with the LCP hero), links it full size, and offers a per-product download plus the full PDF.
+- **Products without a spread render no section.** The resolver returns `null` and the caller skips it — currently the U7K TV (absent from this print run). `catalog-hid-t3.jpg` (HID-T3 ducted) and `catalog-whtc.jpg` (WHTC-18P window type) are on the server but have no product page yet; add the entry to `CATALOG_PAGES` when those ranges are added to the site.
+- **Resolution:** the print exports are 3425×2480; `ops/optimize-media.mjs` caps them at 2048×1483 (≈45% smaller, still legible down to the smallest Persian spec labels — checked at native size). `CATALOG_PAGE_WIDTH`/`CATALOG_PAGE_HEIGHT` must match whatever ships, so re-export → re-run the optimizer → update both constants. The full PDF is not an image and is never touched by the optimizer, so spreads can always be re-exported from it.
+- **Full-catalog download:** `FULL_CATALOG_URL` / `FULL_CATALOG_DOWNLOAD_NAME` (both from `catalogAssets.ts`) back the homepage CTA (`components/catalog/CatalogDownloadSection.tsx`, copy in `HOME_SEO_CONTENT.catalog`) and the footer "download product catalog" link (`Footer.links.catalog`). The footer entry is flagged `download: true` so it renders as a plain anchor and skips the locale prefix.
+
 ### Media URLs
 
 Always use `mediaUrl(path)` from `lib/mediaUrl.ts`. It switches between `/` (local) and `NEXT_PUBLIC_MEDIA_BASE_URL` (CDN). Never hardcode `/media/` paths in components.

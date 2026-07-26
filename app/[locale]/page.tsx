@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import HeroBanner from '@/components/hero/HeroBanner';
 import CategorySpotlights from '@/components/home/CategorySpotlights';
 import type { SpotlightCard } from '@/components/home/CategorySpotlights';
+import CatalogDownloadSection from '@/components/catalog/CatalogDownloadSection';
 import JsonLd from '@/components/seo/JsonLd';
 import { mediaUrl } from '@/lib/mediaUrl';
 import { getLanguageAlternates, getLocaleLanguage, SITE_URL, toAbsoluteUrl } from '@/lib/seo/site';
@@ -24,6 +25,13 @@ const HOME_SEO_CONTENT: Record<
     paragraphs: string[];
     trustSignals: Array<{ value: string; label: string }>;
     quickLinks: Array<{ href: string; label: string }>;
+    catalog: {
+      eyebrow: string;
+      heading: string;
+      description: string;
+      cta: string;
+      note: string;
+    };
   }
 > = {
   fa: {
@@ -48,6 +56,14 @@ const HOME_SEO_CONTENT: Record<
       { href: '/hisense-repair', label: 'خدمات پس از فروش و تعمیرات رسمی' },
       { href: '/complaint', label: 'ثبت شکایت و پیگیری' },
     ],
+    catalog: {
+      eyebrow: 'کاتالوگ محصولات',
+      heading: 'دانلود کاتالوگ کامل محصولات هایسنس',
+      description:
+        'کاتالوگ رسمی زرین نمای کاسپین شامل مشخصات فنی تلویزیون، یخچال فریزر، ماشین لباسشویی و کولر گازی خانگی و صنعتی هایسنس؛ مناسب انتخاب مدل، مقایسه ظرفیت‌ها و استعلام قبل از خرید.',
+      cta: 'دانلود کاتالوگ (PDF)',
+      note: 'فایل PDF — حدود ۱۰ مگابایت',
+    },
   },
   en: {
     title: 'Official Hisense Distributor in Iran | Zarrin Namaye Caspian',
@@ -71,6 +87,14 @@ const HOME_SEO_CONTENT: Record<
       { href: '/hisense-repair', label: 'Official service and repair' },
       { href: '/complaint', label: 'Submit a complaint' },
     ],
+    catalog: {
+      eyebrow: 'Product catalog',
+      heading: 'Download the full Hisense product catalog',
+      description:
+        'The official Zarrin Namaye Caspian catalog with technical specifications for Hisense televisions, refrigerators, washing machines, and residential and commercial air conditioners — useful for model selection, capacity comparison, and pre-purchase enquiries.',
+      cta: 'Download catalog (PDF)',
+      note: 'PDF file — about 10 MB',
+    },
   },
 };
 
@@ -224,6 +248,14 @@ export default async function HomePage() {
         title={categoryTranslations('title')}
         items={localizedSpotlights}
         locale={locale}
+      />
+      <CatalogDownloadSection
+        eyebrow={seoContent.catalog.eyebrow}
+        heading={seoContent.catalog.heading}
+        description={seoContent.catalog.description}
+        cta={seoContent.catalog.cta}
+        note={seoContent.catalog.note}
+        isRTL={isRTL}
       />
     </>
   );

@@ -15,7 +15,7 @@ export const SITE_CONTENT_LAST_MODIFIED = new Date('2026-06-06T00:00:00Z');
 // (to resolve the cross-domain "duplicate canonical" GSC issue) after the baseline
 // above, so the home URL carries its own fresher date — a targeted change signal for
 // Google to recrawl only the homepage, without falsely flagging every other URL.
-export const HOME_CONTENT_LAST_MODIFIED = new Date('2026-07-09T00:00:00Z');
+export const HOME_CONTENT_LAST_MODIFIED = new Date('2026-07-26T00:00:00Z');
 
 export type SeoBreadcrumbItem = {
   label: string;
