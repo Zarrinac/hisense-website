@@ -441,6 +441,8 @@ npm run db:seed:representatives                                            # JSO
 
 - restores the leading `0` Excel strips from phone numbers, and blanks fragments shorter than 7 digits;
 - slugifies `provinceId`/`cityId` (spaces → `-`) while keeping the spaced label in `provinceName`/`cityName`;
+- **normalizes the province label** to always carry the `استان ` prefix. Rows that omit it would otherwise sort as a second, separate block for the same province, because `sortServiceCenters` orders by `provinceName`, not `provinceId`;
+- **strips a trailing parenthetical county qualifier** from the city name (`فیض آباد(مه ولات)` → `فیض آباد`), so one city stays one entry in the city dropdown instead of splitting into two;
 - **carries forward** address and phone values from the current JSON when the new sheet leaves that cell blank, so a gap in the spreadsheet can't wipe live data.
 
 Pass `--check` to verify the JSON matches a spreadsheet without writing. The seed wipes and recreates the whole table in one transaction, and `sortOrder` follows the spreadsheet row order.
