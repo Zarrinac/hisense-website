@@ -1,7 +1,12 @@
 # Machine-local Claude tooling — not project code.
 # (Git does not support trailing inline comments, so keep these on their own lines.)
 
-# Obsidian vault UI state (window layout, regenerable)
+# Obsidian vault UI state (window layout, regenerable).
+# Do NOT open .claude/ (or any tracked directory) as an Obsidian vault: a stray
+# delete/rename in Obsidian removes the real tracked file. That happened on
+# 2026-08-05 — .claude/CLAUDE.md was deleted to the Recycle Bin and only showed
+# up as an unexplained " D" in git status. Vault removed; browse regenerable
+# output like graphify-out/ instead if a vault is ever wanted.
 .obsidian/
 
 # Skills are installed per-machine (~/.claude/skills), not via the repo
