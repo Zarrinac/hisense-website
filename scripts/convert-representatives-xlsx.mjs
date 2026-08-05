@@ -160,6 +160,25 @@ function slug(value) {
   return text(value).replace(/\s+/g, '-');
 }
 
+/**
+ * Some rows spell the province without the "استان" prefix. The published label
+ * always carries it, otherwise the same province sorts as two separate blocks
+ * in the finder (which orders by provinceName).
+ */
+function provinceLabels(value) {
+  const bare = text(value).replace(/^استان\s+/, '');
+  return { bare, full: `استان ${bare}` };
+}
+
+/**
+ * A few city cells qualify the city with its county, e.g. "فیض آباد(مه ولات)".
+ * The published label uses the bare city name so one city stays one entry in
+ * the city dropdown.
+ */
+function cityLabel(value) {
+  return text(text(value).replace(/\s*\([^)]*\)\s*$/, ''));
+}
+
 function serviceKind(value) {
   const code = /\(([A-Za-z]+)\)/.exec(String(value ?? ''))?.[1]?.toLowerCase();
   if (!code || !SERVICE_KINDS.has(code)) {
@@ -186,11 +205,10 @@ function convert(rows) {
 
   const centers = [];
   for (const row of body) {
-    const provinceRaw = text(row[0]);
-    const city = text(row[1]);
-    if (!provinceRaw || !city) continue;
+    const city = cityLabel(row[1]);
+    const { bare: provinceLabel, full: provinceFull } = provinceLabels(row[0]);
+    if (!provinceLabel || !city) continue;
 
-    const provinceLabel = provinceRaw.replace(/^استان\s+/, '');
     const provinceId = slug(provinceLabel);
     const sequence = String(centers.length + 1).padStart(4, '0');
 
@@ -198,7 +216,7 @@ function convert(rows) {
       id: `rep-${sequence}`,
       provinceId,
       cityId: `${provinceId}-${slug(city)}`,
-      provinceName: { fa: provinceRaw, en: provinceLabel },
+      provinceName: { fa: provinceFull, en: provinceLabel },
       cityName: { fa: city, en: city },
       serviceKind: serviceKind(row[2]),
       representativeName: localized(row[3]),
