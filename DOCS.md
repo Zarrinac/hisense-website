@@ -447,6 +447,8 @@ npm run db:seed:representatives                                            # JSO
 
 Pass `--check` to verify the JSON matches a spreadsheet without writing. The seed wipes and recreates the whole table in one transaction, and `sortOrder` follows the spreadsheet row order.
 
+**Watch for superseded rows.** The service department sometimes delivers a code change as an _appended_ row while leaving the old row in place — the 2026-08-2 sheet appended `HA4410115` for پیمان رشیدی کیا (ارومیه) but kept the old `HA4410109`, which would have published that rep twice under لوازم خانگی. Always diff a new sheet against the current JSON before converting; when a code changed, edit it **in place** in the spreadsheet and delete the appended duplicate. Editing in place also keeps every downstream `rep-NNNN` id stable — the ids are positional, so deleting a row instead renumbers the rest of the file and churns the whole diff.
+
 Because hisense and zarrinac **share one Postgres**, seeding on the server updates both sites at once.
 
 ---
