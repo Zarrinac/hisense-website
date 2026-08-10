@@ -692,9 +692,9 @@ Stores to `/backup`, keeps the last 4 weeks, deletes older runs.
 
 ### Monitor
 
-`ops/cron/hisense-monitor.sh` runs daily (cron `0 7 * * *`, as user `reza`). Pipes `df`, `free`, and `pm2 jlist` output to `claude -p` for anomaly detection. Logs to `/var/log/hisense-monitor.log`.
+`ops/cron/hisense-monitor.sh` runs daily (cron `0 7 * * *`, as user `reza`). Checks `df`/`free`/`pm2 jlist` directly against fixed thresholds (disk >80%, memory >90%, any PM2 process not `online`) and logs a summary (or ALERTS block) to `/var/log/hisense-monitor.log`. No external API calls — plain bash + `awk`/`python3`.
 
-**Auth:** `claude -p` needs a valid credential. Cron has a stripped environment, so the script sources `/home/reza/.hisense-monitor.env` (chmod 600, **not** committed) which exports `CLAUDE_CODE_OAUTH_TOKEN`. Mint the token on the server with `claude setup-token` (subscription OAuth token, valid ~1 year — next renewal due ~2027-07). A 401 in the log (`Invalid authentication credentials`) means the token expired or is missing.
+**History:** originally piped stats to `claude -p` for LLM-based anomaly flagging, gated by a `CLAUDE_CODE_OAUTH_TOKEN` in `/home/reza/.hisense-monitor.env`. Removed 2026-08-10: the server's public IP (`94.182.225.50`, Tehran, Iran — ISP Aria Shatel) started getting a flat `403` from `api.anthropic.com` on every request (confirmed via plain `curl`, `claude -p`, and even a fresh `claude /login` OAuth attempt) — Anthropic blocks API access from Iran per usage policy, not a token/account bug. Since the anomaly logic was simple fixed thresholds anyway, replaced with deterministic bash — no LLM dependency needed. `claude` CLI, `~/.claude/`, and `.hisense-monitor.env` were removed from the server entirely.
 
 ### Ops scripts location
 
