@@ -13,7 +13,7 @@ served by PM2 (`hisense-ir`, `ecosystem.config.cjs`) behind Apache. DB: local Po
 | Repo file                     | Live location on server             | Purpose                                                                                    |
 | ----------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------ |
 | `ops/deploy.sh`               | `/var/www/hisense-ir/deploy.sh`     | Pull → `npm ci` → `db:deploy` → `build` → `pm2 reload`                                     |
-| `ops/cron/hisense-monitor.sh` | `/usr/local/bin/hisense-monitor.sh` | Daily health check piped to `claude -p`                                                    |
+| `ops/cron/hisense-monitor.sh` | `/usr/local/bin/hisense-monitor.sh` | Daily health check, deterministic thresholds (disk/mem/PM2), no external API calls         |
 | `ops/cron/weekly-backup.sh`   | `/usr/local/bin/weekly-backup.sh`   | Weekly lean backup: `pg_dumpall` + `/etc` + app secrets, keeps 4 weeks                     |
 | `ops/sync-media.sh`           | `/usr/local/bin/sync-media.sh`      | Mirror staged media → live dir + fix owner/perms (`a+rX`)                                  |
 | `ops/upload-media.ps1`        | (runs on the Windows dev PC)        | scp upload + trigger `sync-media.sh` over ssh (key auth)                                   |
@@ -92,12 +92,13 @@ Manual equivalent (no PS script):
 
 ## Notes
 
-- `hisense-monitor.sh` hard-codes nvm node paths (`v22.19.0`) for `claude`/`pm2` — update
-  them if the server's node version changes.
-- `hisense-monitor.sh` sources `/home/reza/.hisense-monitor.env` (chmod 600, **not** in the
-  repo) for `CLAUDE_CODE_OAUTH_TOKEN` — cron has no login shell, so `claude -p` can't reach
-  the interactive credential. Mint the token with `claude setup-token` (valid ~1 year). A
-  `401 Invalid authentication credentials` line in the log = expired/missing token.
+- `hisense-monitor.sh` hard-codes the nvm node path (`v22.19.0`) for `pm2` — update it if the
+  server's node version changes.
+- **No script here may call `claude -p` or any other Anthropic API endpoint.** The server IP
+  (Iran) gets flat `403`s from `api.anthropic.com` (since ~2026-08-06), so LLM-based checks
+  fail silently. The Claude CLI, `~/.claude`, and `/home/reza/.hisense-monitor.env` (the old
+  `CLAUDE_CODE_OAUTH_TOKEN` file) were removed from the server. Keep server automation
+  deterministic — this script is the reference copy the zarrinac repo mirrors.
 - `deploy.sh` runs as `reza` (never root): a root-owned `.next` breaks PM2.
 - Deploy/DB/media workflow context lives in the repo root `CLAUDE.md` (Deployment & Ops,
   DB & Media Workflow sections).

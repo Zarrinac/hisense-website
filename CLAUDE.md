@@ -196,13 +196,13 @@ Workflow: **develop locally (Windows) → push branch → PR → merge to `main`
 
 **Server:** Ubuntu, `nexzarrin`, app at `/var/www/hisense-ir/app`, served by PM2 (`hisense-ir`, `ecosystem.config.cjs`) behind Apache.
 
-| Script (server)                     | Purpose                                                                                                                              |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `/var/www/hisense-ir/deploy.sh`     | `git pull origin main` → `npm ci` → `npm run db:deploy` → `npm run build` → `pm2 reload …` → IndexNow ping (`ops/indexnow-ping.mjs`) |
-| `/usr/local/bin/hisense-monitor.sh` | Cron: pipes `df`/`free`/`pm2 jlist` to `claude -p` for anomaly flagging → `/var/log/hisense-monitor.log`                             |
-| `/usr/local/bin/weekly-backup.sh`   | Cron: lean backup — `pg_dumpall` + `/etc` + app secrets (`.env`, `ecosystem.config.cjs`) to `/backup`, keeps last 4 weeks            |
-| `.husky/pre-commit`                 | `lint-staged` (lint + format)                                                                                                        |
-| `.husky/pre-push`                   | `git diff origin/main...HEAD \| claude -p` review; non-zero exit blocks push                                                         |
+| Script (server)                     | Purpose                                                                                                                                                                                                          |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/var/www/hisense-ir/deploy.sh`     | `git pull origin main` → `npm ci` → `npm run db:deploy` → `npm run build` → `pm2 reload …` → IndexNow ping (`ops/indexnow-ping.mjs`)                                                                             |
+| `/usr/local/bin/hisense-monitor.sh` | Cron (daily): deterministic `df`/`free`/`pm2 jlist` thresholds (disk >80%, mem >90%, PM2 not online) → `/var/log/hisense-monitor.log`. No API calls — `api.anthropic.com` 403s from this host's IP (see DOCS.md) |
+| `/usr/local/bin/weekly-backup.sh`   | Cron: lean backup — `pg_dumpall` + `/etc` + app secrets (`.env`, `ecosystem.config.cjs`) to `/backup`, keeps last 4 weeks                                                                                        |
+| `.husky/pre-commit`                 | `lint-staged` (lint + format)                                                                                                                                                                                    |
+| `.husky/pre-push`                   | `git diff origin/main...HEAD \| claude -p` review; non-zero exit blocks push                                                                                                                                     |
 
 Deploy gotcha: server runs `git restore public/sitemap-0.xml` before pull (legacy generated file causes conflicts) — the native `app/sitemap.ts` route is the source of truth now.
 
