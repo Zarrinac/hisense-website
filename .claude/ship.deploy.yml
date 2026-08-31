@@ -1,0 +1,80 @@
+# Deploy procedure for hisense-ir.com, as used by the `ship` skill.
+# Discovered from CLAUDE.md + ops/deploy.sh on 2026-08-31 and verified against
+# the live server. No secrets here — credentials live in the server's .env and
+# in ~/.ssh/config on the dev machine.
+
+target:
+  name: production
+  ssh_host: hisense-site # ~/.ssh/config alias -> reza@172.17.0.10 (Ubuntu, hostname nexzarrin)
+  app_dir: /var/www/hisense-ir/app
+  branch: main # the server only ever sits on main, and only pulls
+  process_manager: pm2
+  process_name: hisense-ir
+  web_server: apache # canonical host is https://www.hisense-ir.com
+
+# The deploy script lives OUTSIDE the repo on purpose, so a pull can never
+# rewrite the script while it is executing. ops/deploy.sh is the tracked source
+# of truth; after merging a change to it, re-sync the live copy (see sync_script).
+run:
+  command: /var/www/hisense-ir/deploy.sh
+  # Non-interactive ssh does not source ~/.bashrc, so nvm is absent from PATH.
+  # deploy.sh sources nvm itself, but anything run alongside it must do this:
+  shell_prelude: 'export NVM_DIR="$HOME/.nvm"; . "$NVM_DIR/nvm.sh"'
+  log: /var/log/hisense-deploy.log
+  timeout_seconds: 900 # a cold `npm ci` + Next build on this box runs ~5-8 min
+
+# What deploy.sh does, in order — listed so a failure can be located quickly.
+steps:
+  - git restore public/sitemap-0.xml # legacy generated file blocks the pull
+  - git pull origin main
+  - malware signature scan of postcss.config.mjs + next.config.ts (aborts on hit)
+  - npm ci # full install: the server build needs devDependencies
+  - npm run db:deploy # prisma migrate deploy
+  - rm -rf .next/cache # else ISR/Data Cache serves pre-deploy content
+  - npm run build
+  - pm2 reload ecosystem.config.cjs --update-env
+  - node ops/indexnow-ping.mjs # backgrounded, non-fatal, Google-neutral
+
+migrations:
+  command: npm run db:deploy
+  # ALWAYS check before deploying; stop and ask if anything destructive is pending.
+  preflight: npx prisma migrate status
+  # Postgres is SHARED with zarrinac.com — a schema change hits both sites.
+  shared_with: zarrinac.com
+
+# deploy.sh does NOT run seeds. Data-only refreshes (e.g. serviceCenters.json)
+# must be seeded by hand afterwards or the DB keeps serving the old list.
+seeds:
+  auto: false
+  manual: cd /var/www/hisense-ir/app && npm run db:seed:representatives
+
+health_check:
+  # Verify against the canonical public host, not localhost, so Apache + TLS are
+  # covered too. x-data-source must be `db`; `fallback` means Prisma is down and
+  # the app is serving bundled static data (and admin DB auth is bypassed).
+  urls:
+    - https://www.hisense-ir.com/fa
+    - https://www.hisense-ir.com/en
+  data_source_probe: curl -sI localhost:3000/api/products | grep -i x-data-source
+  expect_status: 200
+  retries: 3
+
+rollback:
+  # Snapshot `git rev-parse HEAD` in the app dir BEFORE deploying, then:
+  command: cd /var/www/hisense-ir/app && git reset --hard <snapshot-sha> && /var/www/hisense-ir/deploy.sh
+  note: >-
+    Confirm the rollback is healthy before reporting. PM2 caches injected env, so
+    if ecosystem.config.cjs changed, `pm2 reload` will NOT drop stale vars —
+    use `pm2 delete hisense-ir && pm2 start ecosystem.config.cjs && pm2 save`.
+
+sync_script: |
+  # Only after a PR changed ops/deploy.sh:
+  cp /var/www/hisense-ir/app/ops/deploy.sh /var/www/hisense-ir/deploy.sh
+  chmod +x /var/www/hisense-ir/deploy.sh
+
+gotchas:
+  - ecosystem.config.cjs (server-only, gitignored) must hold ONLY NODE_ENV. Vars
+    duplicated there silently override .env and never travel through a PR.
+  - Run the deploy as `reza`, never root — a root-owned .next breaks PM2.
+  - Media is promoted separately (ops/upload-media.ps1 -> ops/sync-media.sh) and
+    needs `chmod -R a+rX`, else the app hits EACCES and 503-crash-loops.
