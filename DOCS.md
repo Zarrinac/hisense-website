@@ -285,8 +285,8 @@ The root `app/page.tsx` redirects to `/fa`. All public pages live under `app/[lo
 | `/[locale]/hisense-repair`                 | `app/[locale]/hisense-repair/page.tsx`                 | Repair services                                    |
 | `/[locale]/complaint`                      | `app/[locale]/complaint/page.tsx`                      | After-sales complaint form (multi-step Zod form)   |
 | `/[locale]/survey`                         | `app/[locale]/survey/page.tsx`                         | Satisfaction survey form                           |
-| `/[locale]/support/find-service-center`    | `app/[locale]/support/find-service-center/page.tsx`    | Province/city autocomplete → service center finder |
-| `/[locale]/find-service-center`            | `app/[locale]/find-service-center/page.tsx`            | Legacy path (same feature)                         |
+| `/[locale]/find-service-center`            | `app/[locale]/find-service-center/page.tsx`            | Province/city autocomplete → service center finder |
+| `/[locale]/support/find-service-center`    | `app/[locale]/support/find-service-center/page.tsx`    | Legacy path — 308s to `/find-service-center`       |
 | `/[locale]/support/portal`                 | `app/[locale]/support/portal/page.tsx`                 | Support portal (noindex)                           |
 | `/[locale]/portal`                         | `app/[locale]/portal/page.tsx`                         | Legacy portal path (noindex)                       |
 | `/[locale]/support/request-representation` | `app/[locale]/support/request-representation/page.tsx` | Rep application form                               |
@@ -421,12 +421,13 @@ Always use `mediaUrl(path)` from `lib/mediaUrl.ts`. It switches between `/` (loc
 
 ## Service Centers
 
-The service-center finder at `/[locale]/support/find-service-center` lets users find Hisense service representatives by province and city.
+The service-center finder at `/[locale]/find-service-center` lets users find Hisense service representatives by province and city.
 
 - **Component:** `components/service-centers/ServiceCenterFinder.tsx` — MUI Autocomplete for province, then city, then fetches and displays matching reps.
 - **Data source:** `lib/serviceCenterSource.ts` queries `ServiceRepresentative` from Postgres. Falls back to `content/service-centers/serviceCenters.json` if the DB is unavailable or the table is empty.
 - **Location data:** `lib/iranLocationSource.ts` queries `IranProvince` and `IranCity`. Falls back to `lib/iranLocations.json`.
 - **Performance:** Reduced to a single DB query (was 3 separate queries previously).
+- **Temporary working-hours notice (added 2026-08-31):** a highlighted teal banner between the hero and the finder announces `ساعت کاری نمایندگان خدمات` / `Service representative working hours` above `از ساعت ۹ الی ۱۹` / `From 9:00 to 19:00` — title + hours only, no explanatory note. Copy lives in `PAGE_CONTENT[locale].workingHours` in `app/[locale]/find-service-center/page.tsx`, rendered as an `h2` (the page keeps its single `h1`). It is explicitly provisional — when the hours become permanent or change, edit both locales; to retire it, delete the two `workingHours` blocks plus the commented section in the JSX. Not mirrored into `buildLocalBusinessJsonLd`'s `openingHours` on purpose, so a temporary claim never leaks into structured data.
 
 ### Refreshing the representative list
 
