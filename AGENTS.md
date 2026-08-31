@@ -25,5 +25,5 @@ Two constraints worth knowing before you touch anything, both expanded in `CLAUD
 
 - **SEO efficiency is the top priority.** Judge every change by its SEO impact; keep one `<h1>` per
   page, keep `fa` and `en` in sync (hreflang depends on it), and don't break ISR or the sitemap.
-- **There is no test suite.** The real gates are `npm run lint`, `npx tsc --noEmit`,
-  `npm run format`, and `npm run build`. Don't cite `npx playwright test` — it cannot run.
+- **There is no test suite**, and no test dependency either. The real gates are `npm run lint`,
+  `npx tsc --noEmit`, `npm run format`, and `npm run build`. Don't cite `npx playwright test`.

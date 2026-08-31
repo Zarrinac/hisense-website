@@ -181,7 +181,7 @@ Copy `.env.example` → `.env.local` to get started.
 
 ## Testing
 
-- **There is no test suite.** No unit framework, and no E2E either: `playwright` sits in `devDependencies` but `@playwright/test` is absent and there is no config or spec file anywhere, so `npx playwright test` cannot run. Do not cite it as a gate.
+- **There is no test suite.** No unit framework and no E2E. The repo carries no test dependency at all — an unused `playwright` devDependency (no `@playwright/test`, no config, no specs, imported nowhere) was removed on 2026-08-31. Don't cite `npx playwright test`; it does not exist here.
 - Correctness relies on TypeScript strict mode, ESLint, and manual checks in both locales.
 - **The gates that actually exist:** `npm run lint`, `npx tsc --noEmit`, `npm run format`, and `npm run build`.
 - **Pre-commit:** Husky + lint-staged runs `lint` and `format` on staged files — do not bypass with `--no-verify`. This is the **only** hook in `.husky/`; there is no pre-push hook.
