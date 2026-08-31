@@ -20,7 +20,8 @@ served by PM2 (`hisense-ir`, `ecosystem.config.cjs`) behind Apache. DB: local Po
 | `ops/indexnow-ping.mjs`       | (runs from the repo on the server)  | Submits live sitemap URLs to IndexNow (Bing/Yandex/Seznam) after each deploy; non-blocking |
 
 > Not included: `ecosystem.config.cjs`, `.env` — they hold secrets and are gitignored.
-> Keep them only on the server. The husky hooks (`.husky/pre-commit`, `pre-push`) live in
+> Keep them only on the server. The husky hook (`.husky/pre-commit` — the only one; there is no
+> `pre-push` hook, despite what the docs claimed until 2026-08-31) lives in
 > the repo root already.
 
 ## Syncing to the server

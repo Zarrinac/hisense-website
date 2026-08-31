@@ -55,7 +55,6 @@ npm run dev                  # http://localhost:3000
 | `npm run db:seed:downloads`       | Seed download assets                                    |
 | `npm run logos:scan`              | Regenerate the feature-card black-icon invert manifest  |
 | `npm run db:seed:representatives` | Seed service representatives                            |
-| `npx playwright test`             | Run E2E tests                                           |
 
 ---
 
@@ -71,7 +70,7 @@ npm run dev                  # http://localhost:3000
 | Forms     | react-hook-form + Zod via @hookform/resolvers/zod                   |
 | SEO       | Hand-written JSON-LD, generateMetadata, native app/sitemap.ts route |
 | Analytics | Google Analytics 4 (via `NEXT_PUBLIC_GA_ID`), GTM noscript          |
-| Testing   | Playwright for E2E                                                  |
+| Testing   | None — no unit or E2E suite exists (see "Testing" below)            |
 | Linting   | ESLint + Prettier, enforced by Husky pre-commit (lint-staged)       |
 
 ---
@@ -366,6 +365,28 @@ Unknown/legacy roles fall back to the least-privileged role (`EDITOR`) via `norm
 
 `lib/admin/rateLimit.ts` provides in-memory, IP-based rate limiting on the login endpoint. Locks out after repeated failures.
 
+### Admin smoke test after a deploy
+
+Ported from the old `ADMIN_DEPLOYMENT.md` (removed 2026-08-31 as stale — it still claimed the admin
+adds no Prisma models, which stopped being true when `AdminUser` landed, and gave Nginx proxy
+headers for a server that runs Apache).
+
+1. Open `https://www.hisense-ir.com/admin` — it must redirect to `/admin/login`.
+2. Sign in with an **`AdminUser`** row (not `ADMIN_USERNAME`/`ADMIN_PASSWORD` — that pair is only a
+   bootstrap/outage fallback, see above).
+3. Check `/admin/complaints` and `/admin/surveys` load with data.
+4. Confirm a public page (`/fa`) still renders.
+
+**If login returns 403:** check that `NEXT_PUBLIC_SITE_URL` exactly matches the browser origin
+(`https://www.hisense-ir.com`, with the `www`). **If login fails against a DB user but the env
+fallback works**, Prisma is down — confirm with
+`curl -sI localhost:3000/api/products | grep -i x-data-source` (`fallback` means DB auth is being
+bypassed entirely) and see "Server env vars" below.
+
+Other still-true notes from that file: `ADMIN_SESSION_SECRET` must differ from `ADMIN_PASSWORD`;
+rotating it logs out every current admin session; `INTERNAL_API_BASE_URL` lets server-rendered pages
+call the app's own APIs without looping back out through public HTTPS/Apache.
+
 ### Admin utilities
 
 - `lib/admin/dashboard.ts` — aggregates stats for the dashboard view.
@@ -564,6 +585,20 @@ All JSON-LD is rendered server-side via `components/seo/JsonLd.tsx`.
 
 **Hero videos are self-hosted.** Product `heroVideoUrl`s point at first-party files under the product media folders (e.g. `products/tvs/U7K-Files/u7k-hero.mp4`), resolved via `mediaUrl()` — not third-party hotlinks. Self-hosting is what makes the `VideoObject`'s `contentUrl` a valid first-party claim for video rich results. Compress masters to web-optimized 1080p H.264 (`-crf 21 -movflags +faststart -an`, downscale 4K → 1080p) before placing them under `public/products/` (local) and the `media/` staging folder (promoted to the server via `ops/upload-media.ps1`). Keep the originals as backups outside the synced `media/` folder.
 
+### Site verification: no token is currently served
+
+**Neither search engine's verification token is present in the live HTML** (verified 2026-08-31). `app/[locale]/layout.tsx` emits `verification.google` / `msvalidate.01` only when `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` / `NEXT_PUBLIC_BING_SITE_VERIFICATION` are set, and **neither is set in the server's `.env`** — so `curl https://www.hisense-ir.com/fa | grep verification` returns nothing.
+
+The repo also once carried the HTML-file method: `public/google792b60685361c0d2.html`, containing exactly
+
+```
+google-site-verification: google792b60685361c0d2.html
+```
+
+That file existed **only** on the orphaned `dev` branch, never on `main`, so it has never been deployed — `https://www.hisense-ir.com/google792b60685361c0d2.html` returns **404**. The token is preserved here because `dev` was deleted on 2026-08-31; nothing else records it.
+
+GSC and Bing Webmaster Tools evidently remain verified by some other means (most likely a DNS TXT record at IONOS, or a verification that simply persists from an earlier method). **Verification is therefore unowned by this repo:** if the other method ever lapses, the property unverifies and GSC data stops — which matters, since SEO is this project's top priority. Re-arming is a one-line change once the preferred method is chosen: set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` in the server `.env` (meta-tag method, survives redeploys), or restore the file above to `public/`. Check the active method in GSC → Settings → Ownership verification before changing anything.
+
 ### SEO copy for category pages
 
 `lib/seo/categorySeoContent.ts` contains long-form SEO copy and FAQ entries for each category page. Targets purchase-intent long-tail keywords: خرید/قیمت/نصب/قطعات یدکی. Rendered by `components/seo/CategorySeoSection.tsx`.
@@ -667,7 +702,13 @@ develop locally (Windows)
 ### Husky git hooks
 
 - **pre-commit** (`.husky/pre-commit`): runs `lint-staged` → ESLint + Prettier on staged files.
-- **pre-push** (`.husky/pre-push`): pipes `git diff origin/main...HEAD` to `claude -p` for an automated code review. Non-zero exit blocks the push. Do not bypass with `--no-verify`.
+- **pre-commit is the only hook.** A `pre-push` hook that piped `git diff origin/main...HEAD` to `claude -p` for an automated review was documented here for months but **does not exist in `.husky/`** — removed at some point without the docs following. It would not work on the server anyway: `api.anthropic.com` returns 403 from this host's IP (see "Daily monitor" below). Do not re-add it without a working transport.
+
+### Testing
+
+There is **no test suite** — neither unit nor E2E. `playwright` is listed in `devDependencies`, but `@playwright/test` (which provides the `test` runner) is absent and the repo contains no `playwright.config.*` and no spec files, so the long-documented `npx playwright test` command cannot run. The dependency is unused by any code in the repo.
+
+The gates that actually exist and are run before every ship: `npm run lint`, `npx tsc --noEmit`, `npm run format` / `prettier --check`, and `npm run build` (the authoritative one, executed on the server by `deploy.sh`). Correctness otherwise relies on TypeScript strict mode and manual verification in both locales.
 
 ### Media workflow
 
