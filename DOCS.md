@@ -585,7 +585,7 @@ All JSON-LD is rendered server-side via `components/seo/JsonLd.tsx`.
 
 **Hero videos are self-hosted.** Product `heroVideoUrl`s point at first-party files under the product media folders (e.g. `products/tvs/U7K-Files/u7k-hero.mp4`), resolved via `mediaUrl()` — not third-party hotlinks. Self-hosting is what makes the `VideoObject`'s `contentUrl` a valid first-party claim for video rich results. Compress masters to web-optimized 1080p H.264 (`-crf 21 -movflags +faststart -an`, downscale 4K → 1080p) before placing them under `public/products/` (local) and the `media/` staging folder (promoted to the server via `ops/upload-media.ps1`). Keep the originals as backups outside the synced `media/` folder.
 
-### Site verification: no token is currently served
+### Site verification: DNS TXT, not a token in the HTML
 
 **Neither search engine's verification token is present in the live HTML** (verified 2026-08-31). `app/[locale]/layout.tsx` emits `verification.google` / `msvalidate.01` only when `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` / `NEXT_PUBLIC_BING_SITE_VERIFICATION` are set, and **neither is set in the server's `.env`** — so `curl https://www.hisense-ir.com/fa | grep verification` returns nothing.
 
@@ -597,7 +597,13 @@ google-site-verification: google792b60685361c0d2.html
 
 That file existed **only** on the orphaned `dev` branch, never on `main`, so it has never been deployed — `https://www.hisense-ir.com/google792b60685361c0d2.html` returns **404**. The token is preserved here because `dev` was deleted on 2026-08-31; nothing else records it.
 
-GSC and Bing Webmaster Tools evidently remain verified by some other means (most likely a DNS TXT record at IONOS, or a verification that simply persists from an earlier method). **Verification is therefore unowned by this repo:** if the other method ever lapses, the property unverifies and GSC data stops — which matters, since SEO is this project's top priority. Re-arming is a one-line change once the preferred method is chosen: set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` in the server `.env` (meta-tag method, survives redeploys), or restore the file above to `public/`. Check the active method in GSC → Settings → Ownership verification before changing anything.
+**The active ownership method is a DNS TXT record** (confirmed by the site owner, 2026-08-31; DNS is at IONOS — see "DNS & domain"). That is why the property stays verified with no token in the HTML and no verification file on disk, and it is the most durable of the methods: it survives redeploys, env changes and this repo entirely.
+
+**Consequences to respect:**
+
+- **Do not "fix" the missing meta tag.** Setting `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` is unnecessary and would add a second, redundant method. The env hooks in `layout.tsx` stay in place as an option, deliberately unused.
+- **The DNS TXT record is load-bearing for Search Console access.** Do not prune "unused" TXT records at IONOS — removing it unverifies the property and GSC data stops, which matters given SEO is this project's top priority. Treat it like the A records documented under "DNS & domain".
+- The `public/google792b60685361c0d2.html` token above is kept only as a historical record; it is not needed and should not be restored.
 
 ### SEO copy for category pages
 
@@ -706,7 +712,7 @@ develop locally (Windows)
 
 ### Testing
 
-There is **no test suite** — neither unit nor E2E. `playwright` is listed in `devDependencies`, but `@playwright/test` (which provides the `test` runner) is absent and the repo contains no `playwright.config.*` and no spec files, so the long-documented `npx playwright test` command cannot run. The dependency is unused by any code in the repo.
+There is **no test suite** — neither unit nor E2E, and no test dependency. A `playwright` devDependency sat here unused for months (no `@playwright/test`, which is the package that actually provides the `test` runner; no `playwright.config.*`; no spec files; imported by nothing), making the long-documented `npx playwright test` command impossible to run. **It was removed on 2026-08-31.** The two `@playwright/test` strings still in `package-lock.json` are Next.js's own _optional peer dependency_ declaration — not ours; leave them.
 
 The gates that actually exist and are run before every ship: `npm run lint`, `npx tsc --noEmit`, `npm run format` / `prettier --check`, and `npm run build` (the authoritative one, executed on the server by `deploy.sh`). Correctness otherwise relies on TypeScript strict mode and manual verification in both locales.
 
@@ -777,7 +783,13 @@ pm2 start hisense-ir
 - **Security headers:** CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy set in `next.config.ts`.
 - **No `new PrismaClient()`** in pages/routes — always import the singleton from `lib/db.ts`.
 - **Input validation** at API boundaries: Zod schemas for complaints and surveys; never trust raw body data.
-- **PostCSS malware note (2026-06-06):** `postcss.config.mjs` was found to contain blockchain/C2 malware and was removed. If you inherit this repo, rotate all secrets and audit the upstream `Zarrinac` branch.
+- **PostCSS malware (2026-06-06, remediated; origin branches cleaned 2026-08-31):** `postcss.config.mjs` was found to contain blockchain/C2 malware and was removed on `main` (commit `54cbd87`). A `prebuild` guard (`scripts/scan-build-config.mjs`, wired as npm `prebuild`) now aborts the build if the signature reappears — `deploy.sh` scans as well.
+
+  A branch audit on 2026-08-31 found the payload **still hosted on `origin`** in 8 branches that `main`'s cleanup never touched: `chore/gitignore-graphify-out`, `deps-update`, `docs/db-promotion-gotchas`, `media-sync-script`, `ops-scripts`, `optimisation`, `product-faqs`, `refrigerator-banner-webp`. All 8 carried the identical 8438-byte blob `03dc4bcf` (clean is **116 B**, blob `6a83185b`), payload concealed past whitespace padding. All 8 were **orphan root commits** — no parent, whole-tree snapshots, unsigned, authored `+0330` but committed from a `+0100` host — i.e. forged twins of work already merged properly, the same mechanism as the dcode intrusion. **All 8 were deleted from origin on 2026-08-31**; blob `03dc4bcf` is now unreachable from every ref.
+
+  **Still true and worth knowing:** the _pre-remediation_ infected blob (`73adcc5d`, 5836 B) remains in `main`'s own history, because every commit before `54cbd87` legitimately contains it. That cannot be removed without rewriting `main`'s history, which nobody should do casually — the `prebuild` guard is the mitigation. A checkout of any pre-June-2026 commit will therefore put an infected `postcss.config.mjs` on disk; don't build from one.
+
+  If you inherit this repo: rotate all secrets, keep the `prebuild` guard, and keep force-push and deletion blocked on `main`.
 
 ---
 
