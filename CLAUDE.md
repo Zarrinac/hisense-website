@@ -1,7 +1,7 @@
 # Hisense Iran Website — Claude Code Guide
 
 Marketing + admin site for Hisense Iran (hisense-ir.com).
-Stack: Next.js 16 App Router · React 19 · TypeScript 6 · PostgreSQL + Prisma 7 · next-intl · Tailwind CSS v4 · MUI 9 · Zod · React Hook Form · Playwright.
+Stack: Next.js 16 App Router · React 19 · TypeScript 6 · PostgreSQL + Prisma 7 · next-intl · Tailwind CSS v4 · MUI 9 · Zod · React Hook Form.
 
 ## Primary Objective: SEO
 
@@ -36,7 +36,6 @@ Stack: Next.js 16 App Router · React 19 · TypeScript 6 · PostgreSQL + Prisma 
 | `npm run db:seed:downloads`       | Seed download assets                      |
 | `npm run db:seed:representatives` | Seed service representatives              |
 | `npm run representatives:convert` | Rebuild representatives JSON from .xlsx   |
-| `npx playwright test`             | Run E2E tests                             |
 
 ## Architecture
 
@@ -182,9 +181,10 @@ Copy `.env.example` → `.env.local` to get started.
 
 ## Testing
 
-- **E2E:** Playwright — `npx playwright test`
-- **No unit test framework** — correctness relies on TypeScript strict mode and ESLint
-- **Pre-commit:** Husky + lint-staged runs `lint` and `format` automatically on staged files — do not bypass with `--no-verify`
+- **There is no test suite.** No unit framework, and no E2E either: `playwright` sits in `devDependencies` but `@playwright/test` is absent and there is no config or spec file anywhere, so `npx playwright test` cannot run. Do not cite it as a gate.
+- Correctness relies on TypeScript strict mode, ESLint, and manual checks in both locales.
+- **The gates that actually exist:** `npm run lint`, `npx tsc --noEmit`, `npm run format`, and `npm run build`.
+- **Pre-commit:** Husky + lint-staged runs `lint` and `format` on staged files — do not bypass with `--no-verify`. This is the **only** hook in `.husky/`; there is no pre-push hook.
 
 ## Git
 
@@ -202,7 +202,8 @@ Workflow: **develop locally (Windows) → push branch → PR → merge to `main`
 | `/usr/local/bin/hisense-monitor.sh` | Cron (daily): deterministic `df`/`free`/`pm2 jlist` thresholds (disk >80%, mem >90%, PM2 not online) → `/var/log/hisense-monitor.log`. No API calls — `api.anthropic.com` 403s from this host's IP (see DOCS.md) |
 | `/usr/local/bin/weekly-backup.sh`   | Cron: lean backup — `pg_dumpall` + `/etc` + app secrets (`.env`, `ecosystem.config.cjs`) to `/backup`, keeps last 4 weeks                                                                                        |
 | `.husky/pre-commit`                 | `lint-staged` (lint + format)                                                                                                                                                                                    |
-| `.husky/pre-push`                   | `git diff origin/main...HEAD \| claude -p` review; non-zero exit blocks push                                                                                                                                     |
+
+The whole procedure — ssh alias, ordered steps, migrate preflight, health check, rollback — is recorded machine-readably in `.claude/ship.deploy.yml`; `ops/deploy.sh` is the tracked source of the server script.
 
 Deploy gotcha: server runs `git restore public/sitemap-0.xml` before pull (legacy generated file causes conflicts) — the native `app/sitemap.ts` route is the source of truth now.
 
