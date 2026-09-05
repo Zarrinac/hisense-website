@@ -471,6 +471,8 @@ Pass `--check` to verify the JSON matches a spreadsheet without writing. The see
 
 **Watch for superseded rows.** The service department sometimes delivers a code change as an _appended_ row while leaving the old row in place — the 2026-08-2 sheet appended `HA4410115` for پیمان رشیدی کیا (ارومیه) but kept the old `HA4410109`, which would have published that rep twice under لوازم خانگی. Always diff a new sheet against the current JSON before converting; when a code changed, edit it **in place** in the spreadsheet and delete the appended duplicate. Editing in place also keeps every downstream `rep-NNNN` id stable — the ids are positional, so deleting a row instead renumbers the rest of the file and churns the whole diff.
 
+**Delta sheets.** Sometimes the department sends only the changed rows instead of a full list (e.g. `new-rep-changes-20260905.xlsx`, two rows). A delta sheet is never converted directly — the converter always rebuilds the whole JSON from one workbook. Apply the rows to the latest dated workbook in Excel, save it under a new dated name (`list-of-representatives-2026-09.xlsx`), and convert that. A termination arrives as `فسخ <KIND>` in the activity column (2026-09: `فسخ TV` for `LCD0306`, ارومیه) — delete that row; the converter throws on it, since `serviceKind` only accepts a parenthesised `(TV|HA|RAC|CAC|VRF)` code. New reps are appended at the end of the workbook, matching how earlier additions were handled.
+
 Because hisense and zarrinac **share one Postgres**, seeding on the server updates both sites at once.
 
 ---
