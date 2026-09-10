@@ -438,6 +438,24 @@ The scanned spreads from the printed Hisense Iran catalog plus the full PDF live
 
 Always use `mediaUrl(path)` from `lib/mediaUrl.ts`. It switches between `/` (local) and `NEXT_PUBLIC_MEDIA_BASE_URL` (CDN). Never hardcode `/media/` paths in components.
 
+**The rule is media-store vs `public/`, not "always call `mediaUrl`".** Assets that live in the media store (`banner/`, `products/`, `tv-banner/`, `representatives/`, `catalog/`, `downloads/` — all gitignored out of `public/` and promoted with `ops/upload-media.ps1`) **must** go through `mediaUrl()`. Assets that are genuinely committed under `public/` — notably `public/icons/*` — **must not**: production sets `NEXT_PUBLIC_MEDIA_BASE_URL=/media`, so routing an `icons/` path through `mediaUrl()` would push it to a directory that does not exist. This is why `buildLocalBusinessJsonLd`'s `logo` stays a bare `${SITE_URL}/icons/hisense-logo-full.svg` while its `image` is wrapped.
+
+**This applies to metadata and JSON-LD too, where a 404 is invisible.** A hand-built `` `${SITE_URL}/banner/…` `` in `generateMetadata` or a schema builder renders nothing on screen, so a broken share image or `LocalBusiness.image` can survive indefinitely. Fixed 2026-09-10 (found first in the zarrinac replica, ported back here): the homepage `og:image` asked for a `.jpg` that never existed, and `app/[locale]/layout.tsx` + `lib/seo/localBusiness.ts` hand-built URLs that dropped the `/media` prefix. Verify metadata image URLs by requesting them, not by loading the page:
+
+```bash
+curl -sS https://www.hisense-ir.com/fa | grep -oE '<meta property="og:image" content="[^"]*"'
+curl -sS https://www.hisense-ir.com/fa/contact-us | grep -oE '"image":"[^"]*banner[^"]*"'
+# then curl -I whatever those emit — all must be 200
+```
+
+### Homepage hero banners
+
+`components/hero/HeroBanner.tsx` holds the carousel's `BANNERS` array; array order is slide order, and every slide is `priority`/`loading="eager"`, so **slide 1 is the LCP** — put the campaign that should load first at the top of the array. Container aspect ratios are `aspect-9/16` under 768px, `aspect-video` to 1024px, then `aspect-21/9`, all with `object-cover`.
+
+**That mobile `9/16` box is the constraint on new artwork.** Every banner needs a portrait mobile variant in the 0.56–0.75 aspect range (existing ones are 750×1200, 828×1242, 941×1672). A square social/Instagram export (1:1) is _not_ usable: `object-cover` scales it 1.78× and crops ~44% off each side, cutting the composition in half. Padding a square out to 9:16 was tried and rejected — a blurred or edge-stretched backdrop leaves a visible seam or a large dead band. Ask for a real 9:16 export instead. Desktop variants should be ≥1920 wide to match the rest of the set.
+
+Prep new banners as `.webp` (max width 2048, quality 80) into **both** `media/banner/` and `public/banner/`, then promote with `ops/upload-media.ps1`. `ops/optimize-media.mjs` preserves format, so it will not convert a `.jpg` source for you — convert first, then let the optimizer confirm the result is within policy (it only scans files over 150KB).
+
 ---
 
 ## Service Centers
