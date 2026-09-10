@@ -27,6 +27,12 @@ const BANNERS: Banner[] = [
     alt: 'Hisense RGB MiniLED television in a modern open-plan living room',
   },
   {
+    id: 'banner-09',
+    desktop: bannerAsset('Fix-Banner-09.webp'),
+    mobile: bannerAsset('Fix-Banner-09-mobile.webp'),
+    alt: 'Hisense Space refrigerator range with large capacity and Total No Frost',
+  },
+  {
     id: 'banner-1',
     desktop: bannerAsset('Fix-Banner-02-Back.webp'),
     mobile: bannerAsset('Fix-Banner-02-Back-mobile.webp'),
