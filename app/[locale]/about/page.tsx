@@ -5,8 +5,10 @@ import type { Locale } from '@/i18n/routing';
 import { getAboutContent } from '@/content/about';
 import type { AboutImageKey, AboutPageContent } from '@/content/about/types';
 import JsonLd from '@/components/seo/JsonLd';
+import { buildVideoObjectJsonLd } from '@/lib/seo/productSchema';
 import OfficialLinksSection from '@/components/seo/OfficialLinksSection';
 import PageBreadcrumbs from '@/components/seo/PageBreadcrumbs';
+import MediaVideoSection from '@/components/video/MediaVideoSection';
 import { mediaUrl } from '@/lib/mediaUrl';
 import {
   createBreadcrumbItems,
@@ -22,6 +24,12 @@ const OG_LOCALE_MAP: Record<Locale, string> = {
 };
 
 const aboutAsset = (path: string) => mediaUrl(`/images/${path}`);
+
+// Self-hosted brand film: first-party media-store paths, so the page can claim it
+// in VideoObject JSON-LD. Click-to-play with audio — it is a 100s narrative film,
+// not a decorative loop, so it never autoplays.
+const BRAND_FILM_SRC = '/images/hisense-brand-film.mp4';
+const BRAND_FILM_POSTER = '/images/hisense-brand-film-poster.webp';
 
 const ABOUT_IMAGES: Record<AboutImageKey, string> = {
   factory: aboutAsset('factory.png'),
@@ -101,6 +109,14 @@ export default async function AboutPage({ params }: AboutPageProps) {
       '@id': `${SITE_URL}#organization`,
     },
   };
+  const videoJsonLd = content.video
+    ? buildVideoObjectJsonLd({
+        name: content.video.title,
+        description: content.video.description,
+        contentUrl: mediaUrl(BRAND_FILM_SRC),
+        thumbnailUrl: mediaUrl(BRAND_FILM_POSTER),
+      })
+    : null;
   const officialLinks =
     locale === 'fa'
       ? {
@@ -172,6 +188,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
   return (
     <div className="space-y-16 bg-(--background-color) pb-20 pt-10">
       <JsonLd data={aboutSchema} />
+      {videoJsonLd && <JsonLd data={videoJsonLd} />}
       <PageBreadcrumbs items={breadcrumbItems} locale={locale} className="-mt-5 pt-0" />
       <section className="relative isolate overflow-hidden px-6 py-16 text-(--hero-title-color) sm:py-24">
         {heroImage && (
@@ -258,6 +275,18 @@ export default async function AboutPage({ params }: AboutPageProps) {
             </div>
           </div>
         </section>
+      )}
+
+      {content.video && (
+        <MediaVideoSection
+          mode="feature"
+          src={BRAND_FILM_SRC}
+          poster={BRAND_FILM_POSTER}
+          eyebrow={content.video.eyebrow}
+          title={content.video.title}
+          description={content.video.description}
+          label={content.video.label}
+        />
       )}
 
       {content.sections.map((section, index) => {

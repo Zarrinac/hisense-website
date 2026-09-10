@@ -456,6 +456,30 @@ curl -sS https://www.hisense-ir.com/fa/contact-us | grep -oE '"image":"[^"]*bann
 
 Prep new banners as `.webp` (max width 2048, quality 80) into **both** `media/banner/` and `public/banner/`, then promote with `ops/upload-media.ps1`. `ops/optimize-media.mjs` preserves format, so it will not convert a `.jpg` source for you — convert first, then let the optimizer confirm the result is within policy (it only scans files over 150KB).
 
+**A 1:1 source can still be salvaged by cropping, if it was composed for it.** The 2026-09-10 re-export of banner 09 came back as a 1254x1254 square but recomposed with the headline and product centred, so a straight centre-crop to 9:16 (`705x1253`, no padding, no upscale) kept the headline, the hero product and all six feature icons. Pre-crop to the displayed aspect rather than shipping the square — `object-cover` would crop identically, so the extra 44% of pixels is pure waste. Check the crop by eye before shipping it; a square composed for Instagram (subject filling the frame edge to edge) will not survive this.
+
+### Self-hosted video
+
+`components/video/MediaVideoSection.tsx` renders both video placements. Two modes:
+
+- `ambient` — `autoPlay loop muted playsInline`, no controls, `preload="metadata"`. Decorative motion, so it must stay silent and must not carry information the page does not also state in text. Used on `/[locale]/products/rac`, which otherwise has only the text `RouteHero`.
+- `feature` — `controls`, audio, `preload="none"` so the bytes are only fetched when a visitor chooses to play. Used for the brand film on `/[locale]/about`.
+
+Both emit `VideoObject` JSON-LD via `buildVideoObjectJsonLd`, which is only a valid first-party claim because the files are self-hosted under the media store. The component takes media-store paths and calls `mediaUrl()` itself — never pass it an already-resolved URL. `<video>` has no `alt`, so every use must pass `label` (rendered as `aria-label`).
+
+**Encoding targets** (`ffmpeg`, H.264 + `-movflags +faststart`, `yuv420p`):
+
+| Use          | Settings                               | Result                                                           |
+| ------------ | -------------------------------------- | ---------------------------------------------------------------- |
+| Ambient loop | 1080p, `-crf 21 -preset slow -an`      | `rac-airflow-hero.mp4`, 11.6s → 3.5MB                            |
+| Feature film | 720p, `-crf 25 -preset slow`, AAC 112k | `hisense-brand-film.mp4`, 100s → 37.7MB (from a 173MB 4K master) |
+
+Strip audio (`-an`) only for ambient loops. A narrative film keeps its audio, and 720p is the right target for one — 1080p of fast-cut sports footage came out at 54MB even at `-crf 27`, which is too heavy for the Iranian mobile audience.
+
+**Where video files may live:** only under a path that `.gitignore` already excludes from `public/` (`products/`, `images/`, `banner/`, …), because local dev serves them from `public/` and the media store is promoted separately. The brand film sits at `media/images/hisense-brand-film.mp4` for exactly this reason — a `media/about/` folder would have mirrored to an untracked `public/about/` and committed a 37MB binary into git.
+
+**Trim footage that names a product Hisense Iran does not sell.** The AC source clip ends on a "Fresh Master X700" card; that model is not in the catalogue, so the clip is cut at 11.6s to the model-agnostic product footage.
+
 ---
 
 ## Service Centers
