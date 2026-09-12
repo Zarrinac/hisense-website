@@ -70,7 +70,7 @@ npm run dev                  # http://localhost:3000
 | Forms     | react-hook-form + Zod via @hookform/resolvers/zod                   |
 | SEO       | Hand-written JSON-LD, generateMetadata, native app/sitemap.ts route |
 | Analytics | Google Analytics 4 (via `NEXT_PUBLIC_GA_ID`), GTM noscript          |
-| Testing   | None — no unit or E2E suite exists (see "Testing" below)            |
+| Testing   | `npm test` (node:test) covers build-time data scripts; no app suite |
 | Linting   | ESLint + Prettier, enforced by Husky pre-commit (lint-staged)       |
 
 ---
@@ -505,7 +505,7 @@ npm run db:seed:representatives                                            # JSO
 
 - restores the leading `0` Excel strips from phone numbers, and blanks fragments shorter than 7 digits;
 - slugifies `provinceId`/`cityId` (spaces → `-`) while keeping the spaced label in `provinceName`/`cityName`;
-- **normalizes the province label** to always carry the `استان ` prefix. Rows that omit it would otherwise sort as a second, separate block for the same province, because `sortServiceCenters` orders by `provinceName`, not `provinceId`;
+- **canonicalizes the province label** against `lib/iranLocations.json` (`scripts/province-names.mjs`) and republishes it with the `استان ` prefix. A missing prefix, an Arabic `ك`/`ي` for the Persian `ک`/`ی`, and stray or missing spaces are all folded away; anything that still does not match a real province **throws**, naming the row and the closest canonical match. That matters because `sortServiceCenters` orders by `provinceName`, not `provinceId`, so an unnoticed variant used to publish the same province as two separate blocks;
 - **strips a trailing parenthetical county qualifier** from the city name (`فیض آباد(مه ولات)` → `فیض آباد`), so one city stays one entry in the city dropdown instead of splitting into two;
 - **carries forward** address and phone values from the current JSON when the new sheet leaves that cell blank, so a gap in the spreadsheet can't wipe live data.
 
@@ -515,7 +515,15 @@ Pass `--check` to verify the JSON matches a spreadsheet without writing. The see
 
 **Delta sheets.** Sometimes the department sends only the changed rows instead of a full list (`new-rep-changes-20260905.xlsx`, two rows; `new-rep-changes-20260912.xlsx`, five additions plus two terminations). A delta sheet is never converted directly — the converter always rebuilds the whole JSON from one workbook. Apply the rows to the latest dated workbook in Excel, save it under a new dated name (latest: `list-of-representatives-2026-09-4.xlsx`), and convert that. A termination arrives as `فسخ` in the activity column (2026-09-05: `فسخ TV` for `LCD0306`, ارومیه; 2026-09-12: `HA6110142` + `H6110142`, اندیکا) — delete that row; the converter throws on it, since `serviceKind` only accepts a parenthesised `(TV|HA|RAC|CAC|VRF)` code. New reps are appended at the end of the workbook, matching how earlier additions were handled.
 
-**Province labels are canonical in `lib/iranLocations.json` — match it exactly.** The workbook is retyped by hand, so a province can arrive spelled differently from the rest of the sheet. `provinceId` is only a slug of the label and `cityId` is `<provinceId>-<city>`, so a one-character difference splits a province into two blocks in the finder's dropdown and moves every city id under it. The finder never joins `IranProvince` — it groups on the label the sheet carries — which is exactly why the sheet has to be right. Before converting, check any new or edited province cell against `lib/iranLocations.json` and fix the **sheet**, not the JSON.
+**Province labels are canonical in `lib/iranLocations.json`, and the converter enforces it.** The workbook is retyped by hand, so a province can arrive spelled differently from the rest of the sheet. `provinceId` is only a slug of the label and `cityId` is `<provinceId>-<city>`, so a one-character difference splits a province into two blocks in the finder's dropdown and moves every city id under it. Since **2026-09-12** a non-canonical province aborts the conversion instead of quietly minting a new slug:
+
+```
+Error: Unknown province "استان سیستان بلوچستان" (row 738). Province names are canonical in
+lib/iranLocations.json — fix the spreadsheet, not the JSON. Closest matches:
+"سیستان و بلوچستان" (distance 1), "خوزستان" (distance 9), "گلستان" (distance 9).
+```
+
+Fix the **sheet**, not the JSON — then re-run the converter. The guard folds away formatting noise (prefix, Arabic letter forms, spacing) but deliberately refuses to guess at a wrong letter or a missing word, which is how both historical typos shipped. `npm test` covers the folding rules.
 
 Two provinces carried a wrong label from the original import, both corrected on **2026-09-12**:
 
@@ -767,9 +775,17 @@ develop locally (Windows)
 
 ### Testing
 
-There is **no test suite** — neither unit nor E2E, and no test dependency. A `playwright` devDependency sat here unused for months (no `@playwright/test`, which is the package that actually provides the `test` runner; no `playwright.config.*`; no spec files; imported by nothing), making the long-documented `npx playwright test` command impossible to run. **It was removed on 2026-08-31.** The two `@playwright/test` strings still in `package-lock.json` are Next.js's own _optional peer dependency_ declaration — not ours; leave them.
+There is **no app test suite** — no component, route or E2E tests — and **no test dependency**. A `playwright` devDependency sat here unused for months (no `@playwright/test`, which is the package that actually provides the `test` runner; no `playwright.config.*`; no spec files; imported by nothing), making the long-documented `npx playwright test` command impossible to run. **It was removed on 2026-08-31.** The two `@playwright/test` strings still in `package-lock.json` are Next.js's own _optional peer dependency_ declaration — not ours; leave them.
 
-The gates that actually exist and are run before every ship: `npm run lint`, `npx tsc --noEmit`, `npm run format` / `prettier --check`, and `npm run build` (the authoritative one, executed on the server by `deploy.sh`). Correctness otherwise relies on TypeScript strict mode and manual verification in both locales.
+**`npm test` does exist** and adds no dependency: it runs Node's built-in runner over `scripts/**/*.test.mjs`.
+
+```bash
+npm test          # node --test "scripts/**/*.test.mjs"
+```
+
+Its scope is deliberately narrow — the **build-time data scripts**, where a silent mistake gets baked into committed JSON and then seeded into the shared database. Today that means the representative converter's province canonicalization (`scripts/province-names.test.mjs`: the canonical list round-trips, the `استان ` prefix and Arabic letter forms fold, both historical province typos now throw, a blank cell still yields a skippable row, and the committed `serviceCenters.json` uses only canonical names). Use `node:test` + `node:assert` for anything added here; the point is that a converter change can be proven without dragging a test framework into the project.
+
+The gates run before every ship: `npm run lint`, `npx tsc --noEmit`, `npm run format` / `prettier --check`, `npm test`, and `npm run build` (the authoritative one, executed on the server by `deploy.sh`). Correctness outside the data scripts relies on TypeScript strict mode and manual verification in both locales.
 
 ### Media workflow
 
