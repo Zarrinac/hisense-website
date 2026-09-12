@@ -15,6 +15,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
+import { canonicalizeProvince } from './province-names.mjs';
 
 /* ---------------------------------------------------------------- xlsx read */
 
@@ -161,13 +162,16 @@ function slug(value) {
 }
 
 /**
- * Some rows spell the province without the "استان" prefix. The published label
- * always carries it, otherwise the same province sorts as two separate blocks
- * in the finder (which orders by provinceName).
+ * Province labels are canonicalized against lib/iranLocations.json, so a
+ * retyped cell can never mint a new province slug: the "استان" prefix, Arabic
+ * letter forms and stray spaces are folded away, and anything that still does
+ * not match a real province throws (see scripts/province-names.mjs). The
+ * published label always carries the prefix, otherwise the same province sorts
+ * as two separate blocks in the finder (which orders by provinceName).
  */
-function provinceLabels(value) {
-  const bare = text(value).replace(/^استان\s+/, '');
-  return { bare, full: `استان ${bare}` };
+function provinceLabels(value, context) {
+  const bare = canonicalizeProvince(value, context);
+  return { bare, full: bare && `استان ${bare}` };
 }
 
 /**
@@ -204,9 +208,10 @@ function convert(rows) {
   });
 
   const centers = [];
-  for (const row of body) {
+  for (const [index, row] of body.entries()) {
     const city = cityLabel(row[1]);
-    const { bare: provinceLabel, full: provinceFull } = provinceLabels(row[0]);
+    // The header is row 1, so body[0] is spreadsheet row 2.
+    const { bare: provinceLabel, full: provinceFull } = provinceLabels(row[0], `row ${index + 2}`);
     if (!provinceLabel || !city) continue;
 
     const provinceId = slug(provinceLabel);
