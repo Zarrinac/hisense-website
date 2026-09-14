@@ -642,7 +642,7 @@ Rules to keep Google happy:
 - Never `Disallow` the icon paths in `app/robots.ts`; Googlebot-Image must be able to fetch them.
 - Same favicon site-wide — declaring it once in the root layout guarantees that.
 - After a deploy, the icon only appears once Google **recrawls the home page**: URL Inspection → Request indexing on `https://www.hisense-ir.com/` and `/fa`. Expect days-to-weeks, not minutes.
-- `app/layout.tsx` is byte-identical with the zarrinac repo — port this change there too (zarrinac currently ships the _same_ `favicon.ico` as hisense, so it will render the Hisense mark unless given its own).
+- `app/layout.tsx` is byte-identical with the zarrinac repo — port any change there too. zarrinac.com and znci.ir deliberately keep **this** repo's `favicon.ico` for now (decision of 2026-09-14: declaring an icon beats declaring none while the owner prepares dedicated marks). That is an intentional temporary state on their side, not an open task on this one — hisense's own icon is correct and final.
 
 ### JSON-LD structured data
 
@@ -802,6 +802,15 @@ Its scope is deliberately narrow — the **build-time data scripts**, where a si
 
 The gates run before every ship: `npm run lint`, `npx tsc --noEmit`, `npm run format` / `prettier --check`, `npm test`, and `npm run build` (the authoritative one, executed on the server by `deploy.sh`). Correctness outside the data scripts relies on TypeScript strict mode and manual verification in both locales.
 
+**Don't be fooled by `prettier --check` on this Windows checkout.** `core.autocrlf=true` checks every
+file out with CRLF while Prettier's default `endOfLine: "lf"` wants LF, so a repo-wide
+`prettier --check` reports essentially **every file** as needing formatting — including files nobody
+has touched (`next.config.ts`, `package.json`, `components/Header.tsx`…). Nothing is actually
+wrong: what is _committed_ is LF (lint-staged runs `prettier --write` on staged files, and git
+normalises on commit), and `git status` stays clean. Judge formatting by **`git status` plus the
+pre-commit hook**, not by a bulk `--check` — and never "fix" it with a repo-wide `prettier --write`,
+which would rewrite every file's line endings and produce a diff of the entire tree.
+
 ### Media workflow
 
 Media lives outside git (`HIsense-Website/media` locally, `/var/www/hisense-ir/media` on the server).
@@ -869,9 +878,22 @@ pm2 start hisense-ir
 - **Security headers:** CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy set in `next.config.ts`.
 - **No `new PrismaClient()`** in pages/routes — always import the singleton from `lib/db.ts`.
 - **Input validation** at API boundaries: Zod schemas for complaints and surveys; never trust raw body data.
-- **PostCSS malware (2026-06-06, remediated; origin branches cleaned 2026-08-31):** `postcss.config.mjs` was found to contain blockchain/C2 malware and was removed on `main` (commit `54cbd87`). A `prebuild` guard (`scripts/scan-build-config.mjs`, wired as npm `prebuild`) now aborts the build if the signature reappears — `deploy.sh` scans as well.
+- **PostCSS malware (2026-06-06, remediated; origin branches cleaned 2026-08-31, org-wide sweep 2026-09-14):** `postcss.config.mjs` was found to contain blockchain/C2 malware and was removed on `main` (commit `54cbd87`). A `prebuild` guard (`scripts/scan-build-config.mjs`, wired as npm `prebuild`) now aborts the build if the signature reappears — `deploy.sh` scans as well.
 
   A branch audit on 2026-08-31 found the payload **still hosted on `origin`** in 8 branches that `main`'s cleanup never touched: `chore/gitignore-graphify-out`, `deps-update`, `docs/db-promotion-gotchas`, `media-sync-script`, `ops-scripts`, `optimisation`, `product-faqs`, `refrigerator-banner-webp`. All 8 carried the identical 8438-byte blob `03dc4bcf` (clean is **116 B**, blob `6a83185b`), payload concealed past whitespace padding. All 8 were **orphan root commits** — no parent, whole-tree snapshots, unsigned, authored `+0330` but committed from a `+0100` host — i.e. forged twins of work already merged properly, the same mechanism as the dcode intrusion. **All 8 were deleted from origin on 2026-08-31**; blob `03dc4bcf` is now unreachable from every ref.
+
+  **Org-wide sweep, 2026-09-14.** The 2026-08-31 audit covered this repo only. A sweep across every repo in the org found the payload still hosted on **four more branches**, all now deleted:
+
+  | Repo             | Branch                                         | Blob      | Why it was safe to delete                                                                                       |
+  | ---------------- | ---------------------------------------------- | --------- | --------------------------------------------------------------------------------------------------------------- |
+  | zarrinac-website | `dev`                                          | `6c2e1fb` | stale since PR #3; `postcss.config.mjs` was its **only** diff vs `main` — i.e. the payload was the whole branch |
+  | zarrinac-website | `chore/gitignore-graphify-out`                 | `343f54f` | orphan, **no merge base** with `main`; its `.gitignore` line is already in `main`                               |
+  | zarrinac-website | `security/prebuild-guard-and-graphify-cleanup` | `343f54f` | orphan, no merge base; the `prebuild` guard it claims to add is already in `main`                               |
+  | dcode-website    | `ops/server-deployment`                        | 5847 B    | every `ops/` file on it is already in `main`                                                                    |
+
+  Same signature as the 8 deleted here: orphan root commits, forged twins of work merged properly elsewhere. `hisense-website`'s own `routes` branch was deleted in the same pass — it held the older `73adcc5d` blob and was already an ancestor of `main`, so nothing was lost.
+
+  **All three repos now have exactly one branch: `main`.** That is the cleanest possible posture and worth preserving — a stray long-lived branch is what let the payload survive two remediations. Verified 2026-09-14: `postcss.config.mjs` is 116 B on `main` in hisense-website, zarrinac-website and dcode-website.
 
   **Still true and worth knowing:** the _pre-remediation_ infected blob (`73adcc5d`, 5836 B) remains in `main`'s own history, because every commit before `54cbd87` legitimately contains it. That cannot be removed without rewriting `main`'s history, which nobody should do casually — the `prebuild` guard is the mitigation. A checkout of any pre-June-2026 commit will therefore put an infected `postcss.config.mjs` on disk; don't build from one.
 
