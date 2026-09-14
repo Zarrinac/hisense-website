@@ -13,6 +13,7 @@ Stack: Next.js 16 App Router · React 19 · TypeScript 6 · PostgreSQL + Prisma 
 - **Product `offers` decision:** no prices are published (rial volatility), so `buildProductJsonLd` emits **no `offers`** by default. It auto-emits a valid `Offer` when a positive `price` is passed — add a `price` field to the Product model + `ApiProduct` and pass it through to unlock product rich results. Don't emit a price-less Offer (invalid for Google).
 - Category SEO copy + FAQs live in `lib/seo/categorySeoContent.ts` (target purchase-intent long-tail: خرید/قیمت/نصب/قطعات یدکی). Keywords in `seo/keywords.txt`.
 - Every `<Image>` needs descriptive, localized `alt`. Hero/LCP images use `priority`.
+- **Favicon:** declared via `metadata.icons` in `app/layout.tsx` (root layout, propagates everywhere). Files in `public/` are served but never declared — Google requires a `<link rel="icon">` in the home page `<head>` or it indexes no favicon (GSC showed the generic globe until 2026-09-14). Keep the icon URLs stable; see DOCS.md → "Favicon".
 - Both `fa` and `en` must stay in sync — hreflang depends on it.
 - Don't break ISR (`revalidate = 3600`) or the sitemap/robots routes.
 - Keep `<meta description>` ~150–162 chars (search engines flag under ~150 as "too short"). Set it via the builders in `lib/seo/productMeta.ts` (`buildProductMetaDescription`, `buildCategoryMetaDescription`, `buildSupportMetaDescription`) — never bloat the route translation that some pages also render as a visible subtitle.
