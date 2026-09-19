@@ -1,21 +1,21 @@
 import type { MetadataRoute } from 'next';
-import { FALLBACK_PRODUCTS } from '@/lib/api/products/normalizers';
-import { categoryToSlug } from '@/lib/api/products/categories';
+import { loadProducts } from '@/lib/api/products/source';
 import { REF_PRODUCTS } from '@/content/RefProducts';
 import { routing } from '@/i18n/routing';
-import { SITE_URL, SITE_CONTENT_LAST_MODIFIED, HOME_CONTENT_LAST_MODIFIED } from '@/lib/seo/site';
+import {
+  SITE_CONTENT_LAST_MODIFIED,
+  HOME_CONTENT_LAST_MODIFIED,
+  PRODUCT_CONTENT_LAST_MODIFIED,
+  getLanguageAlternates,
+  getLocalizedPath,
+  toAbsoluteUrl,
+} from '@/lib/seo/site';
 
-// Native sitemap built from the same product source the pages serve. Using the
-// content-backed product list (the API's fallback source) guarantees every URL
-// resolves and includes models generated programmatically (e.g. RAC HIH/HRH
-// series) that the previous regex-based generator silently dropped.
+// Refresh alongside the public catalog. Each category uses exactly the same
+// DB-first/fallback loader as its listing, including models added after a build.
+export const revalidate = 3600;
 
 const STATIC_PATHS = [
-  '/products/tvs',
-  '/products/rac',
-  '/products/cac',
-  '/refrigerator',
-  '/products/wms',
   '/about',
   '/contact-us',
   '/hisense-repair',
@@ -23,56 +23,72 @@ const STATIC_PATHS = [
   '/survey',
   '/faq',
   '/warranty-and-guarantee',
-  '/portal',
   '/find-service-center',
   '/request-representation',
 ];
 
-const productPaths = (): string[] => {
-  const categoryProductPaths = FALLBACK_PRODUCTS.reduce<string[]>((acc, product) => {
-    const slug = categoryToSlug(product.category);
-    if (slug) {
-      acc.push(`/products/${slug}/${(product.slug ?? product.id).toLowerCase()}`);
-    }
-    return acc;
-  }, []);
+const CATEGORIES = [
+  ['tvs', 'TVS'],
+  ['rac', 'RAC'],
+  ['cac', 'CAC'],
+  ['wms', 'WMS'],
+] as const;
 
-  const refrigeratorPaths = REF_PRODUCTS.map(
-    (product) => `/refrigerator/${product.id.toLowerCase()}`,
+type PageEntry = { path: string; lastModified: Date; images?: string[] };
+
+function productModifiedAt(updatedAt?: string): Date {
+  const timestamp = updatedAt ? Date.parse(updatedAt) : NaN;
+  return Number.isFinite(timestamp) && timestamp > PRODUCT_CONTENT_LAST_MODIFIED.getTime()
+    ? new Date(timestamp)
+    : PRODUCT_CONTENT_LAST_MODIFIED;
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const entries: PageEntry[] = [
+    { path: '', lastModified: HOME_CONTENT_LAST_MODIFIED },
+    ...STATIC_PATHS.map((path) => ({ path, lastModified: SITE_CONTENT_LAST_MODIFIED })),
+  ];
+
+  const catalogs = await Promise.all(
+    CATEGORIES.map(async ([slug, category]) => ({ slug, ...(await loadProducts(category)) })),
   );
 
-  return [...categoryProductPaths, ...refrigeratorPaths];
-};
-
-const buildLanguageAlternates = (path: string): Record<string, string> => {
-  const languages = routing.locales.reduce<Record<string, string>>((acc, locale) => {
-    acc[locale] = `${SITE_URL}/${locale}${path}`;
-    return acc;
-  }, {});
-  languages['x-default'] = `${SITE_URL}/${routing.defaultLocale}${path}`;
-  return languages;
-};
-
-const priorityForPath = (path: string): number => {
-  if (path === '') return 1;
-  // Product detail pages (e.g. /products/tvs/u7k) sit one level deeper.
-  return path.split('/').filter(Boolean).length > 2 ? 0.7 : 0.8;
-};
-
-export default function sitemap(): MetadataRoute.Sitemap {
-  const logicalPaths = Array.from(new Set(['', ...STATIC_PATHS, ...productPaths()]));
-
-  return logicalPaths.flatMap((path) => {
-    const languages = buildLanguageAlternates(path);
-    // The homepage carries a fresher <lastmod> than the rest of the site so a sitemap
-    // resubmit gives Google a real change signal for the one URL that was differentiated.
-    const lastModified = path === '' ? HOME_CONTENT_LAST_MODIFIED : SITE_CONTENT_LAST_MODIFIED;
-    return routing.locales.map((locale) => ({
-      url: `${SITE_URL}/${locale}${path}`,
-      lastModified,
-      changeFrequency: path === '' ? ('daily' as const) : ('weekly' as const),
-      priority: priorityForPath(path),
-      alternates: { languages },
+  for (const { slug, products } of catalogs) {
+    const details = products.map((product) => ({
+      path: `/products/${slug}/${(product.slug || product.id).toLowerCase()}`,
+      lastModified: productModifiedAt(product.updatedAt),
+      images: product.imageUrl ? [toAbsoluteUrl(product.imageUrl)] : undefined,
     }));
-  });
+    entries.push(
+      {
+        path: `/products/${slug}`,
+        lastModified: new Date(
+          Math.max(PRODUCT_CONTENT_LAST_MODIFIED.getTime(), ...details.map((p) => +p.lastModified)),
+        ),
+      },
+      ...details,
+    );
+  }
+
+  // Refrigerator pages intentionally use bundled content, independently of DB.
+  entries.push(
+    { path: '/refrigerator', lastModified: PRODUCT_CONTENT_LAST_MODIFIED },
+    ...REF_PRODUCTS.map((product) => ({
+      path: `/refrigerator/${product.id.toLowerCase()}`,
+      lastModified: PRODUCT_CONTENT_LAST_MODIFIED,
+      images: [
+        toAbsoluteUrl(typeof product.image === 'string' ? product.image : product.image.src),
+      ],
+    })),
+  );
+
+  return [...new Map(entries.map((entry) => [entry.path, entry])).values()].flatMap(
+    ({ path, lastModified, images }) =>
+      routing.locales.map((locale) => ({
+        url: toAbsoluteUrl(getLocalizedPath(locale, path)),
+        lastModified,
+        ...(images ? { images } : {}),
+        alternates: { languages: getLanguageAlternates(path) },
+      })),
+  );
 }

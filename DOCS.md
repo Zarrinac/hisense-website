@@ -621,13 +621,25 @@ Each public page implements `generateMetadata` with:
 
 Hreflang is emitted as HTML `<link rel="alternate">` tags only. The next-intl HTTP Link-header hreflang was removed (it produced malformed headers that Google ignored).
 
-**Meta-description length.** Search engines flag descriptions under ~150 chars as "too short" (Bing Webmaster recommends 150–160). Builders in `lib/seo/productMeta.ts` set the `<meta description>` (and OG/Twitter) without touching the shorter route translation that some pages also render as a visible subtitle:
+**Meta-description length.** Around 150–162 characters is an editorial target, not a fixed Google limit. Prioritize accurate, distinct summaries over padding to satisfy a crawler score. Builders in `lib/seo/productMeta.ts` set the `<meta description>` (and OG/Twitter) without touching the shorter route translation that some pages also render as a visible subtitle:
 
 - `buildProductMetaDescription(locale, name)` — product + refrigerator detail pages; wraps the SKU name with purchase-intent + warranty copy. Real SKU names are long (e.g. `کولر گازی اینورتر هایسنس HIH-24TG`), so this already lands ~155–161 for the air-conditioner/refrigerator detail pages that Bing flagged.
-- `buildCategoryMetaDescription(locale, category)` — category + refrigerator listings. Returns a **bespoke** per-category string (`tvs|wms|rac|cac|refrigerator`), each hand-tuned to 150–162 in both locales. A generic "append a suffix to the route description" approach was rejected: the route descriptions span 77–127 chars and no single suffix maps them all into the 150–165 window.
+- `buildCategoryMetaDescription(locale, category)` — category + refrigerator listings. Returns a **bespoke** per-category string (`tvs|wms|rac|cac|refrigerator`), localized to the actual catalog and price-enquiry experience. A generic "append a suffix to the route description" approach was rejected: the route descriptions span 77–127 chars and no single suffix maps them all into the 150–165 window.
 - `buildSupportMetaDescription(locale, page)` — `contact` + `findServiceCenter`, same bespoke per-page approach.
 
-Keep every `fa`/`en` pair in sync (hreflang depends on it) and within ~150–162 chars.
+Keep every `fa`/`en` pair in sync (hreflang depends on it); descriptions may vary in length with product names.
+
+### September 2026 SEO audit and rendering contract
+
+See [the full audit](seo/audit-2026-09-19.md) for the resumed work, file map, live baseline and local validation. The work is retained locally on `seo/comprehensive-audit-2026-09-19`; no merge or deployment was performed.
+
+Public pages seed next-intl from route params with `resolvePageLocale`; shared html/body markup lives in `components/Document.tsx`. A root 404 must use explicit translations (`NotFoundContent`) without mutating the request locale. Setting the default locale in that boundary caused English support titles to become Persian during prerendering and was corrected before completion.
+
+Listings, detail pages, APIs and sitemap now read `lib/api/products/source.ts` directly. This avoids build-time HTTP requests to the application itself. Category listings and detail pages are prerendered with 3600-second ISR; detail static params enumerate both category and product ID because category-page params are not inherited. The service-center page remains dynamic for query filtering. Sitemap likewise revalidates hourly, excludes the noindex portal, carries image URLs and uses `PRODUCT_CONTENT_LAST_MODIFIED` or a newer database update timestamp. The 30 DB-backed catalog models plus eight bundled refrigerator models produce 106 indexable fa/en URLs, including public informational pages.
+
+Product URL case normalization happens in `proxy.ts` before static-file lookup, and page-level redirects resolve product ID/slug aliases. Keep direct catalog links lowercase. The footer now points directly to RAC/CAC canonical routes. `ResponsiveImage` handles mobile/desktop art direction without client-side source replacement; carousel loading prioritizes only the first displayed slide. Product heading and breadcrumb markup is shared across viewport sizes, and feature copy no longer depends on a scroll observer to appear.
+
+JSON-LD escapes `<` before script embedding. Empty video thumbnails suppress `VideoObject`; real per-video publish dates remain a follow-up because the current builder uses a shared content baseline. Do not promise product or video rich results merely from syntactically valid markup. Google [retired FAQ rich results in May 2026](https://developers.google.com/search/updates#may-2026); visible FAQs and their semantic markup are retained. Google also documents [no fixed meta-description length](https://developers.google.com/search/docs/appearance/snippet).
 
 ### Favicon (Search results + Search Console)
 
@@ -642,7 +654,7 @@ Rules to keep Google happy:
 - Never `Disallow` the icon paths in `app/robots.ts`; Googlebot-Image must be able to fetch them.
 - Same favicon site-wide — declaring it once in the root layout guarantees that.
 - After a deploy, the icon only appears once Google **recrawls the home page**: URL Inspection → Request indexing on `https://www.hisense-ir.com/` and `/fa`. Expect days-to-weeks, not minutes.
-- `app/layout.tsx` is byte-identical with the zarrinac repo — port any change there too. zarrinac.com and znci.ir deliberately keep **this** repo's `favicon.ico` for now (decision of 2026-09-14: declaring an icon beats declaring none while the owner prepares dedicated marks). That is an intentional temporary state on their side, not an open task on this one — hisense's own icon is correct and final.
+- Favicon metadata remains shared with the zarrinac implementation. Since the 2026-09-19 local SEO work, do not assume the complete layouts are byte-identical; evaluate any cross-repo port separately. zarrinac.com and znci.ir deliberately keep **this** repo's `favicon.ico` for now (decision of 2026-09-14: declaring an icon beats declaring none while the owner prepares dedicated marks). That is an intentional temporary state on their side, not an open task on this one — hisense's own icon is correct and final.
 
 ### JSON-LD structured data
 
@@ -659,7 +671,7 @@ All JSON-LD is rendered server-side via `components/seo/JsonLd.tsx`.
 | `FAQPage`                     | FAQ page + product detail pages (`components/seo/ProductFaqSection.tsx`)                            |
 | `VideoObject`                 | Product detail pages with a `heroVideoUrl` (`buildVideoObjectJsonLd` in `lib/seo/productSchema.ts`) |
 
-**Product `offers` rule:** No prices are published (rial volatility). `buildProductJsonLd` in `lib/seo/productSchema.ts` emits no `offers` by default. It auto-emits a valid `Offer` only when a positive `price` is passed. Never emit a price-less `Offer` — it's invalid for Google rich results.
+**Product `offers` rule:** No prices are published (rial volatility). `buildProductJsonLd` in `lib/seo/productSchema.ts` returns null by default (no `Product` node); `WebPage` and `Thing` describe the unpriced product. It auto-emits a valid `Offer` only when a positive `price` is passed. Never emit a price-less `Offer` — it's invalid for Google rich results.
 
 **Hero videos are self-hosted.** Product `heroVideoUrl`s point at first-party files under the product media folders (e.g. `products/tvs/U7K-Files/u7k-hero.mp4`), resolved via `mediaUrl()` — not third-party hotlinks. Self-hosting is what makes the `VideoObject`'s `contentUrl` a valid first-party claim for video rich results. Compress masters to web-optimized 1080p H.264 (`-crf 21 -movflags +faststart -an`, downscale 4K → 1080p) before placing them under `public/products/` (local) and the `media/` staging folder (promoted to the server via `ops/upload-media.ps1`). Keep the originals as backups outside the synced `media/` folder.
 

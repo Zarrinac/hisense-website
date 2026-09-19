@@ -17,6 +17,10 @@ export const SITE_CONTENT_LAST_MODIFIED = new Date('2026-06-06T00:00:00Z');
 // Google to recrawl only the homepage, without falsely flagging every other URL.
 export const HOME_CONTENT_LAST_MODIFIED = new Date('2026-07-26T00:00:00Z');
 
+// Product/catalog content, canonical paths and breadcrumb markup were audited
+// together. DB updates can advance individual entries beyond this content date.
+export const PRODUCT_CONTENT_LAST_MODIFIED = new Date('2026-09-19T00:00:00Z');
+
 export type SeoBreadcrumbItem = {
   label: string;
   href: string;
