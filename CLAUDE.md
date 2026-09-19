@@ -10,33 +10,33 @@ Stack: Next.js 16 App Router · React 19 · TypeScript 6 · PostgreSQL + Prisma 
 - Preserve/extend per-page `generateMetadata` (title, description, `alternates.canonical`, `alternates.languages` hreflang).
 - Keep one — and only one — `<h1>` per page; use semantic heading order (h1 → h2 → h3).
 - Maintain JSON-LD: `Organization` + `WebSite` (global), `LocalBusiness` (contact/service-center), `Product` (detail pages), `CollectionPage`/`ItemList` (category pages), `BreadcrumbList`, `FAQPage` (FAQ + category copy).
-- **Product `offers` decision:** no prices are published (rial volatility), so `buildProductJsonLd` emits **no `offers`** by default. It auto-emits a valid `Offer` when a positive `price` is passed — add a `price` field to the Product model + `ApiProduct` and pass it through to unlock product rich results. Don't emit a price-less Offer (invalid for Google).
+- **Product `offers` decision:** no prices are published (rial volatility), so `buildProductJsonLd` returns **null (no Product node)** by default; the page retains `WebPage`/`Thing` information. It auto-emits a valid `Offer` when a positive `price` is passed — add a `price` field to the Product model + `ApiProduct` and pass it through to unlock product rich results. Don't emit a price-less Offer (invalid for Google).
 - Category SEO copy + FAQs live in `lib/seo/categorySeoContent.ts` (target purchase-intent long-tail: خرید/قیمت/نصب/قطعات یدکی). Keywords in `seo/keywords.txt`.
 - Every `<Image>` needs descriptive, localized `alt`. Hero/LCP images use `priority`.
 - **Favicon:** declared via `metadata.icons` in `app/layout.tsx` (root layout, propagates everywhere). Files in `public/` are served but never declared — Google requires a `<link rel="icon">` in the home page `<head>` or it indexes no favicon (GSC showed the generic globe until 2026-09-14). Keep the icon URLs stable; see DOCS.md → "Favicon".
 - Both `fa` and `en` must stay in sync — hreflang depends on it.
 - Don't break ISR (`revalidate = 3600`) or the sitemap/robots routes.
-- Keep `<meta description>` ~150–162 chars (search engines flag under ~150 as "too short"). Set it via the builders in `lib/seo/productMeta.ts` (`buildProductMetaDescription`, `buildCategoryMetaDescription`, `buildSupportMetaDescription`) — never bloat the route translation that some pages also render as a visible subtitle.
+- Write useful, distinct `<meta description>` text; ~150–162 chars is an editorial target, not a Google eligibility rule or fixed limit. Set it via the builders in `lib/seo/productMeta.ts` (`buildProductMetaDescription`, `buildCategoryMetaDescription`, `buildSupportMetaDescription`) — never bloat the route translation that some pages also render as a visible subtitle.
 - SEO infrastructure lives in `lib/seo/` (`site.ts`, `productSchema.ts`, `productMeta.ts`, `keywords.ts`), `components/seo/`, `app/sitemap.ts`, `app/robots.ts`. **IndexNow** (`ops/indexnow-ping.mjs`, fired post-deploy) submits sitemap URLs to Bing/Yandex/Seznam — Google does not use it, so it has zero effect on Google Search Console.
 - **Cross-domain canonical vs zarrinac.com:** the sibling `zarrinac.com` (byte-identical replica) 308-redirects all its Hisense-replica sections here, so those consolidate into hisense automatically. Its **homepage** (`/fa`,`/en`) stays HTTP 200 as zarrinac's own front door — so keep hisense's homepage content (`app/[locale]/page.tsx` `HOME_SEO_CONTENT`) distinct from zarrinac's, or Google folds the two homepages and may pick zarrinac (seen as "Duplicate, Google chose different canonical" in GSC, 2026-07). hisense's own SEO tags (self-referential canonical + fa/en/x-default hreflang) are correct — this is a content-duplication issue on zarrinac's side, fixed by differentiating zarrinac's home. To signal that differentiation to Google, the homepage carries its own fresher sitemap `<lastmod>` (`HOME_CONTENT_LAST_MODIFIED` in `lib/seo/site.ts`), separate from the site-wide `SITE_CONTENT_LAST_MODIFIED` baseline and applied only to `path === ''` in `app/sitemap.ts`, so a GSC sitemap resubmit gives a targeted recrawl signal for just the home URL. Bump `HOME_CONTENT_LAST_MODIFIED` again on any future home-content change; keep this same pattern mirrored in the zarrinac repo.
 
 ## Commands
 
-| Command                           | Purpose                                   |
-| --------------------------------- | ----------------------------------------- |
-| `npm run dev`                     | Dev server at http://localhost:3000       |
-| `npm run build`                   | Production build (runs sitemap postbuild) |
-| `npm run start`                   | Serve production build                    |
-| `npm run lint`                    | ESLint check                              |
-| `npm run format`                  | Prettier format                           |
-| `npm run db:migrate`              | Apply Prisma migrations (dev)             |
-| `npm run db:deploy`               | Apply migrations (production)             |
-| `npm run db:seed`                 | Seed all data                             |
-| `npm run db:seed:products`        | Seed products only                        |
-| `npm run db:seed:locations`       | Seed Iran provinces/cities                |
-| `npm run db:seed:downloads`       | Seed download assets                      |
-| `npm run db:seed:representatives` | Seed service representatives              |
-| `npm run representatives:convert` | Rebuild representatives JSON from .xlsx   |
+| Command                           | Purpose                                 |
+| --------------------------------- | --------------------------------------- |
+| `npm run dev`                     | Dev server at http://localhost:3000     |
+| `npm run build`                   | Production build (native sitemap route) |
+| `npm run start`                   | Serve production build                  |
+| `npm run lint`                    | ESLint check                            |
+| `npm run format`                  | Prettier format                         |
+| `npm run db:migrate`              | Apply Prisma migrations (dev)           |
+| `npm run db:deploy`               | Apply migrations (production)           |
+| `npm run db:seed`                 | Seed all data                           |
+| `npm run db:seed:products`        | Seed products only                      |
+| `npm run db:seed:locations`       | Seed Iran provinces/cities              |
+| `npm run db:seed:downloads`       | Seed download assets                    |
+| `npm run db:seed:representatives` | Seed service representatives            |
+| `npm run representatives:convert` | Rebuild representatives JSON from .xlsx |
 
 ## Architecture
 
@@ -77,6 +77,7 @@ Content source is toggled by `NEXT_PUBLIC_CONTENT_SOURCE` (`"local"` or `"remote
 
 ### Localization
 
+- **Public page/metadata entry points:** call `resolvePageLocale(params)` before translation APIs so static rendering does not read locale headers.
 - **Server components:** `getTranslations('Namespace')` → `t('key')`
 - **Client components:** `useTranslations('Namespace')`
 - Keys are namespaced by page/feature (e.g., `Routes.Complaint`, `Header`, `TvHisensePage`)
@@ -161,6 +162,17 @@ Printed-catalog assets (`<media>/catalog/`) are mapped to products in `lib/catal
 9. **Product ordering is by `position`, not insert order** — DB row order is nondeterministic and drifted between local and server. `Product.position` (indexed `@@index([category, position])`) is seeded from the `content/tvProducts.ts` array index, and the products API does `orderBy: { position: 'asc' }`. To reorder/add/remove products, edit the content array then re-seed (`npm run db:seed:products`) — the seed sets `position` from the new index **and prunes DB rows absent from content**, keeping the DB exactly in sync. Don't rely on insertion order.
 
 10. **`content/service-centers/serviceCenters.json` is generated, not hand-edited** — the source of truth is the dated spreadsheet in `public/representatives/`. Refresh with `npm run representatives:convert -- public/representatives/<file>.xlsx`, then `npm run db:seed:representatives`. Hand edits are lost on the next refresh. Details in DOCS.md → "Refreshing the representative list".
+
+## SEO rendering and catalog audit (2026-09-19)
+
+- `app/layout.tsx` shares metadata/styles only. `components/Document.tsx` supplies html/body with explicit locale in the locale, admin, and root-404 boundaries. Keep root 404 copy explicit via `NotFoundContent`; **never call `setRequestLocale(defaultLocale)` there**: Next also prepares this boundary during normal rendering, and the mutation can turn English metadata Persian.
+- Category **and detail** routes enumerate their own category params. A parent **page** does not feed `generateStaticParams` to a child route. Both catalog routes and sitemap use 3600-second ISR; service-center filtering intentionally remains dynamic. New product URLs remain eligible for on-demand generation.
+- `lib/api/products/source.ts` is the shared DB-first catalog used by API, pages, static params and sitemap. Detail lookup uses the same effective category catalog; a nonempty DB catalog must not resurrect deleted bundled models. Empty/failed DB catalogs retain the existing static fallback policy.
+- Product URLs use lowercase canonical slugs (ID fallback). `proxy.ts` normalizes mixed-case catalog paths before static-file lookup; page redirects additionally resolve ID aliases and refrigerator-category aliases. The root `/` permanently redirects to `/fa`.
+- Sitemap excludes the noindex portal, includes product images and language alternates, and uses the product-content baseline plus newer DB timestamps. Refrigerator listing/detail/sitemap coverage was checked at eight bundled models.
+- `ResponsiveImage` uses browser-selected picture sources before hydration. Only the first carousel slide is high priority; do not reintroduce all-slide preload gates or duplicate desktop/mobile hero images. Product banners render one responsive h1/breadcrumb. Feature sections stay visible without IntersectionObserver.
+- Product rich results remain unavailable without genuine price/review data. FAQ markup is retained as semantic data; Google retired FAQ rich results in May 2026. Video publication dates still need authoritative per-video data before claiming date accuracy or video eligibility.
+- Full audit, file map, validation and remaining limitations: `seo/audit-2026-09-19.md`. This work is local and **not deployed**; do not infer production changes from local validation.
 
 ## Environment Variables
 
