@@ -421,7 +421,7 @@ A product detail page (`app/[locale]/tv-hisense/[productId]/page.tsx` etc.) rend
 7. **ComparisonSections** — spec comparison tables.
 8. **SpecsSection** — tech specs accordion (TV-specific pulls from `TvSpec`).
 9. **ProductFaqSection** — FAQ accordion per product, emits `FAQPage` JSON-LD.
-10. **Breadcrumbs** — `BreadcrumbList` JSON-LD.
+10. **Breadcrumbs** — `BreadcrumbList` as inline **microdata** (`itemScope`/`itemType` in `components/tv/product-detail/Breadcrumbs.tsx`), not JSON-LD.
 
 ### Printed catalog pages
 
@@ -513,7 +513,7 @@ Pass `--check` to verify the JSON matches a spreadsheet without writing. The see
 
 **Watch for superseded rows.** The service department sometimes delivers a code change as an _appended_ row while leaving the old row in place — the 2026-08-2 sheet appended `HA4410115` for پیمان رشیدی کیا (ارومیه) but kept the old `HA4410109`, which would have published that rep twice under لوازم خانگی. Always diff a new sheet against the current JSON before converting; when a code changed, edit it **in place** in the spreadsheet and delete the appended duplicate. Editing in place also keeps every downstream `rep-NNNN` id stable — the ids are positional, so deleting a row instead renumbers the rest of the file and churns the whole diff.
 
-**Delta sheets.** Sometimes the department sends only the changed rows instead of a full list (`new-rep-changes-20260905.xlsx`, two rows; `new-rep-changes-20260912.xlsx`, five additions plus two terminations). A delta sheet is never converted directly — the converter always rebuilds the whole JSON from one workbook. Apply the rows to the latest dated workbook in Excel, save it under a new dated name (latest: `list-of-representatives-2026-09-4.xlsx`), and convert that. A termination arrives as `فسخ` in the activity column (2026-09-05: `فسخ TV` for `LCD0306`, ارومیه; 2026-09-12: `HA6110142` + `H6110142`, اندیکا) — delete that row; the converter throws on it, since `serviceKind` only accepts a parenthesised `(TV|HA|RAC|CAC|VRF)` code. New reps are appended at the end of the workbook, matching how earlier additions were handled.
+**Delta sheets.** Sometimes the department sends only the changed rows instead of a full list (`new-rep-changes-20260905.xlsx`, two rows; `new-rep-changes-20260912.xlsx`, five additions plus two terminations; `new-rep-changes-20261001.xlsx`, four additions). A delta sheet is never converted directly — the converter always rebuilds the whole JSON from one workbook. Apply the rows to the latest dated workbook in Excel, save it under a new dated name (latest: `list-of-representatives-2026-10.xlsx`, 1524 reps), and convert that. A termination arrives as `فسخ` in the activity column (2026-09-05: `فسخ TV` for `LCD0306`, ارومیه; 2026-09-12: `HA6110142` + `H6110142`, اندیکا) — delete that row; the converter throws on it, since `serviceKind` only accepts a parenthesised `(TV|HA|RAC|CAC|VRF)` code. New reps are appended at the end of the workbook, matching how earlier additions were handled. Delta sheets type phone numbers as spaced strings (` 916 857 0477`) while the workbook stores bare digits (Excel drops the leading `0`; the converter restores it), so strip the spaces and enter them as numbers when pasting.
 
 **Province labels are canonical in `lib/iranLocations.json`, and the converter enforces it.** The workbook is retyped by hand, so a province can arrive spelled differently from the rest of the sheet. `provinceId` is only a slug of the label and `cityId` is `<provinceId>-<city>`, so a one-character difference splits a province into two blocks in the finder's dropdown and moves every city id under it. Since **2026-09-12** a non-canonical province aborts the conversion instead of quietly minting a new slug:
 
@@ -660,16 +660,16 @@ Rules to keep Google happy:
 
 All JSON-LD is rendered server-side via `components/seo/JsonLd.tsx`.
 
-| Schema type                   | Where emitted                                                                                       |
-| ----------------------------- | --------------------------------------------------------------------------------------------------- |
-| `Organization`                | Root layout (`app/[locale]/layout.tsx`)                                                             |
-| `WebSite`                     | Root layout                                                                                         |
-| `LocalBusiness`               | Contact page, service-center pages (`lib/seo/localBusiness.ts`)                                     |
-| `Product`                     | Product detail pages (`lib/seo/productSchema.ts`)                                                   |
-| `CollectionPage` + `ItemList` | Category listing pages                                                                              |
-| `BreadcrumbList`              | All product detail pages (`components/seo/PageBreadcrumbs.tsx`)                                     |
-| `FAQPage`                     | FAQ page + product detail pages (`components/seo/ProductFaqSection.tsx`)                            |
-| `VideoObject`                 | Product detail pages with a `heroVideoUrl` (`buildVideoObjectJsonLd` in `lib/seo/productSchema.ts`) |
+| Schema type                   | Where emitted                                                                                                                                                          |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Organization`                | Root layout (`app/[locale]/layout.tsx`)                                                                                                                                |
+| `WebSite`                     | Root layout                                                                                                                                                            |
+| `LocalBusiness`               | Contact page, service-center pages (`lib/seo/localBusiness.ts`)                                                                                                        |
+| `Product`                     | Product detail pages (`lib/seo/productSchema.ts`)                                                                                                                      |
+| `CollectionPage` + `ItemList` | Category listing pages                                                                                                                                                 |
+| `BreadcrumbList`              | Content + listing pages via JSON-LD (`components/seo/PageBreadcrumbs.tsx`); product detail pages via inline microdata (`components/tv/product-detail/Breadcrumbs.tsx`) |
+| `FAQPage`                     | FAQ page + product detail pages (`components/seo/ProductFaqSection.tsx`)                                                                                               |
+| `VideoObject`                 | Product detail pages with a `heroVideoUrl` (`buildVideoObjectJsonLd` in `lib/seo/productSchema.ts`)                                                                    |
 
 **Product `offers` rule:** No prices are published (rial volatility). `buildProductJsonLd` in `lib/seo/productSchema.ts` returns null by default (no `Product` node); `WebPage` and `Thing` describe the unpriced product. It auto-emits a valid `Offer` only when a positive `price` is passed. Never emit a price-less `Offer` — it's invalid for Google rich results.
 
