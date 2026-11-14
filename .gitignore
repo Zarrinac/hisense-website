@@ -44,6 +44,8 @@ next-env.d.ts
 /ecosystem.config.cjs
 
 # media moved to server, keep out of repo
+# (no trailing slash: on the servers public/media is a SYMLINK, which a `dir/` pattern does not match)
+/public/media
 /public/products/
 /public/images/
 /public/tv-banner/
